@@ -1,0 +1,35 @@
+LICENSES
+
+NAME            LICENSE FILE PATH                                               LICENSE TYPE    COPYRIGHT                                       COMMENTS
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+SDK core and    dialog_license.txt                                              Dialog          Dialog Semiconductor                            Licensed under the
+applications                                                                    proprietary                                                     Dialog SLA
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+BLE stack                                                                       RivieraWaves    RivieraWaves                                    Licensed under the
+                                                                                proprietary                                                     Dialog SLA
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+AES             ..\utilities\mkimage\sw_aes_license.txt                         Revised BSD     Cameron Rich                                    Contained in file
+implementation                                                                                                                                  headers where applicable
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+getopt          ..\utilities\prod_test\prod_test_cmds\getopt_license.txt        BSD             Microsoft Corporation,                          Contained in file
+                                                                                                The Regents of the University of California     headers where applicable
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+crc32           ..\utilities\crc32_license.txt                                  unrestricted                                                    Contained in file
+                                                                                use                                                             headers where applicable
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ARM             ..\sdk\platform\arm_license.txt                                 Revised BSD     ARM LIMITED                                     Contained in file
+                                                                                                                                                headers where applicable
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Bosch Sensor    ..\..\projects\target_apps\rcu\src\drivers\bosch_license.txt    Revised BSD     Bosch Sensortec GmbH                            Contained in file
+Driver                                                                                                                                          headers where applicable
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+This software includes both proprietary and open source components. The proprietary components may only be used after execution of the
+relevant Dialog Semiconductor Licensing Agreement. If you have not executed such an agreement you are not authorised to use this software.
+All open source components constitute a separate delivery and are licensed according to the applicable terms of their respective open source
+licenses. All open source software is delivered "AS IS" with no warranties. While Dialog Semiconductor seeks to provide complete and
+accurate licensing information with regard to each open source package, Dialog Semiconductor does not warrant or represent that the
+licensing information is complete or error-free. Please contact customer support for any source code requests, as well as for any 
+licensing inquiries with respect to the proprietary components.
+
+Version: v_6.140.2.17 
