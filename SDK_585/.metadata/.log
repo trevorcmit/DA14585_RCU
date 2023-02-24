@@ -1,0 +1,52 @@
+!SESSION 2023-02-24 11:35:42.240 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=13.0.1
+java.vendor=AdoptOpenJDK
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  ï»¿-startup plugins/org.eclipse.equinox.launcher_1.5.500.v20190715-1310.jar -pluginCustomization C:/DiaSemi/SmartSnippetsStudio2.0.16/CDT/plugin_customization.ini
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 ï»¿-startup plugins/org.eclipse.equinox.launcher_1.5.500.v20190715-1310.jar -pluginCustomization C:/DiaSemi/SmartSnippetsStudio2.0.16/CDT/plugin_customization.ini
+
+!ENTRY org.python.pydev.shared_core 1 1 2023-02-24 11:36:19.741
+!MESSAGE Restoring info for: C:\DiaSemi\SmartSnippetsStudio2.0.16\Python35\python.exe
+!STACK 0
+java.lang.RuntimeException: Restoring info for: C:\DiaSemi\SmartSnippetsStudio2.0.16\Python35\python.exe
+	at org.python.pydev.ast.interpreter_managers.AbstractInterpreterManager.getInterpretersFromPersistedString(AbstractInterpreterManager.java:453)
+	at org.python.pydev.ast.interpreter_managers.AbstractInterpreterManager.internalRecreateCacheGetInterpreterInfos(AbstractInterpreterManager.java:279)
+	at org.python.pydev.ast.interpreter_managers.AbstractInterpreterManager.setInfos(AbstractInterpreterManager.java:576)
+	at com.dialog.eclipse.product_plugin.StartupActions.createPythonInterpreter(StartupActions.java:1169)
+	at com.dialog.eclipse.product_plugin.StartupActions.earlyStartup(StartupActions.java:316)
+	at org.eclipse.ui.internal.EarlyStartupRunnable.runEarlyStartup(EarlyStartupRunnable.java:79)
+	at org.eclipse.ui.internal.EarlyStartupRunnable.run(EarlyStartupRunnable.java:55)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
+	at org.eclipse.ui.internal.Workbench$40.run(Workbench.java:2711)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+Caused by: java.io.IOException: Expecting: C:\Program Files (x86)\Dialog Semiconductor\DA14585_RCU_v_6.140.2.17 (1)\DA14585_RCU_v_6.140.2.17\SDK_585\.metadata\.plugins\org.python.pydev\v1_9bzc0qkd5hm4637qxbr5ckgyz\modulesKeys to exist (and be a file).
+	at org.python.pydev.ast.codecompletion.revisited.ModulesManager.loadFromFile(ModulesManager.java:296)
+	at org.python.pydev.ast.codecompletion.revisited.SystemModulesManager.load(SystemModulesManager.java:400)
+	at org.python.pydev.ast.interpreter_managers.AbstractInterpreterManager.getInterpretersFromPersistedString(AbstractInterpreterManager.java:451)
+	... 9 more
+
+!ENTRY org.python.pydev.shared_core 1 1 2023-02-24 11:36:23.311
+!MESSAGE Finished restoring information for: C:\DiaSemi\SmartSnippetsStudio2.0.16\Python35\python.exe at: C:\Program Files (x86)\Dialog Semiconductor\DA14585_RCU_v_6.140.2.17 (1)\DA14585_RCU_v_6.140.2.17\SDK_585\.metadata\.plugins\org.python.pydev\v1_9bzc0qkd5hm4637qxbr5ckgyz
+!STACK 0
+java.lang.RuntimeException: Finished restoring information for: C:\DiaSemi\SmartSnippetsStudio2.0.16\Python35\python.exe at: C:\Program Files (x86)\Dialog Semiconductor\DA14585_RCU_v_6.140.2.17 (1)\DA14585_RCU_v_6.140.2.17\SDK_585\.metadata\.plugins\org.python.pydev\v1_9bzc0qkd5hm4637qxbr5ckgyz
+	at org.python.pydev.core.log.Log.logInfo(Log.java:45)
+	at org.python.pydev.ast.interpreter_managers.AbstractInterpreterManager.getInterpretersFromPersistedString(AbstractInterpreterManager.java:498)
+	at org.python.pydev.ast.interpreter_managers.AbstractInterpreterManager.internalRecreateCacheGetInterpreterInfos(AbstractInterpreterManager.java:279)
+	at org.python.pydev.ast.interpreter_managers.AbstractInterpreterManager.setInfos(AbstractInterpreterManager.java:576)
+	at com.dialog.eclipse.product_plugin.StartupActions.createPythonInterpreter(StartupActions.java:1169)
+	at com.dialog.eclipse.product_plugin.StartupActions.earlyStartup(StartupActions.java:316)
+	at org.eclipse.ui.internal.EarlyStartupRunnable.runEarlyStartup(EarlyStartupRunnable.java:79)
+	at org.eclipse.ui.internal.EarlyStartupRunnable.run(EarlyStartupRunnable.java:55)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
+	at org.eclipse.ui.internal.Workbench$40.run(Workbench.java:2711)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.eclipse.ui 4 4 2023-02-24 11:43:56.909
+!MESSAGE Plugin com.dialog.eclipse.product_plugin, extension org.eclipse.ui.perspectiveExtensions, id org.eclipse.cdt.embsysregview.views.EmbSysRegView: Attribute 'relative' not defined.  This attribute is required when relationship="stack".
+
+!ENTRY org.eclipse.ui 4 4 2023-02-24 11:43:56.933
+!MESSAGE Unable to process element: view in perspective extension: null
+
+!ENTRY org.eclipse.cdt.core 1 0 2023-02-24 11:52:58.313
+!MESSAGE Indexed 'prox_reporter' (0 sources, 0 headers) in 8.24 sec: 0 declarations; 0 references; 0 unresolved inclusions; 0 syntax errors; 0 unresolved names (0%)

@@ -1,0 +1,17 @@
+build-windows.bat "da14531-cmake-template-master\gcc\arm-none-eabi.cmake" "da14531-cmake-template-master\gcc\dialog-sdk.cmake"
+
+build-windows.bat "da14531-cmake-template-master\gcc\arm-none-eabi.cmake" "SDK_585"
+
+build-windows.bat "C:\Program Files\CMake\bin" "SDK_585"
+
+build-windows.bat "make.exe" "SDK_585"
+
+build-windows.bat "make.exe" "da14531-cmake-template-master\gcc\dialog-sdk.cmake"
+
+build-windows.bat "C:\mingw\bin" "da14531-cmake-template-master\gcc\dialog-sdk.cmake"
+
+build-windows.bat "C:\Program Files (x86)\GNU Arm Embedded Toolchain\10 2021.10\arm-none-eabi\bin" "SDK_585"
+
+C:\Program Files (x86)\Dialog Semiconductor\SDK_6.0.14.1114\DA145xx_SDK
+
+build-windows.bat "C:/Program Files (x86)/GNU Arm Embedded Toolchain/10 2021.10/arm-none-eabi/bin" "C:/Program Files (x86)/Dialog Semiconductor/DA14585_RCU_v_6.140.2.17 (1)/DA14585_RCU_v_6.140.2.17/SDK_585"
