@@ -1,4 +1,4 @@
-;#<FEEDBACK># ARM Linker, 5060300: Last Updated: Wed Jul 05 11:22:32 2017
+;#<FEEDBACK># ARM Linker, 5060960: Last Updated: Tue Mar 14 17:00:10 2023
 ;VERSION 0.2
 ;FILE adc.o
 adc_disable <= USED 0
@@ -41,8 +41,6 @@ app_custs1_init <= USED 0
 ;FILE app_customs_common.o
 app_custs1_val_wr_validate <= USED 0
 ;FILE app_customs_task.o
-;FILE app_dbg.o
-app_dbg_pack_regs <= USED 0
 ;FILE app_default_handlers.o
 default_advertise_operation <= USED 0
 default_app_on_connection <= USED 0
@@ -116,7 +114,6 @@ app_white_list_lookup_public_in_virtual_white_list <= USED 0
 app_white_list_lookup_rand_in_virtual_white_list <= USED 0
 app_white_list_remove_host <= USED 0
 app_white_list_written <= USED 0
-;FILE arch_console.o
 ;FILE arch_main.o
 ;FILE arch_rom.o
 ;FILE arch_sleep.o
@@ -462,7 +459,9 @@ write_one_SW_LUT_entry <= USED 0
 ;FILE port_audio.o
 declare_audio_gpios <= USED 0
 init_audio_gpios <= USED 0
+port_audio_buffer_get_used <= USED 0
 ;FILE port_con_fsm.o
+port_con_fsm_get_rssi <= USED 0
 ;FILE port_con_fsm_task.o
 ;FILE port_ir.o
 port_ir_nec_send_command <= USED 0
@@ -481,6 +480,7 @@ port_alt_pair_load_entry <= USED 0
 port_alt_pair_store_status <= USED 0
 ;FILE port_platform.o
 port_delay_usec <= USED 0
+port_get_time <= USED 0
 ;FILE port_security.o
 ;FILE port_stream.o
 ;FILE port_timer.o
@@ -562,10 +562,14 @@ timer2_stop <= USED 0
 uart2_finish_transfers <= USED 0
 uart2_flow_off <= USED 0
 uart2_flow_on <= USED 0
+uart2_init <= USED 0
 uart2_read <= USED 0
 uart2_set_flow_off_retries_limit <= USED 0
+uart2_write <= USED 0
+uart2_write_from_isr <= USED 0
 ;FILE user_modules.o
-;FILE user_periph_setup.o
+user_modules_reserve_gpios <= USED 0
+;FILE user_periph_setup_1.o
 ;FILE user_pwr_mgr.o
 ;FILE user_rcu.o
 user_is_conn_upd_pending <= USED 0

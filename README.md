@@ -1,0 +1,1 @@
+Attempts to build DA14585 Voice RCU code outside of Keil uVision environment.

@@ -50,3 +50,98 @@ java.lang.RuntimeException: Finished restoring information for: C:\DiaSemi\Smart
 
 !ENTRY org.eclipse.cdt.core 1 0 2023-02-24 11:52:58.313
 !MESSAGE Indexed 'prox_reporter' (0 sources, 0 headers) in 8.24 sec: 0 declarations; 0 references; 0 unresolved inclusions; 0 syntax errors; 0 unresolved names (0%)
+!SESSION 2023-02-24 13:07:16.403 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=13.0.1
+java.vendor=AdoptOpenJDK
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  ï»¿-startup plugins/org.eclipse.equinox.launcher_1.5.500.v20190715-1310.jar -pluginCustomization C:/DiaSemi/SmartSnippetsStudio2.0.16/CDT/plugin_customization.ini
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 ï»¿-startup plugins/org.eclipse.equinox.launcher_1.5.500.v20190715-1310.jar -pluginCustomization C:/DiaSemi/SmartSnippetsStudio2.0.16/CDT/plugin_customization.ini
+
+!ENTRY org.eclipse.ui 2 2 2023-02-24 13:07:46.649
+!MESSAGE Perspective with name 'C/C++' and id 'org.eclipse.cdt.ui.CPerspective' has been made into a local copy
+
+!ENTRY org.eclipse.cdt.core 1 0 2023-02-24 13:08:19.761
+!MESSAGE Indexed 'voice_rcu' (0 sources, 0 headers) in 0.001 sec: 0 declarations; 0 references; 0 unresolved inclusions; 0 syntax errors; 0 unresolved names (0%)
+
+!ENTRY org.python.pydev.shared_core 4 4 2023-02-24 13:08:24.098
+!MESSAGE Info: Rebuilding internal caches: C:\Program Files (x86)\Dialog Semiconductor\DA14585_RCU_v_6.140.2.17 (1)\DA14585_RCU_v_6.140.2.17\SDK_585\.metadata\.plugins\com.python.pydev.analysis\python_v1_9bzc0qkd5hm4637qxbr5ckgyz\python.pydevsysteminfo (Expected error to be provided and got no error!)
+
+!ENTRY org.eclipse.core.resources 2 567 2023-02-24 13:17:53.239
+!MESSAGE Failure occurred reading .project file.
+!SUBENTRY 1 org.eclipse.core.resources 2 567 2023-02-24 13:17:53.239
+!MESSAGE Failure occurred reading .project file.
+!STACK 0
+java.net.URISyntaxException: Illegal character in path at index 10: C:/Program Files (x86)/Dialog Semiconductor/DA14585_RCU_v_6.140.2.17 (1)/DA14585_RCU_v_6.140.2.17/projects/target_apps/rcu/src/user_rcu.c
+	at java.base/java.net.URI$Parser.fail(Unknown Source)
+	at java.base/java.net.URI$Parser.checkChars(Unknown Source)
+	at java.base/java.net.URI$Parser.parseHierarchical(Unknown Source)
+	at java.base/java.net.URI$Parser.parse(Unknown Source)
+	at java.base/java.net.URI.<init>(Unknown Source)
+	at org.eclipse.core.internal.resources.ProjectDescriptionReader.endLinkLocationURI(ProjectDescriptionReader.java:627)
+	at org.eclipse.core.internal.resources.ProjectDescriptionReader.endElement(ProjectDescriptionReader.java:398)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.endElement(Unknown Source)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanEndElement(Unknown Source)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl$FragmentContentDriver.next(Unknown Source)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentScannerImpl.next(Unknown Source)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.next(Unknown Source)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(Unknown Source)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(Unknown Source)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(Unknown Source)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XMLParser.parse(Unknown Source)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.parse(Unknown Source)
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl$JAXPSAXParser.parse(Unknown Source)
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl.parse(Unknown Source)
+	at org.eclipse.core.internal.resources.ProjectDescriptionReader.read(ProjectDescriptionReader.java:930)
+	at org.eclipse.core.internal.resources.ProjectDescriptionReader.read(ProjectDescriptionReader.java:962)
+	at org.eclipse.core.internal.resources.Workspace.loadProjectDescription(Workspace.java:1974)
+	at org.eclipse.ui.internal.wizards.datatransfer.WizardProjectsImportPage$ProjectRecord.setProjectName(WizardProjectsImportPage.java:236)
+	at org.eclipse.ui.internal.wizards.datatransfer.WizardProjectsImportPage$ProjectRecord.<init>(WizardProjectsImportPage.java:178)
+	at org.eclipse.ui.internal.wizards.datatransfer.WizardProjectsImportPage.lambda$7(WizardProjectsImportPage.java:981)
+	at org.eclipse.jface.operation.ModalContext$ModalContextThread.run(ModalContext.java:122)
+!SUBENTRY 1 org.eclipse.core.resources 2 567 2023-02-24 13:17:53.239
+!MESSAGE Empty location detected for linked resource with name 'user_app/user_rcu.c' and type '1'.
+
+!ENTRY org.eclipse.core.resources 2 567 2023-02-24 13:17:55.296
+!MESSAGE Failure occurred reading .project file.
+!SUBENTRY 1 org.eclipse.core.resources 2 567 2023-02-24 13:17:55.296
+!MESSAGE Failure occurred reading .project file.
+!STACK 0
+java.net.URISyntaxException: Illegal character in path at index 10: C:/Program Files (x86)/Dialog Semiconductor/DA14585_RCU_v_6.140.2.17 (1)/DA14585_RCU_v_6.140.2.17/projects/target_apps/rcu/src/user_rcu.c
+	at java.base/java.net.URI$Parser.fail(Unknown Source)
+	at java.base/java.net.URI$Parser.checkChars(Unknown Source)
+	at java.base/java.net.URI$Parser.parseHierarchical(Unknown Source)
+	at java.base/java.net.URI$Parser.parse(Unknown Source)
+	at java.base/java.net.URI.<init>(Unknown Source)
+	at org.eclipse.core.internal.resources.ProjectDescriptionReader.endLinkLocationURI(ProjectDescriptionReader.java:627)
+	at org.eclipse.core.internal.resources.ProjectDescriptionReader.endElement(ProjectDescriptionReader.java:398)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.endElement(Unknown Source)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanEndElement(Unknown Source)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl$FragmentContentDriver.next(Unknown Source)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentScannerImpl.next(Unknown Source)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.next(Unknown Source)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(Unknown Source)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(Unknown Source)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(Unknown Source)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XMLParser.parse(Unknown Source)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.parse(Unknown Source)
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl$JAXPSAXParser.parse(Unknown Source)
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl.parse(Unknown Source)
+	at org.eclipse.core.internal.resources.ProjectDescriptionReader.read(ProjectDescriptionReader.java:930)
+	at org.eclipse.core.internal.localstore.FileSystemResourceManager.read(FileSystemResourceManager.java:896)
+	at org.eclipse.core.internal.resources.Project.updateDescription(Project.java:1336)
+	at org.eclipse.core.internal.resources.Project.create(Project.java:288)
+	at org.eclipse.core.internal.resources.Project.create(Project.java:251)
+	at org.eclipse.ui.internal.wizards.datatransfer.WizardProjectsImportPage.createExistingProject(WizardProjectsImportPage.java:1417)
+	at org.eclipse.ui.internal.wizards.datatransfer.WizardProjectsImportPage.access$14(WizardProjectsImportPage.java:1339)
+	at org.eclipse.ui.internal.wizards.datatransfer.WizardProjectsImportPage$15.execute(WizardProjectsImportPage.java:1272)
+	at org.eclipse.ui.actions.WorkspaceModifyOperation.lambda$0(WorkspaceModifyOperation.java:110)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2295)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2322)
+	at org.eclipse.ui.actions.WorkspaceModifyOperation.run(WorkspaceModifyOperation.java:131)
+	at org.eclipse.jface.operation.ModalContext$ModalContextThread.run(ModalContext.java:122)
+!SUBENTRY 1 org.eclipse.core.resources 2 567 2023-02-24 13:17:55.297
+!MESSAGE Empty location detected for linked resource with name 'user_app/user_rcu.c' and type '1'.
+
+!ENTRY org.eclipse.cdt.core 1 0 2023-02-24 13:17:55.764
+!MESSAGE Indexed 'voice_rcu' (0 sources, 0 headers) in 0.001 sec: 0 declarations; 0 references; 0 unresolved inclusions; 0 syntax errors; 0 unresolved names (0%)
