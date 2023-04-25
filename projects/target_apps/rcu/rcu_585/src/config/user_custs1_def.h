@@ -1,47 +1,28 @@
 /**
- ****************************************************************************************
- *
- * \file user_custs1_def.h
- *
- * \brief Dialog audio service database declarations.
- *
- * Copyright (C) 2017 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information  
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com>
- *
- ****************************************************************************************
- */
-
+****************************************************************************************
+* \file user_custs1_def.h
+* \brief Dialog audio service database declarations.
+****************************************************************************************
+*/
 #ifndef _USER_CUSTS1_DEF_H_
 #define _USER_CUSTS1_DEF_H_
 
 /**
- ****************************************************************************************
- * \addtogroup CONFIGURATION
- * \{
- * \addtogroup PROFILE_CONFIG
- * \{
- * \addtogroup DLG_AUDIO_SVC_CFG
- *
- * \brief Dialog Audio Service implementation
- * \{
- ****************************************************************************************
- */
+****************************************************************************************
+* \addtogroup CONFIGURATION
+* \{
+* \addtogroup PROFILE_CONFIG
+* \{
+* \addtogroup DLG_AUDIO_SVC_CFG
+* \brief Dialog Audio Service implementation
+* \{
+****************************************************************************************
+*/
 
-/*
- * INCLUDE FILES
- ****************************************************************************************
- */
-
+// INCLUDE FILES
 #include "attm_db_128.h"
 
-/*
- * DEFINES
- ****************************************************************************************
- */
-
+// DEFINES
 #define DLG_AUDIO_SVC_UUID_128            {0xd8, 0x03, 0x99, 0x2d, 0x91, 0x3d, 0xb0, 0xb6, 0x03, 0x4c, 0x94, 0x50, 0x8b, 0x10, 0x1d, 0xbc}
 
 #define DEF_DLG_AUDIO_CTRL_UUID_128       {0x6a, 0xbc, 0x6f, 0x0f, 0x0b, 0xdc, 0xc2, 0xb2, 0x71, 0x47, 0xe8, 0xef, 0xae, 0x41, 0x05, 0x0c}

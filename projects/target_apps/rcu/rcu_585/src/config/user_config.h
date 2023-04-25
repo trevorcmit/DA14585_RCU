@@ -71,6 +71,7 @@ static const struct advertise_configuration user_adv_conf = {
      * - GAPM_GEN_NON_RSLV_ADDR: Generated non-resolvable private random address
      */
     .addr_src = GAPM_STATIC_ADDR,
+
     /// Minimum interval for advertising
     .intv_min = MS_TO_BLESLOTS(31.25),                   
 
@@ -123,22 +124,18 @@ static const struct advertise_configuration user_adv_conf = {
 
 /**
  ****************************************************************************************
- *
  * Advertising or scan response data for the following cases:
- *
  * - ADV_IND: Connectable undirected advertising event.
  *    - The maximum length of the user defined advertising data shall be 28 bytes.
  *    - The Flags data type are written by the related ROM function, hence the user shall
  *      not include them in the advertising data. The related ROM function adds 3 bytes in 
  *      the start of the advertising data that are to be transmitted over the air.
  *    - The maximum length of the user defined response data shall be 31 bytes.
- *
  * - ADV_NONCONN_IND: Non-connectable undirected advertising event.
  *    - The maximum length of the user defined advertising data shall be 31 bytes.
  *    - The Flags data type may be omitted, hence the user can use all the 31 bytes for 
  *      data.
  *    - The scan response data shall be empty.
- *
  * - ADV_SCAN_IND: Scannable undirected advertising event.
  *    - The maximum length of the user defined advertising data shall be 31 bytes.
  *    - The Flags data type may be omitted, hence the user can use all the 31 bytes for 
@@ -209,12 +206,10 @@ static const struct advertise_configuration user_adv_conf = {
 #define MAX_MTU_SIZE 133
 
 /**
- ****************************************************************************************
- *
- * GAPM configuration
- *
- ****************************************************************************************
- */
+****************************************************************************************
+* GAPM configuration
+****************************************************************************************
+*/
 static const struct gapm_configuration user_gapm_conf = {
     /// Device Role: Central, Peripheral, Observer, Broadcaster or All roles. (@see enum gap_role)
     .role = GAP_ROLE_PERIPHERAL,
@@ -278,12 +273,10 @@ static const struct gapm_configuration user_gapm_conf = {
 };
 
 /**
- ****************************************************************************************
- *
- * Parameter update configuration
- *
- ****************************************************************************************
- */
+****************************************************************************************
+* Parameter update configuration
+****************************************************************************************
+*/
 /// Connection interval minimum measured in ble double slots (1.25ms)
 /// use the macro MS_TO_DOUBLESLOTS to convert from milliseconds (ms) to double slots
 
@@ -324,12 +317,10 @@ static const struct connection_param_configuration user_connection_param_conf = 
 };
 
 /**
- ****************************************************************************************
- *
- * Default handlers configuration
- *
- ****************************************************************************************
- */
+****************************************************************************************
+* Default handlers configuration
+****************************************************************************************
+*/
 static const struct default_handlers_configuration  user_default_hnd_conf = {
     /// Configure the advertise operation used by the default handlers
     /// Possible values:

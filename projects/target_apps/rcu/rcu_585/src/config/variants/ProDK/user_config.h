@@ -1,18 +1,9 @@
 /**
- ****************************************************************************************
- *
- * \file user_config.h
- *
- * \brief User configuration file.
- *
- * Copyright (C) 2017 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information  
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com>
- *
- ****************************************************************************************
- */
+****************************************************************************************
+* \file user_config.h
+* \brief User configuration file.
+****************************************************************************************
+*/
 
 #ifndef _USER_CONFIG_H_
 #define _USER_CONFIG_H_
@@ -58,9 +49,7 @@ const static sleep_state_t app_default_sleep_mode = ARCH_EXT_SLEEP_ON;
 
 /**
  ****************************************************************************************
- *
  * Advertising configuration
- *
  ****************************************************************************************
  */
 static const struct advertise_configuration user_adv_conf = {
