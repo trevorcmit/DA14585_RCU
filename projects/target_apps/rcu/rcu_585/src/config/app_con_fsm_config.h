@@ -1,18 +1,9 @@
 /**
- ****************************************************************************************
- *
- * \file app_con_fsm_config.h
- *
- * \brief Connection FSM module configuration header file.
- *
- * Copyright (C) 2017 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information  
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com>
- *
- ****************************************************************************************
- */
+****************************************************************************************
+* \file app_con_fsm_config.h
+* \brief Connection FSM module configuration header file.
+****************************************************************************************
+*/
 
 #ifndef _APP_CON_FSM_CONFIG_H_
 #define _APP_CON_FSM_CONFIG_H_
@@ -24,7 +15,6 @@
  * \addtogroup MODULE_CONFIG
  * \{
  * \addtogroup CON_FSM_CFG
- *
  * \brief Connection FSM module configuration
  * \{
  ****************************************************************************************

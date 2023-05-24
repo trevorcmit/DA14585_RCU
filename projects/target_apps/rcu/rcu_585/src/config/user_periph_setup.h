@@ -1,40 +1,26 @@
 /**
- ****************************************************************************************
- *
- * \file user_periph_setup.h
- *
- * \brief Peripherals setup header file.
- *
- * Copyright (C) 2017 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information  
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com>
- *
- ****************************************************************************************
- */
+****************************************************************************************
+* \file user_periph_setup.h
+* \brief Peripherals setup header file.
+****************************************************************************************
+*/
 
 #ifndef _USER_PERIPH_SETUP_H_
 #define _USER_PERIPH_SETUP_H_
 
 /**
- ****************************************************************************************
- * \addtogroup CONFIGURATION
- * \{
- * \addtogroup MODULE_CONFIG
- * \{
- * \addtogroup PERIPHERAL_CFG
- *
- * \brief Peripherals configuration
- * \{
- ****************************************************************************************
- */
+****************************************************************************************
+* \addtogroup CONFIGURATION
+* \{
+* \addtogroup MODULE_CONFIG
+* \{
+* \addtogroup PERIPHERAL_CFG
+* \brief Peripherals configuration
+* \{
+****************************************************************************************
+*/
 
-/*
- * INCLUDE FILES
- ****************************************************************************************
- */
-
+// INCLUDE FILES
 #include "rwip_config.h"
 #include "arch.h"
 #include "da1458x_periph_setup.h"
@@ -71,11 +57,7 @@
 #define I2C_SCL_PORT          GPIO_PORT_2
 #define I2C_SCL_PIN           GPIO_PIN_6
     
-/**
- ***************************************************************************************
- * SPI pin configuration                                                                
- ***************************************************************************************
-*/
+// SPI Pin Configuration
 #define SPI_CLK_PORT   GPIO_PORT_0
 #define SPI_CLK_PIN    GPIO_PIN_0
 
@@ -108,10 +90,8 @@
 #define GPIO_BAT_LED_PORT       GPIO_PORT_1
 #define GPIO_BAT_LED_PIN        GPIO_PIN_2
 
-/*
- * FUNCTION DECLARATIONS
- ****************************************************************************************
- */
+
+// FUNCTION DECLARATIONS
 
 /**
  ****************************************************************************************

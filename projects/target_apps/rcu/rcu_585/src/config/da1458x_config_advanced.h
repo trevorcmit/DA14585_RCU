@@ -1,18 +1,9 @@
 /**
- ****************************************************************************************
- *
- * \file da1458x_config_advanced.h
- *
- * \brief Advanced compile configuration file.
- *
- * Copyright (C) 2017 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information  
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com>
- *
- ****************************************************************************************
- */
+****************************************************************************************
+* \file da1458x_config_advanced.h
+* \brief Advanced compile configuration file.
+****************************************************************************************
+*/
 
 #ifndef _DA1458X_CONFIG_ADVANCED_H_
 #define _DA1458X_CONFIG_ADVANCED_H_
@@ -24,7 +15,6 @@
  * \addtogroup APP_CONFIG
  * \{
  * \addtogroup SDK_ADVANCED_CFG
- *
  * \brief SDK advanced configuration
  * \{
  ****************************************************************************************

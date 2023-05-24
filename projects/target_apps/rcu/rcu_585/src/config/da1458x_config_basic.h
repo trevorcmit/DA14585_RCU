@@ -1,19 +1,9 @@
 /**
- ****************************************************************************************
- *
- * \file da1458x_config_basic.h
- *
- * \brief Basic compile configuration file.
- *
- * Copyright (C) 2017 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information  
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com>
- *
- ****************************************************************************************
- */
-
+****************************************************************************************
+* \file da1458x_config_basic.h
+* \brief Basic compile configuration file.
+****************************************************************************************
+*/
 #ifndef _DA1458X_CONFIG_BASIC_H_
 #define _DA1458X_CONFIG_BASIC_H_
 
@@ -26,7 +16,6 @@
  * \addtogroup APP_CONFIG
  * \{
  * \addtogroup SDK_BASIC_CFG
- *
  * \brief SDK basic configuration
  * \{
  ****************************************************************************************
@@ -49,7 +38,8 @@
 /****************************************************************************************************************/
 /* Enables WatchDog timer.                                                                                      */
 /****************************************************************************************************************/
-#define CFG_WDOG
+// #define CFG_WDOG // original
+#undef CFG_WDOG
 
 /****************************************************************************************************************/
 /* Determines maximum concurrent connections supported by application. It configures the heap memory allocated  */
@@ -70,7 +60,8 @@
 /*      -   Enables Debug module and sets code execution in breakpoint in Hardfault and NMI (Watchdog) handlers.*/
 /*          It allows developer to hot attach debugger and get debug information                                */
 /****************************************************************************************************************/
-#undef CFG_DEVELOPMENT_DEBUG
+// #undef CFG_DEVELOPMENT_DEBUG // original
+#define CFG_DEVELOPMENT_DEBUG
 
 /****************************************************************************************************************/
 /* UART Console Print. Enables serial interface logging mechanism. If CFG_PRINTF is defined CFG_PRINTF_UART2    */

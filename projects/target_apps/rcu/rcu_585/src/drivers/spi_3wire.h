@@ -1,18 +1,9 @@
 /**
- ****************************************************************************************
- *
- * \file spi_3wire.h
- *
- * \brief 3-wire SPI low level driver.
- *
- * Copyright (C) 2017 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information  
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com>
- *
- ****************************************************************************************
- */
+****************************************************************************************
+* \file spi_3wire.h
+* \brief 3-wire SPI low level driver.
+****************************************************************************************
+*/
 
 #ifndef _APP_SPI_3WIRE_H_
 #define _APP_SPI_3WIRE_H_
@@ -24,9 +15,7 @@
  * \addtogroup USER_DRIVERS
  * \{
  * \addtogroup SPI_3WIRE_DRV
- *
  * \brief SPI 3wire driver
- *
  * \{
  ****************************************************************************************
  */
@@ -59,7 +48,6 @@ struct SPI_Config
  * @brief Read from 3-wire SPI
  * @param[in] registerIndex: Target address (A6..A0)
  * @param[in] is_last_transaction: Ttrue if this is the last transaction of the SPI access
- * 
  * @return  byte read
  ****************************************************************************************
  */

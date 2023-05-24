@@ -1,16 +1,7 @@
 /**
  ****************************************************************************************
- *
  * \file user_custs_config.c
- *
  * \brief Custom1/2 Server (CUSTS1/2) profile database structure and initialization.
- *
- * Copyright (C) 2017 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information  
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com>
- *
  ****************************************************************************************
  */
 
@@ -20,23 +11,16 @@
  * \addtogroup PROFILE
  * \{
  * \addtogroup APP_CUSTS1
- *
  * \{
  */
 
-/*
- * INCLUDE FILES
- ****************************************************************************************
- */
-
+// INCLUDE FILES
 #include "app_prf_types.h"
 #include "app_customs.h"
 #include <user_custs1_def.h>
 
-/*
- * GLOBAL VARIABLE DEFINITIONS
- ****************************************************************************************
- */
+
+// GLOBAL VARIABLE DEFINTIONS
 
 /// Custom1 server function callback table
 const struct cust_prf_func_callbacks cust_prf_funcs[] =

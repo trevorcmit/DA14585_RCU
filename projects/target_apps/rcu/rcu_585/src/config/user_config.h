@@ -186,17 +186,14 @@ static const struct advertise_configuration user_adv_conf = {
 #define USER_ADVERTISE_SCAN_RESPONSE_DATA_LEN (sizeof(USER_ADVERTISE_SCAN_RESPONSE_DATA)-1)
 
 /**
- ****************************************************************************************
- *
- * Device name.
- *
- * - If there is space left in the advertising or scan response data the device name is
- *   copied there. The device name can be anytime read by a connected peer, if the
- *   application supports it.
- * - The Bluetooth device name can be up to 248 bytes.
- *
- ****************************************************************************************
- */
+****************************************************************************************
+* Device name.
+* - If there is space left in the advertising or scan response data the device name is
+*   copied there. The device name can be anytime read by a connected peer, if the
+*   application supports it.
+* - The Bluetooth device name can be up to 248 bytes.
+****************************************************************************************
+*/
 #define USER_DEVICE_NAME    "DA14585 RCU"
 
 /// Device name length

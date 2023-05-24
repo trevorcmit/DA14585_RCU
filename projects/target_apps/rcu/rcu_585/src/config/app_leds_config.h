@@ -1,18 +1,9 @@
 /**
- ****************************************************************************************
- *
- * \file app_leds_config.h
- *
- * \brief  LED module configuration header file
- *
- * Copyright (C) 2017 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information  
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com>
- *
- ****************************************************************************************
- */ 
+****************************************************************************************
+* \file app_leds_config.h
+* \brief  LED module configuration header file
+****************************************************************************************
+*/ 
  
 #ifndef _APP_LEDS_CONFIG_H_
 #define _APP_LEDS_CONFIG_H_
@@ -24,18 +15,17 @@
  * \addtogroup MODULE_CONFIG
  * \{
  * \addtogroup LEDS_CFG
- *
  * \brief LEDs module configuration
  * \{
  ****************************************************************************************
  */
 
 /**
- ****************************************************************************************
- * Define LED_USE_RAMP_FEATURE to enable LED intensity to ramp-up and down when turned 
- * on and off respectively.
- ****************************************************************************************
- */
+****************************************************************************************
+* Define LED_USE_RAMP_FEATURE to enable LED intensity to ramp-up and down when turned 
+* on and off respectively.
+****************************************************************************************
+*/
 #define LED_USE_RAMP_FEATURE
 
 #ifdef LED_USE_RAMP_FEATURE
@@ -62,10 +52,10 @@
 #endif
 
 /**
- ****************************************************************************************
- * Define LED_USE_DOUBLE_BLINK_FEATURE to enable LED double-blink function
- ****************************************************************************************
- */
+****************************************************************************************
+* Define LED_USE_DOUBLE_BLINK_FEATURE to enable LED double-blink function
+****************************************************************************************
+*/
 #define LED_USE_DOUBLE_BLINK_FEATURE
 
 #ifdef LED_USE_DOUBLE_BLINK_FEATURE
@@ -73,10 +63,10 @@
 #endif
 
 /**
- ****************************************************************************************
- * Define the number of LEDs and the corresponding names
- ****************************************************************************************
- */
+****************************************************************************************
+* Define the number of LEDs and the corresponding names
+****************************************************************************************
+*/
 #undef HAS_LED_CAPS_LOCK
 #undef HAS_LED_NUM_LOCK
 #undef HAS_LED_SCROLL_LOCK
