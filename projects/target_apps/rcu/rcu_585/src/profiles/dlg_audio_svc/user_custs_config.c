@@ -1,18 +1,16 @@
 /**
- ****************************************************************************************
- * \file user_custs_config.c
- * \brief Custom1/2 Server (CUSTS1/2) profile database structure and initialization.
- ****************************************************************************************
- */
+* \file  user_custs_config.c
+* \brief Custom1/2 Server (CUSTS1/2) profile database structure and initialization.
+*/
 
 /**
- * \addtogroup USER
- * \{
- * \addtogroup PROFILE
- * \{
- * \addtogroup APP_CUSTS1
- * \{
- */
+* \addtogroup USER
+* \{
+* \addtogroup PROFILE
+* \{
+* \addtogroup APP_CUSTS1
+* \{
+*/
 
 // INCLUDE FILES
 #include "app_prf_types.h"

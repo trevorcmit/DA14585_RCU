@@ -1,15 +1,12 @@
 /**
- ****************************************************************************************
  * \file app_motion_config.h
  * \brief  Motion application configuration header file
- ****************************************************************************************
  */ 
  
 #ifndef _APP_MOTION_CONFIG_H_
 #define _APP_MOTION_CONFIG_H_
 
 /**
- ****************************************************************************************
  * \addtogroup CONFIGURATION
  * \{
  * \addtogroup MODULE_CONFIG
@@ -18,7 +15,6 @@
  *
  * \brief Motion module configuration
  * \{
- ****************************************************************************************
  */
 
 #include <user_periph_setup.h>

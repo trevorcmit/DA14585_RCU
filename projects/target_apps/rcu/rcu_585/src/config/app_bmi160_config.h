@@ -1,18 +1,9 @@
 /**
- ****************************************************************************************
- *
- * \file app_bmi160_config.h
- *
- * \brief  BMI160 sensor driver configuration
- *
- * Copyright (C) 2017 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information  
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com>
- *
- ****************************************************************************************
- */ 
+****************************************************************************************
+* \file app_bmi160_config.h
+* \brief  BMI160 sensor driver configuration
+****************************************************************************************
+*/ 
  
 #ifndef _APP_BMI160_CONFIG_H_
 #   define _APP_BMI160_CONFIG_H_

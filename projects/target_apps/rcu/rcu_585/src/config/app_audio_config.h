@@ -1,34 +1,24 @@
 /**
- ****************************************************************************************
- *
- * \file app_audio_config.h
- *
- * \brief  Audio module configuration header file
- *
- * Copyright (C) 2017 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information  
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com>
- *
- ****************************************************************************************
- */ 
+****************************************************************************************
+* \file app_audio_config.h
+* \brief  Audio module configuration header file
+****************************************************************************************
+*/ 
  
 #ifndef _APP_AUDIO_CONFIG_H_
 #define _APP_AUDIO_CONFIG_H_
 
 /**
- ****************************************************************************************
- * \addtogroup CONFIGURATION
- * \{
- * \addtogroup MODULE_CONFIG
- * \{
- * \addtogroup AUDIO_CFG
- *
- * \brief Audio module configuration
- * \{
- ****************************************************************************************
- */
+****************************************************************************************
+* \addtogroup CONFIGURATION
+* \{
+* \addtogroup MODULE_CONFIG
+* \{
+* \addtogroup AUDIO_CFG
+* \brief Audio module configuration
+* \{
+****************************************************************************************
+*/
 
 #include "port_platform.h"
 #include "app_audio_defs.h"
@@ -39,24 +29,21 @@
  ****************************************************************************************
  * \brief Escape byte value used for audio in-band control information.
  *        If defined audio control information can be passed in-band with the audio data.
- *        If not defined, only audio data can be transmitted over audio vendor specific 
- *        reports.
+ *        If not defined, only audio data can be transmitted over audio vendor specific reports.
  ****************************************************************************************
  */
 #define AUDIO_CONTROL_ESCAPE_VALUE 0x7F
 
 /**
  ****************************************************************************************
- * \brief Define CFG_AUDIO_IMA_ADPCM to use IMA ADPCM encoding.                             
- *        If not defined aLaw encoding will be used                                         
+ * \brief Define CFG_AUDIO_IMA_ADPCM to use IMA ADPCM encoding. If not defined aLaw encoding will be used                                         
  ****************************************************************************************
  */
 #define CFG_AUDIO_IMA_ADPCM
 
 /**
  ****************************************************************************************
- * \brief Define CFG_AUDIO_ADAPTIVE_RATE to enable dynamic                                  
- *        sampling rate and ADPCM configuration changing                                 
+ * \brief Define CFG_AUDIO_ADAPTIVE_RATE to enable dynamic sampling rate and ADPCM configuration changing                                 
  ****************************************************************************************
  */
 #define CFG_AUDIO_ADAPTIVE_RATE
@@ -208,11 +195,11 @@ static const audio_util_funcs_t app_audio_funcs = {
 /**
  ****************************************************************************************
  * \brief Define CFG_AUDIO_EMULATE_PDM_MIC to emulate microphone input using a software
- *        generated waveform as defined in emul_waveform table. A 222Hz sine waveform 
- *        is used by default.
+ *        generated waveform as defined in emul_waveform table. A 222Hz sine waveform is used by default.
  ****************************************************************************************
  */ 
 #undef CFG_AUDIO_EMULATE_PDM_MIC
+// #define CFG_AUDIO_EMULATE_PDM_MIC
 
 /**
  ****************************************************************************************
@@ -221,11 +208,11 @@ static const audio_util_funcs_t app_audio_funcs = {
  ****************************************************************************************
  */ 
 #undef CFG_AUDIO_EMULATE_PDM_MIC_TRIANGULAR
+// #define CFG_AUDIO_EMULATE_PDM_MIC_TRIANGULAR
 
 /**
  ****************************************************************************************
- * \brief Define CFG_AUDIO_UART_DEBUG to print to the debug console special characters 
- *        indicating the audio process progress.
+ * \brief Define CFG_AUDIO_UART_DEBUG to print to the debug console special characters indicating the audio process progress.
  ****************************************************************************************
  */ 
 #undef CFG_AUDIO_UART_DEBUG

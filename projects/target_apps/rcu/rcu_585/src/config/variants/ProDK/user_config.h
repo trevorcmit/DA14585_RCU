@@ -1,42 +1,33 @@
 /**
-****************************************************************************************
 * \file user_config.h
 * \brief User configuration file.
-****************************************************************************************
 */
 
 #ifndef _USER_CONFIG_H_
 #define _USER_CONFIG_H_
 
 /**
- ****************************************************************************************
- * \addtogroup CONFIGURATION
- * \{
- * \addtogroup APP_CONFIG
- * \{
- * \addtogroup USER_CFG
- *
- * \brief User configuration
- * \{
- ****************************************************************************************
- */
+* \addtogroup CONFIGURATION
+* \{
+* \addtogroup APP_CONFIG
+* \{
+* \addtogroup USER_CFG
+* \brief User configuration
+* \{
+*/
  
-/*
- * INCLUDE FILES
- ****************************************************************************************
- */
 
+// INCLUDE FILES
 #include "app_user_config.h"
 #include "arch_api.h"
 #include "app_default_handlers.h"
 #include "app_adv_data.h"
 #include "port_ble_gap.h"
 
-/*
- * VARIABLES
- ****************************************************************************************
- */
 
+/*
+* VARIABLES
+*/
 /**
  ****************************************************************************************
  * Default sleep mode. Possible values are:
@@ -48,10 +39,8 @@
 const static sleep_state_t app_default_sleep_mode = ARCH_EXT_SLEEP_ON;
 
 /**
- ****************************************************************************************
- * Advertising configuration
- ****************************************************************************************
- */
+* Advertising configuration
+*/
 static const struct advertise_configuration user_adv_conf = {
     /**
      * Own BD address source of the device:
@@ -60,26 +49,28 @@ static const struct advertise_configuration user_adv_conf = {
      * - GAPM_GEN_NON_RSLV_ADDR: Generated non-resolvable private random address
      */
     .addr_src = GAPM_STATIC_ADDR,
+
     /// Minimum interval for advertising
     .intv_min = MS_TO_BLESLOTS(31.25),                   
-
     /// Maximum interval for advertising
-    .intv_max = MS_TO_BLESLOTS(62.5),                  
+    .intv_max = MS_TO_BLESLOTS(62.5), 
+
+    // .intv_min = MS_TO_BLESLOTS(687.5),                    // 687.5ms
+    // .intv_max = MS_TO_BLESLOTS(687.5),                    // 687.5ms                 
 
     /**
-     *  Advertising channels map:
-     * - ADV_CHNL_37_EN:   Advertising channel map for channel 37.
-     * - ADV_CHNL_38_EN:   Advertising channel map for channel 38.
-     * - ADV_CHNL_39_EN:   Advertising channel map for channel 39.
-     * - ADV_ALL_CHNLS_EN: Advertising channel map for channel 37, 38 and 39.
-     */
+    *  Advertising channels map:
+    * - ADV_CHNL_37_EN:   Advertising channel map for channel 37.
+    * - ADV_CHNL_38_EN:   Advertising channel map for channel 38.
+    * - ADV_CHNL_39_EN:   Advertising channel map for channel 39.
+    * - ADV_ALL_CHNLS_EN: Advertising channel map for channel 37, 38 and 39.
+    */
     .channel_map = ADV_ALL_CHNLS_EN,
 
     /*************************
      * Advertising information
      *************************
      */
-
     /// Host information advertising data (GAPM_ADV_NON_CONN and GAPM_ADV_UNDIRECT)
     /// Advertising mode :
     /// - GAP_NON_DISCOVERABLE: Non discoverable mode
@@ -111,32 +102,27 @@ static const struct advertise_configuration user_adv_conf = {
 };
 
 /**
- ****************************************************************************************
- *
+ *******************************************************************************************
  * Advertising or scan response data for the following cases:
- *
- * - ADV_IND: Connectable undirected advertising event.
+ * ADV_IND: Connectable undirected advertising event.
  *    - The maximum length of the user defined advertising data shall be 28 bytes.
  *    - The Flags data type are written by the related ROM function, hence the user shall
  *      not include them in the advertising data. The related ROM function adds 3 bytes in 
  *      the start of the advertising data that are to be transmitted over the air.
  *    - The maximum length of the user defined response data shall be 31 bytes.
- *
- * - ADV_NONCONN_IND: Non-connectable undirected advertising event.
+ * ADV_NONCONN_IND: Non-connectable undirected advertising event.
  *    - The maximum length of the user defined advertising data shall be 31 bytes.
- *    - The Flags data type may be omitted, hence the user can use all the 31 bytes for 
- *      data.
+ *    - The Flags data type may be omitted, hence the user can use all the 31 bytes for data.
  *    - The scan response data shall be empty.
- *
- * - ADV_SCAN_IND: Scannable undirected advertising event.
+ * ADV_SCAN_IND: Scannable undirected advertising event.
  *    - The maximum length of the user defined advertising data shall be 31 bytes.
- *    - The Flags data type may be omitted, hence the user can use all the 31 bytes for 
- *      data.
+ *    - The Flags data type may be omitted, hence the user can use all the 31 bytes for data.
  *    - The maximum length of the user defined response data shal be 31 bytes.
- ****************************************************************************************
+ *******************************************************************************************
  */
-/// Advertising service data
-/// Advertising AD type flags, shall not be set in advertising data
+
+// Advertising service data
+// Advertising AD type flags, shall not be set in advertising data
 #if defined(CFG_PRF_SUOTAR)
     #define USER_ADVERTISE_DATA \
             "\x03"\
@@ -178,17 +164,12 @@ static const struct advertise_configuration user_adv_conf = {
 #define USER_ADVERTISE_SCAN_RESPONSE_DATA_LEN (sizeof(USER_ADVERTISE_SCAN_RESPONSE_DATA)-1)
 
 /**
- ****************************************************************************************
- *
- * Device name.
- *
- * - If there is space left in the advertising or scan response data the device name is
- *   copied there. The device name can be anytime read by a connected peer, if the
- *   application supports it.
- * - The Bluetooth device name can be up to 248 bytes.
- *
- ****************************************************************************************
- */
+* Device name.
+* - If there is space left in the advertising or scan response data the device name is
+*   copied there. The device name can be anytime read by a connected peer, if the
+*   application supports it.
+* - The Bluetooth device name can be up to 248 bytes.
+*/
 #define USER_DEVICE_NAME    "DA14585 RCU"
 
 /// Device name length
@@ -197,29 +178,29 @@ static const struct advertise_configuration user_adv_conf = {
 /// Maximum MTU size
 #define MAX_MTU_SIZE 133
 
+
+#define USER_CFG_ADDRESS_MODE       APP_CFG_ADDR_PUB
+
 /**
- ****************************************************************************************
- *
- * GAPM configuration
- *
- ****************************************************************************************
- */
+****************************************************************************************
+* GAPM configuration
+****************************************************************************************
+*/
 static const struct gapm_configuration user_gapm_conf = {
     /// Device Role: Central, Peripheral, Observer, Broadcaster or All roles. (@see enum gap_role)
     .role = GAP_ROLE_PERIPHERAL,
+
     /// Maximal MTU
     .max_mtu = MAX_MTU_SIZE,
+
     /// Device Address Type
     /// - GAPM_CFG_ADDR_PUBLIC: Device Address is a Public Static address
     /// - GAPM_CFG_ADDR_PRIVATE: Device Address is a Private Static address
     /// - GAPM_CFG_ADDR_PRIVACY: Device Address generated using Privacy feature
     .addr_type = GAPM_CFG_ADDR_PUBLIC,
+    // .addr_type = APP_CFG_ADDR_TYPE(USER_CFG_ADDRESS_MODE),
 
-    /***********************
-     * Privacy configuration
-     ***********************
-     */
-
+    // ***** Privacy configuration *****
     /// Duration before regenerate device address when privacy is enabled.
     .renew_dur = 0,
     /// Device IRK used for resolvable random BD address generation (LSB first)
@@ -266,11 +247,12 @@ static const struct gapm_configuration user_gapm_conf = {
     .max_txtime = (CFG_MAX_TX_PACKET_LENGTH+11+3)*8,
 };
 
+
+
+
 /**
  ****************************************************************************************
- *
  * Parameter update configuration
- *
  ****************************************************************************************
  */
 /// Connection interval minimum measured in ble double slots (1.25ms)
@@ -312,13 +294,21 @@ static const struct connection_param_configuration user_connection_param_conf = 
     .ce_len_max = MS_TO_DOUBLESLOTS(0),
 };
 
+// static const struct connection_param_configuration user_connection_param_conf = {
+//     .intv_min = MS_TO_DOUBLESLOTS(10),
+//     .intv_max = MS_TO_DOUBLESLOTS(20),
+//     .latency = 0,         // Latency measured in connection events
+//     .time_out = MS_TO_TIMERUNITS(1250),
+//     .ce_len_min = MS_TO_DOUBLESLOTS(0),
+//     .ce_len_max = MS_TO_DOUBLESLOTS(0),
+// };
+
+
+
+
 /**
- ****************************************************************************************
- *
- * Default handlers configuration
- *
- ****************************************************************************************
- */
+* Default handlers configuration
+*/
 static const struct default_handlers_configuration  user_default_hnd_conf = {
     /// Configure the advertise operation used by the default handlers
     /// Possible values:
@@ -329,7 +319,8 @@ static const struct default_handlers_configuration  user_default_hnd_conf = {
     /// Configure the advertise period in case of DEF_ADV_WITH_TIMEOUT.
     /// It is measured in timer units (10ms). Use MS_TO_TIMERUNITS macro to convert
     /// from milliseconds (ms) to timer units.
-    .advertise_period = MS_TO_TIMERUNITS(10000),
+    .advertise_period = MS_TO_TIMERUNITS(10000),  // Default
+    // .advertise_period = MS_TO_TIMERUNITS(180000),
 
     /// Configure the security start operation of the default handlers
     /// if the security is enabled (CFG_APP_SECURITY)
@@ -337,72 +328,54 @@ static const struct default_handlers_configuration  user_default_hnd_conf = {
 };
 
 /**
- ****************************************************************************************
- *
- * Central configuration (not used by current example)
- *
- ****************************************************************************************
- */
+* Central configuration (not used by current example)
+*/
 static const struct central_configuration user_central_conf = {0};
 
+
 /**
- ****************************************************************************************
- *
- * Security related configuration
- *
- * Default configuration for no MITM.
- * When MITM is used, the values will be overridden in user_on_pairing_request()
- *
- ****************************************************************************************
- */
+* Security related configuration
+* Default configuration for no MITM.
+* When MITM is used, the values will be overridden in user_on_pairing_request()
+*/
 static const struct security_configuration user_security_conf = {
-    /**************************************************************************************
-     * IO capabilities (@see gap_io_cap)
-     *
-     * - GAP_IO_CAP_DISPLAY_ONLY          Display Only
-     * - GAP_IO_CAP_DISPLAY_YES_NO        Display Yes No
-     * - GAP_IO_CAP_KB_ONLY               Keyboard Only
-     * - GAP_IO_CAP_NO_INPUT_NO_OUTPUT    No Input No Output
-     * - GAP_IO_CAP_KB_DISPLAY            Keyboard Display
-     *
-     **************************************************************************************
-     */
+    /*
+    * IO capabilities (@see gap_io_cap)
+    * - GAP_IO_CAP_DISPLAY_ONLY          Display Only
+    * - GAP_IO_CAP_DISPLAY_YES_NO        Display Yes No
+    * - GAP_IO_CAP_KB_ONLY               Keyboard Only
+    * - GAP_IO_CAP_NO_INPUT_NO_OUTPUT    No Input No Output
+    * - GAP_IO_CAP_KB_DISPLAY            Keyboard Display
+    */
     .iocap          = GAP_IO_CAP_NO_INPUT_NO_OUTPUT,
 
     /**************************************************************************************
      * OOB information (@see gap_oob)
-     *
      * - GAP_OOB_AUTH_DATA_NOT_PRESENT    OOB Data not present
      * - GAP_OOB_AUTH_DATA_PRESENT        OOB data present
-     *
      **************************************************************************************
      */
     .oob            = GAP_OOB_AUTH_DATA_NOT_PRESENT,
 
     /**************************************************************************************
      * Authentication (@see gap_auth)
-     *
      * - GAP_AUTH_REQ_NO_MITM_NO_BOND     No MITM No Bonding
      * - GAP_AUTH_REQ_NO_MITM_BOND        No MITM Bonding
      * - GAP_AUTH_REQ_MITM_NO_BOND        MITM No Bonding
      * - GAP_AUTH_REQ_MITM_BOND           MITM and Bonding
-     *
      **************************************************************************************
      */
     .auth           = GAP_AUTH_REQ_NO_MITM_BOND,
 
-    /**************************************************************************************
-     * Device security requirements (minimum security level). (@see gap_sec_req)
-     *
-     * - GAP_NO_SEC                       No security (no authentication and encryption)
-     * - GAP_SEC1_NOAUTH_PAIR_ENC         Unauthenticated pairing with encryption
-     * - GAP_SEC1_AUTH_PAIR_ENC           Authenticated pairing with encryption
-     * - GAP_SEC2_NOAUTH_DATA_SGN         Unauthenticated pairing with data signing
-     * - GAP_SEC2_AUTH_DATA_SGN           Authentication pairing with data signing
-     * - GAP_SEC_UNDEFINED                Unrecognised security
-     *
-     **************************************************************************************
-     */
+    /**
+    * Device security requirements (minimum security level). (@see gap_sec_req)
+    * - GAP_NO_SEC                       No security (no authentication and encryption)
+    * - GAP_SEC1_NOAUTH_PAIR_ENC         Unauthenticated pairing with encryption
+    * - GAP_SEC1_AUTH_PAIR_ENC           Authenticated pairing with encryption
+    * - GAP_SEC2_NOAUTH_DATA_SGN         Unauthenticated pairing with data signing
+    * - GAP_SEC2_AUTH_DATA_SGN           Authentication pairing with data signing
+    * - GAP_SEC_UNDEFINED                Unrecognised security
+    */
     .sec_req        = GAP_SEC1_NOAUTH_PAIR_ENC,
 
      /// Encryption key size (7 to 16) - LTK Key Size
@@ -440,7 +413,7 @@ static const struct security_configuration user_security_conf = {
  * \brief Set the pattery polling period in msec
  ******************************************************************************
  */
-#define BATTERY_LEVEL_POLLING_PERIOD 10000
+#define BATTERY_LEVEL_POLLING_PERIOD  10000
 
 /**
  ******************************************************************************
@@ -450,33 +423,27 @@ static const struct security_configuration user_security_conf = {
 #define USE_ONE_BAS_INSTANCE
 
 /*
- ******************************************************************************
- *
- * Module configuration
- *
- ******************************************************************************
- */
+******************************************************************************
+* Module configuration
+******************************************************************************
+*/
 
-/**
- ******************************************************************************
- * \brief Define HAS_KBD to use the keyboard matrix scanner
- ******************************************************************************
- */
-#define HAS_KBD
+/* \brief Define HAS_KBD to use the keyboard matrix scanner  */
+#define HAS_KBD  // DO NOT CHANGE
     
 /*
- ******************************************************************************
- * \brief Define HAS_GPIO_KEYS to use keys connected to GPIO pins
- ******************************************************************************
- */
+******************************************************************************
+* \brief Define HAS_GPIO_KEYS to use keys connected to GPIO pins
+******************************************************************************
+*/
 #undef HAS_GPIO_KEYS
     
 /**
- ******************************************************************************
- * \brief Define CFG_APP_AUDIO to use the audio features
- * Audio configuration is defined in app_audio_config.h
- ******************************************************************************
- */
+******************************************************************************
+* \brief Define CFG_APP_AUDIO to use the audio features
+* Audio configuration is defined in app_audio_config.h
+******************************************************************************
+*/
 #define HAS_AUDIO
 
 #ifdef HAS_AUDIO
@@ -506,7 +473,6 @@ static const struct security_configuration user_security_conf = {
      **************************************************************************
      */
     #define AUDIO_WAIT_FOR_HOST_START_CMD
-
 #endif
 
 /**
@@ -584,22 +550,20 @@ static const struct security_configuration user_security_conf = {
 
 #ifdef HAS_AUDIO
     /**
- ******************************************************************************
-     * \brief Define HAS_BLE_STREAM to enable the BLE stream
- * Stream configuration is defined in app_stream_config.h
- ******************************************************************************
- */
+    * \brief Define HAS_BLE_STREAM to enable the BLE stream
+    * Stream configuration is defined in app_stream_config.h
+    */
     #define HAS_BLE_STREAM
 #endif
 
 
 #if defined(HAS_KBD) || defined(HAS_TOUCHPAD_SLIDER)
     /**
- ******************************************************************************
-     * \brief Define HAS_HID_REPORT to enable the HID report FIFO. Normal and 
-     *        extended keyboard reports can be added to the report FIFO
-     ******************************************************************************
-     */
+    ******************************************************************************
+    * \brief Define HAS_HID_REPORT to enable the HID report FIFO. Normal and 
+    *        extended keyboard reports can be added to the report FIFO
+    ******************************************************************************
+    */
     #define HAS_HID_REPORT
 #endif
 
@@ -638,11 +602,11 @@ static const struct security_configuration user_security_conf = {
 #if defined(HAS_KBD) || defined(HAS_TOUCHPAD_TRACKPAD) || defined(HAS_TOUCHPAD_SLIDER)\
     || defined(HAS_GPIO_KEYS)
     /**
- ******************************************************************************
-     * \brief Define HAS_WKUP to enable wakeup controller sharing between various 
-     *        modules
- ******************************************************************************
- */
+    ******************************************************************************
+    * \brief Define HAS_WKUP to enable wakeup controller sharing between various 
+    *        modules
+    ******************************************************************************
+    */
     #define HAS_WKUP
 #endif    
 
@@ -667,12 +631,13 @@ static const struct security_configuration user_security_conf = {
 #endif    
 
 /**
- ******************************************************************************
- * \brief Define NORMALLY_CONNECTABLE to force the device to always advertise 
- * when not connected to a BLE host
- ******************************************************************************
- */
+******************************************************************************
+* \brief Define NORMALLY_CONNECTABLE to force the device to always advertise 
+* when not connected to a BLE host
+******************************************************************************
+*/
 #undef NORMALLY_CONNECTABLE
+// #define NORMALLY_CONNECTABLE
 
 /**
  ******************************************************************************

@@ -78,11 +78,7 @@
  ****************************************************************************************
  */
 
-/*
- * GLOBAL VARIABLE DEFINITIONS
- ****************************************************************************************
- */
-
+// GLOBAL VARIABLE DEFINITIONS
 extern struct arch_sleep_env_tag sleep_env;
 
 extern last_ble_evt arch_rwble_last_event;
@@ -163,18 +159,14 @@ int main(void)
 {
     sleep_mode_t sleep_mode;
     
-    // initialize retention mode
+    // Initialize retention mode
     init_retention_mode();
 
-    //global initialise
+    // Global initialise
     system_init();
 
-    /*
-     ************************************************************************************
-     * Platform initialization
-     ************************************************************************************
-     */
-
+    
+		// Platform Initialization
     while(1)
     {
         do {
@@ -209,7 +201,8 @@ int main(void)
                 sleep_mode = mode_active;
             }                
             
-            if(arch_printf_transfer_pending() == true) {
+            if(arch_printf_transfer_pending()==true)
+						{
                 sleep_mode = mode_active;
             }                
             
@@ -254,7 +247,8 @@ int main(void)
 #endif                
 #if defined(MEASURE_CPU_LOAD) && DEVELOPMENT_DEBUG
                     bool measure = false;
-                    if(GetBits16(CLK_RADIO_REG, BLE_ENABLE) != 0) {
+                    if(GetBits16(CLK_RADIO_REG, BLE_ENABLE) != 0)
+										{
                         measure = true;
                         cpu_load_active[cpu_load_index] = current - cpu_load_prev_timestamp;
                         cpu_load_prev_timestamp = current;
@@ -268,13 +262,16 @@ int main(void)
                         cpu_load_idle[cpu_load_index] = current - cpu_load_prev_timestamp;
                         cpu_load_prev_timestamp = current;
                         cpu_load_index++;
-                        if(cpu_load_index == SMOOTHING_FACTOR) {
+                        if(cpu_load_index == SMOOTHING_FACTOR)
+												{
                                 cpu_load_index = 0;
                         }
                         
-                        if(cpu_load_index == 0) {
+                        if(cpu_load_index == 0)
+												{
                             uint32_t idle=0, active=0;
-                            for(int i=1; i<SMOOTHING_FACTOR; i++) { // Drop the first sample
+                            for(int i=1; i<SMOOTHING_FACTOR; i++)
+														{ // Drop the first sample
                                 idle+= cpu_load_idle[i];
                                 active+= cpu_load_active[i];
                             }

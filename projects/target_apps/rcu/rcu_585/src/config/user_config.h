@@ -4,13 +4,6 @@
  * \file user_config.h
  *
  * \brief User configuration file.
- *
- * Copyright (C) 2017 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information  
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com>
- *
  ****************************************************************************************
  */
 
@@ -31,9 +24,9 @@
  */
  
 /*
- * INCLUDE FILES
- ****************************************************************************************
- */
+* INCLUDE FILES
+****************************************************************************************
+*/
 
 #include "app_user_config.h"
 #include "arch_api.h"

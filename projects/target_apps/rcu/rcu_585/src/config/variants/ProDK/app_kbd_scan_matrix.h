@@ -1,43 +1,26 @@
 /**
- ****************************************************************************************
- *
- * \file app_kbd_scan_matrix.h
- *
- * \brief HID Keyboard scan matrix.
- *
- * Copyright (C) 2017 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information  
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com>
- *
- ****************************************************************************************
- */
+* \file app_kbd_scan_matrix.h
+* \brief HID Keyboard scan matrix.
+*/
 
 #ifndef _APP_KBD_SCAN_MATRIX_H_
 #define _APP_KBD_SCAN_MATRIX_H_
 
 /**
- ****************************************************************************************
- * \brief Number of input pins used for key matrix columns
- ****************************************************************************************
- */
+* \brief Number of input pins used for key matrix columns
+*/
 #define KBD_NR_COLUMN_INPUTS     4
 
 /**
- ****************************************************************************************
- * \brief Number of output pins used for key matrix rows
- ****************************************************************************************
- */
+* \brief Number of output pins used for key matrix rows
+*/
 #define KBD_NR_ROW_OUTPUTS       4
 
 /**
- ****************************************************************************************
- * \brief Define the pins used for columns. Maximum number of columns supported is 16.
- *        If a column is not used set the corresponding port and pin to PORT_UNUSED
- *        and PIN_UNUSED respectively.
- ****************************************************************************************
- */
+* \brief Define the pins used for columns. Maximum number of columns supported is 16.
+*        If a column is not used set the corresponding port and pin to PORT_UNUSED
+*        and PIN_UNUSED respectively.
+*/
 #define COLUMN_INPUT_0_PORT		 2	
 #define COLUMN_INPUT_0_PIN		 8
                                  
@@ -51,12 +34,10 @@
 #define COLUMN_INPUT_3_PIN		 3
 
 /**
- ****************************************************************************************
- * \brief Define the pins used for rows. Maximum number of rows supported is 16.
- *        If a row is not used set the corresponding port and pin to PORT_UNUSED
- *        and PIN_UNUSED respectively.
- ****************************************************************************************
- */
+* \brief Define the pins used for rows. Maximum number of rows supported is 16.
+*        If a row is not used set the corresponding port and pin to PORT_UNUSED
+*        and PIN_UNUSED respectively.
+*/
 #define ROW_OUTPUT_0_PORT        2
 #define ROW_OUTPUT_0_PIN  	     7
                                 

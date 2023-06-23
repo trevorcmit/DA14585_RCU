@@ -1,18 +1,7 @@
 /**
- ****************************************************************************************
- *
- * \file app_kbd_matrix.h
- *
- * \brief HID Keyboard matrix.
- *
- * Copyright (C) 2017 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information  
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com>
- *
- ****************************************************************************************
- */
+* \file app_kbd_matrix.h
+* \brief HID Keyboard matrix.
+*/
 
 #ifndef _APP_KBD_MATRIX_H_
 #define _APP_KBD_MATRIX_H_
@@ -24,28 +13,21 @@
 #include <user_hogpd_config.h>
 
 /**
- ****************************************************************************************
- * \brief Enable multi-key combinations
- ****************************************************************************************
- */
+* \brief Enable multi-key combinations
+*/
 #define MULTI_KEY_COMBINATIONS_ON
 
 /**
- ****************************************************************************************
- * \brief Maximum number of keys for key combination (maximum value is 8)
- ****************************************************************************************
- */
+* \brief Maximum number of keys for key combination (maximum value is 8)
+*/
 #define MULTI_KEY_NUM_OF_KEYS       2      // maximum 8
 
 /**
- ****************************************************************************************
- * \brief Custom key definition. These keys are not treated as normal keys. No HID
- *        report is created. Instead kbd_params.notify_callback will be called when the
- *        corresponding key or key combinations is pressed. These definitions can be
- *        used to define keys in the key matrix or can be used in multi_key_combinations
- *        table definition.
- ****************************************************************************************
- */
+* \brief Custom key definition. These keys are not treated as normal keys. No HID report is
+*        created. Instead kbd_params.notify_callback will be called when the corresponding key 
+*        or key combinations is pressed. These definitions can be used to define keys in
+*        the key matrix or can be used in multi_key_combinations table table definition.
+*/
 
 enum custom_keys {
         CUSTOM_KEY_PAIR = 1,

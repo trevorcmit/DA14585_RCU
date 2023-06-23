@@ -1,30 +1,20 @@
 /**
- ****************************************************************************************
- *
- * \file spi_3wire.c
- *
- * \brief custom app 3-wire SPI low level driver.
- *
- * Copyright (C) 2017 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information  
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com>
- *
- ****************************************************************************************
- */
+****************************************************************************************
+* \file spi_3wire.c
+* \brief custom app 3-wire SPI low level driver.
+****************************************************************************************
+*/
 
 /**
- ****************************************************************************************
- * \addtogroup USER
- * \{
- * \addtogroup USER_DRIVERS
- * \{
- * \addtogroup SPI_3WIRE_DRV
- *
- * \{
- ****************************************************************************************
- */
+****************************************************************************************
+* \addtogroup USER
+* \{
+* \addtogroup USER_DRIVERS
+* \{
+* \addtogroup SPI_3WIRE_DRV
+* \{
+****************************************************************************************
+*/
  
 #include <stdint.h>
 #include "port_platform.h"
@@ -90,7 +80,7 @@ uint8_t read_from_3wire_SPI_register(uint8_t registerIndex, bool is_last_transac
     dataRead = do_transaction(0x0000);                              // read received byte
 	
     if(is_last_transaction)
-      GPIO_SetActive(cs.port, cs.pin);                              // set CS high 
+        GPIO_SetActive(cs.port, cs.pin);                              // set CS high 
     
     return dataRead;
 }   
@@ -106,21 +96,21 @@ void burst_write_to_3wire_SPI_register(uint8_t registerIndex)
 
 uint8_t burst_read_from_3wire_SPI_register(void)
 {
-   return do_transaction(0x0000);                             // read received byte
+    return do_transaction(0x0000);                             // read received byte
 }   
 
 void spi3wire_cs_high(void)
 {
-      GPIO_SetActive(cs.port, cs.pin);                              // set CS high 
+    GPIO_SetActive(cs.port, cs.pin);                              // set CS high 
 }
 
 void spi3wire_cs_low(void)
 {
-      GPIO_SetInactive(cs.port, cs.pin);                            // set CS low 
+    GPIO_SetInactive(cs.port, cs.pin);                            // set CS low 
 }
 
 /**
- * \}
- * \}
- * \}
- */
+* \}
+* \}
+* \}
+*/

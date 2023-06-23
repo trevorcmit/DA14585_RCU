@@ -1,18 +1,9 @@
 /**
- ****************************************************************************************
- *
- * \file user_rcu.c
- *
- * \brief RCU implementation.
- *
- * Copyright (C) 2017 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information  
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com>
- *
- ****************************************************************************************
- */
+****************************************************************************************
+* \file user_rcu.c
+* \brief RCU implementation
+****************************************************************************************
+*/
 
 /**
  ****************************************************************************************
@@ -149,7 +140,8 @@ uint8_t last_connection_idx __PORT_RETAINED;
 #ifdef HAS_PWR_MGR
 static void user_rcu_reset_inactivity(void)
 {
-    if(user_reset_inactivity_triggered == false) {
+    if(user_reset_inactivity_triggered == false)
+    {
         user_pwr_mgr_reset_inactivity();   
         user_reset_inactivity_triggered = true;
     }
@@ -162,16 +154,20 @@ static void user_rcu_reset_inactivity(void)
  */
 static void user_exchange_mtu(void)
 {
-    struct gattc_exc_mtu_cmd *pkt = KE_MSG_ALLOC(GATTC_EXC_MTU_CMD,
-                                                 KE_BUILD_ID(TASK_GATTC, app_env[last_connection_idx].conidx),
-                                                 TASK_APP, gattc_exc_mtu_cmd);
-    if (pkt) {
-#if (RWBLE_SW_VERSION_MAJOR >= 8)    
-        pkt->operation = GATTC_MTU_EXCH;
-#else
-        pkt->req_type = GATTC_MTU_EXCH;
-#endif
-        ke_msg_send(pkt);
+    struct gattc_exc_mtu_cmd *pkt = KE_MSG_ALLOC(
+        GATTC_EXC_MTU_CMD,
+        KE_BUILD_ID(TASK_GATTC, app_env[last_connection_idx].conidx),
+        TASK_APP, gattc_exc_mtu_cmd
+    );
+
+    if (pkt)
+    {
+        #if (RWBLE_SW_VERSION_MAJOR >= 8)    
+            pkt->operation = GATTC_MTU_EXCH;
+        #else
+            pkt->req_type = GATTC_MTU_EXCH;
+        #endif
+            ke_msg_send(pkt);
     }
 }
 
@@ -229,11 +225,8 @@ bool user_is_conn_upd_pending(void)
 #endif        
 }
 
-/*
- ****************************************************************************************
- * User application callback functions
- ****************************************************************************************
- */
+
+// User application callback functions
 
 #ifdef HAS_CONNECTION_FSM
 void user_on_update_params_rejected(const uint8_t status)
@@ -276,7 +269,8 @@ void user_on_update_params_complete(void)
 void user_on_set_dev_config_complete(void)
 {
     // Add the first required service in the database
-    if (app_db_init_start()) {
+    if (app_db_init_start())
+    {
         app_con_fsm_state_update(INIT_EVT);
     }
 }
@@ -306,7 +300,7 @@ void user_update_params_timer_cb(timer_hnd hnd)
 void user_app_adv_undirect_complete(uint8_t status)
 {
     // If advertising was canceled then update advertising data and start advertising again
-    if (status == GAP_ERR_CANCELED)
+    if (status==GAP_ERR_CANCELED)
     {
         app_easy_gap_undirected_advertise_start();
     }
@@ -381,9 +375,9 @@ void user_on_disconnect( struct gapc_disconnect_ind const *param )
     uint8_t state = ke_state_get(TASK_APP);
     
 #if (RWBLE_SW_VERSION_MAJOR >= 8)
-    if (state == APP_CONNECTED)
+    if (state==APP_CONNECTED)
 #else
-    if ((state == APP_CONNECTED) || (state == APP_PARAM_UPD) || (state == APP_SECURITY))
+    if ((state==APP_CONNECTED) || (state==APP_PARAM_UPD) || (state==APP_SECURITY))
 #endif        
     {
         skip_slave_latency_flag = false;  
@@ -455,30 +449,26 @@ void user_on_db_init_complete(void)
 }
 
 #if (BLE_SPOTA_RECEIVER) || (BLE_SUOTA_RECEIVER)
-/*
- ****************************************************************************************
- * SUOTA Functions
- ****************************************************************************************
- */
+    // SUOTA Functions
 
-/**
- ****************************************************************************************
- * @brief Prepare system for SUOTA
- ****************************************************************************************
- */
-static void user_suota_started(void)
-{
-    USER_LEDS_RAMP(led_suota_start_param);
-#ifdef HAS_PWR_MGR    
-    user_pwr_mgr_disable_inactivity();
-#endif
-    
-    skip_slave_latency_flag = true;
-    user_suota_in_progress = true;
-    // Configure a timeout timer. If there is no SUOTA action during this time SUOTA will 
-    // be stopped.
-    port_timer_set(APP_SUOTA_TIMEOUT_TIMER, TASK_APP, 2000);
-}
+    /**
+     ****************************************************************************************
+    * @brief Prepare system for SUOTA
+    ****************************************************************************************
+    */
+    static void user_suota_started(void)
+    {
+        USER_LEDS_RAMP(led_suota_start_param);
+    #ifdef HAS_PWR_MGR    
+        user_pwr_mgr_disable_inactivity();
+    #endif
+        
+        skip_slave_latency_flag = true;
+        user_suota_in_progress = true;
+        // Configure a timeout timer. If there is no SUOTA action during this time SUOTA will 
+        // be stopped.
+        port_timer_set(APP_SUOTA_TIMEOUT_TIMER, TASK_APP, 2000);
+    }
 
 /**
  ****************************************************************************************
@@ -556,8 +546,10 @@ void user_on_data_length_change(struct gapc_le_pkt_size_ind *ind)
 }
 #endif
 
-void user_process_catch_rest(ke_msg_id_t const msgid, void const *param,
-                             ke_task_id_t const dest_id, ke_task_id_t const src_id) 
+void user_process_catch_rest(
+    ke_msg_id_t const msgid, void const *param,
+    ke_task_id_t const dest_id, ke_task_id_t const src_id
+) 
 {
 #if (BLE_HID_DEVICE)
     // Process the messages sent to HOGPD
@@ -597,18 +589,21 @@ void user_process_catch_rest(ke_msg_id_t const msgid, void const *param,
 #endif    
     
 #ifdef HAS_CONNECTION_FSM        
-    if(msgid == GAPC_ENCRYPT_IND) {
+    if(msgid == GAPC_ENCRYPT_IND)
+    {
         user_on_encrypt_ind(((struct gapc_encrypt_ind *)param)->auth);
         // Do not return here. Let port_security_process_handler() handle this message as well
     }
     
     // Process the messages exchanged during pairing
-    if(port_security_process_handler(msgid, param, KE_IDX_GET(src_id)) == PR_EVENT_HANDLED) {
+    if(port_security_process_handler(msgid, param, KE_IDX_GET(src_id)) == PR_EVENT_HANDLED)
+    {
         return;
     }
 
     // Process the messages needed by Connection FSM
-    if(port_con_fsm_process_handler(msgid, param) == PR_EVENT_HANDLED) {
+    if(port_con_fsm_process_handler(msgid, param) == PR_EVENT_HANDLED)
+    {
         return;
     }
 #endif    
@@ -621,7 +616,8 @@ void user_action_triggered(void)
     // Notify the connection FSM to start advertise if required
     if (app_con_fsm_get_state() == IDLE_ST) {
         app_con_fsm_state_update(USER_EVT);
-    } else {
+    } 
+    else {
         user_sync_key_press_evt = true; // synchronize the call to app_con_fsm_state_update(USER_EVT);
     }
 #endif
@@ -704,7 +700,6 @@ arch_main_loop_callback_ret_t user_on_ble_powered(void)
     // Synchronize with the BLE here! The time window of requesting a packet trm at the upcoming
     // anchor point is from the CSCNT event until the FINEGTIM event. If you pass the FINEGTIM
     // event then the packet will be sent at the next anchor point!
-    //
     // Note that this synchronization is only possible in sleep modes!
 
 	arch_main_loop_callback_ret_t ret;
@@ -733,7 +728,7 @@ arch_main_loop_callback_ret_t user_on_ble_powered(void)
     }
 #endif
             
-    if(ret == KEEP_POWERED) {
+    if (ret == KEEP_POWERED) {
         wdg_reload(WATCHDOG_DEFAULT_PERIOD);
     }
     
@@ -761,8 +756,6 @@ arch_main_loop_callback_ret_t user_on_system_powered(void)
             ret = arch_ble_force_wakeup() ? KEEP_POWERED : GOTO_SLEEP;
 #if defined(HAS_MOUSE) || defined(HAS_TOUCHPAD_TRACKPAD)                        
             if(ret == KEEP_POWERED) {
-//                extern bool mouse_cpt_event;
-//                mouse_cpt_event = true; // Force sending the first report
                 user_mouse_send_report(false); // send the first report
             }
 #endif       
@@ -775,7 +768,7 @@ arch_main_loop_callback_ret_t user_on_system_powered(void)
     if(ret == KEEP_POWERED) {
         wdg_reload(WATCHDOG_DEFAULT_PERIOD);
     }
-       
+    
     return ret;
 }
 
@@ -822,19 +815,14 @@ sleep_mode_t user_validate_sleep(sleep_mode_t sleep_mode)
 
 void user_going_to_sleep(sleep_mode_t sleep_mode)
 {
-    if ( sleep_mode == mode_idle)  {
-        /*
-        * Use a lower clock to preserve power (i.e. 2MHz)
-        */
+    if ( sleep_mode == mode_idle)
+    {
         syscntl_use_lowest_amba_clocks();
     }
 }
 
 void user_resume_from_sleep(void)
 {
-    /*
-     * Restore clock
-     */
     syscntl_use_highest_amba_clocks();    
 }    
 
