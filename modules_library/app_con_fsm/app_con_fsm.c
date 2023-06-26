@@ -1,5 +1,4 @@
-/**
- *****************************************************************************************
+/******************************************************************************************
  *
  * \file app_con_fsm.c
  *
@@ -14,8 +13,7 @@
  *****************************************************************************************
  */
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \addtogroup APP_UTILS
  * \{
  * \addtogroup BONDING
@@ -152,15 +150,13 @@ __attribute__((unused)) static const char events_names[][21] = {
 #define CON_FSM_WARNINGS
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief       App Con Fsm callback indication API
  *
  * \details     Used to send an indication from the app_con_fsm to the user application
  *
  * \param[in]   type App Con Fsm indication type
- ****************************************************************************************
- */
+******************************************************************************************/
 static inline void app_con_fsm_call_callback(enum con_fsm_state_update_callback_type type)
 {
         if (con_fsm_params.state_update_callback) {
@@ -169,16 +165,14 @@ static inline void app_con_fsm_call_callback(enum con_fsm_state_update_callback_
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief       Start a general purpose subtimer.
  *
  * \details     The APP_CON_FSM_TIMER is used to run three separate timer types
  *              This means that only one subtimer can be active at a time
  *
  * \param[in]       timerType The desired subtimer to start
- ****************************************************************************************
- */
+******************************************************************************************/
 static void app_con_fsm_start_gp_timer(con_fsm_timer_type_t timerType)
 {
     // Error if we are trying to start a timer while another one is running
@@ -215,13 +209,11 @@ static void app_con_fsm_start_gp_timer(con_fsm_timer_type_t timerType)
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief   Requests update of connection params
  *          After connection and, optionally, pairing is completed, this function 
  *          is called to (optionally) modify the connection parameters.
- ****************************************************************************************
- */
+******************************************************************************************/
 static void app_con_fsm_param_update(void)
 {
         if (con_fsm_params.use_pref_conn_params) {
@@ -236,11 +228,9 @@ static void app_con_fsm_param_update(void)
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief      Starts the address resolving
- ****************************************************************************************
- */
+******************************************************************************************/
 static void app_con_fsm_resolve_address(void)
 {
         if(app_con_fsm_funcs.con_fsm_resolve_address) {
@@ -252,11 +242,9 @@ static void app_con_fsm_resolve_address(void)
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief      Sends a disconnect request
- ****************************************************************************************
- */
+******************************************************************************************/
 static void app_con_fsm_disconnect(void)
 {
         if(app_con_fsm_funcs.con_fsm_disconnect) {
@@ -268,11 +256,9 @@ static void app_con_fsm_disconnect(void)
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief      Starts the security procedure during a connection
- ****************************************************************************************
- */
+******************************************************************************************/
 static void app_con_fsm_start_security(void)
 {
         if(app_con_fsm_funcs.con_fsm_start_security) {
@@ -284,15 +270,13 @@ static void app_con_fsm_start_security(void)
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief      Sends a connection confirmation
  *
  * \param[in]  auth the authorization type as seen in the enum gap_auth
  *
  * \return     uint8_t The peer's address type
- ****************************************************************************************
- */
+******************************************************************************************/
 static void app_con_fsm_connect_confirm(uint8_t auth)
 {
         if(app_con_fsm_funcs.con_fsm_connect_confirm) {
@@ -305,14 +289,12 @@ static void app_con_fsm_connect_confirm(uint8_t auth)
 
 
 #ifdef CON_FSM_WARNINGS
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief      
  *
  * \param[in]  thystate
  * \param[in]  thyevent
- ****************************************************************************************
- */
+******************************************************************************************/
 static void dbg_warning_con_fsm(main_fsm_states thystate, enum main_fsm_events thyevent)
 {
     dbg_printf(DBG_CONN_LVL, "[UNEXP EVT %s ON %s state]", events_names[thyevent], state_names[thystate] );
@@ -320,8 +302,7 @@ static void dbg_warning_con_fsm(main_fsm_states thystate, enum main_fsm_events t
 #endif
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief      Asynchronous general purpose (non-ble) task setup function
  *
  * \details    Used to set up a task to be executed asynchronously
@@ -329,16 +310,14 @@ static void dbg_warning_con_fsm(main_fsm_states thystate, enum main_fsm_events t
  * \param[in]      taskbm Specifies which task to set up
  *             ASYNC_TASK_WRITE_BONDING_DATA: Write/Save the current bonding data
  *             ASYNC_TASK_ERASE_BONDING_DATA: Erase All bonding data
- ****************************************************************************************
- */
+******************************************************************************************/
 static void app_con_fsm_set_async_task(uint8_t taskbm)
 {
     non_ble_async_tasks |= taskbm;
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief      Asynchronous BLE task setup function
  *
  * \details    Sets up a BLE task to be executed asynchronously
@@ -352,8 +331,7 @@ static void app_con_fsm_set_async_task(uint8_t taskbm)
  *
  *             BLE_ASYNC_TASK_ENTERING_PASSCODE: Task to asynchronously inform the app_con_fsm
  *             about password entering (used when mitm is enabled)
- ****************************************************************************************
- */
+******************************************************************************************/
 static void app_con_fsm_set_ble_async_task(uint8_t taskbm)
 {
     ble_async_tasks |= taskbm;
@@ -388,13 +366,11 @@ void app_con_fsm_gp_timer_expired(void)
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief       Stop a general purpose subtimer.
  *
  * \param[in]       timerType The desired subtimer to stop
- ****************************************************************************************
- */
+******************************************************************************************/
 static void app_con_fsm_stop_gp_timer(con_fsm_timer_type_t timerType)
 {
     // If the timer is already stopped then return immediately
@@ -426,14 +402,12 @@ static void app_con_fsm_stop_gp_timer(con_fsm_timer_type_t timerType)
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief       Disconnect for a Host switch.
  *
  * \details     Called on a Host switch to disconnect from the current Host and
  *              start the "switching period" of con_fsm_params.alt_pair_disconn_time
- ****************************************************************************************
- */
+******************************************************************************************/
 static void app_alt_pair_disconnect(void)
 {
         if (port_alt_pair_is_bonded() && (multi_bond_enabled == MULTI_BOND_REJECT_LAST ||
@@ -455,12 +429,10 @@ static void app_alt_pair_disconnect(void)
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief       Sends an indication from the app_con_fsm to the user application that
  *              the con fsm is entering IDLE state
- ****************************************************************************************
- */
+******************************************************************************************/
 
 static void indicate_disconnecting_idle()
 {
@@ -469,40 +441,34 @@ static void indicate_disconnecting_idle()
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief Changes/Enqueues a desired advertising type. Used in cases where the user wants to
  *        enqueue an advertising state, after an event occurs
  *
  * \param[in] advType The advertising type to be enqueued
- ****************************************************************************************
- */
+******************************************************************************************/
 static void app_con_fsm_enqueue_adv_type(app_con_fsm_adv_type_t advType)
 {
     app_con_fsm_last_queued_adv = advType;
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief Returns the last enqueued advertising type
  *
  * \return The last enqueued advertising type
- ****************************************************************************************
- */
+******************************************************************************************/
 static app_con_fsm_adv_type_t app_con_fsm_get_last_queued_adv_type(void)
 {
     return app_con_fsm_last_queued_adv;
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief Helper function that starts a desired type of advertising
  *
  * \param[in] advType The advertising type we want to start
- ****************************************************************************************
- */
+******************************************************************************************/
 static void app_con_fsm_start_advertise(app_con_fsm_adv_type_t advType)
 {
     enum adv_filter_policy undFilterP = ADV_ALLOW_SCAN_ANY_CON_ANY;
@@ -543,22 +509,18 @@ static void app_con_fsm_start_advertise(app_con_fsm_adv_type_t advType)
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief Helper function that stops advertising (if active)
- ****************************************************************************************
- */
+******************************************************************************************/
 static void app_con_fsm_stop_advertise()
 {
         app_adv_fsm_adv_stop();
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief Checks if host can be accepted according to the given RSSI threshold
  * \return bool true if host can be accepted, false otherwise
- ****************************************************************************************
- */
+******************************************************************************************/
 static bool app_con_fsm_smart_pairing_is_host_accepted(void)
 {
         if(con_fsm_params.has_smart_rssi_pairing == true && app_con_fsm_funcs.con_fsm_get_rssi) {
@@ -571,14 +533,12 @@ static bool app_con_fsm_smart_pairing_is_host_accepted(void)
         }
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief       Idle state common event handling function
  *
  * \details 	Checks based on the current pairing information if directed advertising 
  *              is permitted
- ****************************************************************************************
- */
+******************************************************************************************/
 static void idle_state_common_handler()
 {
         if (con_fsm_params.has_nv_rom) {
@@ -620,8 +580,7 @@ static void idle_state_common_handler()
         }
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief IDLE state handler
  *
  * \details Handles any incoming events while the connection FSM is in IDLE state
@@ -629,8 +588,7 @@ static void idle_state_common_handler()
  * \param[in] evt The event to be processed
  *
  * \return main_fsm_states The next state after the event has been handled
- ****************************************************************************************
- */
+******************************************************************************************/
 static main_fsm_states handle_idle_state(enum main_fsm_events evt)
 {
         // Each time we enter idle state
@@ -709,8 +667,7 @@ static main_fsm_states handle_idle_state(enum main_fsm_events evt)
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief ADVERTISING_ST state handler 
  *
  * \details Handles any incoming events while the connection FSM is in ADVERTISING state
@@ -718,8 +675,7 @@ static main_fsm_states handle_idle_state(enum main_fsm_events evt)
  * \param[in] evt The event to be processed
  *
  * \return main_fsm_states The next state after the event has been handled
- ****************************************************************************************
- */
+******************************************************************************************/
 static main_fsm_states handle_advertising_state (enum main_fsm_events evt)
 {
     switch (evt)
@@ -809,13 +765,11 @@ static main_fsm_states handle_advertising_state (enum main_fsm_events evt)
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief Connection in progress state common handler
  *
  * \details Common event handler while being in connection in progress state
- ****************************************************************************************
- */
+******************************************************************************************/
 static void conn_in_progr_common_evt(void)
 {
         dbg_puts(DBG_CONN_LVL, "[(-) ENC timer]");
@@ -823,8 +777,7 @@ static void conn_in_progr_common_evt(void)
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief CONNECTION_IN_PROGRESS_ST state pairing request event handler
  *
  * \details While in CONNECTION_IN_PROGRESS_ST state this function handles any incoming
@@ -832,8 +785,7 @@ static void conn_in_progr_common_evt(void)
  * and sends a pairing response accordingly
  *
  * \return true if pairing request was accepted, false otherwise
- ****************************************************************************************
- */
+******************************************************************************************/
 static bool connection_in_progress_is_pairing_req_accepted(void)
 {
         // If the SMART RSSI PAIRING feature is enabled
@@ -875,15 +827,13 @@ static bool connection_in_progress_is_pairing_req_accepted(void)
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief Connection in progress state CONN_CMP_EVT handler
  *
  * \details While in CONNECTION_IN_PROGRESS_ST this function handles any incoming connection
  * completion events (CONN_CMP_EVT) and sends a CONNECTED indication to the user application
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 static void connection_in_progress_conn_cmp_evt(void)
 {
     if (con_fsm_params.has_multi_bond) {
@@ -926,8 +876,7 @@ static void connection_in_progress_conn_cmp_evt(void)
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief CONNECTION_IN_PROGRESS_ST state handler 
  *
  * \details Handles any incoming events while the connection FSM is in 
@@ -936,8 +885,7 @@ static void connection_in_progress_conn_cmp_evt(void)
  * \param[in] evt The event to be processed
  *
  * \return main_fsm_states The next state after the event has been handled
- ****************************************************************************************
- */
+******************************************************************************************/
 static main_fsm_states handle_connection_in_progress_state(enum main_fsm_events evt)
 {
         if(evt != ADV_COMPLETED_EVT && evt!= CONN_UPD_RESP_EVT
@@ -1095,13 +1043,11 @@ static main_fsm_states handle_connection_in_progress_state(enum main_fsm_events 
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief CONNECTED_PAIRING_ST common event handler
  *
  * \details Handles common events while in CONNECTED_PAIRING_ST state 
- ****************************************************************************************
- */
+******************************************************************************************/
 static void connected_pairing_state_common_evt(void)
 {
     if (con_fsm_params.has_mitm && con_fsm_params.has_passcode_timeout) {
@@ -1111,13 +1057,11 @@ static void connected_pairing_state_common_evt(void)
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief CONNECTED_PAIRING_ST pass key event handler
  *
  * \details Handles a PASSKEY_ENTERED event while in CONNECTED_PAIRING_ST state 
- ****************************************************************************************
- */
+******************************************************************************************/
 static void connected_pairing_state_passkey_entered_evt(void)
 {
         if (con_fsm_params.has_passcode_timeout) {
@@ -1127,16 +1071,14 @@ static void connected_pairing_state_passkey_entered_evt(void)
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief CONNECTED_PAIRING_ST connection completion event host checking
  *
  * \details Checks a connected host when being in CONNECTED_PAIRING_ST state  
  * and a CONN_CMP_EVT event occurs
  *
  * \return true if host is accepted, false otherwise
- ****************************************************************************************
- */
+******************************************************************************************/
 static bool connected_pairing_state_conn_cmp_evt_check_host(void)
 {
         app_con_fsm_call_callback(INDICATE_PAIRING_COMPLETED);
@@ -1164,14 +1106,12 @@ static bool connected_pairing_state_conn_cmp_evt_check_host(void)
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief CONNECTED_PAIRING_ST connection completion event handler
  *
  * \details Called on a CONN_CMP_EVT (while in CONNECTED_PAIRING_ST) to handle the accepted
  *  host
- ****************************************************************************************
- */
+******************************************************************************************/
 static void connected_pairing_state_conn_cmp_evt(void)
 {
         dev_bdaddr = alt_dev_bdaddr;
@@ -1216,8 +1156,7 @@ static void connected_pairing_state_conn_cmp_evt(void)
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief CONNECTED_PAIRING_ST state handler 
  *
  * \details Handles any incoming events while the connection FSM is in 
@@ -1226,8 +1165,7 @@ static void connected_pairing_state_conn_cmp_evt(void)
  * \param[in] evt The event to be processed
  *
  * \return main_fsm_states The next state after the event has been handled
- ****************************************************************************************
- */
+******************************************************************************************/
 static main_fsm_states handle_connected_pairing_state(enum main_fsm_events evt)
 {
         connected_pairing_state_common_evt();
@@ -1361,13 +1299,11 @@ static main_fsm_states handle_connected_pairing_state(enum main_fsm_events evt)
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief CONNECTED_ST state param update timeout event handler
  *
  * \details Handles a PARAM_UPD_TIMEOUT_EVT while in CONNECTED_ST
- ****************************************************************************************
- */
+******************************************************************************************/
 static void connected_state_param_upd_timeout_evt(void)
 {
     if (con_fsm_params.use_pref_conn_params) {
@@ -1382,13 +1318,11 @@ static void connected_state_param_upd_timeout_evt(void)
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief CONNECTED_ST state power off event handler
  *
  * \details Handles a POWEROFF_EVT while in CONNECTED_ST
- ****************************************************************************************
- */
+******************************************************************************************/
 static void connected_state_poweroff_evt(void)
 {
         dbg_puts(DBG_CONN_LVL, "[Disconnect due to poweroff]");
@@ -1412,8 +1346,7 @@ static void connected_state_poweroff_evt(void)
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief CONNECTED_ST pairing request event handler
  *
  * \details While in CONNECTED_ST state this function handles any incoming pairing
@@ -1421,8 +1354,7 @@ static void connected_state_poweroff_evt(void)
  * a pairing response accordingly
  *
  * \return bool true if pairing request was accepted, false otherwise
- ****************************************************************************************
- */
+******************************************************************************************/
 static bool connected_state_pairing_req_evt_is_accepted(void)
 {
     dbg_puts(DBG_CONN_LVL, "    GAPC_PAIRING_REQ ind\r\n");
@@ -1463,8 +1395,7 @@ static bool connected_state_pairing_req_evt_is_accepted(void)
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief CONNECTED_ST state handler 
  *
  * \details Handles any incoming events while the connection FSM is in CONNECTED_ST state
@@ -1472,8 +1403,7 @@ static bool connected_state_pairing_req_evt_is_accepted(void)
  * \param[in] evt The event to be processed
  *
  * \return main_fsm_states The next state after the event has been handled
- ****************************************************************************************
- */
+******************************************************************************************/
 static main_fsm_states handle_connected_state(enum main_fsm_events evt)
 {
         switch (evt) {
@@ -1606,8 +1536,7 @@ static main_fsm_states handle_connected_state(enum main_fsm_events evt)
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief POWEROFF_ST state handler 
  *
  * \details Handles any incoming events while the connection FSM is in POWEROFF_ST state
@@ -1615,8 +1544,7 @@ static main_fsm_states handle_connected_state(enum main_fsm_events evt)
  * \param[in] evt The event to be processed
  *
  * \return main_fsm_states The next state after the event has been handled
- ****************************************************************************************
- */
+******************************************************************************************/
 static main_fsm_states handle_poweroff_state(enum main_fsm_events evt)
 {
         switch (evt) {
@@ -1680,8 +1608,7 @@ static main_fsm_states handle_poweroff_state(enum main_fsm_events evt)
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief WAITING_DISCONNECTION_AFTER_POWEROFF state handler 
  *
  * \details Handles any incoming events while the connection FSM is in 
@@ -1690,8 +1617,7 @@ static main_fsm_states handle_poweroff_state(enum main_fsm_events evt)
  * \param[in] evt The event to be processed
  *
  * \return main_fsm_states The next state after the event has been handled
- ****************************************************************************************
- */
+******************************************************************************************/
 static main_fsm_states handle_waiting_disconnection_after_poweroff_state(enum main_fsm_events evt)
 {
     switch(evt)
@@ -1729,8 +1655,7 @@ static main_fsm_states handle_waiting_disconnection_after_poweroff_state(enum ma
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief DISCONNECTED_INIT_ST state handler 
  *
  * \details Handles any incoming events while the connection FSM is in 
@@ -1739,8 +1664,7 @@ static main_fsm_states handle_waiting_disconnection_after_poweroff_state(enum ma
  * \param[in] evt The event to be processed
  *
  * \return main_fsm_states The next state after the event has been handled
- ****************************************************************************************
- */
+******************************************************************************************/
 static  main_fsm_states handle_disconnected_init_state(enum main_fsm_events evt)
 {
         switch (evt) {
@@ -1893,15 +1817,13 @@ void app_con_fsm_reset_bonding_data(void)
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief   Check if connection to host can be accepted.
  *
  * \param[in] param  BD address of the host
  *
  * \return true, if connection can be accepted. Otherwise return false.
- ****************************************************************************************
- */
+******************************************************************************************/
 static bool alt_pair_check_peer(const peer_addr_t *param)
 {
 
@@ -2375,14 +2297,12 @@ bool app_con_fsm_is_conn_upd_pending(void)
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief Directed Advertising Ended notification handler
  *
  * \details Handles an incoming ADV_FSM_DIR_ADV_ENDED notification from the 
  * Advertising FSM
- ****************************************************************************************
- */
+******************************************************************************************/
 static void handle_dir_adv_ended_notification(void)
 {
         app_con_fsm_set_ble_async_task(BLE_ASYNC_TASK_SEND_ADV_COMPLETED_EVT);
@@ -2390,28 +2310,24 @@ static void handle_dir_adv_ended_notification(void)
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief Directed Advertising Started notification handler
  *
  * \details Handles an incoming ADV_FSM_DIR_ADV_STARTED notification from the 
  * Advertising FSM
- ****************************************************************************************
- */
+******************************************************************************************/
 static void handle_dir_adv_started_notification(void)
 {
         app_con_fsm_advertising = true;
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief Undirected Advertising Ended notification handler
  *
  * \details Handles an incoming ADV_FSM_UND_ADV_ENDED notification from the 
  * Advertising FSM
- ****************************************************************************************
- */
+******************************************************************************************/
 static void handle_und_adv_ended_notification(void)
 {
         app_con_fsm_set_ble_async_task(BLE_ASYNC_TASK_SEND_ADV_COMPLETED_EVT);
@@ -2420,14 +2336,12 @@ static void handle_und_adv_ended_notification(void)
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief Undirected Advertising Started notification handler
  *
  * \details Handles an incoming ADV_FSM_UND_ADV_STARTED notification from the 
  * Advertising FSM
- ****************************************************************************************
- */
+******************************************************************************************/
 static void handle_und_adv_started_notification(void)
 {
         app_con_fsm_call_callback(INDICATE_ADVERTISING_START);
@@ -2435,28 +2349,24 @@ static void handle_und_adv_started_notification(void)
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief Undirected Limited Advertising Started notification handler
  *
  * \details Handles an incoming ADV_FSM_UND_ADV_LIM_STARTED notification from the 
  * Advertising FSM
- ****************************************************************************************
- */
+******************************************************************************************/
 static void handle_und_adv_lim_started_notification(void)
 {
         app_con_fsm_advertising = true;
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief Undirected Limited Advertising Ended notification handler
  *
  * \details Handles an incoming ADV_FSM_UND_ADV_LIM_ENDED notification from the 
  * Advertising FSM
- ****************************************************************************************
- */
+******************************************************************************************/
 static void handle_und_adv_lim_ended_notification(void)
 {
         app_con_fsm_set_ble_async_task(BLE_ASYNC_TASK_SEND_ADV_COMPLETED_EVT);
@@ -2465,14 +2375,12 @@ static void handle_und_adv_lim_ended_notification(void)
 
 
 #ifdef HAS_SPECIAL_ADVERTISING
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief Special Undirected Advertising Ended notification handler
  *
  * \details Handles an incoming ADV_FSM_UND_ADV_SPECIAL_ENDED notification from the 
  * Advertising FSM
- ****************************************************************************************
- */
+******************************************************************************************/
 static void handle_special_adv_ended_notification(void)
 {
      app_con_fsm_advertising = false;

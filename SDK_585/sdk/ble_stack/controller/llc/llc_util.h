@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file llc_util.h
  *
@@ -8,12 +7,10 @@
  * Copyright (C) RivieraWaves 2009-2014
  *
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 #ifndef LLC_UTIL_H_
 #define LLC_UTIL_H_
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @addtogroup LLCUTIL
  * @ingroup LLC
  * @brief Link layer controller utilities definitions
@@ -21,14 +18,12 @@
  * full description
  *
  * @{
- ****************************************************************************************
- */
+******************************************************************************************/
 
 
 /*
  * INCLUDE FILES
- ****************************************************************************************
- */
+******************************************************************************************/
 #include <stdint.h>
 
 #include "compiler.h"
@@ -40,10 +35,8 @@
 #if (BLE_PERIPHERAL || BLE_CENTRAL)
 /*
  * FUNCTION DEFINITIONS
- ****************************************************************************************
- */
-/**
- ****************************************************************************************
+******************************************************************************************/
+/*****************************************************************************************
  * @brief Gets a free connection handle.
  *
  * This function allocates a new connection handle if possible.
@@ -52,13 +45,11 @@
  *
  * @return If the connection handle has been correctly allocated.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 uint8_t llc_util_get_free_conhdl(uint16_t *conhdl);
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Process the disconnection
  *
  * This function request to the Link Layer to stop sending any further packets, frees the
@@ -67,12 +58,10 @@ uint8_t llc_util_get_free_conhdl(uint16_t *conhdl);
  * @param[in] conhdl         Connection handle disconnected.
  * @param[in] reason         reason of the disconnection.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 void llc_util_dicon_procedure(uint16_t conhdl, uint8_t reason);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief generates the  SKDm or SKDs
  *
  * The SKDx is generated from the Random Number and Init Vectors passed as parameter
@@ -81,14 +70,12 @@ void llc_util_dicon_procedure(uint16_t conhdl, uint8_t reason);
  * @param[in]  nb       Pointer to the Random Number
  * @param[in]  ivx      Pointer to the Init Vector
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 void llc_util_gen_skdx(struct sess_k_div_x *skdx,
                        struct rand_nb const *nb,
                        struct init_vect  const *ivx);
 #endif //(BLE_PERIPHERAL || BLE_CENTRAL)
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Gets the size of the packet received.
  *
  * This function gets the length of the packet received.
@@ -97,16 +84,14 @@ void llc_util_gen_skdx(struct sess_k_div_x *skdx,
  *
  * @return The length of the data.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE uint8_t llc_util_rxlen_getf(struct co_buf_rx_desc *rxdesc)
 {
     uint16_t localVal =  rxdesc->rxheader;
     return ((localVal & BLE_RXLEN_MASK) >> BLE_RXLEN_LSB);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Gets the logical link identifier of the packet received.
  *
  * This function gets the LLID of the packet received.
@@ -115,8 +100,7 @@ __INLINE uint8_t llc_util_rxlen_getf(struct co_buf_rx_desc *rxdesc)
  *
  * @return The LLID for the packet received.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE uint8_t llc_util_rxllid_getf(struct co_buf_rx_desc *rxdesc)
 {
     uint16_t localVal =  rxdesc->rxheader;
@@ -124,8 +108,7 @@ __INLINE uint8_t llc_util_rxllid_getf(struct co_buf_rx_desc *rxdesc)
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Gets the RSSI of the packet received.
  *
  * This function gets the RSSI of the packet received.
@@ -134,16 +117,14 @@ __INLINE uint8_t llc_util_rxllid_getf(struct co_buf_rx_desc *rxdesc)
  *
  * @return The RSSI for the packet received.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE uint8_t llc_util_rxrssi_getf(struct co_buf_rx_desc *rxdesc)
 {
     uint16_t localVal = rxdesc->rxchass;
     return ((localVal & BLE_RSSI_MASK) >> BLE_RSSI_LSB);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief  Gets the channel used for the reception of this descriptor.
  *
  * This function gets the channel used for the reception of this descriptor
@@ -152,16 +133,14 @@ __INLINE uint8_t llc_util_rxrssi_getf(struct co_buf_rx_desc *rxdesc)
  *
  * @return The channel used to receive the packet.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE uint8_t llc_util_used_ch_idx_getf(struct co_buf_rx_desc *rxdesc)
 {
     uint16_t localVal = rxdesc->rxchass;
     return ((localVal & BLE_USED_CH_IDX_MASK) >> BLE_USED_CH_IDX_LSB);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief  Gets the error on the reception.
  *
  * This function gets the error field for the reception of this descriptor
@@ -170,8 +149,7 @@ __INLINE uint8_t llc_util_used_ch_idx_getf(struct co_buf_rx_desc *rxdesc)
  *
  * @return The error field.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE uint16_t llc_util_rxerr_getf(struct co_buf_rx_desc *rxdesc)
 {
     uint16_t localVal =  rxdesc->rxstatus;
@@ -179,8 +157,7 @@ __INLINE uint16_t llc_util_rxerr_getf(struct co_buf_rx_desc *rxdesc)
                        | BLE_CRC_ERR_BIT | BLE_LEN_ERR_BIT | BLE_TYPE_ERR_BIT | BLE_SYNC_ERR_BIT)) >> 0);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief  Gets the link identifier of the reception.
  *
  * This function gets the link identifier for the reception of this descriptor
@@ -189,24 +166,21 @@ __INLINE uint16_t llc_util_rxerr_getf(struct co_buf_rx_desc *rxdesc)
  *
  * @return The link value.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE uint8_t llc_util_rxlink_getf(struct co_buf_rx_desc *rxdesc)
 {
     uint16_t localVal =  rxdesc->rxstatus;
     return ((localVal & BLE_RXLINKLBL_MASK) >> BLE_RXLINKLBL_LSB);
 }
 #if (BLE_PERIPHERAL || BLE_CENTRAL)
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief  Checks the number of active(s) link(s).
  *
  * This function returns the number of active(s) link(s).
  *
  * @return The number of active(s) link(s).
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE uint8_t llc_util_get_active_conhdl(void)
 {
     uint8_t idx;
@@ -225,8 +199,7 @@ __INLINE uint8_t llc_util_get_active_conhdl(void)
     return cpt_active;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief  Checks if the meta event is enabled.
  *
  * This function checks if the meta event is authorized to be sent to the host.
@@ -235,8 +208,7 @@ __INLINE uint8_t llc_util_get_active_conhdl(void)
  *
  * @return The is the event is authorized.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE bool llc_util_event_enabled(uint8_t meta_event)
 {
     uint8_t idx;
@@ -255,8 +227,7 @@ __INLINE bool llc_util_event_enabled(uint8_t meta_event)
     return cpt_active;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief  Gets the L2CAP length.
  *
  * This function gets in the data buffer the L2CAP length.
@@ -265,8 +236,7 @@ __INLINE bool llc_util_event_enabled(uint8_t meta_event)
  *
  * @return The L2CAP data length.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE uint16_t llc_util_rxl2clen_getf(uint8_t *data)
 {
     uint16_t localVal =  *data++ & 0x00FF; //gets the lsb first
@@ -274,15 +244,13 @@ __INLINE uint16_t llc_util_rxl2clen_getf(uint8_t *data)
     return (localVal);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief  Set the IVm in the control structure
  *
  * @param[in] conhdl    Handle of the connection for which the IVm is set
  * @param[in] ivm       Pointer to the IVm to set for this connection
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE void llc_util_ivm_set(uint16_t conhdl, uint8_t const *ivm)
 {
     for (int i = 0; i < 2; i++)
@@ -292,15 +260,13 @@ __INLINE void llc_util_ivm_set(uint16_t conhdl, uint8_t const *ivm)
     }
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief  Set the IVs in the control structure
  *
  * @param[in] conhdl    Handle of the connection for which the IVs is set
  * @param[in] ivs       Pointer to the IVs to set for this connection
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE void llc_util_ivs_set(uint16_t conhdl, uint8_t const *ivs)
 {
     for (int i = 0; i < 2; i++)
@@ -310,44 +276,36 @@ __INLINE void llc_util_ivs_set(uint16_t conhdl, uint8_t const *ivs)
     }
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief  Update the channel map of a specific link
  *
  * @param[in] conhdl    Handle of the connection for which the IVs is set
  * @param[in] map       Pointer to the channel map
- ****************************************************************************************
- */
+******************************************************************************************/
 void llc_util_update_channel_map(uint16_t conhdl, struct le_chnl_map *map);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief  Enable/disable LLCP discard
  *
  * @param[in] conhdl    Connection handle
- ****************************************************************************************
- */
+******************************************************************************************/
 void llc_util_set_llcp_discard_enable(uint16_t conhdl, bool enable);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief  Calculates and sets an appropriate margin for the authenticated payload timeout
  *
  * @param[in] conhdl    Handle of the connection for which the IVs is set
  * @param[in] enable    True/false
- ****************************************************************************************
- */
+******************************************************************************************/
 void llc_util_set_auth_payl_to_margin(struct lld_evt_tag *evt);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief  Check disc command param
  *
  * @param[in] reason    Reason for disconnection
  *
  * @return reason accepted or rejected
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE bool llc_util_disc_reason_ok(uint8_t reason)
 {
     // disconnection reason range
@@ -367,15 +325,13 @@ __INLINE bool llc_util_disc_reason_ok(uint8_t reason)
     return (false);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Set operation pointer
  *
  * @param[in] op_type       Operation type.
  * @param[in] op            Operation pointer.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE void llc_util_set_operation_ptr(uint16_t conhdl, uint8_t op_type, void* op)
 {
     ASSERT_ERR(op_type < LLC_OP_MAX);
@@ -384,15 +340,13 @@ __INLINE void llc_util_set_operation_ptr(uint16_t conhdl, uint8_t op_type, void*
     llc_env_ptr->operation[op_type] = op;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Get operation pointer
  *
  * @param[in] op_type       Operation type.
  *
  * @return operation pointer on going
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE void* llc_util_get_operation_ptr(uint16_t conhdl, uint8_t op_type)
 {
     ASSERT_ERR(op_type < LLC_OP_MAX);

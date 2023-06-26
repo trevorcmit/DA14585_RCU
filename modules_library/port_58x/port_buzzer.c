@@ -1,29 +1,16 @@
-/**
- ****************************************************************************************
- *
+/*****************************************************************************************
  * \file port_buzzer.c
- *
  * \brief Buzzer module platform adaptation source file
- *
- * Copyright (C) 2017 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information  
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com>
- *
- ****************************************************************************************
- */
+*****************************************************************************************/
  
-/**
- ****************************************************************************************
+/****************************************************************************************
  * \addtogroup APP_UTILS
  * \{
  * \addtogroup BUZZER
  * \{
  * \addtogroup PORT_BUZZER
  * \{
- ****************************************************************************************	 
- */
+*****************************************************************************************/
 
 #ifdef HAS_SOUND_INDICATION
 #include "port_buzzer.h"
@@ -31,7 +18,6 @@
 #include "timer0.h"
 #include "gpio.h"
 #include "port_platform.h"
-
 
 // Buzzer PWM settings
 #define BUZZER_TIMER_ON        1000
@@ -43,22 +29,22 @@ uint8_t port_current_note_repeats __PORT_RETAINED;
 buzzer_note_handler_t port_note_ended_handler __PORT_RETAINED;
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief Handles PWM events related to the buzzer
- ****************************************************************************************
- */ 
+*****************************************************************************************/ 
 static void port_buzzer_note_cb(void)
 {
     // Time to change to the next note (current note duration expired)
-    if(port_current_note_repeats == 0) {
-            
-            if(port_note_ended_handler) {
-                    port_note_ended_handler();
-            }
+    if(port_current_note_repeats == 0)
+    { 
+        if (port_note_ended_handler)
+        {
+            port_note_ended_handler();
+        }
     }
-    else {
-            --port_current_note_repeats;
+    else
+    {
+        --port_current_note_repeats;
     }    
 }
 
@@ -99,7 +85,6 @@ void port_buzzer_start(buzzer_note_handler_t hndl)
 void port_buzzer_change_note(uint32_t note, uint8_t noteRepeat)
 {
     port_current_note_repeats = noteRepeat;
-    
     timer0_set_pwm_on_counter(0xFFFF);
     timer0_set_pwm_high_counter(note/3 * 2);
     timer0_set_pwm_low_counter(note/3);

@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file htpc.c
  *
@@ -8,20 +7,16 @@
  * Copyright (C) RivieraWaves 2009-2015
  *
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @addtogroup HTPC
  * @{
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /*
  * INCLUDE FILES
- ****************************************************************************************
- */
+******************************************************************************************/
 #include "rwip_config.h"
 
 #if (BLE_HT_COLLECTOR)
@@ -31,11 +26,9 @@
 
 /*
  * LOCAL FUNCTION DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Initialization of the HTPC module.
  * This function performs all the initializations of the Profile module.
  *  - Creation of database (if it's a service)
@@ -52,8 +45,7 @@
  * @param[in]     param      Configuration parameters of profile collector or service (32 bits aligned)
  *
  * @return status code to know if profile initialization succeed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static uint8_t htpc_init(struct prf_task_env* env, uint16_t* start_hdl, uint16_t app_task,
                             uint8_t sec_lvl,  void* params)
 {
@@ -86,15 +78,13 @@ static uint8_t htpc_init(struct prf_task_env* env, uint16_t* start_hdl, uint16_t
     return GAP_ERR_NO_ERROR;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Destruction of the HTPC module - due to a reset for instance.
  * This function clean-up allocated memory (attribute database is destroyed by another
  * procedure)
  *
  * @param[in|out]    env        Collector or Service allocated environment data.
- ****************************************************************************************
- */
+******************************************************************************************/
 static void htpc_destroy(struct prf_task_env* env)
 {
     uint8_t idx;
@@ -119,29 +109,25 @@ static void htpc_destroy(struct prf_task_env* env)
     ke_free(htpc_env);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles Connection creation
  *
  * @param[in|out]    env        Collector or Service allocated environment data.
  * @param[in]        conidx     Connection index
- ****************************************************************************************
- */
+******************************************************************************************/
 static void htpc_create(struct prf_task_env* env, uint8_t conidx)
 {
     /* Put HTP Client in Idle state */
     ke_state_set(KE_BUILD_ID(env->task, conidx), HTPC_IDLE);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles Disconnection
  *
  * @param[in|out]    env        Collector or Service allocated environment data.
  * @param[in]        conidx     Connection index
  * @param[in]        reason     Detach reason
- ****************************************************************************************
- */
+******************************************************************************************/
 static void htpc_cleanup(struct prf_task_env* env, uint8_t conidx, uint8_t reason)
 {
     struct htpc_env_tag* htpc_env = (struct htpc_env_tag*) env->env;
@@ -234,8 +220,7 @@ uint8_t htpc_get_next_desc_char_code(struct htpc_env_tag *htpc_env,
 
 /*
  * GLOBAL VARIABLE DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /// HTPC Task interface required by profile manager
 const struct prf_task_cbs htpc_itf =
@@ -248,8 +233,7 @@ const struct prf_task_cbs htpc_itf =
 
 /*
  * FUNCTION DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 const struct prf_task_cbs* htpc_prf_itf_get(void)
 {

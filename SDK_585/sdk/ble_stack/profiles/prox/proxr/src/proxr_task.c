@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file proxr_task.c
  *
@@ -8,21 +7,17 @@
  * Copyright (C) RivieraWaves 2009-2015
  *
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @addtogroup PROXRTASK
  * @{
- ****************************************************************************************
- */
+******************************************************************************************/
 
 
 /*
  * INCLUDE FILES
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #include "rwip_config.h"
 
@@ -39,11 +34,9 @@
 
 /*
  * FUNCTION DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of write request message.
  * The handler will analyse what has been set and decide alert level
  * @param[in] msgid Id of the message received (probably unused).
@@ -51,8 +44,7 @@
  * @param[in] dest_id ID of the receiving task instance (probably unused).
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int gattc_write_req_ind_handler(ke_msg_id_t const msgid,
                                       struct gattc_write_req_ind const *param,
                                       ke_task_id_t const dest_id,
@@ -118,8 +110,7 @@ static int gattc_write_req_ind_handler(ke_msg_id_t const msgid,
     return (msg_status);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the read request from peer device
  *
  * @param[in] msgid Id of the message received (probably unused).
@@ -127,8 +118,7 @@ static int gattc_write_req_ind_handler(ke_msg_id_t const msgid,
  * @param[in] dest_id ID of the receiving task instance (probably unused).
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int gattc_read_req_ind_handler(ke_msg_id_t const msgid,
                                       struct gattc_read_req_ind const *param,
                                       ke_task_id_t const dest_id,
@@ -193,8 +183,7 @@ static int gattc_read_req_ind_handler(ke_msg_id_t const msgid,
     return msg_status;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the @ref GAPM_DEV_ADV_TX_POWER_IND message.
  * This generic event is received for different requests, so need to keep track.
  * @param[in] msgid Id of the message received (probably unused).
@@ -202,8 +191,7 @@ static int gattc_read_req_ind_handler(ke_msg_id_t const msgid,
  * @param[in] dest_id ID of the receiving task instance (probably unused).
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int gapm_dev_adv_tx_power_ind_handler(ke_msg_id_t const msgid,
                                             struct gapm_dev_adv_tx_power_ind const *param,
                                             ke_task_id_t const dest_id,
@@ -230,8 +218,7 @@ static int gapm_dev_adv_tx_power_ind_handler(ke_msg_id_t const msgid,
     return (KE_MSG_CONSUMED);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the @ref GAPM_CMP_EVT message.
  * This generic event is received for different requests, so need to keep track.
  * @param[in] msgid Id of the message received (probably unused).
@@ -239,8 +226,7 @@ static int gapm_dev_adv_tx_power_ind_handler(ke_msg_id_t const msgid,
  * @param[in] dest_id ID of the receiving task instance (probably unused).
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int gapm_cmp_evt_handler(ke_msg_id_t const msgid,
                                 struct gapm_cmp_evt const *param,
                                 ke_task_id_t const dest_id,
@@ -268,8 +254,7 @@ static int gapm_cmp_evt_handler(ke_msg_id_t const msgid,
 
 /*
  * GLOBAL VARIABLE DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /// Default State handlers definition
 const struct ke_msg_handler proxr_default_state[] =

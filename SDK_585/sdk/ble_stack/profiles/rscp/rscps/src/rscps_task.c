@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file rscps_task.c
  *
@@ -9,20 +8,16 @@
  *
  * $ Rev $
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @addtogroup RSCPSTASK
  * @{
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /*
  * INCLUDE FILES
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #include "rscp_common.h"
 
@@ -38,19 +33,16 @@
 
 /*
  * LOCAL FUNCTIONS DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the @ref RSCPS_ENABLE_REQ message.
  * @param[in] msgid Id of the message received
  * @param[in] param Pointer to the parameters of the message.
  * @param[in] dest_id ID of the receiving task instance
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int rscps_enable_req_handler(ke_msg_id_t const msgid,
                                     struct rscps_enable_req *param,
                                     ke_task_id_t const dest_id,
@@ -97,8 +89,7 @@ static int rscps_enable_req_handler(ke_msg_id_t const msgid,
     return (KE_MSG_CONSUMED);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the read request from peer device
  *
  * @param[in] msgid Id of the message received (probably unused).
@@ -106,8 +97,7 @@ static int rscps_enable_req_handler(ke_msg_id_t const msgid,
  * @param[in] dest_id ID of the receiving task instance (probably unused).
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int gattc_read_req_ind_handler(ke_msg_id_t const msgid,
                                       struct gattc_read_req_ind const *param,
                                       ke_task_id_t const dest_id,
@@ -179,8 +169,7 @@ static int gattc_read_req_ind_handler(ke_msg_id_t const msgid,
     return (KE_MSG_CONSUMED);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the attribute info request message.
  *
  * @param[in] msgid Id of the message received (probably unused).
@@ -188,8 +177,7 @@ static int gattc_read_req_ind_handler(ke_msg_id_t const msgid,
  * @param[in] dest_id ID of the receiving task instance (probably unused).
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int gattc_att_info_req_ind_handler(ke_msg_id_t const msgid,
         struct gattc_att_info_req_ind *param,
         ke_task_id_t const dest_id,
@@ -232,16 +220,14 @@ static int gattc_att_info_req_ind_handler(ke_msg_id_t const msgid,
         return (KE_MSG_CONSUMED);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the @ref RSCPS_NTF_RSC_MEAS_REQ message.
  * @param[in] msgid Id of the message received.
  * @param[in] param Pointer to the parameters of the message.
  * @param[in] dest_id ID of the receiving task instance.
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int rscps_ntf_rsc_meas_req_handler(ke_msg_id_t const msgid,
                                           struct rscps_ntf_rsc_meas_req *param,
                                           ke_task_id_t const dest_id,
@@ -317,16 +303,14 @@ static int rscps_ntf_rsc_meas_req_handler(ke_msg_id_t const msgid,
     return (int)msg_status;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the @ref RSCPS_SC_CTNL_PT_CFM message.
  * @param[in] msgid Id of the message received.
  * @param[in] param Pointer to the parameters of the message.
  * @param[in] dest_id ID of the receiving task instance.
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int rscps_sc_ctnl_pt_cfm_handler(ke_msg_id_t const msgid,
                                           struct rscps_sc_ctnl_pt_cfm *param,
                                           ke_task_id_t const dest_id,
@@ -462,16 +446,14 @@ static int rscps_sc_ctnl_pt_cfm_handler(ke_msg_id_t const msgid,
     return (KE_MSG_CONSUMED);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the @ref GATTC_WRITE_REQ_IND message.
  * @param[in] msgid Id of the message received.
  * @param[in] param Pointer to the parameters of the message.
  * @param[in] dest_id ID of the receiving task instance.
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int gattc_write_req_ind_handler(ke_msg_id_t const msgid,
                                        struct gattc_write_req_ind const *param,
                                        ke_task_id_t const dest_id,
@@ -750,8 +732,7 @@ static int gattc_write_req_ind_handler(ke_msg_id_t const msgid,
     return (int)msg_status;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles @ref GATT_NOTIFY_CMP_EVT message meaning that a notification or an indication
  * has been correctly sent to peer device (but not confirmed by peer device).
  *
@@ -760,8 +741,7 @@ static int gattc_write_req_ind_handler(ke_msg_id_t const msgid,
  * @param[in] dest_id   ID of the receiving task instance
  * @param[in] src_id    ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int gattc_cmp_evt_handler(ke_msg_id_t const msgid,  struct gattc_cmp_evt const *param,
                                  ke_task_id_t const dest_id, ke_task_id_t const src_id)
 {
@@ -805,8 +785,7 @@ static int gattc_cmp_evt_handler(ke_msg_id_t const msgid,  struct gattc_cmp_evt 
 
 /*
  * GLOBAL VARIABLE DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /// Specifies the default message handlers
 const struct ke_msg_handler rscps_default_state[] =

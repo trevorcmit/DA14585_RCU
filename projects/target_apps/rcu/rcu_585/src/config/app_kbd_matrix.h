@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * \file app_kbd_matrix.h
  *
@@ -11,14 +10,12 @@
  *
  * <bluetooth.support@diasemi.com>
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #ifndef _APP_KBD_MATRIX_H_
 #define _APP_KBD_MATRIX_H_
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \addtogroup CONFIGURATION
  * \{
  * \addtogroup MODULE_CONFIG
@@ -27,8 +24,7 @@
  *
  * \brief Keyboard module matrix configuration
  * \{
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #include <stdint.h>
 #include <stddef.h>
@@ -41,29 +37,23 @@
 #endif
 #include "app_kbd_defs.h"
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief Enable multi-key combinations
- ****************************************************************************************
- */
+******************************************************************************************/
 #define MULTI_KEY_COMBINATIONS_ON
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief Maximum number of keys for key combination (maximum value is 8)
- ****************************************************************************************
- */
+******************************************************************************************/
 #define MULTI_KEY_NUM_OF_KEYS       2       // maximum 8
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief Custom key definition. These keys are not treated as normal keys. No HID
  *        report is created. Instead kbd_params.notify_callback will be called when the
  *        corresponding key or key combinations is pressed. These definitions can be
  *        used to define keys in the key matrix or can be used in multi_key_combinations
  *        table definition.
- ****************************************************************************************
- */
+******************************************************************************************/
 
 enum custom_keys {
         CUSTOM_KEY_PAIR = 1,
@@ -126,8 +116,7 @@ enum modifier_keys {
 // extra sets for 'hidden modifiers', e.g. the 'Fn' key
 #define KBD_NR_SETS (2)
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * The key map.
  * 00xx:   regular key
  * FCxx:   modifier key.
@@ -137,8 +126,7 @@ enum modifier_keys {
  * K_CODE: unknown key code - nothing is sent to the other side but the key is examined 
  *         for ghosting
  * KEY_UNUSED: if the key is not used
- ****************************************************************************************
- */
+******************************************************************************************/
 static const uint16_t kbd_keymap[KBD_NR_SETS][KBD_NR_ROW_OUTPUTS][KBD_NR_COLUMN_INPUTS] =
 {
   {
@@ -171,8 +159,7 @@ static const uint16_t kbd_keymap[KBD_NR_SETS][KBD_NR_ROW_OUTPUTS][KBD_NR_COLUMN_
   }
 };
 
-/**
- *******************************************************************************************
+/********************************************************************************************
  * Definition of multi-key combinations. For each combination a row is added in the     
  * multi_key_combinations matrix. In each row the following members must be defined:    
  *    i) an array with MULTI_KEY_NUM_OF_KEYS elements of type multi_key_t containing    

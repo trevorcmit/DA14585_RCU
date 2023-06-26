@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file rscpc.c
  *
@@ -9,21 +8,17 @@
  *
  * $ Rev $
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @addtogroup RSCPC
  * @{
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /*
  * INCLUDE FILES
- ****************************************************************************************
- */
+******************************************************************************************/
 #include "rscp_common.h"
 
 #if (BLE_RSC_COLLECTOR)
@@ -33,17 +28,14 @@
 
 /*
  * GLOBAL VARIABLES DECLARATION
- ****************************************************************************************
- */
+******************************************************************************************/
 
 
 /*
  * LOCAL FUNCTIONS DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Initialization of the RSCPC module.
  * This function performs all the initializations of the Profile module.
  *  - Creation of database (if it's a service)
@@ -60,8 +52,7 @@
  * @param[in]     param      Configuration parameters of profile collector or service (32 bits aligned)
  *
  * @return status code to know if profile initialization succeed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static uint8_t rscpc_init(struct prf_task_env* env, uint16_t* start_hdl, uint16_t app_task, uint8_t sec_lvl,  void* params)
 {
     uint8_t idx;
@@ -93,15 +84,13 @@ static uint8_t rscpc_init(struct prf_task_env* env, uint16_t* start_hdl, uint16_
     return GAP_ERR_NO_ERROR;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Clean-up connection dedicated environment parameters
  * This function performs cleanup of ongoing operations
  * @param[in|out]    env        Collector or Service allocated environment data.
  * @param[in]        conidx     Connection index
  * @param[in]        reason     Detach reason
- ****************************************************************************************
- */
+******************************************************************************************/
 static void rscpc_cleanup(struct prf_task_env* env, uint8_t conidx, uint8_t reason)
 {
     struct rscpc_env_tag* rscpc_env = (struct rscpc_env_tag*) env->env;
@@ -122,15 +111,13 @@ static void rscpc_cleanup(struct prf_task_env* env, uint8_t conidx, uint8_t reas
     ke_state_set(KE_BUILD_ID(env->task, conidx), RSCPC_FREE);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Destruction of the RSCPC module - due to a reset for instance.
  * This function clean-up allocated memory (attribute database is destroyed by another
  * procedure)
  *
  * @param[in|out]    env        Collector or Service allocated environment data.
- ****************************************************************************************
- */
+******************************************************************************************/
 static void rscpc_destroy(struct prf_task_env* env)
 {
     uint8_t idx;
@@ -147,14 +134,12 @@ static void rscpc_destroy(struct prf_task_env* env)
     ke_free(rscpc_env);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles Connection creation
  *
  * @param[in|out]    env        Collector or Service allocated environment data.
  * @param[in]        conidx     Connection index
- ****************************************************************************************
- */
+******************************************************************************************/
 static void rscpc_create(struct prf_task_env* env, uint8_t conidx)
 {
     /* Put RSCP Client in Idle state */
@@ -172,8 +157,7 @@ const struct prf_task_cbs rscpc_itf =
 
 /*
  * GLOBAL FUNCTIONS DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 const struct prf_task_cbs* rscpc_prf_itf_get(void)
 {

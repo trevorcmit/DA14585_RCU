@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file app_suotar.c
  *
@@ -11,20 +10,16 @@
  *
  * <bluetooth.support@diasemi.com> and contributors.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @addtogroup APP
  * @{
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /*
  * INCLUDE FILES
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #include "rwble_config.h"
 
@@ -75,19 +70,15 @@ uint8_t app_get_image_id(uint8_t);
 uint8_t app_find_old_img(uint8_t, uint8_t);
 
 extern void platform_reset(uint32_t error);
- /**
- ****************************************************************************************
+ /*****************************************************************************************
  * SUOTAR Application Functions
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Initializes SUOTAR Application.
  *
  * @return      void
- ****************************************************************************************
- */
+******************************************************************************************/
 void app_suotar_init(void)
 {
     //suota_state.status_ind_func = app_suotar_status;
@@ -100,15 +91,13 @@ void app_suotar_init(void)
     suota_state.mem_dev = SUOTAR_MEM_INVAL_DEV;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Resets SUOTAR Apllication.
  *
  * @param[in]   void
  *
  * @return      void
- ****************************************************************************************
- */
+******************************************************************************************/
 void app_suotar_reset(void)
 {
     suota_state.suota_pd_idx = 0;
@@ -116,15 +105,13 @@ void app_suotar_reset(void)
     suota_state.new_patch_len = 0;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Creates SUOTAR service database.
  *
  * @param[in]   void
  *
  * @return      void
- ****************************************************************************************
- */
+******************************************************************************************/
 void app_suotar_create_db(void)
 {
     struct suotar_db_cfg* db_cfg;
@@ -150,16 +137,14 @@ void app_suotar_create_db(void)
     ke_msg_send(req);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Reads memory device and writes memory info.
  *
  * @param[in]   mem_dev: MSbyte holds the Memory device type, rest is the base address.
  * @param[in]   mem_info: 16MSbits hold number of patches, 16LSbits hold overall mem len.
  *
  * @return      void
- ****************************************************************************************
- */
+******************************************************************************************/
 void app_suotar_read_mem(uint32_t mem_dev, uint32_t* mem_info)
 {
     // *mem_info = 0;
@@ -265,15 +250,13 @@ void app_suotar_read_mem(uint32_t mem_dev, uint32_t* mem_info)
     }
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Starts SUOTAR serivce and disables sleep.
  *
  * @param[in]   void
  *
  * @return      void
- ****************************************************************************************
- */
+******************************************************************************************/
 
 void app_suotar_start(void)
 {
@@ -299,15 +282,13 @@ void app_suotar_start(void)
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Stops SUOTAR service and resets application
  *
  * @param[in]   void
  *
  * @return      void
- ****************************************************************************************
- */
+******************************************************************************************/
 
 void app_suotar_stop(void)
 {
@@ -329,15 +310,13 @@ void app_suotar_stop(void)
     //app_restore_sleep_mode();
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Updates SUOTAR status characteristic.
  *
  * @param[in]   status: SUOTAR application status.
  *
  * @return      void
- ****************************************************************************************
- */
+******************************************************************************************/
 void suotar_send_status_update_req( uint8_t status )
 {
     // Inform SUOTAR task.
@@ -352,15 +331,13 @@ void suotar_send_status_update_req( uint8_t status )
     ke_msg_send(req);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Updates SUOTAR memory info characteristic.
  *
  * @param[in]   mem_info: Patch memory info. Number of patches and overall patch length.
  *
  * @return      void.
- ****************************************************************************************
- */
+******************************************************************************************/
 void suotar_send_mem_info_update_req(uint32_t mem_info)
 {
     // Inform SUOTAR task.
@@ -374,8 +351,7 @@ void suotar_send_mem_info_update_req(uint32_t mem_info)
     ke_msg_send(req);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief SUOTA image block handler. Validates image block and stores it to
  *        external memory device.
  *
@@ -383,8 +359,7 @@ void suotar_send_mem_info_update_req(uint32_t mem_info)
  *
  * @return      void
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 void app_suotar_img_hdlr(void)
 {
     uint32_t mem_info;
@@ -519,16 +494,14 @@ void app_suotar_img_hdlr(void)
     CALLBACK_ARGS_1(user_app_suotar_cb.on_suotar_status_change, SUOTAR_IN_PROGRESS);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Reserves SPI GPIO pins, reads the GPIO map set by initiator, and configures the SPI pins.
  *
  * @param[in]   spi_conf: Pointer to port/pin pad structure.
  *
  * @return      void.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 #if (!SUOTAR_SPI_DISABLE)
 void app_suotar_spi_config(spi_gpio_config_t *spi_conf)
 {
@@ -555,15 +528,13 @@ void app_suotar_spi_config(spi_gpio_config_t *spi_conf)
     GPIO_ConfigurePin( spi_conf->miso.port, spi_conf->miso.pin, INPUT, PID_SPI_DI, false );
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief SPI and SPI flash initialization function
  *
  * @param[in]   cs_pad_param: Pointer to chip select port/pin pad structure.
  *
  * @return      void.
- ****************************************************************************************
- */
+******************************************************************************************/
 void app_spi_flash_init(SPI_Pad_t *cs_pad_param)
 {
     uint16_t man_dev_id = 0;
@@ -604,16 +575,14 @@ void app_spi_flash_init(SPI_Pad_t *cs_pad_param)
 #endif //(!SUOTAR_SPI_DISABLE)
 
 #if (!SUOTAR_I2C_DISABLE)
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Reserves I2C GPIO pins, reads the GPIO map set by initiator, and configures the the I2C pins.
  *
  * @param[in]   i2c_conf:  pointer to port/pin pad structure.
  *
  * @return      void
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 void app_suotar_i2c_config(i2c_gpio_config_t *i2c_conf)
 {
     i2c_conf->sda.port      = ((GPIO_PORT)((suota_state.gpio_map & 0x000000f0) >>  4));
@@ -633,8 +602,7 @@ void app_suotar_i2c_config(i2c_gpio_config_t *i2c_conf)
 }
 #endif //(!SUOTAR_I2C_DISABLE)
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief This function is called when the first SUOTA block is received.
  *        Firstly, the image header is extracted from the first block, then the external memmory
  *        is checked to determin where to write this new image and finaly the header and the first
@@ -647,8 +615,7 @@ void app_suotar_i2c_config(i2c_gpio_config_t *i2c_conf)
  *
  * @return      0 for success, otherwise error codes
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 int app_read_image_headers(uint8_t image_bank, uint8_t* data, uint32_t data_len)
 {
     image_header_t *pImageHeader;
@@ -864,8 +831,7 @@ int app_read_image_headers(uint8_t image_bank, uint8_t* data, uint32_t data_len)
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief This function is called when the entire image has been received successfully
  *        to set the valid flag field on the image header and make the image valid for
  *        the bootloader.
@@ -874,8 +840,7 @@ int app_read_image_headers(uint8_t image_bank, uint8_t* data, uint32_t data_len)
  *
  * @return      SUOTA Status values
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 uint8_t app_set_image_valid_flag(void)
 {
     int8_t ret = SUOTAR_EXT_MEM_WRITE_ERR;
@@ -906,16 +871,14 @@ uint8_t app_set_image_valid_flag(void)
     return ret;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief This function is called to get the correct image id to write to the image header
  *
  * @param[in]   imgid: current latest image id
  *
  * @return      new image id
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 uint8_t app_get_image_id(uint8_t imgid)
 {
 	uint8_t new_imgid = IMAGE_ID_0;
@@ -926,16 +889,14 @@ uint8_t app_get_image_id(uint8_t imgid)
 	}
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief This function is called to find the older image of the two in the external memmory
  *
  * @param[in]   imgid: current ids of the two images
  *
  * @return      older image id
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 uint8_t app_find_old_img(uint8_t id1, uint8_t id2)
 {
 	if (id1 == 0xFF && id2 == 0xFF) return IMAGE_ID_1;
@@ -945,16 +906,14 @@ uint8_t app_find_old_img(uint8_t id1, uint8_t id2)
 	else return 1;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief This function is called to erase the SPI sectors before writing the new image
  *
  * @param[in]   starting_address:  Starting address to start erasing
  *
  * @return      ERR_OK on success
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 #if (!SUOTAR_SPI_DISABLE)
 int8_t app_erase_flash_sectors(uint32_t starting_address, uint32_t size)
 {
@@ -978,8 +937,7 @@ int8_t app_erase_flash_sectors(uint32_t starting_address, uint32_t size)
 	return ret;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief This function is called to wrire data to SPI flash memory.
  *
  * @param[in] *data:    Pointer to the data to be written
@@ -988,8 +946,7 @@ int8_t app_erase_flash_sectors(uint32_t starting_address, uint32_t size)
  *
  * @return  Number of bytes actually written
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 int32_t app_flash_write_data (uint8_t *data, uint32_t address, uint32_t size)
 {
 
@@ -1014,8 +971,7 @@ int32_t app_flash_write_data (uint8_t *data, uint32_t address, uint32_t size)
 }
 #endif
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Read data from a given starting address
  *
  * @param[in] *rd_data_ptr:  Points to the position the read data will be stored
@@ -1023,8 +979,7 @@ int32_t app_flash_write_data (uint8_t *data, uint32_t address, uint32_t size)
  * @param[in] size:          Size of the data to be read
  *
  * @return  Number of read bytes or error code
- ****************************************************************************************
- */
+******************************************************************************************/
 int app_read_ext_mem( uint8_t *rd_data_ptr, uint32_t address, uint32_t size )
 {
     int ret = -1;

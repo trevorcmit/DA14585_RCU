@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file proxm_task.c
  *
@@ -8,20 +7,16 @@
  * Copyright (C) RivieraWaves 2009-2015
  *
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @addtogroup PROXMTASK
  * @{
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /*
  * INCLUDE FILES
- ****************************************************************************************
- */
+******************************************************************************************/
 #include "rwip_config.h"
 
 #if (BLE_PROX_MONITOR)
@@ -53,19 +48,16 @@ const struct prf_char_def proxm_svc_char[PROXM_SVC_NB][PROXM_SVCS_CHAR_NB] =  {
 
 /*
  * FUNCTION DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Enable the Proximity Monitor role, used after connection.
  * @param[in] msgid     Id of the message received.
  * @param[in] param     Pointer to the parameters of the message.
  * @param[in] dest_id   ID of the receiving task instance
  * @param[in] src_id    ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int proxm_enable_req_handler(ke_msg_id_t const msgid,
                                     struct proxm_enable_req const *param,
                                     ke_task_id_t const dest_id,
@@ -119,8 +111,7 @@ static int proxm_enable_req_handler(ke_msg_id_t const msgid,
     return (KE_MSG_CONSUMED);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the @ref PROXM_RD_REQ message.
  * Request to read the LLS alert level.
  * @param[in] msgid Id of the message received (probably unused).
@@ -128,8 +119,7 @@ static int proxm_enable_req_handler(ke_msg_id_t const msgid,
  * @param[in] dest_id ID of the receiving task instance (probably unused).
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int proxm_rd_req_handler(ke_msg_id_t const msgid,
                                   struct proxm_rd_req const *param,
                                   ke_task_id_t const dest_id,
@@ -197,8 +187,7 @@ static int proxm_rd_req_handler(ke_msg_id_t const msgid,
     return (KE_MSG_CONSUMED);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the @ref PROXM_WR_ALERT_LVL_REQ message.
  * Request to write either the LLS or IAS alert levels.
  * @param[in] msgid Id of the message received (probably unused).
@@ -206,8 +195,7 @@ static int proxm_rd_req_handler(ke_msg_id_t const msgid,
  * @param[in] dest_id ID of the receiving task instance (probably unused).
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int proxm_wr_alert_lvl_req_handler(ke_msg_id_t const msgid,
                                           struct proxm_wr_alert_lvl_req const *param,
                                           ke_task_id_t const dest_id,
@@ -279,8 +267,7 @@ static int proxm_wr_alert_lvl_req_handler(ke_msg_id_t const msgid,
     return (KE_MSG_CONSUMED);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the @ref GATTC_SDP_SVC_IND_HANDLER message.
  * The handler stores the found service details for service discovery.
  * @param[in] msgid Id of the message received (probably unused).
@@ -288,8 +275,7 @@ static int proxm_wr_alert_lvl_req_handler(ke_msg_id_t const msgid,
  * @param[in] dest_id ID of the receiving task instance (probably unused).
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int gattc_sdp_svc_ind_handler(ke_msg_id_t const msgid,
                                              struct gattc_sdp_svc_ind const *ind,
                                              ke_task_id_t const dest_id,
@@ -342,8 +328,7 @@ static int gattc_sdp_svc_ind_handler(ke_msg_id_t const msgid,
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the @ref GATTC_CMP_EVT message.
  * This generic event is received for different requests, so need to keep track.
  * @param[in] msgid Id of the message received (probably unused).
@@ -351,8 +336,7 @@ static int gattc_sdp_svc_ind_handler(ke_msg_id_t const msgid,
  * @param[in] dest_id ID of the receiving task instance (probably unused).
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int gattc_cmp_evt_handler(ke_msg_id_t const msgid,
                                 struct gattc_cmp_evt const *param,
                                 ke_task_id_t const dest_id,
@@ -453,8 +437,7 @@ static int gattc_cmp_evt_handler(ke_msg_id_t const msgid,
     return (KE_MSG_CONSUMED);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the @ref GATTC_READ_IND message.
  * Generic event received after every simple read command sent to peer server.
  * @param[in] msgid Id of the message received (probably unused).
@@ -462,8 +445,7 @@ static int gattc_cmp_evt_handler(ke_msg_id_t const msgid,
  * @param[in] dest_id ID of the receiving task instance (probably unused).
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int gattc_read_ind_handler(ke_msg_id_t const msgid,
                                     struct gattc_read_ind const *param,
                                     ke_task_id_t const dest_id,
@@ -491,8 +473,7 @@ static int gattc_read_ind_handler(ke_msg_id_t const msgid,
 
 /*
  * GLOBAL VARIABLE DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /// Default State handlers definition
 const struct ke_msg_handler proxm_default_state[] =

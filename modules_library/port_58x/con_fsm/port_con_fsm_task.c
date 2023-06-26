@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * \file port_con_fsm_task.c
  *
@@ -11,11 +10,9 @@
  *
  * <bluetooth.support@diasemi.com>
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
- /**
- ****************************************************************************************
+ /*****************************************************************************************
  * \addtogroup APP_UTILS
  * \{
  * \addtogroup BONDING
@@ -30,8 +27,7 @@
 
 /*
  * INCLUDE FILES
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #include <port_con_fsm.h>
 #include <app_con_fsm_config.h>
@@ -75,13 +71,11 @@ void port_con_fsm_alt_pair_timer_handler(void)
 #if (RWBLE_SW_VERSION_MAJOR >= 8)
     // Privacy is not handled yet
 #else
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief  The Privacy flag has been altered by the remote host
  *
  * \param[in] param
- ****************************************************************************************
- */                                    
+******************************************************************************************/                                    
 static void port_con_fsm_updated_privacy_ind_handler(void const *param)
 {
     // 1. If disabled, use the public address in advertising
@@ -97,13 +91,11 @@ static void port_con_fsm_updated_privacy_ind_handler(void const *param)
     }
 }    
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief  The host updated the reconnection address
  *
  * \param[in] param
- ****************************************************************************************
- */   
+******************************************************************************************/   
 static void port_con_fsm_updated_recon_addr_ind_handler(void const *param)
 {
     if (con_fsm_params.has_privacy) {
@@ -112,13 +104,11 @@ static void port_con_fsm_updated_recon_addr_ind_handler(void const *param)
 }
 #endif
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief  The Client Char Config of Service Changed has been updated
  *
  * \param[in] param
- ****************************************************************************************
- */ 
+******************************************************************************************/ 
 static void port_con_fsm_service_changed_cfg_ind_handler(void const *param)
 {
     struct gattc_svc_changed_cfg *ind = (struct gattc_svc_changed_cfg *)param;
@@ -127,8 +117,7 @@ static void port_con_fsm_service_changed_cfg_ind_handler(void const *param)
     port_alt_pair_store_ccc(ATT_CHAR_SERVICE_CHANGED, 0, ind->ind_cfg);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief   Called when the Service Changed indication has been successfully received by the Host
  *          
  * \param[in] param

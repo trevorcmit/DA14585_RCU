@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file attm_db.h
  *
@@ -8,14 +7,12 @@
  * Copyright (C) RivieraWaves 2009-2014
  *
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #ifndef ATTM_DB_H_
 #define ATTM_DB_H_
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @addtogroup ATTDB Database
  * @ingroup ATTM
  * @brief Attribute Protocol Database
@@ -27,13 +24,11 @@
  *
  * @{
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /*
  * INCLUDE FILES
- ****************************************************************************************
- */
+******************************************************************************************/
 #include "rwip_config.h"
 #if (BLE_ATTS)
 #include <stdio.h>
@@ -46,8 +41,7 @@
 
 /*
  * DEFINES
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /// update attribute permission on specific handle
 #define ATTMDB_UPDATE_PERM(handle, access, right)\
@@ -60,11 +54,9 @@
 
 /*
  * TYPE DEF
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Add a service in database.
  *
  * According to service start handle and number of attribute, ATTM DB allocate a set of
@@ -81,14 +73,12 @@
  *  - @ref ATT_ERR_NO_ERROR: If service allocation succeeds.
  *  - @ref ATT_ERR_INVALID_HANDLE: If start_hdl given in parameter or UUIDs value invalid
  *  - @ref ATT_ERR_INSUFF_RESOURCE: There is not enough memory to allocate service buffer.
- ****************************************************************************************
- */
+******************************************************************************************/
 uint8_t attmdb_add_service(struct gattm_svc_desc* svc_desc);
 
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Clear database
  *
  * For debug purpose only, this function clear the database and unalloc all services
@@ -96,24 +86,20 @@ uint8_t attmdb_add_service(struct gattm_svc_desc* svc_desc);
  *
  * This function shall be used only for qualification and tests in order to manually
  * change database without modifying software.
- ****************************************************************************************
- */
+******************************************************************************************/
 void attmdb_destroy(void);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *  @brief Search in database from which service attribute handle comes from.
  *
  * @param[in] handle Attribute handle.
  *
  * @return Services that contains attribute handle; NULL if handle not available in
  *         database.
- ****************************************************************************************
- */
+******************************************************************************************/
 struct attm_svc * attmdb_get_service(uint16_t handle);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *  @brief Search in database Attribute pointer using attribute handle.
  *
  * @param[in]  handle   Attribute handle.
@@ -122,12 +108,10 @@ struct attm_svc * attmdb_get_service(uint16_t handle);
  * @return Command status code:
  *  - @ref ATT_ERR_NO_ERROR: If attribute found.
  *  - @ref ATT_ERR_INVALID_HANDLE: If No Attribute found
- ****************************************************************************************
- */
+******************************************************************************************/
 uint8_t attmdb_get_attribute(uint16_t handle, struct attm_elmt*elmt);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Retrieve attribute at or after specified handle
  *
  * Retrieve first attribute with handle >= parameter handle.
@@ -139,24 +123,20 @@ uint8_t attmdb_get_attribute(uint16_t handle, struct attm_elmt*elmt);
  * @return Command status code:
  *  - @ref ATT_ERR_NO_ERROR: If attribute found.
  *  - @ref ATT_ERR_INVALID_HANDLE: If No Attribute found
- ****************************************************************************************
- */
+******************************************************************************************/
 uint8_t attmdb_get_next_att(uint16_t * handle, struct attm_elmt*elmt);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * Check if attribute element UUID is equals to uuid given in parameter.
  *
  * @param elmt     Attribute element that can be a UUID 16 or 128 bits
  * @param uuid16   UUID 16 bits to compare
  *
  * @return True if UUIDs matches, False else.
- ****************************************************************************************
- */
+******************************************************************************************/
 bool attmdb_uuid16_comp(struct attm_elmt *elmt, uint16_t uuid16);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Update attribute value
  *
  * Updating attribute value do not trigger any notification or indication, this shall be
@@ -175,12 +155,10 @@ bool attmdb_uuid16_comp(struct attm_elmt *elmt, uint16_t uuid16);
  *  - @ref ATT_ERR_INVALID_ATTRIBUTE_VAL_LEN: If new value length exceeds maximum attribute
  *                              value length.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 uint8_t attmdb_att_set_value(uint16_t handle, att_size_t length, att_size_t offset, uint8_t* value);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Retrieve attribute value Max Length
  *
  * @param[in]  elmt    Attribute element information
@@ -189,12 +167,10 @@ uint8_t attmdb_att_set_value(uint16_t handle, att_size_t length, att_size_t offs
  * @return Command status code:
  *  - @ref ATT_ERR_NO_ERROR: If request succeeds
  *  - @ref ATT_ERR_REQUEST_NOT_SUPPORTED: If attribute is read only
- ****************************************************************************************
- */
+******************************************************************************************/
 uint8_t attmdb_get_max_len(struct attm_elmt* elmt, att_size_t* length);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Retrieve attribute value
 
  *
@@ -206,13 +182,11 @@ uint8_t attmdb_get_max_len(struct attm_elmt* elmt, att_size_t* length);
  *  - @ref ATT_ERR_NO_ERROR: If request succeeds
  *  - @ref ATT_ERR_INVALID_HANDLE: If handle doesn't exist in database
  *  - @ref ATT_ERR_REQUEST_NOT_SUPPORTED: If attribute data not present in database
- ****************************************************************************************
- */
+******************************************************************************************/
 uint8_t attmdb_get_value(uint16_t handle, att_size_t* length, uint8_t** value);
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Retrieve attribute UUID
  *
  * @param[in]  elmt     Attribute information.
@@ -224,12 +198,10 @@ uint8_t attmdb_get_value(uint16_t handle, att_size_t* length, uint8_t** value);
  * @return Command status code:
  *  - @ref ATT_ERR_NO_ERROR: If request succeeds
  *  - @ref ATT_ERR_INVALID_HANDLE: If handle doesn't exist in database
- ****************************************************************************************
- */
+******************************************************************************************/
 uint8_t attmdb_get_uuid(struct attm_elmt *elmt, uint8_t* uuid_len, uint8_t* uuid, bool srv_uuid, bool air);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Update attribute permission
  *
  * @param[in] handle Attribute handle.
@@ -240,12 +212,10 @@ uint8_t attmdb_get_uuid(struct attm_elmt *elmt, uint8_t* uuid_len, uint8_t* uuid
  *  - @ref ATT_ERR_NO_ERROR: If request succeeds
  *  - @ref ATT_ERR_INVALID_HANDLE: If handle doesn't exist in database
  *  - @ref ATT_ERR_REQUEST_NOT_SUPPORTED: If attribute permission is fixed
- ****************************************************************************************
- */
+******************************************************************************************/
 uint8_t attmdb_att_set_permission(uint16_t handle, att_perm_type perm);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Retrieve attribute permission
  * If access mask is set, service authentication or encryption key size value can be loaded.
  *
@@ -258,12 +228,10 @@ uint8_t attmdb_att_set_permission(uint16_t handle, att_perm_type perm);
  * @return Command status code:
  *  - @ref ATT_ERR_NO_ERROR: If request succeeds
  *  - @ref ATT_ERR_INVALID_HANDLE: If handle doesn't exist in database
- ****************************************************************************************
- */
+******************************************************************************************/
 uint8_t attmdb_att_get_permission(uint16_t handle, att_perm_type* perm, att_perm_type access_mask, struct attm_elmt *elmt);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Reset some permissions bit in the Handle passed as parameter.
  *
  * @param[in] handle      Attribute handle.
@@ -275,12 +243,10 @@ uint8_t attmdb_att_get_permission(uint16_t handle, att_perm_type* perm, att_perm
  *  - @ref ATT_ERR_NO_ERROR: If request succeeds
  *  - @ref ATT_ERR_INVALID_HANDLE: If handle doesn't exist in database
  *  - @ref ATT_ERR_REQUEST_NOT_SUPPORTED: If attribute permission is fixed
- ****************************************************************************************
- */
+******************************************************************************************/
 uint8_t attmdb_att_update_perm(uint16_t handle, att_perm_type access_mask, att_perm_type perm);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Update attribute service permission
  *
  * @param[in] handle Attribute handle.
@@ -289,12 +255,10 @@ uint8_t attmdb_att_update_perm(uint16_t handle, att_perm_type access_mask, att_p
  * @return Command status code:
  *  - @ref ATT_ERR_NO_ERROR: If request succeeds
  *  - @ref ATT_ERR_INVALID_HANDLE: If handle doesn't exist in database
- ****************************************************************************************
- */
+******************************************************************************************/
 uint8_t attmdb_svc_set_permission(uint16_t handle, uint8_t perm);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Retrieve attribute service permission
  *
  * @param[in]  handle Attribute handle.
@@ -303,43 +267,35 @@ uint8_t attmdb_svc_set_permission(uint16_t handle, uint8_t perm);
  * @return Command status code:
  *  - @ref ATT_ERR_NO_ERROR: If request succeeds
  *  - @ref ATT_ERR_INVALID_HANDLE: If handle doesn't exist in database
- ****************************************************************************************
- */
+******************************************************************************************/
 uint8_t attmdb_svc_get_permission(uint16_t handle, uint8_t* perm);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Initialize Attribute Database (clear it)
  *
  * @param[in] reset  true if it's requested by a reset; false if it's boot initialization
- ****************************************************************************************
- */
+******************************************************************************************/
 void attmdb_init(bool reset);
 
 #if (BLE_DEBUG)
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Retrieve number of services.
  *
  * @return number of services
- ****************************************************************************************
- */
+******************************************************************************************/
 uint8_t attmdb_get_nb_svc(void);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Retrieve services informations
  *
  * @param[in] svc_info Services information array to update
- ****************************************************************************************
- */
+******************************************************************************************/
 void attmdb_get_svc_info(struct gattm_svc_info* svc_info);
 #endif /* (BLE_DEBUG) */
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Function use to ease service database creation.
  * Use @see attmdb_add_service function of attmdb module to create service database,
  * then use @see attmdb_add_attribute function of attmdb module to create attributes
@@ -372,13 +328,11 @@ void attmdb_get_svc_info(struct gattm_svc_info* svc_info);
  *
  * If there is not enough memory to allocate service buffer, platform reset will be
  * performed with RESET_MEM_ALLOC_FAIL error code.
- ****************************************************************************************
- */
+******************************************************************************************/
 uint8_t attm_svc_create_db(uint16_t *shdl, uint16_t uuid, uint8_t *cfg_flag, uint8_t max_nb_att,
                            uint8_t *att_tbl, ke_task_id_t const dest_id,
                            const struct attm_desc *att_db, uint8_t svc_perm);
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Function use to verify if several services can be allocated on a contiguous
  * handle range. If this command succeed, it means that service allocation will succeed.
  *
@@ -391,8 +345,7 @@ uint8_t attm_svc_create_db(uint16_t *shdl, uint16_t uuid, uint8_t *cfg_flag, uin
  * @return Command status code:
  *  - @ref ATT_ERR_NO_ERROR: If service allocation succeeds.
  *  - @ref ATT_ERR_INVALID_HANDLE: If start_hdl given in parameter or UUIDs value invalid
- ****************************************************************************************
- */
+******************************************************************************************/
 uint8_t attmdb_reserve_handle_range(uint16_t* start_hdl, uint8_t nb_att);
 
 

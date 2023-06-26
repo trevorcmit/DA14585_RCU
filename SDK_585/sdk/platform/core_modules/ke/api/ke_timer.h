@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file ke_timer.h
  *
@@ -8,22 +7,19 @@
  * Copyright (C) RivieraWaves 2009-2014
  *
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #ifndef _KE_TIMER_H_
 #define _KE_TIMER_H_
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @defgroup TIMER BT Time
  * @ingroup KERNEL
  * @brief Timer management module.
  *
  * This module implements the functions used for managing kernel timers.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #include "rwip_config.h"          // stack configuration
 #include "ke_msg.h"               // messaging definition
@@ -31,13 +27,11 @@
 
 /*
  * DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /*
  * TYPE DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /// Timer Object
 struct ke_timer
@@ -55,19 +49,15 @@ struct ke_timer
 
 /*
  * FUNCTION PROTOTYPES
- ****************************************************************************************
- */
+******************************************************************************************/
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Initialize Kernel timer module.
- ****************************************************************************************
- */
+******************************************************************************************/
 void ke_timer_init(void);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Set a timer.
  *
  * The function first cancel the timer if it is already existing, then
@@ -82,12 +72,10 @@ void ke_timer_init(void);
  * @param[in] timer_id      Timer identifier (message identifier type).
  * @param[in] task_id       Task identifier which will be notified
  * @param[in] delay         Delay in time units.
- ****************************************************************************************
- */
+******************************************************************************************/
 void ke_timer_set(ke_msg_id_t const timer_id, ke_task_id_t const task, uint32_t delay);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Remove an registered timer.
  *
  * This function search for the timer identified by its id and its task id.
@@ -95,25 +83,21 @@ void ke_timer_set(ke_msg_id_t const timer_id, ke_task_id_t const task, uint32_t 
  *
  * @param[in] timer_id  Timer identifier.
  * @param[in] task      Task identifier.
- ****************************************************************************************
- */
+******************************************************************************************/
 void ke_timer_clear(ke_msg_id_t const timerid, ke_task_id_t const task);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Checks if a requested timer is active.
  *
  * This function pops the first timer from the timer queue and notifies the appropriate
  * task by sending a kernel message. If the timer is periodic, it is set again;
  * if it is one-shot, the timer is freed. The function checks also the next timers
  * and process them if they have expired or are about to expire.
- ****************************************************************************************
- */
+******************************************************************************************/
 bool ke_timer_active(ke_msg_id_t const timer_id, ke_task_id_t const task_id);
 
 #if (DEEP_SLEEP)
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Check if sleep mode is possible
  *
  * The function takes as argument the allowed sleep duration that must not be increased.
@@ -126,8 +110,7 @@ bool ke_timer_active(ke_msg_id_t const timer_id, ke_task_id_t const task_id);
  * @param[in]     wakeup_delay     Delay for system wake-up (in slot of 625us)
  *
  * @return true if sleep is allowed, false otherwise
- ****************************************************************************************
- */
+******************************************************************************************/
 bool ke_timer_sleep_check(uint32_t *sleep_duration, uint32_t wakeup_delay);
 #endif //DEEP_SLEEP
 

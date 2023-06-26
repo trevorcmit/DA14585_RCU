@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file lld_evt.h
  *
@@ -8,14 +7,12 @@
  * Copyright (C) RivieraWaves 2009-2014
  *
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #ifndef LLD_EVT_H_
 #define LLD_EVT_H_
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @addtogroup LLDEVT
  * @ingroup LLD
  * @brief Event scheduling functions
@@ -23,13 +20,11 @@
  * This module implements the primitives used for event scheduling
  *
  * @{
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /*
  * INCLUDE FILES
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #include <stdint.h>
 #include <stdbool.h>
@@ -42,8 +37,7 @@
 
 /*
  * MACROS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /// Get BLE Event environment address from an element
 #define LLD_EVT_ENV_ADDR_GET(elt)        \
@@ -52,8 +46,7 @@
 
 /*
  * DEFINES
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /// Size of the LLD event table. It shall be equal to the max number of supported
 /// connections * 2 + 1 for the scanning/advertising
@@ -118,8 +111,7 @@
 #define LLD_EVT_FLAG_EVT_TO_HOST         (LLD_EVT_FLAG_APFM << 1)
 /*
  * MACROS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /// Set Event status flag
 #define LLD_EVT_FLAG_SET(evt, flag)          \
@@ -133,8 +125,7 @@
 
 /*
  * ENUMERATIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 enum lld_evt_mode
 {
@@ -181,8 +172,7 @@ enum lld_evt_cs_format
 
 /*
  * TYPE DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /// Synchronization counters
 struct lld_evt_anchor
@@ -316,39 +306,33 @@ struct lld_evt_deferred_tag
 };
 /*
  * GLOBAL VARIABLE DECLARATIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /// Environment of the LLDEVT module
 extern struct lld_evt_env_tag lld_evt_env;
 
 /*
  * FUNCTION DECLARATIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Get sleep clock accuracy
  *
  * @return The sleep clock accuracy as defined in the standard
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE uint8_t lld_evt_sca_get(void)
 {
     // Read sleep clock accuracy from the environment
     return (lld_evt_env.sca);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Get current time value from HW
  *
  * @return The current time in units of 625us
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE uint32_t lld_evt_time_get(void)
 {
     // Sample the base time count
@@ -358,8 +342,7 @@ __INLINE uint32_t lld_evt_time_get(void)
     return (ble_basetimecnt_get());
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Compare absolute times
  *
  * The absolute time difference between time1 and time2 is supposed to be less than the
@@ -369,24 +352,21 @@ __INLINE uint32_t lld_evt_time_get(void)
  * @param[in] time2 Second time to compare
  *
  * @return true if time1 is smaller than time2.
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE bool lld_evt_time_cmp(uint32_t time1,
                                uint32_t time2)
 {
     return (((time1 - time2) & BLE_BASETIMECNT_MASK) > MAX_INTERVAL_TIME);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Check if time passed as parameter is in the past
  *
  * @param[in] time Time to be compare with current time to see if it in the past
  *
  * @return true if time is in the past, false otherwise
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE bool lld_evt_time_past(uint32_t time)
 {
     // Compare time and current time
@@ -394,23 +374,20 @@ __INLINE bool lld_evt_time_past(uint32_t time)
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief get the connection event counter for a dedicated event
  *
  * @param[in] evt   Pointer to the event for which the counter is requested
  *
  * @return The connection event counter
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE uint16_t lld_evt_con_count_get(struct lld_evt_tag *evt)
 {
     return (evt->counter - evt->missed_cnt);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Update the TX power field of the event passed as parameter with the requested
  * value of TX power
  *
@@ -419,16 +396,14 @@ __INLINE uint16_t lld_evt_con_count_get(struct lld_evt_tag *evt)
  *
  * @return The computed compensation
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE void lld_evt_txpwr_update(struct lld_evt_tag *evt, uint8_t tx_pwr)
 {
     // Update Power in the event structure
     evt->tx_pwr = tx_pwr;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Go through the current event list to find the one corresponding to the
  * connection handle passed as parameter
  *
@@ -436,12 +411,10 @@ __INLINE void lld_evt_txpwr_update(struct lld_evt_tag *evt, uint8_t tx_pwr)
  *
  * @return The pointer to the found event (NULL if no event is attached to this handle)
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 struct ea_elt_tag *lld_evt_conhdl2elt(uint16_t conhdl);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Computes the maximum drift according to the master clock accuracy and the delay
  * passed as parameters
  *
@@ -451,12 +424,10 @@ struct ea_elt_tag *lld_evt_conhdl2elt(uint16_t conhdl);
  * @return The value of the RX window size formatted for the RXWINCNTL field of the
  * control structure
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 uint16_t lld_evt_drift_compute(uint16_t delay, uint8_t master_sca);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Create a connection or scanning event and chain it in the scheduling and
  * interval lists
  *
@@ -470,8 +441,7 @@ uint16_t lld_evt_drift_compute(uint16_t delay, uint8_t master_sca);
  *
  * @return The pointer to the event just created
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 struct ea_elt_tag* lld_evt_scan_create(uint16_t handle,
                                        uint16_t duration,
                                        uint16_t mininterval,
@@ -484,8 +454,7 @@ struct ea_elt_tag *lld_evt_scan_connect_create(uint16_t scan_handle,
                                        uint16_t connect_mininterval,
                                        uint16_t connect_maxinterval,
                                        uint16_t connect_latency);
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Create an advertising event and chain it in the scheduling list
  *
  * @param[in] handle      Connection handle for which the event is created (LLD_ADV_HDL if
@@ -497,8 +466,7 @@ struct ea_elt_tag *lld_evt_scan_connect_create(uint16_t scan_handle,
  *
  * @return The pointer to the event just created
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 struct ea_elt_tag *lld_evt_adv_create(uint16_t handle,
                                       uint16_t mininterval,
                                       uint16_t maxinterval,
@@ -506,8 +474,7 @@ struct ea_elt_tag *lld_evt_adv_create(uint16_t handle,
                                       uint8_t adv_type);
 
 #if (BLE_CENTRAL || BLE_PERIPHERAL)
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Create a connection event for parameter update
  *
  * @param[in]  evt_old     Pointer to the current connection event
@@ -519,8 +486,7 @@ struct ea_elt_tag *lld_evt_adv_create(uint16_t handle,
  *
  * @return The pointer to the new event created (used after instant)
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 struct ea_elt_tag *lld_evt_update_create(struct ea_elt_tag *evt_old,
                                          uint16_t ce_len,
                                          uint16_t mininterval,
@@ -528,8 +494,7 @@ struct ea_elt_tag *lld_evt_update_create(struct ea_elt_tag *evt_old,
                                          uint16_t latency,
                                          struct lld_evt_update_tag *upd_par);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Create a slave connection event
  *
  * @param[in]  con_par     Pointer to the decoded connection parameters
@@ -539,50 +504,42 @@ struct ea_elt_tag *lld_evt_update_create(struct ea_elt_tag *evt_old,
  *
  * @return The pointer to the slave event created
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 struct ea_elt_tag* lld_evt_move_to_slave(struct llc_create_con_req_ind const *con_par,
                                          struct llm_pdu_con_req_rx *con_req_pdu,
                                          struct ea_elt_tag *elt_adv,
                                          uint16_t conhdl);
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Indicates to the LLD the occurrence of a connection parameter update.
  *
  * @param[in]  param_pdu   Pointer to the connection parameter update PDU
  * @param[in]  evt_old     Pointer to the current event used for this connection
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 void lld_evt_slave_update(struct llcp_con_up_req const *param_pdu,
                           struct ea_elt_tag *elt_old);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Indicates to the LLD to move from initiating to master connected state.
  *
  * @param[in]  evt      Pointer to the event used for initiation
  * @param[in]  conhdl   Handle of the new master connection
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 struct ea_elt_tag* lld_evt_move_to_master(struct ea_elt_tag *elt_scan, uint16_t conhdl, struct llc_create_con_req_ind const *pdu_tx);
 #endif //(BLE_CENTRAL || BLE_PERIPHERAL)
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Delete an event by removing it from all the lists it is in
  *
  * @param[in] evt        Event to be deleted
  * @param[in] abort_bit  Bit of the BLE core controlling the abort for the event
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 //void lld_evt_delete(struct lld_evt_tag *evt, uint32_t abort_bit);
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Program the next occurrence of the slave event passed as parameter
  * In case the slave event passed as parameter is far enough in the future (e.g. due to
  * slave latency), the event is canceled and replaced with the earliest possible one. This
@@ -590,93 +547,75 @@ struct ea_elt_tag* lld_evt_move_to_master(struct ea_elt_tag *elt_scan, uint16_t 
  * soon as possible even if slave latency is used.
  *
  * @param[in] elt        Element to be deleted
- ****************************************************************************************
- */
+******************************************************************************************/
 void lld_evt_schedule_next(struct ea_elt_tag *elt);
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Initialization of the BLE event scheduler
  *
  * This function initializes the lists used for event scheduling.
  *
  * @param[in] reset  true if it's requested by a reset; false if it's boot initialization
- ****************************************************************************************
- */
+******************************************************************************************/
 void lld_evt_init(bool reset);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Initialization of BLE event environement
- ****************************************************************************************
- */
+******************************************************************************************/
 void lld_evt_init_evt(struct lld_evt_tag *evt);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handle insertion of an element in Event Arbitrer list of elements
- ****************************************************************************************
- */
+******************************************************************************************/
 void lld_evt_elt_insert(struct ea_elt_tag *elt);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handle removing of an element in Event Arbitrer list of elements
- ****************************************************************************************
- */
+******************************************************************************************/
 bool lld_evt_elt_delete(struct ea_elt_tag *elt, bool flush_data);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Kernel event scheduled when BLE events has to be programmed in the HW
  *
  * This function is a deferred action of the BLE wake up interrupt. It programs the data
  * Tx/Rx exchange in the control structure corresponding to the event, and programs the
  * target time of the next event to be scheduled.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 void lld_evt_schedule(struct ea_elt_tag *elt);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Kernel event scheduled when a BLE event has to be handled by the HW
  *
  * This function is a deferred action of the BLE end of event interrupt. It flushes the
  * data Tx/Rx exchange corresponding to the event, and programs the
  * target time of the next event to be scheduled.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 void lld_evt_end(struct ea_elt_tag *elt);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Kernel event scheduled when a BLE RX has to be handled by the HW
  *
  * This function is a deferred action of the BLE RX interrupt. It flushes the
  * data Tx/Rx exchange corresponding to the event.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 void lld_evt_rx(struct ea_elt_tag *elt);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief End of sleep interrupt handler
  *
  * This function is called under interrupt when an end of sleep interrupt is generated by
  * the BLE core. It sets the associated kernel event in order to perform the handling as a
  * deferred action in background context.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 void lld_evt_start_isr(void);
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief End of event/frame interrupt handler
  *
  * This function is called under interrupt when an end of event/frame interrupt is
@@ -684,53 +623,44 @@ void lld_evt_start_isr(void);
  *
  * param[in] apfm  - Indicate if end of event is due to an apfm interrupt
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 void lld_evt_end_isr(bool apfm);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief RX interrupt handler
  *
  * This function is called under interrupt when an RX interrupt is generated by
  * the BLE core. It sets the associated kernel event in order to perform the handling as a
  * deferred action in background context.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 void lld_evt_rx_isr(void);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief General purpose timer interrupt handler
  *
  * This function is called under interrupt when a general purpose timer interrupt is
  * generated by the BLE core. It sets the associated kernel event in order to perform the
  * handling as a deferred action in background context.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 void lld_evt_timer_isr(void);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Request to program a channel map update
  *
  * @param[in] evt     Pointer to the event for which the update has to be programmed
  *
  * @return The instant computed for the update
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 uint16_t lld_evt_ch_map_update_req(struct lld_evt_tag *evt);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Check if event has an alternative event, if yes, delete it.
  *
  * @param[in] evt          Pointer to the event which can have alternative event
- ****************************************************************************************
- */
+******************************************************************************************/
 void lld_delete_alt_evt(struct lld_evt_tag * evt);
 
 

@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file app_mid.h
  *
@@ -11,23 +10,19 @@
  *
  * <bluetooth.support@diasemi.com> and contributors.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #ifndef _APP_MID_H_
 #define _APP_MID_H_
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @addtogroup APP
  * @{
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /*
  * INCLUDE FILES
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #include "rwip_config.h"             // SW configuration
 #include "app_task.h"                // Application task Definition
@@ -40,8 +35,7 @@
 
 /*
  * DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 enum address_type
 {
@@ -53,16 +47,13 @@ enum address_type
 
 /*
  * FUNCTION DECLARATIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Create a disconnect message.
  * @param[in] conidx The connection id.
  * @return The pointer to the created message.
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE struct gapc_disconnect_cmd* app_disconnect_msg_create(uint8_t conidx)
 {
     struct gapc_disconnect_cmd *cmd = KE_MSG_ALLOC(GAPC_DISCONNECT_CMD,
@@ -73,25 +64,21 @@ __INLINE struct gapc_disconnect_cmd* app_disconnect_msg_create(uint8_t conidx)
     return cmd;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Send a disconnect message.
  * @param[in] gapc_disconnect_cmd    Pointer to the disconnect message to send.
  * @return void
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE void app_disconnect_msg_send(struct gapc_disconnect_cmd *cmd)
 {
     ke_msg_send(cmd);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Create a connect confirmation message.
  * @param[in] conidx    The connection id.
  * @return The pointer to the created message.
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE struct gapc_connection_cfm* app_connect_cfm_msg_create(uint8_t conidx)
 {
     // confirm connection
@@ -103,24 +90,20 @@ __INLINE struct gapc_connection_cfm* app_connect_cfm_msg_create(uint8_t conidx)
     return cfm;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Send a connect confirmation message.
  * @param[in] gapc_connection_cfm    Pointer to the connect confirmation message to send.
  * @return void
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE void app_connect_cfm_msg_send(struct gapc_connection_cfm* cmd)
 {
      ke_msg_send(cmd);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Create a start advertise message.
  * @return The pointer to the created message.
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE struct gapm_start_advertise_cmd* app_advertise_start_msg_create(void)
 {
     struct gapm_start_advertise_cmd* cmd = KE_MSG_ALLOC(GAPM_START_ADVERTISE_CMD,
@@ -131,24 +114,20 @@ __INLINE struct gapm_start_advertise_cmd* app_advertise_start_msg_create(void)
     return cmd;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Send an advertise_start_msg message.
  * @param[in] gapm_start_advertise_cmd    Pointer to the advertise start message to send.
  * @return void
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE void app_advertise_start_msg_send(struct gapm_start_advertise_cmd* cmd)
 {
     ke_msg_send(cmd);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Create a cancel message.
  * @return The pointer to the created message.
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE struct gapm_cancel_cmd* app_gapm_cancel_msg_create(void)
 {
     struct gapm_cancel_cmd* cmd = KE_MSG_ALLOC(GAPM_CANCEL_CMD,
@@ -160,48 +139,40 @@ __INLINE struct gapm_cancel_cmd* app_gapm_cancel_msg_create(void)
     return cmd;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Send a cancellation message.
  * @param[in] gapm_cancel_cmd    Pointer to the cancellation message to send.
  * @return void
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE void app_gapm_cancel_msg_send(struct gapm_cancel_cmd* cmd)
 {
     ke_msg_send(cmd);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Create an advertise stop message.
  * @return The pointer to the created message.
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE struct gapm_cancel_cmd* app_advertise_stop_msg_create(void)
 {
     return app_gapm_cancel_msg_create();
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Send an advertise stop  message.
  * @param[in] gapm_cancel_cmd    Pointer to the advertise stop message to send.
  * @return void
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE void app_advertise_stop_msg_send(struct gapm_cancel_cmd* cmd)
 {
     app_gapm_cancel_msg_send(cmd);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Create a parameter update message.
  * @param[in] conidx    The connection id where the message should be sent.
  * @return The pointer to the created message.
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE  struct gapc_param_update_cmd* app_param_update_msg_create(uint8_t conidx)
 {
     struct gapc_param_update_cmd* cmd = KE_MSG_ALLOC(GAPC_PARAM_UPDATE_CMD,
@@ -214,24 +185,20 @@ __INLINE  struct gapc_param_update_cmd* app_param_update_msg_create(uint8_t coni
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Send a parameter update message.
  * @param[in] gapc_param_update_cmd    Pointer to the parameter update message to send.
  * @return void
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE void app_param_update_msg_send(struct gapc_param_update_cmd* cmd)
 {
     ke_msg_send(cmd);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Create an empty GAPM_START_CONNECTION_CMD message (connection message).
  * @return The pointer to the created message.
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE struct gapm_start_connection_cmd* app_connect_start_msg_create(void)
 {
     struct gapm_start_connection_cmd* cmd = KE_MSG_ALLOC_DYN(GAPM_START_CONNECTION_CMD,
@@ -243,25 +210,21 @@ __INLINE struct gapm_start_connection_cmd* app_connect_start_msg_create(void)
     return cmd;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Send a GAPM_START_CONNECTION_CMD message (connection start message).
  * @param[in] gapm_start_connection_cmd    Pointer to the GAPM_START_CONNECTION_CMD
  *                                         message to send.
  * @return void
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE  void app_connect_start_msg_send(struct gapm_start_connection_cmd* cmd)
 {
     ke_msg_send(cmd);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Create an empty GAPM_SET_DEV_CONFIG_CMD message (device configuration message).
  * @return The pointer to the created message.
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE  struct gapm_set_dev_config_cmd* app_gapm_configure_msg_create(void)
 {
     struct gapm_set_dev_config_cmd* cmd=KE_MSG_ALLOC(GAPM_SET_DEV_CONFIG_CMD,
@@ -274,50 +237,42 @@ __INLINE  struct gapm_set_dev_config_cmd* app_gapm_configure_msg_create(void)
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Send a gap manager configuration message.
  * @param[in] Pointer to the gap manager configuration message to send.
  * @return void
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE void app_gapm_configure_msg_send(struct gapm_set_dev_config_cmd* cmd)
 {
     ke_msg_send(cmd);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Create a gap bond confirmation message.
  * @param[in] conidx    The id of the connection.
  * @return The pointer to the created message.
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE struct gapc_bond_cfm* app_gapc_bond_cfm_msg_create(uint8_t conidx)
 {
     struct gapc_bond_cfm* cmd=KE_MSG_ALLOC(GAPC_BOND_CFM, KE_BUILD_ID(TASK_GAPC, conidx), TASK_APP, gapc_bond_cfm);
     return cmd;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Send a gap bond confirmation message.
  * @param[in] gapc_bond_cfm    Pointer to the gap bond confirmation message to send.
  * @return void
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE void app_gapc_bond_cfm_msg_send (struct gapc_bond_cfm* cmd)
 {
     ke_msg_send(cmd);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Create a GAPC_BOND_CFM pairing response message.
  * @param[in] conidx Connection index
  * @return The pointer to the created message
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE struct gapc_bond_cfm* app_gapc_bond_cfm_pairing_rsp_msg_create(uint8_t conidx)
 {
     struct gapc_bond_cfm* cmd = app_gapc_bond_cfm_msg_create(conidx);
@@ -326,25 +281,21 @@ __INLINE struct gapc_bond_cfm* app_gapc_bond_cfm_pairing_rsp_msg_create(uint8_t 
     return cmd;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Send a gap bond pairing message.
  * @param[in] gapc_bond_cfm    Pointer to the gap bond pairing message to send.
  * @return void
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE void app_gapc_bond_cfm_pairing_rsp_msg_send(struct gapc_bond_cfm* cmd)
 {
     ke_msg_send(cmd);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Create a gap bond temporary key exchange message.
  * @param[in] conidx    The id of the connection.
  * @return The pointer to the created message.
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE struct gapc_bond_cfm* app_gapc_bond_cfm_tk_exch_msg_create(uint8_t conidx)
 {
     struct gapc_bond_cfm* cmd = app_gapc_bond_cfm_msg_create(conidx);
@@ -352,25 +303,21 @@ __INLINE struct gapc_bond_cfm* app_gapc_bond_cfm_tk_exch_msg_create(uint8_t coni
     cmd->accept = 0x01;
     return cmd;
 }
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Send a gap bond temporary key exchange message.
  * @param[in] gapc_bond_cfm    Pointer to the gap bond temporary key exchange message to send.
  * @return void
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE void app_gapc_bond_cfm_tk_exch_msg_send(struct gapc_bond_cfm* cmd)
 {
     ke_msg_send(cmd);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Create CSRK exchange message.
  * @param[in] conidx    The id of the connection.
  * @return The pointer to the created message.
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE struct gapc_bond_cfm* app_gapc_bond_cfm_csrk_exch_msg_create(uint8_t conidx)
 {
     struct gapc_bond_cfm* cmd = app_gapc_bond_cfm_msg_create(conidx);
@@ -379,25 +326,21 @@ __INLINE struct gapc_bond_cfm* app_gapc_bond_cfm_csrk_exch_msg_create(uint8_t co
     return cmd;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Send a CSRK exchange message.
  * @param[in] gapc_bond_cfm    Pointer to the gap bond CSRK exchange message to send.
  * @return void
- ****************************************************************************************
- */
+******************************************************************************************/
  __INLINE void app_gapc_bond_cfm_csrk_exch_msg_send(struct gapc_bond_cfm* cmd)
 {
     ke_msg_send(cmd);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Create a gap bond Long Term Key (LTK) exchange message.
  * @param[in] conidx    The id of the connection.
  * @return The pointer to the created message.
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE struct gapc_bond_cfm* app_gapc_bond_cfm_ltk_exch_msg_create(uint8_t conidx)
 {
     struct gapc_bond_cfm* cmd = app_gapc_bond_cfm_msg_create(conidx);
@@ -406,51 +349,43 @@ __INLINE struct gapc_bond_cfm* app_gapc_bond_cfm_ltk_exch_msg_create(uint8_t con
     return cmd;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Send a gap bond ltk exchange message.
  * @param[in] gapc_bond_cfm    Pointer to the gap bond ltk exchange message to send.
  * @return void
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE void app_gapc_bond_cfm_ltk_exch_msg_send(struct gapc_bond_cfm* cmd)
 {
     ke_msg_send(cmd);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Create a gap encrypt confirmation message.
  * @param[in] conidx    The id of the connection.
  * @return The pointer to the created message.
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE struct gapc_encrypt_cfm* app_gapc_encrypt_cfm_msg_create(uint8_t conidx)
 {
     struct gapc_encrypt_cfm* cmd = KE_MSG_ALLOC(GAPC_ENCRYPT_CFM, KE_BUILD_ID(TASK_GAPC, conidx), TASK_APP, gapc_encrypt_cfm);
     return cmd;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Send a gap encrypt confirmation message.
  * @param[in] gapc_bond_cfm    Pointer to the gap encrypt confirmation message to send.
  * @return void
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE void app_gapc_encrypt_cfm_msg_send(struct gapc_bond_cfm* cmd)
 {
     ke_msg_send(cmd);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Create a gap security request message.
  * @param[in] conidx    The id of the connection.
  * @param[in] auth The authentication requirements.
  * @return The pointer to the created message.
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE struct gapc_security_cmd* app_gapc_security_request_msg_create(uint8_t conidx, enum gap_auth auth)
 {
     struct gapc_security_cmd * cmd = KE_MSG_ALLOC(GAPC_SECURITY_CMD,
@@ -461,24 +396,20 @@ __INLINE struct gapc_security_cmd* app_gapc_security_request_msg_create(uint8_t 
     return cmd;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Send a gap security request message.
  * @param[in] gapc_security_cmd    Pointer to the gap security request message to send.
  * @return void
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE  void app_gapc_security_request_msg_send(struct gapc_security_cmd* cmd)
 {
     ke_msg_send(cmd);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Create a gap manager reset message.
  * @return The pointer to the created message.
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE struct gapm_reset_cmd* app_gapm_reset_msg_create(void)
 {
         struct gapm_reset_cmd* cmd = KE_MSG_ALLOC(GAPM_RESET_CMD, TASK_GAPM, TASK_APP,
@@ -489,13 +420,11 @@ __INLINE struct gapm_reset_cmd* app_gapm_reset_msg_create(void)
         return cmd;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Send a gap manager reset message.
  * @param[in] gapm_reset_cmd    Pointer to the gap reset message to send.
  * @return void
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE void app_gapm_reset_msg_send (struct gapm_reset_cmd* cmd)
 {
  ke_msg_send(cmd);
@@ -503,26 +432,22 @@ __INLINE void app_gapm_reset_msg_send (struct gapm_reset_cmd* cmd)
 
 //--------------------------------OPERATIONS
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Send a gap manager reset operation.
  * @return void
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE void app_gapm_reset_op(void)
 {
     struct gapm_reset_cmd* cmd = app_gapm_reset_msg_create();
     app_gapm_reset_msg_send(cmd);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Disconnect from a given connection.
  * @param[in] conidx    The id of the given connection.
  * @param[in] reason    The reason for the disconnection.
  * @return void
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE void app_disconnect_op(uint8_t conidx, uint8_t reason)
 {
     struct gapc_disconnect_cmd *cmd = app_disconnect_msg_create(conidx);
@@ -530,15 +455,13 @@ __INLINE void app_disconnect_op(uint8_t conidx, uint8_t reason)
     ke_msg_send(cmd);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Confirm connection operation.
  * @param[in] conidx                    The id of the given connection.
  * @param[in] auth                      The authentication requirements (@see gap_auth).
  * @param[in] svc_changed_ind_enable    Service changed indication enable/disable.
  * @return void
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE void app_connect_confirm_op(uint8_t conidx, enum gap_auth auth, uint8_t svc_changed_ind_enable)
 {
     // confirm connection
@@ -550,8 +473,7 @@ __INLINE void app_connect_confirm_op(uint8_t conidx, enum gap_auth auth, uint8_t
     app_connect_cfm_msg_send(cfm);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Create advertising message for nonconnectable undirected event (ADV_NONCONN_IND).
  * @param[in] address_src_type          The source address type used during the
  *                                      advertising operation:
@@ -577,8 +499,7 @@ __INLINE void app_connect_confirm_op(uint8_t conidx, enum gap_auth auth, uint8_t
  * @return void
  * @note This function supports also the advertising with scan response (ADV_SCAN_IND), if
  *       the scan response data are NOT empty.
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE void app_advertise_non_connectable_start_op(enum gapm_own_addr address_src_type,
                                                      uint16_t interval,
                                                      uint8_t channel_map,
@@ -614,8 +535,7 @@ __INLINE void app_advertise_non_connectable_start_op(enum gapm_own_addr address_
     app_advertise_start_msg_send(cmd);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Create advertising message for connectable undirected event (ADV_IND).
  * @param[in] address_src_type          The source address type used during the
  *                                      advertising operation:
@@ -639,8 +559,7 @@ __INLINE void app_advertise_non_connectable_start_op(enum gapm_own_addr address_
  * @param[in] scan_response_data        Pointer to an array with the scan response data.
  * @param[in] scan_response_data_len    The length of the scan response data.
  * @return void
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE void app_advertise_undirected_start_op(enum gapm_own_addr address_src_type,
                                                 uint16_t interval,
                                                 uint8_t channel_map,
@@ -675,8 +594,7 @@ __INLINE void app_advertise_undirected_start_op(enum gapm_own_addr address_src_t
     app_advertise_start_msg_send(cmd);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Create advertising message for connectable directed event (ADV_DIRECT_IND). It
  *        supports the low duty cycle directed advertising mode.
  * @param[in] address_src_type          The source address type used during the
@@ -692,8 +610,7 @@ __INLINE void app_advertise_undirected_start_op(enum gapm_own_addr address_src_t
  *                                          - 0 = disabled
  *                                          - 1 = enabled
  * @return void
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE void app_advertise_directed_start_op(enum gapm_own_addr address_src_type,
                                               uint16_t interval,
                                               uint8_t channel_map,
@@ -724,12 +641,10 @@ __INLINE void app_advertise_directed_start_op(enum gapm_own_addr address_src_typ
     app_advertise_start_msg_send(cmd);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Stop the active advertise operation.
  * @return void
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE void app_advertise_stop_op(void)
 {
     // Disable Advertising
@@ -737,8 +652,7 @@ __INLINE void app_advertise_stop_op(void)
     app_advertise_stop_msg_send(cmd);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Send parameter update request message.
  * @param[in] conidx                      The connection id.
  * @param[in] intv_min                    The new preferred minimum connection interval
@@ -753,8 +667,7 @@ __INLINE void app_advertise_stop_op(void)
  * @param[in] connection_event_len_max    The new preferred maximum connection event length
  *                                        measured in 1.25 ms slots.
  * @return void
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE void app_param_update_op(uint8_t conidx,
                                   uint16_t intv_min,
                                   uint16_t intv_max,
@@ -775,8 +688,7 @@ __INLINE void app_param_update_op(uint8_t conidx,
     app_param_update_msg_send(cmd);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Send parameter update request message.
  * @param[in] conidx                      The connection id.
  * @param[in] intv_min_us                 The new preferred minimum connection interval
@@ -791,8 +703,7 @@ __INLINE void app_param_update_op(uint8_t conidx,
  * @param[in] connection_event_len_max_us The new preferred maximum connection event length
  *                                        measured in us.
  * @return void
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE void app_param_update_op_us(uint8_t conidx,
                                      uint32_t intv_min_us,
                                      uint32_t intv_max_us,
@@ -810,8 +721,7 @@ __INLINE void app_param_update_op_us(uint8_t conidx,
                         (uint16_t) US_TO_DOUBLESLOTS(connection_event_len_max_us));
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Send GAPM_SET_DEV_CONFIG_CMD message (device configuration).
  * @param[in] role              Device Role - Central, Peripheral, Observer, Broadcaster
  *                              or All roles:
@@ -839,8 +749,7 @@ __INLINE void app_param_update_op_us(uint8_t conidx,
  * @param[in] max_txoctets      Maximal Tx octets.
  * @param[in] max_txtime        Maximal Tx time.
  * @return void
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE void app_gapm_configure_op(enum gap_role role,
                                     uint16_t max_mtu,
                                     uint8_t addr_type,
@@ -876,14 +785,12 @@ __INLINE void app_gapm_configure_op(enum gap_role role,
     app_gapm_configure_msg_send(cmd);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Start security operation.
  * @param[in] conidx The id of the connection.
  * @param[in] auth The authentication requirements.
  * @return None.
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE  void app_security_request_op(uint8_t conidx, enum gap_auth auth)
 {
     // Send security request command
@@ -891,8 +798,7 @@ __INLINE  void app_security_request_op(uint8_t conidx, enum gap_auth auth)
     app_gapc_security_request_msg_send(cmd);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Gap Bonding Pairing Response operation.
  * @param[in] conidx The id of the connection.
  * @param[in] io_capabilities Device capabilities: GAP_IO_CAP_DISPLAY_ONLY, GAP_IO_CAP_DISPLAY_YES_NO,
@@ -906,8 +812,7 @@ __INLINE  void app_security_request_op(uint8_t conidx, enum gap_auth auth)
  *  GAP_KDIST_IDKEY, GAP_KDIST_SIGNKEY
  * @param[in] security_requirements Security definition.
  * @return void
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE void app_gapc_bond_cfm_pairing_rsp_op (uint8_t conidx, enum gap_io_cap io_capabilities, enum gap_oob oob, enum gap_auth authentication, uint8_t key_size,
                                            enum gap_kdist initiator_key_dist, enum gap_kdist responder_key_dist, enum gap_sec_req security_requirements)
 {
@@ -922,14 +827,12 @@ __INLINE void app_gapc_bond_cfm_pairing_rsp_op (uint8_t conidx, enum gap_io_cap 
     app_gapc_bond_cfm_msg_send (cfm);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Gap Bonding Temporary Key exchange operation.
  * @param[in] conidx The id of the connection.
  * @param[in] temporary_key Array containing the temporary key.
  * @return void
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE void app_gapc_bond_cfm_tk_exch_op (uint8_t conidx, uint8_t* temporary_key)
 {
     struct gapc_bond_cfm* cmd=app_gapc_bond_cfm_tk_exch_msg_create(conidx);
@@ -937,14 +840,12 @@ __INLINE void app_gapc_bond_cfm_tk_exch_op (uint8_t conidx, uint8_t* temporary_k
     app_gapc_bond_cfm_tk_exch_msg_send(cmd);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Gap Bonding Connection Signature Resolving Key exchange operation.
  * @param[in] conidx The id of the connection.
  * @param[in] csrk Array containing the csrk key.
  * @return void
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE void app_gapc_bond_cfm_csrk_exch_op(uint8_t conidx, uint8_t* csrk)
 {
    struct gapc_bond_cfm* cmd=app_gapc_bond_cfm_csrk_exch_msg_create(conidx);
@@ -952,8 +853,7 @@ __INLINE void app_gapc_bond_cfm_csrk_exch_op(uint8_t conidx, uint8_t* csrk)
    app_gapc_bond_cfm_csrk_exch_msg_send(cmd);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Gap Bonding Long Term Key exchange operation.
  * @param[in] conidx The id of the connection.
  * @param[in] long_term_key Array containing the long term key.
@@ -961,8 +861,7 @@ __INLINE void app_gapc_bond_cfm_csrk_exch_op(uint8_t conidx, uint8_t* csrk)
  * @param[in] random_number Random number.
  * @param[in] encryption_diversifier Encryption diversifier.
  * @return void
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE void app_gapc_bond_cfm_ltk_exch_op(uint8_t conidx, uint8_t* long_term_key, uint8_t encryption_key_size,
                                             uint8_t* random_number, uint16_t encryption_diversifier)
 {
@@ -977,16 +876,14 @@ __INLINE void app_gapc_bond_cfm_ltk_exch_op(uint8_t conidx, uint8_t* long_term_k
     app_gapc_bond_cfm_ltk_exch_msg_send(cmd);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Gap Bonding Encrypt confirmation operation.
  * @param[in] conidx The id of the connection.
  * @param[in] found Confirm that the entry has been found.
  * @param[in] key_size Size of the key.
  * @param[in] long_term_key The long term key.
  * @return void
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE  void app_gapc_encrypt_cfm_op (uint8_t conidx, bool found, uint8_t key_size, uint8_t* long_term_key)
 {
     struct gapc_encrypt_cfm* cmd=app_gapc_encrypt_cfm_msg_create(conidx);

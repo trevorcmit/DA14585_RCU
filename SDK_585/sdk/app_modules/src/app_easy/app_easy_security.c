@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file app_easy_security.c
  *
@@ -11,20 +10,16 @@
  *
  * <bluetooth.support@diasemi.com> and contributors.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @addtogroup APP_SECURITY
  * @{
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /*
  * INCLUDE FILES
- ****************************************************************************************
- */
+******************************************************************************************/
  
 #include <stdlib.h>
 #include "co_bt.h"
@@ -34,15 +29,13 @@
 
 /*
  * DEFINES
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #define APP_EASY_SECURITY_MAX_CONNECTION APP_EASY_MAX_ACTIVE_CONNECTION
 
 /*
  * LOCAL VARIABLE DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 static struct gapc_bond_cfm *gapc_bond_cfm_pairing_rsp[APP_EASY_SECURITY_MAX_CONNECTION] __attribute__((section("retention_mem_area0"),zero_init));
 static struct gapc_bond_cfm *gapc_bond_cfm_tk_exch[APP_EASY_SECURITY_MAX_CONNECTION]     __attribute__((section("retention_mem_area0"),zero_init));
@@ -53,17 +46,14 @@ static struct gapc_security_cmd *gapc_security_req[APP_EASY_SECURITY_MAX_CONNECT
 
 /*
  * FUNCTION DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Creates a GAPC_BOND_CFM pairing feature response message and stores it into
  *        retention memory, if the message does not already exist.
  * @param[in] conidx        Connection index.
  * @return The pointer to the message.
- ****************************************************************************************
- */
+******************************************************************************************/
 static inline struct gapc_bond_cfm* pairing_rsp_create_msg(uint8_t conidx)
 {
     // Allocate a message for GAP
@@ -98,14 +88,12 @@ void app_easy_security_send_pairing_rsp(uint8_t conidx)
     gapc_bond_cfm_pairing_rsp[conidx] = NULL;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Creates a GAPC_BOND_CFM temporary key (TK) exchange message and stores it into
  *        retention memory, if hte message does not already exist.
  * @param[in] conidx        Connection index.
  * @return The pointer to the message.
- ****************************************************************************************
- */
+******************************************************************************************/
 static inline struct gapc_bond_cfm* tk_exch_create_msg(uint8_t conidx)
 {
     // Allocate a message for GAP
@@ -136,14 +124,12 @@ void app_easy_security_tk_exch(uint8_t conidx, uint8_t *key, uint8_t length)
     gapc_bond_cfm_tk_exch[conidx] = NULL;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Creates a GAPC_BOND_CFM connection signature resolving key (CSRK) exchange
  *        message and stores it into retention memory, if the message does not already exist.
  * @param[in] connection_idx        Connection index.
  * @return The pointer to the message.
- ****************************************************************************************
- */
+******************************************************************************************/
 static inline struct gapc_bond_cfm* csrk_exch_create_msg(uint8_t conidx)
 {
     // Allocate a message for GAP
@@ -171,14 +157,12 @@ void app_easy_security_csrk_exch(uint8_t conidx)
     gapc_bond_cfm_csrk_exch[conidx] = NULL;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Creates a GAPC_BOND_CFM long term key (LTK) exchange message and stores it into
  *        retention memory, if the message does not already exist.
  * @param[in] connection_idx        Connection index.
  * @return The pointer to the message.
- ****************************************************************************************
- */
+******************************************************************************************/
 static inline struct gapc_bond_cfm* ltk_exch_create_msg(uint8_t conidx)
 {
     // Allocate a message for GAP
@@ -229,14 +213,12 @@ void app_easy_security_set_ltk_exch(uint8_t conidx, uint8_t* long_term_key, uint
     memcpy(&(cfm->data.ltk.ltk), long_term_key , KEY_LEN);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Creates a GAPC_ENCRYPT_CFM encryption information message and stores it into
           retention memory, if the message does not already exist.
  * @param[in] connection_idx Connection index.
  * @return The pointer to the message.
- ****************************************************************************************
- */
+******************************************************************************************/
 static inline struct gapc_encrypt_cfm* encrypt_cfm_create_msg(uint8_t conidx)
 {
     // Allocate a message for GAP
@@ -289,14 +271,12 @@ void app_easy_security_set_encrypt_req_invalid(uint8_t conidx)
     cfm->found = false;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Creates a GAPC_SECURITY_CMD security request command message and stores it into
           retention memory, if the message does not already exist.
  * @param[in] connection_idx        Connection index.
  * @return The pointer to the message.
- ****************************************************************************************
- */
+******************************************************************************************/
 static inline struct gapc_security_cmd* security_request_create_msg(uint8_t conidx)
 {
     // Allocate a message for GAP

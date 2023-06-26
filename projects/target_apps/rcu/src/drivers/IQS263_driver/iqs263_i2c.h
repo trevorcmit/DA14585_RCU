@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * \file iqs263_i2c.h
  *
@@ -11,14 +10,12 @@
  *
  * <bluetooth.support@diasemi.com>
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #ifndef _I2C_IQS263_H_
 #define _I2C_IQS263_H_
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \addtogroup USER
  * \{
  * \addtogroup USER_DRIVERS
@@ -28,8 +25,7 @@
  * \brief IQS263 over i2c driver
  *
  * \{
- ****************************************************************************************
- */
+******************************************************************************************/
  
 /* Set Active Channels (Address 0x0D) */
 #define ACTIVE_CHS							0x0F //CH0,CH1,CH2,CH3
@@ -89,15 +85,13 @@ typedef enum i2c_iqs263_operation_result
 i2c_iqs263_operation_result_t;
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Initialize I2C controller as a master for BMI055 handling.
  *
  * @param[in] dev_address   Slave device address
  * @param[in] speed         Speed
  * @param[in] address_mode  Addressing mode
- ****************************************************************************************
- */
+******************************************************************************************/
 void i2c_iqs263_init (uint16_t dev_address, uint8_t speed, uint8_t address_mode);
 
 i2c_iqs263_operation_result_t i2c_iqs263_repeat_read_data(uint32_t address1, uint32_t address2, uint8_t *rd_data_ptr, uint32_t size1, uint32_t size2);
@@ -105,11 +99,9 @@ i2c_iqs263_operation_result_t i2c_iqs263_repeat_read_data(uint32_t address1, uin
 uint32_t i2c_iqs263_repeat_read_tri_data(uint32_t address1, uint32_t address2,uint32_t address3 ,  uint8_t *rd_data_ptr, uint32_t size1, uint32_t size2, uint32_t size3);
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Disable I2C controller and clock
- ****************************************************************************************
- */
+******************************************************************************************/
 void i2c_iqs263_release(void);
 
 
@@ -120,12 +112,10 @@ void i2c_iqs263_release(void);
  * @param[in] buffer Buffer
  *
  * @return
- ****************************************************************************************
- */
+******************************************************************************************/
 i2c_iqs263_operation_result_t i2c_iqs263_read_byte(uint8_t addr, uint8_t *buffer);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Reads data from I2C BMI055 to memory position of given pointer.
  *
  * @param[in] rd_data_ptr   Read data pointer.
@@ -133,18 +123,15 @@ i2c_iqs263_operation_result_t i2c_iqs263_read_byte(uint8_t addr, uint8_t *buffer
  * @param[in] size          Size of the data to be read.
  *
  * @return Bytes that were actually read (due to memory size limitation).
- ****************************************************************************************
- */
+******************************************************************************************/
 uint32_t i2c_iqs263_read_data(uint32_t address, uint8_t *rd_data_ptr, uint32_t size);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Write single byte to I2C BMI055.
  *
  * @param[in] address   Memory position to write the byte to.
  * @param[in] wr_data   Byte to be written.
- ****************************************************************************************
- */
+******************************************************************************************/
 void i2c_iqs263_write_byte(uint32_t address, uint8_t wr_data);
 
 i2c_iqs263_operation_result_t i2c_iqs263_write_bytes(uint32_t address, uint8_t *wr_data, uint8_t size);

@@ -1,146 +1,133 @@
-/**
- ****************************************************************************************
- *
+/*****************************************************************************************
  * \file app_audio.c
- *
  * \brief Audio module source file
- *
- * Copyright (C) 2017 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information  
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com>
- *
- *****************************************************************************************
- */
+******************************************************************************************/
 
-/**
+/*****************************************************************************************
  * \addtogroup APP_UTILS
  * \{
  * \addtogroup AUDIO
  * \{
  * \addtogroup APP_AUDIO
- *
  * \brief Audio implementation
  * \{
- */
+******************************************************************************************/
 
 #ifdef HAS_AUDIO
+        #include "app_audio.h"
+        #include "app_audio_codec.h"
+        #include <string.h>
 
-#include "app_audio.h"
-#include "app_audio_codec.h"
-#include <string.h>
+        #ifdef CFG_AUDIO_DEBUG_ENC_AUDIO_TO_UART
+                #include "uart.h"
+        #endif
 
-#ifdef CFG_AUDIO_DEBUG_ENC_AUDIO_TO_UART
-        #include "uart.h"
-#endif
+        #include <app_audio_config.h>
 
-#include <app_audio_config.h>
+        #if !defined(CFG_AUDIO_ADAPTIVE_RATE) && !defined(ADPCM_DEFAULT_MODE)
+                #error "ADPCM_DEFAULT_MODE must be defined"
+        #endif
 
-#if !defined(CFG_AUDIO_ADAPTIVE_RATE) && !defined(ADPCM_DEFAULT_MODE)
-    #error "ADPCM_DEFAULT_MODE must be defined"
-#endif
+        #if defined(CFG_AUDIO_USE_32BIT_SAMPLING) && !defined(CFG_AUDIO_CONFIGURABLE_SAMPLING_RATE)
+                #error "CFG_AUDIO_CONFIGURABLE_SAMPLING_RATE must be defined"
+        #endif
 
-#if defined(CFG_AUDIO_USE_32BIT_SAMPLING) && !defined(CFG_AUDIO_CONFIGURABLE_SAMPLING_RATE)
-    #error "CFG_AUDIO_CONFIGURABLE_SAMPLING_RATE must be defined"
-#endif
+        #ifdef CFG_AUDIO_SAMPLING_ATTENUATION
+                #error "CFG_AUDIO_SAMPLING_ATTENUATION has been deprecated. Calclulate offset in AUDIO_SAMPLING_OFFSET instead."
+        #endif
 
-#ifdef CFG_AUDIO_SAMPLING_ATTENUATION
-    #error "CFG_AUDIO_SAMPLING_ATTENUATION has been deprecated. Calclulate offset in AUDIO_SAMPLING_OFFSET instead."
-#endif
+        #if defined(CFG_AUDIO_DC_BLOCK) && defined(CFG_AUDIO_EMULATE_PDM_MIC_TRIANGULAR)
+                #undef CFG_AUDIO_DC_BLOCK
+                #warning "Audio DC blocking has been disabled"
+        #endif    
 
-#if defined(CFG_AUDIO_DC_BLOCK) && defined(CFG_AUDIO_EMULATE_PDM_MIC_TRIANGULAR)
-    #undef CFG_AUDIO_DC_BLOCK
-    #warning "Audio DC blocking has been disabled"
-#endif    
+        #define APP_AUDIO_DCB_BETA (32768*0.0728)
 
-#define APP_AUDIO_DCB_BETA (32768*0.0728)
+        #define AUDIO_CALL_CALBACK(func, param)   if(app_audio_funcs.func!=NULL) app_audio_funcs.func(param)
+        #define AUDIO_CALL_CALBACK_VOID(func)     if(app_audio_funcs.func!=NULL) app_audio_funcs.func()
+        #define AUDIO_CALL_CALBACK_VOID_RET(func) app_audio_funcs.func()
 
-#define AUDIO_CALL_CALBACK(func, param)   if(app_audio_funcs.func!=NULL) app_audio_funcs.func(param)
-#define AUDIO_CALL_CALBACK_VOID(func)     if(app_audio_funcs.func!=NULL) app_audio_funcs.func()
-#define AUDIO_CALL_CALBACK_VOID_RET(func) app_audio_funcs.func()
+        #if AUDIO_SBUF_SIZE > 0xFFFF
+                #error "AUDIO_SBUF_SIZE must fit in 16 bits"
+        #endif
 
-#if AUDIO_SBUF_SIZE > 0xFFFF
-    #error "AUDIO_SBUF_SIZE must fit in 16 bits"
-#endif
-
-typedef  struct app_audio_env_s
-{
-#ifdef CFG_AUDIO_IMA_ADPCM
-    IMAData_t imaState;
-#endif // CFG_AUDIO_IMA_ADPCM
-    unsigned int errors_send;
-#ifdef CFG_AUDIO_DC_BLOCK
-    DCBLOCKData_t dcBlock;
-#endif
-    uint32_t buffer_errors;
-    /* States for internal working buffer, to deal with changing rates */
-    uint16_t sbuf_len;
-    uint16_t sbuf_avail;
-    int16_t  sbuffer[AUDIO_SBUF_SIZE];
-#if !defined(CFG_AUDIO_CONFIGURABLE_SAMPLING_RATE) && (defined(CFG_AUDIO_ADAPTIVE_RATE) || (ADPCM_DEFAULT_MODE)==2 || (ADPCM_DEFAULT_MODE)==3)
-    int16_t FilterTaps[FILTER_LENGTH];  
-#endif    
-#ifdef CFG_AUDIO_ADAPTIVE_RATE    
-    audio_sampling_rate_t sampling_mode;
-#endif    
-} app_audio_env_t;
-
-app_audio_env_t app_audio_env;
-    
-bool app_audio_started __PORT_RETAINED;
-#if defined(CFG_AUDIO_IMA_ADPCM) && defined(CFG_AUDIO_ADAPTIVE_RATE)
-    app_audio_adpcm_mode_t adpcm_mode __PORT_RETAINED;
-#endif
-
-#ifdef CFG_AUDIO_CLICK_STARTUP_CLEAN
-    int click_packages;
-    #define DROP_PACKAGES_NO         25      //how many packages to drop
-    #define DC_BLOCK_PACKAGES_START  10      //when to start DC_BLOCK calculation
-    #define DC_BLOCK_PACKAGES_STOP  150      //when to stop DC_BLOCK calculation
-#endif
-
-#ifdef CFG_AUDIO_IMA_ADPCM
-/**
- ****************************************************************************************
- * \brief Set the correct IMA encoding parameters
- *
- * The ima-mode is stored in global retention value app_audio_adpcm_mode;
- * The Data Rate will be:
- * 0: 64 Kbit/s = ima 4Bps, 16 KHz.
- * 1: 48 Kbit/s = ima 3Bps, 16 KHz.
- * 2: 32 Kbit/s = ima 4Bps, 8 KHz (downsample if hardware does not support 8KHz sampling).
- * 3: 24 Kbit/s = ima 3Bps, 8 KHz (downsample if hardware does not support 8KHz sampling).
- ****************************************************************************************
- */
-static void app_audio_set_adpcm_mode_params(void)
-{
-        int AUDIO_IMA_SIZE;
-
-#ifdef CFG_AUDIO_ADAPTIVE_RATE
-        switch(adpcm_mode)
-#else
-        switch(ADPCM_DEFAULT_MODE)
-#endif
+        typedef  struct app_audio_env_s
         {
-        case ADPCM_MODE_24KBPS_3_8KHZ:
-        case ADPCM_MODE_48KBPS_3_16KHZ:
-                AUDIO_IMA_SIZE = 3;
-                break;
-        case ADPCM_MODE_64KBPS_4_16KHZ:
-        case ADPCM_MODE_32KBPS_4_8KHZ:
-                AUDIO_IMA_SIZE = 4;
-                break;
-        default:
-                ASSERT_ERROR(0);
-                break;
-        }
+                #ifdef CFG_AUDIO_IMA_ADPCM
+                        IMAData_t imaState;
+                #endif // CFG_AUDIO_IMA_ADPCM
+                unsigned int errors_send;
 
-        app_audio_env.imaState.imaSize  = AUDIO_IMA_SIZE;
-        app_audio_env.imaState.imaAnd   = 0xF - ((1 << (4 - AUDIO_IMA_SIZE)) - 1);
-        app_audio_env.imaState.imaOr    = (1 << (4 - AUDIO_IMA_SIZE)) - 1;
-}
-#endif
+                #ifdef CFG_AUDIO_DC_BLOCK
+                        DCBLOCKData_t dcBlock;
+                #endif
+
+                uint32_t buffer_errors;
+                /* States for internal working buffer, to deal with changing rates */
+                uint16_t sbuf_len;
+                uint16_t sbuf_avail;
+                int16_t  sbuffer[AUDIO_SBUF_SIZE];
+
+                #if !defined(CFG_AUDIO_CONFIGURABLE_SAMPLING_RATE) && (defined(CFG_AUDIO_ADAPTIVE_RATE) || (ADPCM_DEFAULT_MODE)==2 || (ADPCM_DEFAULT_MODE)==3)
+                        int16_t FilterTaps[FILTER_LENGTH];  
+                #endif    
+                #ifdef CFG_AUDIO_ADAPTIVE_RATE    
+                        audio_sampling_rate_t sampling_mode;
+                #endif    
+        } app_audio_env_t;
+
+        app_audio_env_t app_audio_env;
+    
+        bool app_audio_started __PORT_RETAINED;
+        #if defined(CFG_AUDIO_IMA_ADPCM) && defined(CFG_AUDIO_ADAPTIVE_RATE)
+                app_audio_adpcm_mode_t adpcm_mode __PORT_RETAINED;
+        #endif
+
+        #ifdef CFG_AUDIO_CLICK_STARTUP_CLEAN
+                int click_packages;
+                #define DROP_PACKAGES_NO         25      //how many packages to drop
+                #define DC_BLOCK_PACKAGES_START  10      //when to start DC_BLOCK calculation
+                #define DC_BLOCK_PACKAGES_STOP  150      //when to stop DC_BLOCK calculation
+        #endif
+
+        #ifdef CFG_AUDIO_IMA_ADPCM
+                /*****************************************************************************************
+                 * \brief Set the correct IMA encoding parameters
+                 * The ima-mode is stored in global retention value app_audio_adpcm_mode;
+                 * The Data Rate will be:
+                 * 0: 64 Kbit/s = ima 4Bps, 16 KHz.
+                 * 1: 48 Kbit/s = ima 3Bps, 16 KHz.
+                 * 2: 32 Kbit/s = ima 4Bps, 8 KHz (downsample if hardware does not support 8KHz sampling).
+                 * 3: 24 Kbit/s = ima 3Bps, 8 KHz (downsample if hardware does not support 8KHz sampling).
+                *****************************************************************************************/
+                static void app_audio_set_adpcm_mode_params(void)
+                {
+                        int AUDIO_IMA_SIZE;
+
+                #ifdef CFG_AUDIO_ADAPTIVE_RATE
+                        switch(adpcm_mode)
+                #else
+                        switch(ADPCM_DEFAULT_MODE)
+                #endif
+                        {
+                        case ADPCM_MODE_24KBPS_3_8KHZ:
+                        case ADPCM_MODE_48KBPS_3_16KHZ:
+                                AUDIO_IMA_SIZE = 3;
+                                break;
+                        case ADPCM_MODE_64KBPS_4_16KHZ:
+                        case ADPCM_MODE_32KBPS_4_8KHZ:
+                                AUDIO_IMA_SIZE = 4;
+                                break;
+                        default:
+                                ASSERT_ERROR(0);
+                                break;
+                        }
+
+                        app_audio_env.imaState.imaSize  = AUDIO_IMA_SIZE;
+                        app_audio_env.imaState.imaAnd   = 0xF - ((1 << (4 - AUDIO_IMA_SIZE)) - 1);
+                        app_audio_env.imaState.imaOr    = (1 << (4 - AUDIO_IMA_SIZE)) - 1;
+                }
+                #endif // CFG_AUDIO_IMA_ADPCM
 
 void app_audio_init(void)
 {
@@ -179,16 +166,16 @@ void app_audio_init(void)
 #if defined(CFG_AUDIO_IMA_ADPCM) && defined(CFG_AUDIO_ADAPTIVE_RATE)
 void app_audio_set_adpcm_mode(app_audio_adpcm_mode_t mode)
 {
-    #if defined(CFG_AUDIO_UART_DEBUG) && DEVELOPMENT_DEBUG
-        if(mode > adpcm_mode) {
-            dbg_putc('-');
-        }
-        if(mode < adpcm_mode) {
-            dbg_putc('+');
-        }
-    #endif
-        adpcm_mode = mode;
-        app_audio_set_adpcm_mode_params();
+        #if defined(CFG_AUDIO_UART_DEBUG) && DEVELOPMENT_DEBUG
+                if(mode > adpcm_mode) {
+                dbg_putc('-');
+                }
+                if(mode < adpcm_mode) {
+                dbg_putc('+');
+                }
+        #endif
+                adpcm_mode = mode;
+                app_audio_set_adpcm_mode_params();
 }
 #endif
 
@@ -232,16 +219,14 @@ void app_audio_to_uart(void)
 }
 #endif
 
+
 #ifndef CFG_AUDIO_USE_32BIT_SAMPLING
-/**
- ****************************************************************************************
+/****************************************************************************************
  * \brief Fill work buffer with new packet  with optional downsampling
  * This function will add a packet to the work buffer. If downsampling is selective
  * then the a 2x downsampling is performed using FIR filter.
- *
  * \param[in] ptr: pointer to the data in packet.
- ****************************************************************************************
- */
+*****************************************************************************************/
 static void app_audio_fill_buffer(int16_t *ptr)
 {
         int16_t *dst = &app_audio_env.sbuffer[app_audio_env.sbuf_len];
@@ -264,23 +249,23 @@ static void app_audio_fill_buffer(int16_t *ptr)
                 
         app_audio_env.sbuf_avail -= tot;
 
-        if (tot == AUDIO_NR_SAMP_PER_SLOT) {
-                for (int i = 0; i < tot; i++) {
+        if (tot == AUDIO_NR_SAMP_PER_SLOT)
+        {
+                for (int i = 0; i < tot; i++)
+                {
                         *dst++ = *ptr++;
                 }
         }
 }
 #endif
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief Remove len samples from the work buffer.
  * The len samples to be removed are always at the start of the buffer. Shift the complete
  * buffer, and update the sbuf_len and sbuf_avail states.
  *
  * \param[in] len: number of samples to remove
- ****************************************************************************************
- */
+******************************************************************************************/
 static void app_audio_empty_buffer(int len)
 {
         app_audio_env.sbuf_len -= len;

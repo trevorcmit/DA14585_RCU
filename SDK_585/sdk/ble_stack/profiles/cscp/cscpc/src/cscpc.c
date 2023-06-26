@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file cscpc.c
  *
@@ -9,21 +8,17 @@
  *
  * $ Rev $
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @addtogroup CSCPC
  * @{
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /*
  * INCLUDE FILES
- ****************************************************************************************
- */
+******************************************************************************************/
 #include "cscp_common.h"
 
 #if (BLE_CSC_COLLECTOR)
@@ -33,17 +28,14 @@
 
 /*
  * GLOBAL VARIABLES DECLARATION
- ****************************************************************************************
- */
+******************************************************************************************/
 
 
 /*
  * GLOBAL FUNCTIONS DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Initialization of the CSCPC module.
  * This function performs all the initializations of the Profile module.
  *  - Creation of database (if it's a service)
@@ -60,8 +52,7 @@
  * @param[in]     param      Configuration parameters of profile collector or service (32 bits aligned)
  *
  * @return status code to know if profile initialization succeed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static uint8_t cscpc_init(struct prf_task_env* env, uint16_t* start_hdl, uint16_t app_task, uint8_t sec_lvl,  void* params)
 {
     uint8_t idx;
@@ -93,15 +84,13 @@ static uint8_t cscpc_init(struct prf_task_env* env, uint16_t* start_hdl, uint16_
     return GAP_ERR_NO_ERROR;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Clean-up connection dedicated environment parameters
  * This function performs cleanup of ongoing operations
  * @param[in|out]    env        Collector or Service allocated environment data.
  * @param[in]        conidx     Connection index
  * @param[in]        reason     Detach reason
- ****************************************************************************************
- */
+******************************************************************************************/
 static void cscpc_cleanup(struct prf_task_env* env, uint8_t conidx, uint8_t reason)
 {
     struct cscpc_env_tag* cscpc_env = (struct cscpc_env_tag*) env->env;
@@ -123,15 +112,13 @@ static void cscpc_cleanup(struct prf_task_env* env, uint8_t conidx, uint8_t reas
     ke_state_set(KE_BUILD_ID(env->task, conidx), CSCPC_FREE);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Destruction of the CSCPC module - due to a reset for instance.
  * This function clean-up allocated memory (attribute database is destroyed by another
  * procedure)
  *
  * @param[in|out]    env        Collector or Service allocated environment data.
- ****************************************************************************************
- */
+******************************************************************************************/
 static void cscpc_destroy(struct prf_task_env* env)
 {
     uint8_t idx;
@@ -148,14 +135,12 @@ static void cscpc_destroy(struct prf_task_env* env)
     ke_free(cscpc_env);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles Connection creation
  *
  * @param[in|out]    env        Collector or Service allocated environment data.
  * @param[in]        conidx     Connection index
- ****************************************************************************************
- */
+******************************************************************************************/
 static void cscpc_create(struct prf_task_env* env, uint8_t conidx)
 {
     /* Put CSCP Client in Idle state */
@@ -173,8 +158,7 @@ const struct prf_task_cbs cscpc_itf =
 
 /*
  * GLOBAL FUNCTIONS DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 const struct prf_task_cbs* cscpc_prf_itf_get(void)
 {

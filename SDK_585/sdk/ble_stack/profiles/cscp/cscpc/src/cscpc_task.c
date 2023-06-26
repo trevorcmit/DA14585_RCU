@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file cscpc_task.c
  *
@@ -9,21 +8,17 @@
  *
  * $ Rev $
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @addtogroup CSCPCTASK
  * @{
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /*
  * INCLUDE FILES
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #include "cscp_common.h"
 
@@ -38,8 +33,7 @@
 
 /*
  * STRUCTURES
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /// State machine used to retrieve Cycling Speed and Cadence service characteristics information
 const struct prf_char_def cscpc_cscs_char[CSCP_CSCS_CHAR_MAX] =
@@ -78,11 +72,9 @@ const struct prf_char_desc_def cscpc_cscs_char_desc[CSCPC_DESC_MAX] =
 
 /*
  * LOCAL FUNCTIONS DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the @ref GATTC_SDP_SVC_IND_HANDLER message.
  * The handler stores the found service details for service discovery.
  * @param[in] msgid Id of the message received (probably unused).
@@ -90,8 +82,7 @@ const struct prf_char_desc_def cscpc_cscs_char_desc[CSCPC_DESC_MAX] =
  * @param[in] dest_id ID of the receiving task instance (probably unused).
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int gattc_sdp_svc_ind_handler(ke_msg_id_t const msgid,
                                              struct gattc_sdp_svc_ind const *ind,
                                              ke_task_id_t const dest_id,
@@ -127,16 +118,14 @@ static int gattc_sdp_svc_ind_handler(ke_msg_id_t const msgid,
 
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the @ref CSCPC_ENABLE_REQ message.
  * @param[in] msgid Id of the message received.
  * @param[in] param Pointer to the parameters of the message.
  * @param[in] dest_id ID of the receiving task instance.
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int cscpc_enable_req_handler(ke_msg_id_t const msgid,
                                     struct cscpc_enable_req *param,
                                     ke_task_id_t const dest_id,
@@ -190,16 +179,14 @@ static int cscpc_enable_req_handler(ke_msg_id_t const msgid,
     return (KE_MSG_CONSUMED);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the @ref CSCPC_READ_CMD message.
  * @param[in] msgid Id of the message received.
  * @param[in] param Pointer to the parameters of the message.
  * @param[in] dest_id ID of the receiving task instance.
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int cscpc_read_cmd_handler(ke_msg_id_t const msgid,
                                   struct cscpc_read_cmd *param,
                                   ke_task_id_t const dest_id,
@@ -307,16 +294,14 @@ static int cscpc_read_cmd_handler(ke_msg_id_t const msgid,
     return (int)msg_status;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the @ref CSCPC_CFG_NTFIND_CMD message.
  * @param[in] msgid Id of the message received.
  * @param[in] param Pointer to the parameters of the message.
  * @param[in] dest_id ID of the receiving task instance.
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int cscpc_cfg_ntfind_cmd_handler(ke_msg_id_t const msgid,
                                         struct cscpc_cfg_ntfind_cmd *param,
                                         ke_task_id_t const dest_id,
@@ -421,16 +406,14 @@ static int cscpc_cfg_ntfind_cmd_handler(ke_msg_id_t const msgid,
     return (int)msg_status;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the @ref CSCPC_CFG_NTFIND_CMD message.
  * @param[in] msgid Id of the message received.
  * @param[in] param Pointer to the parameters of the message.
  * @param[in] dest_id ID of the receiving task instance.
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int cscpc_ctnl_pt_cfg_req_handler(ke_msg_id_t const msgid,
                                          struct cscpc_ctnl_pt_cfg_req *param,
                                          ke_task_id_t const dest_id,
@@ -550,8 +533,7 @@ static int cscpc_ctnl_pt_cfg_req_handler(ke_msg_id_t const msgid,
     return (int)msg_status;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the @ref CSCPC_TIMEOUT_TIMER_IND message. This message is
  * received when the peer device doesn't send a SC Control Point indication within 30s
  * after reception of the write response.
@@ -560,8 +542,7 @@ static int cscpc_ctnl_pt_cfg_req_handler(ke_msg_id_t const msgid,
  * @param[in] dest_id ID of the receiving task instance.
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int cscpc_timeout_timer_ind_handler(ke_msg_id_t const msgid,
                                            void const *param,
                                            ke_task_id_t const dest_id,
@@ -585,16 +566,14 @@ static int cscpc_timeout_timer_ind_handler(ke_msg_id_t const msgid,
     return (KE_MSG_CONSUMED);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the @ref GATTC_CMP_EVT message.
  * @param[in] msgid Id of the message received.
  * @param[in] param Pointer to the parameters of the message.
  * @param[in] dest_id ID of the receiving task instance.
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int gattc_cmp_evt_handler(ke_msg_id_t const msgid,
                                  struct gattc_cmp_evt const *param,
                                  ke_task_id_t const dest_id,
@@ -706,8 +685,7 @@ static int gattc_cmp_evt_handler(ke_msg_id_t const msgid,
     return (KE_MSG_CONSUMED);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the @ref GATTC_READ_IND message.
  * Generic event received after every simple read command sent to peer server.
  * @param[in] msgid Id of the message received (probably unused).
@@ -715,8 +693,7 @@ static int gattc_cmp_evt_handler(ke_msg_id_t const msgid,
  * @param[in] dest_id ID of the receiving task instance (probably unused).
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int gattc_read_ind_handler(ke_msg_id_t const msgid,
                                     struct gattc_read_ind const *param,
                                     ke_task_id_t const dest_id,
@@ -779,16 +756,14 @@ static int gattc_read_ind_handler(ke_msg_id_t const msgid,
     return (KE_MSG_CONSUMED);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the @ref GATTC_EVENT_IND message.
  * @param[in] msgid Id of the message received (probably unused).
  * @param[in] param Pointer to the parameters of the message.
  * @param[in] dest_id ID of the receiving task instance (probably unused).
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int gattc_event_ind_handler(ke_msg_id_t const msgid,
                                    struct gattc_event_ind const *param,
                                    ke_task_id_t const dest_id,
@@ -923,8 +898,7 @@ static int gattc_event_ind_handler(ke_msg_id_t const msgid,
 
 /*
  * GLOBAL VARIABLE DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /// Specifies the default message handlers
 const struct ke_msg_handler cscpc_default_state[] =

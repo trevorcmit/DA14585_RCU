@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file app.c
  *
@@ -11,8 +10,7 @@
  *
  * <bluetooth.support@diasemi.com> and contributors.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
 
 #include <stdio.h>
@@ -106,15 +104,13 @@ gpio_name_t gpio_names[] = {
 };
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Parse string GPIO name and return a GPIO code.
  *
  * @param[in] argc  GPIO name
  *
  * @return GPIO code
- ****************************************************************************************
- */
+******************************************************************************************/
 uint8_t parse_gpio(const char *s)
 {
     int kk;
@@ -131,16 +127,14 @@ uint8_t parse_gpio(const char *s)
     return ret;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Calculate XOR checksum of a byte array.
  *
  * @param[in] data  Pointer to array of bytes
  * @param[in] len   Number of bytes in array
  *
  * @return checksum value
- ****************************************************************************************
- */
+******************************************************************************************/
 uint8_t checksum(const uint8_t *data, const uint32_t len)
 {
     uint8_t crc_code = 0;
@@ -154,15 +148,13 @@ uint8_t checksum(const uint8_t *data, const uint32_t len)
     return crc_code;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Loads data from binary file (.bin)
  *
  * @param[in] bin_filename  File name of binary file.
  *
  * @return 0 on success, non 0 value on failure
- ****************************************************************************************
- */
+******************************************************************************************/
 int patch_data_load_bin(const char *bin_filename)
 {
     FILE *f;
@@ -230,13 +222,11 @@ void app_exit(void)
     Sleep(100);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Set device configuration.
  *
  * @return void.
- ****************************************************************************************
- */
+******************************************************************************************/
 void app_set_mode(void)
 {
 
@@ -259,13 +249,11 @@ void app_set_mode(void)
     return;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Send Reset request to GAPM task.
  *
  * @return void.
- ****************************************************************************************
- */
+******************************************************************************************/
 void app_rst_gap(void)
 {
     struct gapm_reset_cmd *msg = BleMsgAlloc(GAPM_RESET_CMD , TASK_ID_GAPM, TASK_ID_GTL,
@@ -294,13 +282,11 @@ void app_rst_gap(void)
     return;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Send Start Scanning Command to GAPM task.
  *
  * @return void.
- ****************************************************************************************
- */
+******************************************************************************************/
 void app_inq(void)
 {
     struct gapm_start_scan_cmd *msg = BleMsgAlloc(GAPM_START_SCAN_CMD , TASK_ID_GAPM, TASK_ID_GTL,
@@ -335,15 +321,13 @@ void app_inq(void)
     return;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Send Connect request to GAP task.
  *
  * @param[in] indx  Peer device's index in discovered devices list.
  *
  * @return void.
- ****************************************************************************************
- */
+******************************************************************************************/
 void app_connect(unsigned char indx)
 {
     struct gapm_start_connection_cmd *msg;
@@ -373,13 +357,11 @@ void app_connect(unsigned char indx)
     BleSendMsg((void *) msg);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Send Read rssi request to GAP task.
  *
  * @return void.
- ****************************************************************************************
- */
+******************************************************************************************/
 void app_read_rssi(void)
 {
     struct gapc_get_info_cmd * req = BleMsgAlloc(GAPC_GET_INFO_CMD, KE_BUILD_ID(TASK_GAPC, app_env.peer_device.device.conidx), TASK_ID_GTL,
@@ -390,13 +372,11 @@ void app_read_rssi(void)
     BleSendMsg((void *) req);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Send disconnect request to GAP task.
  *
  * @return void.
- ****************************************************************************************
- */
+******************************************************************************************/
 void app_disconnect(void)
 {
     struct gapc_disconnect_cmd *req = BleMsgAlloc(GAPC_DISCONNECT_CMD,
@@ -410,13 +390,11 @@ void app_disconnect(void)
     BleSendMsg((void *) req);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Send pairing request.
  *
  * @return void.
- ****************************************************************************************
- */
+******************************************************************************************/
 void app_security_enable(void)
 {
     // Allocate the message
@@ -483,13 +461,11 @@ void app_security_enable(void)
 
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief generate key.
  *
  * @return void.
- ****************************************************************************************
- */
+******************************************************************************************/
 void app_gen_csrk(void)
 {
     uint8_t i;
@@ -502,13 +478,11 @@ void app_gen_csrk(void)
 
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Confirm bonding.
  *
  * @return void.
- ****************************************************************************************
- */
+******************************************************************************************/
 void app_gap_bond_cfm(void)
 {
     struct gapc_bond_cfm * req = BleMsgAlloc(GAPC_BOND_CFM, KE_BUILD_ID(TASK_GAPC, app_env.peer_device.device.conidx), TASK_ID_GTL,
@@ -530,15 +504,13 @@ void app_gap_bond_cfm(void)
     BleSendMsg(req); // Send the message
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Confirm bonding.
  *
  * @param[in] tk_type  Used key type.
  *
  * @return void.
- ****************************************************************************************
- */
+******************************************************************************************/
 void app_gap_bond_tk_cfm(uint8_t tk_type)
 {
     struct gapc_bond_cfm *req = BleMsgAlloc(GAPC_BOND_CFM, KE_BUILD_ID(TASK_GAPC, app_env.peer_device.device.conidx), TASK_ID_GTL,
@@ -557,13 +529,11 @@ void app_gap_bond_tk_cfm(uint8_t tk_type)
     BleSendMsg(req); // Send the message
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Start Encryption with pre-agreed key.
  *
  * @return void.
- ****************************************************************************************
- */
+******************************************************************************************/
 void app_start_encryption(void)
 {
     // Allocate the message
@@ -577,15 +547,13 @@ void app_start_encryption(void)
     BleSendMsg(req); // Send the message
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Send connection confirmation.
  *
  * param[in] auth  Authentication requirements.
  *
  * @return void.
- ****************************************************************************************
- */
+******************************************************************************************/
 void app_connect_confirm(uint8_t auth)
 {
     // confirm connection
@@ -598,15 +566,13 @@ void app_connect_confirm(uint8_t auth)
     BleSendMsg(cfm);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Discover service by 16-bit UUID
  *
  * @param[in] conidx    Connection index for the connected peer device.
  *
  * @return void.
- ****************************************************************************************
- */
+******************************************************************************************/
 void app_discover_svc_by_uuid_16(uint16_t conidx, uint16_t uuid)
 {
     struct gattc_disc_cmd * req = BleMsgAlloc(GATTC_DISC_CMD, KE_BUILD_ID(TASK_ID_GATTC, conidx), TASK_ID_GTL,
@@ -623,8 +589,7 @@ void app_discover_svc_by_uuid_16(uint16_t conidx, uint16_t uuid)
     BleSendMsg((void *) req);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Discover all characteristics in specified handle range
  *
  * @param[in] conidx        Connection index for the connected peer device.
@@ -632,8 +597,7 @@ void app_discover_svc_by_uuid_16(uint16_t conidx, uint16_t uuid)
  * @param[in] end_handle    end of handle range to search
  *
  * @return void.
- ****************************************************************************************
- */
+******************************************************************************************/
 void app_discover_all_char(uint16_t conidx, uint16_t start_handle, uint16_t end_handle)
 {
     struct gattc_disc_cmd * req = BleMsgAlloc(GATTC_DISC_CMD, KE_BUILD_ID(TASK_ID_GATTC, conidx), TASK_ID_GTL,
@@ -650,8 +614,7 @@ void app_discover_all_char(uint16_t conidx, uint16_t start_handle, uint16_t end_
     BleSendMsg((void *) req);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Discover characteristic descriptors in a specified handle range
  *
  * @param[in] conidx        Connection index for the connected peer device.
@@ -659,8 +622,7 @@ void app_discover_all_char(uint16_t conidx, uint16_t start_handle, uint16_t end_
  * @param[in] end_handle    end of handle range to search
  *
  * @return void.
- ****************************************************************************************
- */
+******************************************************************************************/
 void app_discover_char_desc(uint16_t conidx, uint16_t start_handle, uint16_t end_handle)
 {
     struct gattc_disc_cmd * req = BleMsgAlloc(GATTC_DISC_CMD, KE_BUILD_ID(TASK_ID_GATTC, conidx), TASK_ID_GTL,
@@ -677,8 +639,7 @@ void app_discover_char_desc(uint16_t conidx, uint16_t start_handle, uint16_t end
     BleSendMsg((void *) req);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Write peer device characteristic
  *
  * @param[in] conidx           Connection index for the connected peer device.
@@ -687,8 +648,7 @@ void app_discover_char_desc(uint16_t conidx, uint16_t start_handle, uint16_t end
  * @param[in] value_length     length of value byte array
  *
  * @return void.
- ****************************************************************************************
- */
+******************************************************************************************/
 void app_characteristic_write(uint16_t conidx, uint16_t char_val_handle, uint8_t *value, uint8_t value_length)
 {
     int kk = 0;
@@ -708,8 +668,7 @@ void app_characteristic_write(uint16_t conidx, uint16_t char_val_handle, uint8_t
     BleSendMsg((void *) req);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Performs Write with no response to peer device characteristic
  *
  * @param[in] conidx           Connection index for the connected peer device.
@@ -718,8 +677,7 @@ void app_characteristic_write(uint16_t conidx, uint16_t char_val_handle, uint8_t
  * @param[in] value_length     length of value byte array
  *
  * @return void.
- ****************************************************************************************
- */
+******************************************************************************************/
 void app_characteristic_write_no_resp(uint16_t conidx, uint16_t char_val_handle, uint8_t *value, uint8_t value_length)
 {
     int kk = 0;
@@ -740,16 +698,14 @@ void app_characteristic_write_no_resp(uint16_t conidx, uint16_t char_val_handle,
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Read peer device characteristic
  *
  * @param[in] conidx           Connection index for the connected peer device.
  * @param[in] char_val_handle  Characteristic value descriptor handle.
  *
  * @return void.
- ****************************************************************************************
- */
+******************************************************************************************/
 void app_characteristic_read(uint16_t conidx, uint16_t char_val_handle)
 {
     struct gattc_read_cmd * req = BleMsgAlloc(GATTC_READ_CMD, KE_BUILD_ID(TASK_ID_GATTC, conidx), TASK_ID_GTL,
@@ -764,16 +720,14 @@ void app_characteristic_read(uint16_t conidx, uint16_t char_val_handle)
     BleSendMsg((void *) req);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief bd address compare.
  *
  * @param[in] bd_address1  Pointer to bd_address 1.
  * @param[in] bd_address2  Pointer to bd_address 2.
  *
  * @return true if addresses are equal / false if not.
- ****************************************************************************************
- */
+******************************************************************************************/
 bool bdaddr_compare(struct bd_addr *bd_address1,
                     struct bd_addr *bd_address2)
 {
@@ -790,15 +744,13 @@ bool bdaddr_compare(struct bd_addr *bd_address1,
     return(true);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Check if device is in application's discovered device list.
  *
  * @param[in] padv_addr  Pointer to devices bd_addr.
  *
  * @return Index in list. if return value equals MAX_SCAN_DEVICES device is not listed.
- ****************************************************************************************
- */
+******************************************************************************************/
 unsigned char app_device_recorded(struct bd_addr *padv_addr)
 {
     int i;
@@ -813,12 +765,10 @@ unsigned char app_device_recorded(struct bd_addr *padv_addr)
     return i;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Cancel ongoing air operation
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 void app_cancel(void)
 {
     struct gapm_cancel_cmd *msg;
@@ -830,12 +780,10 @@ void app_cancel(void)
     BleSendMsg((void *) msg);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief  Starts data length extension negotiation
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 void app_suota_start_dle_negotiation()
 {
     struct gapc_set_le_pkt_size_cmd * req = BleMsgAlloc(GAPC_SET_LE_PKT_SIZE_CMD, KE_BUILD_ID(TASK_ID_GAPC, app_env.peer_device.device.conidx), TASK_ID_GTL,
@@ -850,12 +798,10 @@ void app_suota_start_dle_negotiation()
     BleSendMsg((void *) req);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief  Starts GATT MTU size negotiation
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 void app_suota_start_gatt_mtu_negotiation()
 {
     struct gattc_exc_mtu_cmd *req = BleMsgAlloc(GATTC_EXC_MTU_CMD, TASK_ID_GATTC, TASK_ID_GTL,
@@ -867,13 +813,11 @@ void app_suota_start_gatt_mtu_negotiation()
     BleSendMsg((void *) req);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Sets suota_chunk_size and suota_block_size
  *
  * @param[in] mtu  Negotiated MTU size
- ****************************************************************************************
- */
+******************************************************************************************/
 void app_suota_set_data_params(uint16_t mtu)
 {
     uint16_t pd_char_size = (app_env.peer_device.suota.pd_char_size_value[1] << 8)
@@ -894,12 +838,10 @@ void app_suota_set_data_params(uint16_t mtu)
     printf("Block size set to : %d bytes\n", suota_block_size);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Write SUOTA_MEM_DEV characteristic
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 void app_suota_write_mem_dev(void)
 {
     uint8_t value[4];
@@ -943,12 +885,10 @@ void app_suota_write_mem_dev(void)
                               &value[0], value_length);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Write SUOTA_GPIO_MAM characteristic
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 void app_suota_write_gpio_map(void)
 {
     uint8_t v[4] = {0, 0, 0, 0};
@@ -984,25 +924,21 @@ void app_suota_write_gpio_map(void)
     app_characteristic_write(app_env.peer_device.device.conidx, app_env.peer_device.suota.gpio_map_handle, v, 4);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Checks if the current block is the last block of the image.
  *
  * @return True if the current block is the last block of the image.
- ****************************************************************************************
- */
+******************************************************************************************/
 bool is_last_block(void)
 {
     return ((block_offset + block_length) == patch_length);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Advances current block to the next block of the image.
  *
  * If the current block is the last block of the image then no action is taken
- ****************************************************************************************
- */
+******************************************************************************************/
 void next_block(void)
 {
     if (is_last_block())
@@ -1015,25 +951,21 @@ void next_block(void)
                  : (patch_length - block_offset);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Checks if the current chunk of the current block is the last chunk of the block.
  *
  * @return True if the current chunk is the last chunk of the current block.
- ****************************************************************************************
- */
+******************************************************************************************/
 bool is_last_chunk(void)
 {
     return ((patch_chunck_offset + patch_chunck_length) == block_length);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Advances current chunk to the next chunk of the current block.
  *
  * If the current chunk is the last chunk of the current block then no action is taken
- ****************************************************************************************
- */
+******************************************************************************************/
 void next_chunk(void)
 {
     if (is_last_chunk())
@@ -1044,12 +976,10 @@ void next_chunk(void)
     patch_chunck_length = (block_length - patch_chunck_offset) > suota_chunk_size ? suota_chunk_size : (block_length - patch_chunck_offset);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Writes the current block length to SUOTA_PATCH_LEN characteristic
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 void app_suota_write_patch_len()
 {
     uint8_t value[] = {0, 0};
@@ -1064,20 +994,16 @@ void app_suota_write_patch_len()
                               &value[0], value_length);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * Counts the number of 20-bye chunk write commands that have been issued but have not
  * been completed yet.
- ****************************************************************************************
- */
+******************************************************************************************/
 int expected_write_completion_events_counter = 0;
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Writes the current chunk to SUOTA_PATCH_DATA characteristic
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 void app_suota_write_current_block_chunk(void)
 {
     app_env.state = APP_WR_PATCH_DATA;
@@ -1087,12 +1013,10 @@ void app_suota_write_current_block_chunk(void)
                                       &patch_data[block_offset + patch_chunck_offset], patch_chunck_length);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief  Calculates and prints current upload progress
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 void app_suota_show_upload_progress(void)
 {
     unsigned int progress = ((block_offset + block_length)*100)/patch_length;
@@ -1106,12 +1030,10 @@ void app_suota_show_upload_progress(void)
     }
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief  Writes current block to SUOTA_PATCH_DATA  in 20 byte chunks
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 void app_suota_write_chunks(void)
 {
     // init 1st chunk of block
@@ -1132,12 +1054,10 @@ void app_suota_write_chunks(void)
     app_suota_show_upload_progress();
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief  Sends the SUOTA END command
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 void app_suota_end(void)
 {
     uint8_t value[4];
@@ -1184,12 +1104,10 @@ void app_suota_reboot(void)
                               &value[0], value_length);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Initialization of application environment
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 void app_env_init(void)
 {
     memset(app_env.peer_device.device.adv_addr.addr, 0,  sizeof(app_env.peer_device.device.adv_addr.addr));
@@ -1200,16 +1118,14 @@ void app_env_init(void)
     app_env.target_idx = -1;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Parse application's command line arguments
  *
  * @param[in] argc  Argument count
  * @param[in] argv  Argument array
  *
  * @return int  0 on success
- ****************************************************************************************
- */
+******************************************************************************************/
 int parse_cmd_line_args(int argc, char** argv)
 {
     uint8_t tk_arg_pos = 0;
@@ -1406,12 +1322,10 @@ int parse_cmd_line_args(int argc, char** argv)
     return 0;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Print usage message in standard output
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 void print_usage(void)
 {
     printf ("Usage: \n");
@@ -1441,12 +1355,10 @@ void print_usage(void)
     printf ("<temporary key>   = passkey or OOB data. This argument is optional. \n");
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Application's main function.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 int main(int argc, char** argv)
 {
     if ( 0 != parse_cmd_line_args(argc, argv) )
@@ -1513,12 +1425,10 @@ int main(int argc, char** argv)
     exit (EXIT_SUCCESS);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Print current time in standard output
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 void print_time(void)
 {
     SYSTEMTIME timestamp;

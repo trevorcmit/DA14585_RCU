@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file smpc.h
  *
@@ -8,14 +7,12 @@
  * Copyright (C) RivieraWaves 2009-2014
  *
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #ifndef SMPC_H_
 #define SMPC_H_
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @addtogroup SMP Security Manager Protocol
  * @ingroup HOST
  * @brief Security Manager Protocol.
@@ -57,15 +54,13 @@
  * implemented in SMPC.
  * @{
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #include "smp_common.h"
 
 /*
  * INCLUDE FILES
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #if (RW_BLE_USE_CRYPT)
 
@@ -82,8 +77,7 @@
 
 /*
  * DEFINES
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /// Minimum Encryption key size
 #define SMPC_MIN_ENC_SIZE_LEN                   (7)
@@ -127,8 +121,7 @@
 
 /*
  * ENUMERATIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 
 /// Information source.
@@ -340,8 +333,7 @@ enum
 
 /*
  * STRUCTURES DEFINITION
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /// Master ID Information Structure
 struct smpc_mst_id_info
@@ -473,14 +465,12 @@ struct smpc_env
 
 /*
  * GLOBAL VARIABLES DEFINITION
- ****************************************************************************************
- */
+******************************************************************************************/
 
 
 /*
  * MACROS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /// Authentication Request mask
 #define SMPC_MASK_AUTH_REQ(req)    (req & 0x07)
@@ -493,242 +483,198 @@ struct smpc_env
 
 /*
  * FUNCTION DECLARATIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Send a SMPM_USE_ENC_BLOCK_CMD message to the SMPM. Shall be use when the AES_128
  *        encryption block need to be used.
  *
  * @param[in] conidx      Connection Index
  * @param[in] operand_1   First operand
  * @param[in] operand_2   Second operand
- ****************************************************************************************
- */
+******************************************************************************************/
 void smpc_send_use_enc_block_cmd(uint8_t conidx,
                                  uint8_t *operand_1, uint8_t *operand_2);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Send a request to the controller to start the encryption procedure.
  *
  * @param[in] conidx      Connection Index
  * @param[in] operand_1   First operand
  * @param[in] operand_2   Second operand
- ****************************************************************************************
- */
+******************************************************************************************/
 void smpc_send_start_enc_cmd(uint8_t idx, uint8_t key_type, uint8_t *key,
                              uint8_t *randnb, uint16_t ediv);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Send the LTK provided by the HL to the controller.
  *
  * @param[in] idx         Connection Index
  * @param[in] found       Indicate if the requested LTK has been found by the application
  * @param[in] key         Found LTK, used only if found is set to true
- ****************************************************************************************
- */
+******************************************************************************************/
 void smpc_send_ltk_req_rsp(uint8_t idx, bool found, uint8_t *key);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Send a SMPC_PAIRING_REQ_IND message to the HL
  *
  * @param[in] conidx      Connection Index
  * @param[in] req_type    Kind of request
- ****************************************************************************************
- */
+******************************************************************************************/
 void smpc_send_pairing_req_ind(uint8_t conidx, uint8_t req_type);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Send a SMPC_PAIRING_IND message to the HL
  *
  * @param[in] conidx      Connection Index
  * @param[in] ind_type    Kind of indication
  * @param[in] value       Value to indicate (keys, ...)
- ****************************************************************************************
- */
+******************************************************************************************/
 void smpc_send_pairing_ind(uint8_t conidx, uint8_t ind_type, void *value);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Check if the provided pairing features are within the specified range.
  *
  * @param[in] pair_feat   Pairing Features values to check
  *
  * @param[out] true if features are valid, else false
- ****************************************************************************************
- */
+******************************************************************************************/
 bool smpc_check_pairing_feat(struct gapc_pairing *pair_feat);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Check if an attack by repeated attempts has been triggered by the peer device
  *
  * @param[in] conidx   Connection Index
- ****************************************************************************************
- */
+******************************************************************************************/
 uint8_t smpc_check_repeated_attempts(uint8_t conidx);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Compute and check the encryption key size to use during the connection.
  *
  * @param[in] conidx   Connection Index
  *
  * @param[out] true if the resultant EKS is within the specified range [7-16 bytes], else false
- ****************************************************************************************
- */
+******************************************************************************************/
 bool smpc_check_max_key_size(uint8_t conidx);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Check if the keys distribution scheme is compliant with the required security
  *        level
  *
  * @param[in] conidx      Connection Index
  * @param[in] sec_level   Security level required by the device.
- ****************************************************************************************
- */
+******************************************************************************************/
 bool smpc_check_key_distrib(uint8_t conidx, uint8_t sec_level);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Apply the XOR operator to the two provided operands
  *
  * @param[in|out] result      Buffer which will contain the result of the XOR operation
  * @param[in]     operand_1   First operand
  * @param[in]     operand_2   Second operand
- ****************************************************************************************
- */
+******************************************************************************************/
 void smpc_xor(uint8_t *result, uint8_t *operand_1, uint8_t *operand_2);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Generate the L value during a signature verification/generation procedure.
  *
  * @param[in] conidx   Connection Index
  * @param[in] src      Indicate the source of the CSRK which will be used (LOCAL or PEER)
- ****************************************************************************************
- */
+******************************************************************************************/
 void smpc_generate_l(uint8_t conidx, uint8_t src);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Generate one of the Ci value during a signature verification/generation procedure.
  *
  * @param[in] conidx   Connection Index
  * @param[in] src      Indicate the source of the CSRK which will be used (LOCAL or PEER)
  * @param[in] ci1      Previous computed Ci value
  * @param[in] mi       16-byte block used to generate the ci value
- ****************************************************************************************
- */
+******************************************************************************************/
 void smpc_generate_ci(uint8_t conidx, uint8_t src, uint8_t *ci1, uint8_t *mi);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Generate the random value exchanged during the pairing procedure (phase 2)
  *
  * @param[in] conidx   Connection Index
  * @param[in] state    New state of the SMPC task.
- ****************************************************************************************
- */
+******************************************************************************************/
 void smpc_generate_rand(uint8_t conidx, uint8_t state);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Generate the first value needed in the confirm value generation
  *
  * @param[in] conidx   Connection Index
  * @param[in] role     Current role of the device
  * @param[in] local    true if the confirm value to generate is the confirm value of the
  *                     device, false if it is the remote device's one.
- ****************************************************************************************
- */
+******************************************************************************************/
 void smpc_generate_e1(uint8_t conidx, uint8_t role, bool local);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Generate the confirm value
  *
  * @param[in] conidx   Connection Index
  * @param[in] role     Current role of the device
  * @param[in] e1       e1 value
- ****************************************************************************************
- */
+******************************************************************************************/
 void smpc_generate_cfm(uint8_t conidx, uint8_t role, uint8_t *e1);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Generate the STK used to encrypt a link after the pairing procedure
  *
  * @param[in] conidx   Connection Index
  * @param[in] role     Current role of the device
- ****************************************************************************************
- */
+******************************************************************************************/
 void smpc_generate_stk(uint8_t conidx, uint8_t role);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Calculate one of the subkey used during the signature generation/verification
  *        procedure.
  *
  * @param[in] gen_k2        true if the returned subkeys is k2, false if k1
  * @param[in] l_value       L value obtained from the CSRK.
  * @param[in|out] subkey    Buffer which will contain the generated subkey.
- ****************************************************************************************
- */
+******************************************************************************************/
 void smpc_calc_subkeys(bool gen_k2, uint8_t *l_value, uint8_t *subkey);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Start to send the keys defined during the pairing features exchange procedure.
  *
  * @param[in] conidx        Connection Index
  * @param[in] role          Current role of the device
- ****************************************************************************************
- */
+******************************************************************************************/
 void smpc_tkdp_send_start(uint8_t conidx, uint8_t role);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Define the next step of TKDP procedure (sending side).
  *
  * @param[in] conidx        Connection Index
  * @param[in] role          Current role of the device
  * @param[in] ltk           LTK to send
  * @param[in] mst_id_info   Master Identifier structure (EDIV + Random number)
- ****************************************************************************************
- */
+******************************************************************************************/
 void smpc_tkdp_send_continue(uint8_t conidx, uint8_t role, uint8_t *ltk,
                              struct smpc_mst_id_info *mst_id_info);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Put the task in a state allowing to receive the keys defined during the pairing
  *        features exchange procedure.
  *
  * @param[in] conidx        Connection Index
  * @param[in] role          Current role of the device
- ****************************************************************************************
- */
+******************************************************************************************/
 void smpc_tkdp_rcp_start(uint8_t conidx, uint8_t role);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Define the next step of TKDP procedure (reception side).
  *
  * @param[in] conidx        Connection Index
  * @param[in] role          Current role of the device
- ****************************************************************************************
- */
+******************************************************************************************/
 void smpc_tkdp_rcp_continue(uint8_t conidx, uint8_t role);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Inform the HL that the pairing procedure currently in progress is over.
  *
  * @param[in] conidx          Connection Index
@@ -736,79 +682,64 @@ void smpc_tkdp_rcp_continue(uint8_t conidx, uint8_t role);
  * @param[in] status          Status
  * @param[in] start_ra_timer  Indicate if the repeated attempts timer shall be started in
  *                            the case of a pairing failed.
- ****************************************************************************************
- */
+******************************************************************************************/
 void smpc_pairing_end(uint8_t conidx, uint8_t role, uint8_t status, bool start_ra_timer);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Stop the timer used to detect a SMP Timeout
  *
  * @param[in] conidx        Connection Index
- ****************************************************************************************
- */
+******************************************************************************************/
 void smpc_clear_timeout_timer(uint8_t conidx);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Start the timer used to detect a Repeated Attempts attack
  *
  * @param[in] conidx        Connection Index
- ****************************************************************************************
- */
+******************************************************************************************/
 void smpc_launch_rep_att_timer(uint8_t conidx);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Determine the method which will be used to generate the STK during a pairing
  *        procedure
  *
  * @param[in] conidx        Connection Index
- ****************************************************************************************
- */
+******************************************************************************************/
 void smpc_get_key_sec_prop(uint8_t conidx);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Check if the security mode requested by the application or the peer device can
  *        be reached with the exchanged pairing features.
  *
  * @param[in] conidx        Connection Index
  * @param[in] role          Current role of the device
- ****************************************************************************************
- */
+******************************************************************************************/
 bool smpc_is_sec_mode_reached(uint8_t conidx, uint8_t role);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Define what to do once a start encryption procedure has been successfully finished.
  *
  * @param[in] conidx        Connection Index
  * @param[in] role          Current role of the device
  * @param[in] status        Status
- ****************************************************************************************
- */
+******************************************************************************************/
 void smpc_handle_enc_change_evt(uint8_t conidx, uint8_t role, uint8_t status);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Send a SMP PDU to the peer device
  *
  * @param[in] conidx        Connection Index
  * @param[in] cmd_code      Code of the PDU to send
  * @param[in] value         Unpacked value
- ****************************************************************************************
- */
+******************************************************************************************/
 void smpc_pdu_send(uint8_t conidx, uint8_t cmd_code, void *value);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handle reception of a SMP PDU sent by the peer device.
  *
  * @param[in] conidx        Connection Index
  * @param[in] pdu           Unpacked PDU
- ****************************************************************************************
- */
+******************************************************************************************/
 void smpc_pdu_recv(uint8_t conidx, struct l2cc_pdu *pdu);
 
 #endif //(BLE_CENTRAL || BLE_PERIPHERAL)

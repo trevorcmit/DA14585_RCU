@@ -1,34 +1,17 @@
-/**
- ****************************************************************************************
- *
+/*****************************************************************************************
  * \file port_platform.c
- *
  * \brief
- *
- * Copyright (C) 2017 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information  
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com>
- *
- ****************************************************************************************
- */
+*****************************************************************************************/
  
- /**
- ****************************************************************************************
+/*****************************************************************************************
  * \addtogroup APP_UTILS
  * \{
  * \addtogroup PLATFORM
  * \{
  * \addtogroup PORT_PLATFORM
  * \{
- ****************************************************************************************	 
- */
+****************************************************************************************	 */
 
-/*
- * INCLUDE FILES
- ****************************************************************************************
- */
 #include <port_platform.h>
 #include "l2cm.h"
 #include "l2cc_task.h"
@@ -57,126 +40,129 @@ loop
 }
 
 #if (RWBLE_SW_VERSION_MAJOR >= 8)
-uint8_t port_attmdb_find_by_uuid(uint8_t conidx, uint16_t *start_hdl, uint16_t end_hdl, uint8_t uuid_len, uint8_t *uuid, bool service)
-{
-    uint8_t attmdb_get_next_att(uint16_t * handle, struct attm_elmt*elmt);
-    uint8_t attmdb_get_uuid(struct attm_elmt *elmt, uint8_t* uuid_len, uint8_t* uuid, bool srv_uuid, bool air);
+    uint8_t port_attmdb_find_by_uuid(uint8_t conidx, uint16_t *start_hdl, uint16_t end_hdl, uint8_t uuid_len, uint8_t *uuid, bool service)
+    {
+        uint8_t attmdb_get_next_att(uint16_t * handle, struct attm_elmt*elmt);
+        uint8_t attmdb_get_uuid(struct attm_elmt *elmt, uint8_t* uuid_len, uint8_t* uuid, bool srv_uuid, bool air);
 
-    uint8_t att_uuid_len;
-    uint8_t att_uuid[ATT_UUID_128_LEN];
-    bool found = false;
-    uint8_t status = ATT_ERR_NO_ERROR;
+        uint8_t att_uuid_len;
+        uint8_t att_uuid[ATT_UUID_128_LEN];
+        bool found = false;
+        uint8_t status = ATT_ERR_NO_ERROR;
 
-    struct attm_elmt elmt;
-    
-    do {
-        status = attmdb_get_next_att(start_hdl, &elmt);
+        struct attm_elmt elmt;
+        
+        do {
+            status = attmdb_get_next_att(start_hdl, &elmt);
 
-        /* end of database - attribute not found */
-        if(status != ATT_ERR_NO_ERROR) {
-            *start_hdl = end_hdl;
-            break;
-        } else if(*start_hdl <= end_hdl) {
-            // retrieve attribute UUID
-            status = attmdb_get_uuid(&elmt, &(att_uuid_len), att_uuid, service, false);
-            ASSERT_INFO(status == ATT_ERR_NO_ERROR, *start_hdl, status);
+            /* end of database - attribute not found */
+            if(status != ATT_ERR_NO_ERROR) {
+                *start_hdl = end_hdl;
+                break;
+            } else if(*start_hdl <= end_hdl) {
+                // retrieve attribute UUID
+                status = attmdb_get_uuid(&elmt, &(att_uuid_len), att_uuid, service, false);
+                ASSERT_INFO(status == ATT_ERR_NO_ERROR, *start_hdl, status);
 
-            // compare UUIDs
-            if(attm_uuid_comp(uuid, uuid_len, att_uuid, att_uuid_len)) {
-                found = true;
-            } else { /* check next handle if no uuid found */
-                (*start_hdl)++;
+                if (attm_uuid_comp(uuid, uuid_len, att_uuid, att_uuid_len))
+                {
+                    found = true;
+                } else
+                { /* check next handle if no uuid found */
+                    (*start_hdl)++;
+                }
             }
+        } while (!found &&
+                (*start_hdl <= end_hdl) &&
+                (*start_hdl != ATT_INVALID_HANDLE));
+
+        if(!found)
+        {
+            status = ATT_ERR_ATTRIBUTE_NOT_FOUND;
         }
-    } while (!found &&
-             (*start_hdl <= end_hdl) &&
-             (*start_hdl != ATT_INVALID_HANDLE));
 
-    if(!found) {
-        status = ATT_ERR_ATTRIBUTE_NOT_FOUND;
+        return status;    
     }
-
-    return status;    
-}
 #endif
 
 uint8_t port_atts_find_value_by_uuid(uint8_t conidx, uint16_t *start_hdl, uint16_t end_hdl, uint8_t uuid_len, uint8_t *uuid)
 {
-#if (RWBLE_SW_VERSION_MAJOR >= 8)    
-    return port_attmdb_find_by_uuid(conidx, start_hdl, end_hdl, uuid_len, uuid, false);
-#else
-    extern uint8_t atts_find_uuid(uint16_t *start_hdl, uint16_t end_hdl, uint8_t uuid_len, uint8_t *uuid);
+    #if (RWBLE_SW_VERSION_MAJOR >= 8)    
+        return port_attmdb_find_by_uuid(conidx, start_hdl, end_hdl, uuid_len, uuid, false);
+    #else
+        extern uint8_t atts_find_uuid(uint16_t *start_hdl, uint16_t end_hdl, uint8_t uuid_len, uint8_t *uuid);
 
-    return atts_find_uuid(start_hdl, 0xFFFF, ATT_UUID_16_LEN, uuid);
-#endif    
+        return atts_find_uuid(start_hdl, 0xFFFF, ATT_UUID_16_LEN, uuid);
+    #endif    
 }
 
 #ifdef DEBUG_EMULATE_PACKET_LOSS
-typedef enum app_radio_status { 
-    APP_OTHER_RADIO_ON=0,
-    APP_OTHER_RADIO_OFF=1,
-    APP_OTHER_WAITING_TO_SWITCH_RADIO_ON,
-    APP_OTHER_WAITING_TO_SWITCH_RADIO_OFF
-} app_radio_status_t;
+    typedef enum app_radio_status { 
+        APP_OTHER_RADIO_ON=0,
+        APP_OTHER_RADIO_OFF=1,
+        APP_OTHER_WAITING_TO_SWITCH_RADIO_ON,
+        APP_OTHER_WAITING_TO_SWITCH_RADIO_OFF
+    } app_radio_status_t;
 
-static  app_radio_status_t  internal_radio_state  __PORT_RETAINED; 
+    static  app_radio_status_t  internal_radio_state  __PORT_RETAINED; 
 
-app_radio_status_t port_probe_radio(void)
-{       
-     return(internal_radio_state);
-}
-
-void port_enable_radio(void)
-{
-     if (internal_radio_state!=APP_OTHER_RADIO_ON) {
-        internal_radio_state=APP_OTHER_WAITING_TO_SWITCH_RADIO_ON;
-     }
-}
-
-void port_disable_radio(void)
-{   
-     if (internal_radio_state!=APP_OTHER_RADIO_OFF) {
-        internal_radio_state=APP_OTHER_WAITING_TO_SWITCH_RADIO_OFF;
-     }
-}
-
-/**
- ****************************************************************************************
- * \brief       
- ****************************************************************************************
- */
-static void port_force_disable_radio(void)
-{
-     internal_radio_state=APP_OTHER_RADIO_OFF;
-     SetBits16(RF_OVERRULE_REG, 4, APP_OTHER_RADIO_OFF);
-     SetBits16(RF_OVERRULE_REG, 1, APP_OTHER_RADIO_OFF);
-}
-
-/**
- ****************************************************************************************
- * \brief       
- ****************************************************************************************
- */
-static void port_force_enable_radio(void)
-{
-     internal_radio_state=APP_OTHER_RADIO_ON;
-     SetBits16(RF_OVERRULE_REG, 4, APP_OTHER_RADIO_ON);
-     SetBits16(RF_OVERRULE_REG, 1, APP_OTHER_RADIO_ON);
-}
-  
-void port_handle_radio_ctrl(void)
-{
-    switch (internal_radio_state) {
-    case APP_OTHER_RADIO_ON: 
-    case APP_OTHER_WAITING_TO_SWITCH_RADIO_ON:
-        port_force_enable_radio();
-        break;
-    case APP_OTHER_RADIO_OFF: 
-    case APP_OTHER_WAITING_TO_SWITCH_RADIO_OFF:
-        port_force_disable_radio();
-        break;
+    app_radio_status_t port_probe_radio(void)
+    {       
+        return(internal_radio_state);
     }
-}
+
+    void port_enable_radio(void)
+    {
+        if (internal_radio_state!=APP_OTHER_RADIO_ON)
+        {
+            internal_radio_state=APP_OTHER_WAITING_TO_SWITCH_RADIO_ON;
+        }
+    }
+
+    void port_disable_radio(void)
+    {   
+        if (internal_radio_state!=APP_OTHER_RADIO_OFF)
+        {
+            internal_radio_state=APP_OTHER_WAITING_TO_SWITCH_RADIO_OFF;
+        }
+    }
+
+
+    /*****************************************************************************************
+     * \brief       
+    *****************************************************************************************/
+    static void port_force_disable_radio(void)
+    {
+        internal_radio_state=APP_OTHER_RADIO_OFF;
+        SetBits16(RF_OVERRULE_REG, 4, APP_OTHER_RADIO_OFF);
+        SetBits16(RF_OVERRULE_REG, 1, APP_OTHER_RADIO_OFF);
+    }
+
+
+    /*****************************************************************************************
+     * \brief       
+    ******************************************************************************************/
+    static void port_force_enable_radio(void)
+    {
+        internal_radio_state=APP_OTHER_RADIO_ON;
+        SetBits16(RF_OVERRULE_REG, 4, APP_OTHER_RADIO_ON);
+        SetBits16(RF_OVERRULE_REG, 1, APP_OTHER_RADIO_ON);
+    }
+  
+    void port_handle_radio_ctrl(void)
+    {
+        switch (internal_radio_state)
+        {
+            case APP_OTHER_RADIO_ON: 
+            case APP_OTHER_WAITING_TO_SWITCH_RADIO_ON:
+                port_force_enable_radio();
+                break;
+            case APP_OTHER_RADIO_OFF: 
+            case APP_OTHER_WAITING_TO_SWITCH_RADIO_OFF:
+                port_force_disable_radio();
+                break;
+        }
+    }
 #endif // DEBUG_EMULATE_PACKET_LOSS
 
 struct l2cc_pdu_send_req *port_create_l2cc_pdu(uint16_t length, uint16_t handle)

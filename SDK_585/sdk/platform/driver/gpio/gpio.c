@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file gpio.c
  *
@@ -11,13 +10,11 @@
  *
  * <bluetooth.support@diasemi.com> and contributors.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /*
  * INCLUDE FILES
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #include <stdint.h>
 #include "arch.h"
@@ -41,17 +38,14 @@ GPIO_handler_function_t GPIOHandlerFunction[NO_OF_IRQS];
 
 /*
  * FUNCTION DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #if DEVELOPMENT_DEBUG && !defined(GPIO_DRV_PIN_ALLOC_MON_DISABLED) && defined(__DA14586__)
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief GPIO reservations for DA14586 internal SPI flash.
  *
  * @return void
- ****************************************************************************************
- */
+******************************************************************************************/
 static void da14586_internal_flash_gpio_reservations(void)
 {
     RESERVE_GPIO(DA14586_INTERNAL_FLASH_SPI_CLK,      GPIO_PORT_2, GPIO_PIN_0, PID_SPI_CLK);
@@ -61,15 +55,13 @@ static void da14586_internal_flash_gpio_reservations(void)
 }
 #endif // #if DEVELOPMENT_DEBUG && !defined(GPIO_DRV_PIN_ALLOC_MON_DISABLED) && defined(__DA14586__)
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Find the offset of the first '1' in a uint16_t mask
  *
  * @param[in] f        uint16_t bit mask
  *                     http://graphics.stanford.edu/~seander/bithacks.html
  * @return c           the number of trailing zeros in the right
- ****************************************************************************************
- */
+******************************************************************************************/
 static uint16_t gpioshift16(uint16_t f){
     uint16_t c;  // output: c will count f's trailing zero bits,
 
@@ -94,17 +86,14 @@ static uint16_t gpioshift16(uint16_t f){
 
 /*
  * Global Functions
- ****************************************************************************************
- */
+******************************************************************************************/
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Initialize the GPIO assignemnt check variables
  *
  * @return void
- ****************************************************************************************
- */
+******************************************************************************************/
 void GPIO_init(void)
 {
 #if DEVELOPMENT_DEBUG
@@ -149,8 +138,7 @@ void GPIO_init(void)
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Set the pin type and mode
  *
  * @param[in] port     GPIO port
@@ -159,8 +147,7 @@ void GPIO_init(void)
  * @param[in] function GPIO pin usage. GPIO_FUNCTION enumeration.
  *
  * @return void
- ****************************************************************************************
- */
+******************************************************************************************/
 void GPIO_SetPinFunction(GPIO_PORT port, GPIO_PIN pin, GPIO_PUPD mode, GPIO_FUNCTION function)
 {
 #if DEVELOPMENT_DEBUG
@@ -179,8 +166,7 @@ void GPIO_SetPinFunction(GPIO_PORT port, GPIO_PIN pin, GPIO_PUPD mode, GPIO_FUNC
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Combined function to set the state and the type and mode of the GPIO pin
  *
  * @param[in] port     GPIO port
@@ -190,8 +176,7 @@ void GPIO_SetPinFunction(GPIO_PORT port, GPIO_PIN pin, GPIO_PUPD mode, GPIO_FUNC
  * @param[in] high     set to TRUE to set the pin into high else low
  *
  * @return void
- ****************************************************************************************
- */
+******************************************************************************************/
 void GPIO_ConfigurePin(GPIO_PORT port, GPIO_PIN pin, GPIO_PUPD mode, GPIO_FUNCTION function,
                         const bool high)
 {
@@ -211,8 +196,7 @@ void GPIO_ConfigurePin(GPIO_PORT port, GPIO_PIN pin, GPIO_PUPD mode, GPIO_FUNCTI
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Set the power source of the GPIO pin.
  *
  * @param[in] port          GPIO port
@@ -220,8 +204,7 @@ void GPIO_ConfigurePin(GPIO_PORT port, GPIO_PIN pin, GPIO_PUPD mode, GPIO_FUNCTI
  * @param[in] power_rail    GPIO power rail. See GPIO_POWER_RAIL  enumeration.
  *
  * @return void
- ****************************************************************************************
- */
+******************************************************************************************/
 void GPIO_ConfigurePinPower(GPIO_PORT port, GPIO_PIN pin, GPIO_POWER_RAIL power_rail)
 {
 #if DEVELOPMENT_DEBUG
@@ -250,8 +233,7 @@ void GPIO_ConfigurePinPower(GPIO_PORT port, GPIO_PIN pin, GPIO_POWER_RAIL power_
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Sets a pin high. The GPIO should have been previously configured as output!
  *
  * @param[in] port     GPIO port
@@ -278,8 +260,7 @@ void GPIO_SetActive(GPIO_PORT port, GPIO_PIN pin)
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Sets the GPIO low. The GPIO should have been previously configured as output!
  *
  * @param[in] port     GPIO port
@@ -306,8 +287,7 @@ void GPIO_SetInactive(GPIO_PORT port, GPIO_PIN pin)
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Gets the GPIO status. The GPIO should have been previously configured as input!
  *
  * @param[in] port     GPIO port
@@ -336,8 +316,7 @@ bool GPIO_GetPinStatus(GPIO_PORT port, GPIO_PIN pin)
 
 #ifndef GPIO_DRV_IRQ_HANDLING_DISABLED
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Function to set the interrupt generated by the GPIO pin
  *
  * @param[in] port          GPIO port
@@ -348,8 +327,7 @@ bool GPIO_GetPinStatus(GPIO_PORT port, GPIO_PIN pin)
  * @param[in] debounce_ms   duration of a debounce sequence before an IRQ is generated
  *
  * @return void
- ****************************************************************************************
- */
+******************************************************************************************/
 void GPIO_EnableIRQ(GPIO_PORT port, GPIO_PIN pin, IRQn_Type irq, bool low_input,
                      bool release_wait, uint8_t debounce_ms)
 {
@@ -380,54 +358,47 @@ void GPIO_EnableIRQ(GPIO_PORT port, GPIO_PIN pin, IRQn_Type irq, bool low_input,
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Returns the GPIO input level that triggers a GPIO IRQ.
  *
  * @param[in] irq   GPIO IRQ number (e.g. GPIO2_IRQn).
  *
  * @return input level that triggers the GPIO IRQ (see GPIO_IRQ_INPUT_LEVEL)
- ****************************************************************************************
- */
+******************************************************************************************/
 GPIO_IRQ_INPUT_LEVEL GPIO_GetIRQInputLevel(IRQn_Type irq)
 {
     return (GPIO_IRQ_INPUT_LEVEL) GetBits16(GPIO_INT_LEVEL_CTRL_REG, (INPUT_LEVEL0 << (irq-GPIO0_IRQn)));
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Set the GPIO input level that triggers a GPIO IRQ.
  *
  * @param[in] irq       GPIO IRQ (e.g. GPIO2_IRQn).
  * @param[in] level     Input level that triggers the GPIO IRQ (see GPIO_IRQ_INPUT_LEVEL).
  *
  * @return void
- ****************************************************************************************
- */
+******************************************************************************************/
 void GPIO_SetIRQInputLevel(IRQn_Type irq, GPIO_IRQ_INPUT_LEVEL level)
 {
     GPIOSetBits16(GPIO_INT_LEVEL_CTRL_REG, (INPUT_LEVEL0 << (irq-GPIO0_IRQn)), level);
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Function to reset the interrupt generated by the GPIO pin
  *
  * @param[in] irq   GPIO IRQ
  *
  * @return void
- ****************************************************************************************
- */
+******************************************************************************************/
 void GPIO_ResetIRQ( IRQn_Type irq )
 {
     GPIOSetBits16(GPIO_RESET_IRQ_REG, RESET_GPIO0_IRQ << (irq-GPIO0_IRQn), 1);
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Register Callback function for GPIO IRQ.
  *
  * @param[in] irq       The handler of this IRQ will call the function
@@ -435,8 +406,7 @@ void GPIO_ResetIRQ( IRQn_Type irq )
  * @param[in] callback  Callback function's reference.
  *
  * @return void
- ****************************************************************************************
- */
+******************************************************************************************/
 void GPIO_RegisterCallback(IRQn_Type irq, GPIO_handler_function_t callback)
 {
     if ((irq<=GPIO4_IRQn) && (irq>=GPIO0_IRQn))
@@ -444,15 +414,13 @@ void GPIO_RegisterCallback(IRQn_Type irq, GPIO_handler_function_t callback)
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief GPIO IRQn Handler
  *
  * @param[in] irq   The IRQ that this handler services
  *
  * @return void
- ****************************************************************************************
- */
+******************************************************************************************/
 void GPIOn_Handler(IRQn_Type irq)
 {
     if ((irq<=GPIO4_IRQn) && (irq>=GPIO0_IRQn))
@@ -467,65 +435,55 @@ void GPIOn_Handler(IRQn_Type irq)
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief GPIO IRQ0 Handler
  *
  * @return void
- ****************************************************************************************
- */
+******************************************************************************************/
 void GPIO0_Handler(void)
 {
     GPIOn_Handler(GPIO0_IRQn);
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief GPIO IRQ1 Handler
  *
  * @return void
- ****************************************************************************************
- */
+******************************************************************************************/
 void GPIO1_Handler(void)
 {
     GPIOn_Handler(GPIO1_IRQn);
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief GPIO IRQ2 Handler
  *
  * @return void
- ****************************************************************************************
- */
+******************************************************************************************/
 void GPIO2_Handler(void)
 {
     GPIOn_Handler(GPIO2_IRQn);
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief GPIO IRQ3 Handler
  *
  * @return void
- ****************************************************************************************
- */
+******************************************************************************************/
 void GPIO3_Handler(void)
 {
     GPIOn_Handler(GPIO3_IRQn);
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief GPIO IRQ4 Handler
  *
  * @return void
- ****************************************************************************************
- */
+******************************************************************************************/
 void GPIO4_Handler(void)
 {
     GPIOn_Handler(GPIO4_IRQn);

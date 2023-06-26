@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * \file port_multi_bond.c
  *
@@ -11,11 +10,9 @@
  *
  * <bluetooth.support@diasemi.com>
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \addtogroup APP_UTILS
  * \{
  * \addtogroup BONDING
@@ -30,8 +27,7 @@
 
 /*
  * INCLUDE FILES
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #include "rwip_config.h"             // SW configuration
 
@@ -79,8 +75,7 @@ extern enum multi_bond_host_rejection multi_bond_enabled;
 
 /*
  * Retained variables
- ****************************************************************************************
- */
+******************************************************************************************/
 uint8_t multi_bond_status                       __PORT_RETAINED;
 uint8_t multi_bond_active_peer_pos              __PORT_RETAINED; 
 uint8_t multi_bond_next_peer_pos                __PORT_RETAINED;
@@ -98,18 +93,15 @@ struct bd_addr alt_dev_bdaddr                   __PORT_RETAINED;
 
 /*
  * Local variables
- ****************************************************************************************
- */
+******************************************************************************************/
 int attribute_handle;
 	
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief       Clear the NV memory.
  *
  * \warning     nv_prom_init() must be called before calling this function.  
  *              nv_prom_release() must be called after this function exits.
- ****************************************************************************************
- */
+******************************************************************************************/
 static void multi_bond_clear_eeprom(void)
 {
     int i;
@@ -174,13 +166,11 @@ static void multi_bond_clear_eeprom(void)
     }
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief       Update the index to the last (or current) used NV memory entry.
  *
  * \param[in]   index
- ****************************************************************************************
- */
+******************************************************************************************/
 static void multi_bond_update_active_peer_pos(int index)
 {
     ASSERT_WARNING((index >= 0) && (index < MAX_BOND_PEER));
@@ -189,16 +179,14 @@ static void multi_bond_update_active_peer_pos(int index)
     multi_bond_next_peer_pos = ((index + 1) % MAX_BOND_PEER);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief       Check if bond info must be stored in the NV memory due to a DataBase change.
  *
  * \param[in]   pos             The offset of the field in the info
  * \param[in]   num_of_bits
  * \param[in]   value           The value of this field in the DataBase.
  * \param[in]   request_write
- ****************************************************************************************
- */
+******************************************************************************************/
 static void multi_bond_update_bond_data(uint8_t pos, uint8_t num_of_bits, uint8_t value, bool request_write)
 {
     ASSERT_ERROR(num_of_bits <= 8);
@@ -214,16 +202,14 @@ static void multi_bond_update_bond_data(uint8_t pos, uint8_t num_of_bits, uint8_
     }
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief       Reads bonding data fro the NV memory
  *
  * \param[out]  info    A pointer to where the bonding info will be placed
  * \param[in]   entry   The entry for which we want to get the bonding information
  *
  * \return      bool    true if the reading of bonding data was successful
- ****************************************************************************************
- */
+******************************************************************************************/
 static bool multi_bond_read_bond_data_from_nv(struct bonding_info_s *info, uint8_t entry)
 {
     nv_prom_read_data( (uint8_t *) info, 
@@ -233,15 +219,13 @@ static bool multi_bond_read_bond_data_from_nv(struct bonding_info_s *info, uint8
     return ((info->env.nvds_tag >> 4) == 0x5);    
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief
  *
  * \param[in]   uuid
  *
  * \return
- ****************************************************************************************
- */
+******************************************************************************************/
 static uint8_t multi_bond_get_notification_info_index(uint16_t uuid) 
 {
     uint8_t i=0;
@@ -251,8 +235,7 @@ static uint8_t multi_bond_get_notification_info_index(uint16_t uuid)
     return i;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief       Refresh usage counters.
  *
  * \details     Refresh usage counters (decrement) for all entries apart from idx.
@@ -260,8 +243,7 @@ static uint8_t multi_bond_get_notification_info_index(uint16_t uuid)
  *              currently available while all other entries are decremented by 1.
  *
  * \param[in]   idx     index of currently connected host
- ****************************************************************************************
- */
+******************************************************************************************/
 static void multi_bond_update_usage_count_values(int idx)
 {
     int i;
@@ -278,8 +260,7 @@ static void multi_bond_update_usage_count_values(int idx)
     }
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief      Called to update the usage counter of a peer with a specific index
  *
  * \param[in]   idx The index of the peer
@@ -292,8 +273,7 @@ static void multi_bond_update_usage_count_values(int idx)
  *                  or the peer idx is invalid
  *                  <li> 1 if the update was successful
  *              </ul>
- ****************************************************************************************
- */
+******************************************************************************************/
 static int multi_bond_update_usage_count(int idx)
 {
     if (con_fsm_params.has_usage_counters) {
@@ -339,15 +319,13 @@ static int multi_bond_update_usage_count(int idx)
 #ifdef FORCE_CONNECT_TO_HOST_ON
 extern uint8_t force_next_store_entry;
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief     Force storing of the bonding info of the next host that will be bonded
  *            to the specified position
  *          
  * \param[in] entry  The position in the storage memory where the bonding data
  *                   will be stored
- ****************************************************************************************
- */
+******************************************************************************************/
 uint8_t app_alt_pair_force_next_store_entry(uint8_t entry)
 {
         force_next_store_entry = entry;
@@ -439,8 +417,7 @@ uint8_t port_multi_bond_get_entry_to_delete(void)
     return 0;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief       Get the last used entry (if any).
  *
  * \details     Gets the position of the last used bonding entry.
@@ -448,8 +425,7 @@ uint8_t port_multi_bond_get_entry_to_delete(void)
  * \return      int
  *
  * \retval      The index of the last used bonding entry or MAX_BOND_PEER if none if found.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int multi_bond_get_last_used_entry(void)
 {
     int i;
@@ -593,8 +569,7 @@ void port_alt_pair_store_status(void)
     }
 }
      
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief       Reads the value of a UUID in the DataBase.
  *
  * \details     Finds the given UUID descriptor in the DB and reads its value.
@@ -610,8 +585,7 @@ void port_alt_pair_store_status(void)
  *                  <li> 0 if the UUID does not exist in the DB.
  *                  <li> 1 if the UUID was found and the read/write operation was successful
  *              </ul>
- ****************************************************************************************
- */
+******************************************************************************************/
 static bool multi_bond_read_value_of_uuid(uint16_t *handle, const notification_info_t *info, uint8_t **value)
 {
     att_size_t length;
@@ -644,8 +618,7 @@ static bool multi_bond_read_value_of_uuid(uint16_t *handle, const notification_i
     return false;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief       Writes the value of a UUID in the DataBase.
  *
  * \details     Finds the given UUID or a Client Characteristic
@@ -662,8 +635,7 @@ static bool multi_bond_read_value_of_uuid(uint16_t *handle, const notification_i
  *                  <li> 0 if the UUID does not exist in the DB.
  *                  <li> 1 if the UUID was found and the read/write operation was successful
  *              </ul>
- ****************************************************************************************
- */
+******************************************************************************************/
 static bool multi_bond_write_value_of_uuid(uint16_t *handle, const notification_info_t *info, int value)
 {
     if (port_atts_find_value_by_uuid(0, handle, 0xFFFF, ATT_UUID_16_LEN, (uint8_t *)&(info->uuid)) == ATT_ERR_NO_ERROR) {
@@ -692,13 +664,11 @@ static bool multi_bond_write_value_of_uuid(uint16_t *handle, const notification_
     return false;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief       Update bonding information based on the current configuration of the DataBase.
  *
  * \param[in]   inf     The bonding information
- ****************************************************************************************
- */
+******************************************************************************************/
 static void prepare_bonding_info(struct bonding_info_s *inf)
 {
     bool ret;
@@ -720,13 +690,11 @@ static void prepare_bonding_info(struct bonding_info_s *inf)
         }
 }        
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief       Write bonding information to a specific entry of the NV memory.
  *
  * \param[in]   entry     The index to to NV memory bonding entry.
- ****************************************************************************************
- */
+******************************************************************************************/
 static void write_bonding_info(int8_t entry)
 {
     int addr = NV_STORAGE_BOND_DATA_ADDR;
@@ -789,8 +757,7 @@ void port_alt_pair_store_bond_data(void)
     }
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief       Updates the next attribute of a specific type in the DataBase
  *              based on the bonding information.
  *
@@ -804,8 +771,7 @@ void port_alt_pair_store_bond_data(void)
  * \return      int
  *
  * \retval      The value of the attribute.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int multi_bond_process_next_attribute(struct bonding_info_s *inf, int pos, int attr_num)
 {
     const notification_info_t *p_info=&notification_info[pos];
@@ -817,8 +783,7 @@ static int multi_bond_process_next_attribute(struct bonding_info_s *inf, int pos
     return value;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief       Updates the first attribute of a specific type in the DataBase
  *              based on the bonding information.
  *
@@ -831,8 +796,7 @@ static int multi_bond_process_next_attribute(struct bonding_info_s *inf, int pos
  * \return      int
  *
  * \retval      The value of the attribute.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int multi_bond_process_attribute(struct bonding_info_s *inf, int pos)
 {
     attribute_handle = 0;
@@ -1341,15 +1305,13 @@ uint8_t port_alt_pair_get_num_of_bonded_hosts(void)
 	return __builtin_popcount(multi_bond_status);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief       Gets the IRK of a specific peer
  *
  * \param[in]   peer    The peer for which we want to get the IRK
  *
  * \return      struct gap_sec_key * The IRK
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE struct gap_sec_key * multi_bond_get_irk_from_list(int peer)
 {
 	if (MBOND_LOAD_INFO_AT_INIT) {

@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file findt.c
  *
@@ -8,20 +7,16 @@
  * Copyright (C) RivieraWaves 2009-2015
  *
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @addtogroup FINDT
  * @{
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /*
  * INCLUDE FILES
- ****************************************************************************************
- */
+******************************************************************************************/
 #include "rwip_config.h"
 
 #if (BLE_FINDME_TARGET)
@@ -31,8 +26,7 @@
 
 /*
  * FINDT PROFILE ATTRIBUTES
- ****************************************************************************************
- */
+******************************************************************************************/
 /// Full IAS Database Description - Used to add attributes into the database
 const struct attm_desc findt_att_db[FINDT_IAS_IDX_NB] =
 {
@@ -46,11 +40,9 @@ const struct attm_desc findt_att_db[FINDT_IAS_IDX_NB] =
 
 /*
  * LOCAL FUNCTION DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Initialization of the FINDT module.
  * This function performs all the initializations of the Profile module.
  *  - Creation of database (if it's a service)
@@ -67,8 +59,7 @@ const struct attm_desc findt_att_db[FINDT_IAS_IDX_NB] =
  * @param[in]     param      Configuration parameters of profile collector or service (32 bits aligned)
  *
  * @return status code to know if profile initialization succeed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static uint8_t findt_init (struct prf_task_env* env, uint16_t* start_hdl, uint16_t app_task,
                             uint8_t sec_lvl, struct findt_db_cfg* params)
 {
@@ -110,15 +101,13 @@ static uint8_t findt_init (struct prf_task_env* env, uint16_t* start_hdl, uint16
     return status;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Destruction of the FINDT module - due to a reset for instance.
  * This function clean-up allocated memory (attribute database is destroyed by another
  * procedure)
  *
  * @param[in|out]    env        Collector or Service allocated environment data.
- ****************************************************************************************
- */
+******************************************************************************************/
 static void findt_destroy(struct prf_task_env* env)
 {
     struct findt_env_tag* findt_env = (struct findt_env_tag*) env->env;
@@ -128,28 +117,24 @@ static void findt_destroy(struct prf_task_env* env)
     ke_free(findt_env);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles Connection creation
  *
  * @param[in|out]    env        Collector or Service allocated environment data.
  * @param[in]        conidx     Connection index
- ****************************************************************************************
- */
+******************************************************************************************/
 static void findt_create(struct prf_task_env* env, uint8_t conidx)
 {
     /* nothing to do */
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles Disconnection
  *
  * @param[in|out]    env        Collector or Service allocated environment data.
  * @param[in]        conidx     Connection index
  * @param[in]        reason     Detach reason
- ****************************************************************************************
- */
+******************************************************************************************/
 static void findt_cleanup(struct prf_task_env* env, uint8_t conidx, uint8_t reason)
 {
    /* nothing to do */
@@ -157,8 +142,7 @@ static void findt_cleanup(struct prf_task_env* env, uint8_t conidx, uint8_t reas
 
 /*
  * GLOBAL VARIABLE DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /// FINDT Task interface required by profile manager
 const struct prf_task_cbs findt_itf =
@@ -171,8 +155,7 @@ const struct prf_task_cbs findt_itf =
 
 /*
  * FUNCTION DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 const struct prf_task_cbs* findt_prf_itf_get(void)
 {

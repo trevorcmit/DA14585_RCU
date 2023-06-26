@@ -4377,30 +4377,30 @@ Image component sizes
         52          0          0          0          0       3015   app_default_handlers.o
         60          4          0          0          0       1578   app_diss.o
        260        126          8          0          0       2671   app_diss_task.o
-        76          4          0          0         24       2897   app_easy_msg_utils.o
+        76          4          0          0         24       2893   app_easy_msg_utils.o
        180          8          0          0         24      11565   app_easy_security.o
-       586         26          0          0         80       6199   app_easy_timer.o
+       586         26          0          0         80       6195   app_easy_timer.o
        136         10         32          0          0      48245   app_entry_point.o
        388         12          4          0          2       4165   app_flash.o
       1236         72        116          0        232       8867   app_hid_report.o
        284         18         36          0          4       4847   app_hogpd.o
        412         30        184          0          0       5881   app_hogpd_task.o
-      1276         36         72          0        116      12063   app_kbd.o
+      1276         36         72          0        116      12059   app_kbd.o
         40          4          0          0          0       1571   app_msg_utils.o
         82          0          0          0          0       2360   app_nv_prom.o
        160          0          0          0          0       1943   app_pairing.o
        540         10          0          0       1064       5994   app_stream.o
       1792         44          0          0        556      13293   app_suotar.o
        268         12         32          0          0       3257   app_suotar_task.o
-       636         34        108          0          1      12896   app_task.o
+       636         34        108          0          1      12892   app_task.o
        904         60          0          0          8      22813   arch_console.o
-       680         62          0          0          8      69833   arch_main.o
+       680         62          0          0          8      69829   arch_main.o
        200         90          0          0          0        652   arch_rom.o
        308         16          0          0          4       3827   arch_sleep.o
       1032         74         90          4         48      91314   arch_system.o
        484          6          0          0          0       6121   attm_db_128.o
        940         20         76          0          0      18654   bass.o
-       676         14         56          0          0      20562   bass_task.o
+       676         14         56          0          0      20566   bass_task.o
        292         16          0          0          0       2929   battery.o
         80         16        160          0       1536        812   boot_vectors.o
        288          6          0          0          0       5301   custom_common.o
@@ -4420,45 +4420,45 @@ Image component sizes
        200         14         14          0          0       3036   nvds.o
         72          8          0          0          4       8191   pdm.o
          0          0          0          0          0       1284   pdm_mic.o
-       520        216          0          0          0       2375   port_adv_fsm.o
-       496         26        292          0        496      10981   port_audio.o
+       520        216          0          0          0       2387   port_adv_fsm.o
+       496         26        292          0        496      10997   port_audio.o
        296         40          0          0          0       8155   port_con_fsm.o
        208         78          0          0          0       2755   port_con_fsm_task.o
       2158         74         32         24         64      17825   port_kbd.o
       1632         84         48          0        258      14617   port_multi_bond.o
-       316         14          0          0          0       5915   port_platform.o
-       548         68          0          0          0       9810   port_security.o
-       408         30          0          8          3       4164   port_stream.o
+       316         14          0          0          0       5919   port_platform.o
+       548         68          0          0          0       9806   port_security.o
+       408         30          0          8          3       4160   port_stream.o
        148         16         28          0          7       3262   port_timer.o
        356         14         24          0         16       3291   port_wkup.o
        556          4          0          0        120       6498   prf.o
         30          0          0          0          0       3309   prf_utils.o
-       380         84          0          0          1      75278   rf_585.o
-       788         58          0          0         20     119643   rwble.o
+       380         84          0          0          1      75274   rf_585.o
+       788         58          0          0         20     119635   rwble.o
        444         58          0          0         12      75738   rwip.o
        316          8          0          0          2       4031   spi.o
-       640          8          0          0         16      13944   spi_flash.o
+       640          8          0          0         16      13940   spi_flash.o
        836         12        488          0          0       4669   suotar.o
        756         10         40          0          0       5578   suotar_task.o
         44          0          0          0          0        757   syscntl.o
-        72         18          0          0          0     231946   system_armcm0.o
+        72         18          0          0          0     231938   system_armcm0.o
        108         10          0          0          4       2613   systick.o
-       172         36          0          0          6      11262   timer0.o
+       172         36          0          0          6      11258   timer0.o
          0          0          0          0          2        982   timer2.o
-       420         36          0          0       1024       3619   trng.o
-       436         20          0          0         36      24080   uart2.o
+       420         36          0          0       1024       3615   trng.o
+       436         20          0          0         36      24076   uart2.o
          0          0         56          0          0        893   user_custs_config.o
          0          0         71        312          0       1228   user_dlg_audio_svc_def.o
-       340         14        196          0          0      12455   user_modules.o
-       284         12          0          0          0        938   user_periph_setup_1.o
+       340         14        196          0          0      12447   user_modules.o
+       284         12          0          0          0        934   user_periph_setup_1.o
         64         10          0          0          4       2391   user_pwr_mgr.o
       1496         90          0          0         14      21403   user_rcu.o
-      2228        394        169          0         84      55702   user_rcu_audio.o
+      2228        394        169          0         84      55706   user_rcu_audio.o
        160         20          0          0          1       2551   user_rcu_kbd.o
-       380         28          0          0         12       8374   wkupct_quadec.o
+       380         28          0          0         12       8370   wkupct_quadec.o
 
     ----------------------------------------------------------------------
-     47066       4020       5504        348      13232    1376820   Object Totals
+     47066       4020       5504        348      13232    1376780   Object Totals
          0          0         64          0         80          0   (incl. Generated)
          6          0         11          0         32          0   (incl. Padding)
 
@@ -4505,8 +4505,8 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-     48372       4156       5776        348      13272    1370564   Grand Totals
-     48372       4156       5776        348      13272    1370564   ELF Image Totals
+     48372       4156       5776        348      13272    1370524   Grand Totals
+     48372       4156       5776        348      13272    1370524   ELF Image Totals
      48372       4156       5776        348          0          0   ROM Totals
 
 ==============================================================================

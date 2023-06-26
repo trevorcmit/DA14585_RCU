@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file i2c_eeprom.h
  *
@@ -11,8 +10,7 @@
  *
  * <bluetooth.support@diasemi.com> and contributors.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /*******************************************************************************************/
 /* Configuration of EEPROM IC's that have been tested                                      */
@@ -46,16 +44,14 @@
 
 /*
  * INCLUDE FILES
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #include <stdint.h>
 #include "i2c_core.h"
 
 /*
  * DEFINES
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #define I2C_MAX_RETRIES                 (200000)
 
@@ -68,91 +64,74 @@ typedef enum
 
 /*
  * FUNCTION DECLARATIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Initialize I2C controller as a master for I2C EEPROM handling.
  * @param[in] dev_address  Slave device address
  * @param[in] speed        Speed
  * @param[in] address_mode Addressing mode
  * @param[in] address_size Address size
  * @retun void
- ****************************************************************************************
- */
+******************************************************************************************/
 void i2c_eeprom_init(uint16_t dev_address, uint8_t speed, uint8_t address_mode, uint8_t address_size);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Disable I2C controller and clock.
  * @return void
- ****************************************************************************************
- */
+******************************************************************************************/
 void i2c_eeprom_release(void);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Poll until I2C eeprom is ready.
  * @return i2c_error_code Enumeration type that defines the returned error code
- ****************************************************************************************
- */
+******************************************************************************************/
 i2c_error_code i2c_wait_until_eeprom_ready(void);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Read single byte from I2C EEPROM.
  * @param[in] address     Memory address to read the byte from
  * @param[in|out] byte    Pointer to the read byte
  * @return i2c_error_code Enumeration type that defines the returned error code
- ****************************************************************************************
- */
+******************************************************************************************/
 i2c_error_code i2c_eeprom_read_byte(uint32_t address, uint8_t *byte);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Reads data from I2C EEPROM to memory position of given pointer.
  * @param[in|out] rd_data_ptr Read data pointer
  * @param[in] address         Starting memory address
  * @param[in] size            Size of the data to be read
  * @param[in|out] bytes_read  Bytes that were actually read (due to memory size limitation)
  * @return i2c_error_code     Enumeration type that defines the returned error code
- ****************************************************************************************
- */
+******************************************************************************************/
 i2c_error_code i2c_eeprom_read_data(uint8_t *rd_data_ptr, uint32_t address, uint32_t size, uint32_t *bytes_read);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Write single byte to I2C EEPROM.
  * @param[in] address     Memory position to write the byte to
  * @param[in] byte        Byte to be written
  * @return i2c_error_code Enumeration type that defines the returned error code
- ****************************************************************************************
- */
+******************************************************************************************/
 i2c_error_code i2c_eeprom_write_byte(uint32_t address, uint8_t byte);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Writes page to I2C EEPROM.
  * @param[in] address           Starting address of memory page (MUST BE MULTIPLE OF I2C_EEPROM_PAGE)
  * @param[in] wr_data_ptr       Pointer to the first of the bytes to be written
  * @param[in] size              Size of the data to be written (MUST BE LESS OR EQUAL TO I2C_EEPROM_PAGE)
  * @param[in|out] bytes_written Bytes that were actually written (due to memory size limitation)
  * @return i2c_error_code       Enumeration type that defines the returned error code
- ****************************************************************************************
- */
+******************************************************************************************/
 i2c_error_code i2c_eeprom_write_page(uint8_t *wr_data_ptr, uint32_t address, uint16_t size, uint32_t *bytes_written);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Writes data to I2C EEPROM.
  * @param[in] wr_data_ptr       Pointer to the first of the bytes to be written
  * @param[in] address           Starting address of the write process
  * @param[in] size              Size of the data to be written
  * @param[in|out] bytes_written Bytes that were actually written (due to memory size limitation)
  * @return i2c_error_code       Enumeration type that defines the returned error code
- ****************************************************************************************
- */
+******************************************************************************************/
 i2c_error_code i2c_eeprom_write_data(uint8_t *wr_data_ptr, uint32_t address, uint32_t size, uint32_t *bytes_written);
 
 #endif // _I2C_EEPROM_H_

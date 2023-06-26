@@ -10,8 +10,7 @@
  *
  * <bluetooth.support@diasemi.com> and contributors.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #ifndef _AES_API_H_
 #define _AES_API_H_
@@ -27,8 +26,7 @@ typedef AES_CTX AES_KEY;
 #define BLE_SAFE_MASK   0x0F
 #define BLE_SYNC_MASK   0xF0
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief AES set encrypt/decrypt key.
  * @param[in] userKey   The key data.
  * @param[in] bits      Key number of bits. Should be 128
@@ -37,12 +35,10 @@ typedef AES_CTX AES_KEY;
  * @return               0 if successfull,
  *                      -1 if userKey or key are NULL,
  *                      -2 if bits is not 128.
- ****************************************************************************************
- */
+******************************************************************************************/
 int aes_set_key(const uint8_t *userKey, const uint32_t bits, AES_KEY *key, uint8_t enc_dec);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief AES encrypt/decrypt block.
  * @param[in] in            The input data block (16bytes).
  * @param[in] out           The output data block (16bytes).
@@ -54,8 +50,7 @@ int aes_set_key(const uint8_t *userKey, const uint32_t bits, AES_KEY *key, uint8
  *                          to avoid missing any ble events.
  * @return                   0 if successfull,
  *                          -1 if the AES HW block is in use.
- ****************************************************************************************
- */
+******************************************************************************************/
 int aes_enc_dec(uint8_t *in, uint8_t *out, AES_KEY *key, uint8_t enc_dec, uint8_t ble_flags);
 
 #endif  //_AES_API_H_

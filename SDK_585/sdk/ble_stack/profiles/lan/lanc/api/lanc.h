@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file lanc.h
  *
@@ -9,25 +8,21 @@
  *
  * $ Rev $
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #ifndef _LANC_H_
 #define _LANC_H_
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @addtogroup LANC Location and Navigation Profile Collector
  * @ingroup LAN
  * @brief Location and Navigation Profile Collector
  * @{
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /*
  * INCLUDE FILES
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #include "lan_common.h"
 
@@ -40,8 +35,7 @@
 
 /*
  * ENUMERATIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /// Internal codes for reading/writing a LNS characteristic with one single request
 enum lanc_code
@@ -71,8 +65,7 @@ enum lanc_code
 
 /*
  * STRUCTURES
- ****************************************************************************************
- */
+******************************************************************************************/
 
 struct lanc_cnx_env
 {
@@ -108,134 +101,110 @@ struct lanc_cmd
 
 /*
  * GLOBAL VARIABLE DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /// Pool of Location and Navigation Profile Collector task environments.
 extern struct lanc_env_tag **lanc_envs;
 
 /*
  * GLOBAL FUNCTION DECLARATIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Retrieve LAN client profile interface
  *
  * @return LAN client profile interface
- ****************************************************************************************
- */
+******************************************************************************************/
 const struct prf_task_cbs* lanc_prf_itf_get(void);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Send Location and Navigation ATT DB discovery results to LANC host.
  * @param[in] lanc_env environment variable
  * @param[in] conidx Connection index
  * @param[in] status Status
  * @return handle
- ****************************************************************************************
- */
+******************************************************************************************/
 void lanc_enable_rsp_send(struct lanc_env_tag *lanc_env, uint8_t conidx, uint8_t status);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Send a LANC_CMP_EVT message when no connection exists (no environment)
  * @param[in] src_id Source task
  * @param[in] dest_id Destination task
  * @param[in] operation Operation
- ****************************************************************************************
- */
+******************************************************************************************/
 void lanc_send_no_conn_cmp_evt(uint8_t src_id, uint8_t dest_id, uint8_t operation);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Send a LANC_CMP_EVT message to the task which enabled the profile
  * @param[in] lanc_env environment variable
  * @param[in] conidx Connection index
  * @param[in] operation Operation
  * @param[in] status Status
  * @return handle
- ****************************************************************************************
- */
+******************************************************************************************/
 void lanc_send_cmp_evt(struct lanc_env_tag *lanc_env, uint8_t conidx, uint8_t operation, uint8_t status);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Gets correct read handle according to the request
  * @param[in] lanc_env environment variable
  * @param[in] conidx Connection index
  * @param[in] param Pointer to the parameters of the message.
  * @return handle
- ****************************************************************************************
- */
+******************************************************************************************/
 uint16_t lanc_get_read_handle_req (struct lanc_env_tag *lanc_env, uint8_t conidx, struct lanc_read_cmd *param);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Gets correct write handle according to the request
  * @param[in] conidx Connection index
  * @param[in] param Pointer to the parameters of the message.
  * @param[in] lanc_env environment variable
  * @param[out] handle handle
  * @return handle
- ****************************************************************************************
- */
+******************************************************************************************/
 uint8_t lanc_get_write_desc_handle_req (uint8_t conidx, struct lanc_cfg_ntfind_cmd *param, struct lanc_env_tag *lanc_env, uint16_t *handle);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Unpacks location and speed data and sends the indication
  * @param[in] conidx Connection index
  * @param[in] param Pointer to the parameters of the message.
  * @param[in] lanc_env environment variable
  * @return length
- ****************************************************************************************
- */
+******************************************************************************************/
 uint8_t lanc_unpack_loc_speed_ind (uint8_t conidx, struct gattc_event_ind const *param, struct lanc_env_tag *lanc_env);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Unpacks Navigation and sends the indication
  * @param[in] conidx Connection index
  * @param[in] param Pointer to the parameters of the message.
  * @param[in] lanc_env environment variable
  * @return length
- ****************************************************************************************
- */
+******************************************************************************************/
 uint8_t lanc_unpack_navigation_ind (uint8_t conidx, struct gattc_event_ind const *param, struct lanc_env_tag *lanc_env);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Unpacks position quality
  * @param[in] param Pointer to the parameters of the message
  * @param[out] ind Pointer to the value indication
  * @return length
- ****************************************************************************************
- */
+******************************************************************************************/
 uint8_t lanc_unpack_pos_q_ind (struct gattc_read_ind const *param, struct lanc_value_ind *ind);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Packs Control Point data
  * @param[in] param Pointer to the parameters of the message.
  * @param[out] req packed message
  * @param[out] status status of the operation
  * @return length
- ****************************************************************************************
- */
+******************************************************************************************/
 uint8_t lanc_pack_ln_ctnl_pt_req (struct lanc_ln_ctnl_pt_cfg_req *param, uint8_t *req, uint8_t *status);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Unpacks Control Point data and sends the indication
  * @param[in] param Pointer to the parameters of the message.
  * @param[in] src Source task
  * @param[in] dest Destination task
  * @return length
- ****************************************************************************************
- */
+******************************************************************************************/
 uint8_t lanc_unpack_ln_ctln_pt_ind (struct gattc_event_ind const *param, ke_task_id_t src, ke_task_id_t dest);
 
 #endif //(BLE_LN_COLLECTOR)

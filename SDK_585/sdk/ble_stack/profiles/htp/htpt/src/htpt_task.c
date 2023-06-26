@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file htpt_task.c
  *
@@ -8,21 +7,17 @@
  * Copyright (C) RivieraWaves 2009-2015
  *
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @addtogroup HTPTTASK
  * @{
- ****************************************************************************************
- */
+******************************************************************************************/
 
 
 /*
  * INCLUDE FILES
- ****************************************************************************************
- */
+******************************************************************************************/
 #include "rwip_config.h"
 
 #if (BLE_HT_THERMOM)
@@ -38,11 +33,9 @@
 
 /*
  * FUNCTION DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the @ref HTPT_ENABLE_REQ message.
  * The handler enables the Health Thermometer Profile Thermometer Role.
  * @param[in] msgid Id of the message received (probably unused).
@@ -50,8 +43,7 @@
  * @param[in] dest_id ID of the receiving task instance (probably unused).
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int htpt_enable_req_handler(ke_msg_id_t const msgid,
                                    struct htpt_enable_req const *param,
                                    ke_task_id_t const dest_id,
@@ -79,16 +71,14 @@ static int htpt_enable_req_handler(ke_msg_id_t const msgid,
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the @ref HTPT_TEMP_SEND_REQ message.
  * @param[in] msgid Id of the message received (probably unused).
  * @param[in] param Pointer to the parameters of the message.
  * @param[in] dest_id ID of the receiving task instance (probably unused).
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int htpt_temp_send_req_handler(ke_msg_id_t const msgid,
                                       struct htpt_temp_send_req const *param,
                                       ke_task_id_t const dest_id,
@@ -150,16 +140,14 @@ static int htpt_temp_send_req_handler(ke_msg_id_t const msgid,
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Request to update Measurement Interval Value
  * @param[in] msgid     Id of the message received.
  * @param[in] param     Pointer to the parameters of the message.
  * @param[in] dest_id   ID of the receiving task instance
  * @param[in] src_id    ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int htpt_meas_intv_upd_req_handler(ke_msg_id_t const msgid,
                                           struct htpt_meas_intv_upd_req const *param,
                                           ke_task_id_t const dest_id,
@@ -227,8 +215,7 @@ static int htpt_meas_intv_upd_req_handler(ke_msg_id_t const msgid,
     return (msg_status);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the attribute info request message.
  *
  * @param[in] msgid Id of the message received (probably unused).
@@ -236,8 +223,7 @@ static int htpt_meas_intv_upd_req_handler(ke_msg_id_t const msgid,
  * @param[in] dest_id ID of the receiving task instance (probably unused).
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int gattc_att_info_req_ind_handler(ke_msg_id_t const msgid,
         struct gattc_att_info_req_ind *param,
         ke_task_id_t const dest_id,
@@ -281,8 +267,7 @@ static int gattc_att_info_req_ind_handler(ke_msg_id_t const msgid,
 
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the @ref GL2C_CODE_ATT_WR_CMD_IND message.
  * The handler compares the new values with current ones and notifies them if they changed.
  * @param[in] msgid Id of the message received (probably unused).
@@ -290,8 +275,7 @@ static int gattc_att_info_req_ind_handler(ke_msg_id_t const msgid,
  * @param[in] dest_id ID of the receiving task instance (probably unused).
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int gattc_write_req_ind_handler(ke_msg_id_t const msgid,
                                       struct gattc_write_req_ind const *param,
                                       ke_task_id_t const dest_id,
@@ -404,16 +388,14 @@ static int gattc_write_req_ind_handler(ke_msg_id_t const msgid,
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the @ref GATTC_READ_REQ_IND message.
  * @param[in] msgid Id of the message received (probably unused).
  * @param[in] param Pointer to the parameters of the message.
  * @param[in] dest_id ID of the receiving task instance (probably unused).
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int gattc_read_req_ind_handler(ke_msg_id_t const msgid, struct gattc_write_req_ind const *param,
                                       ke_task_id_t const dest_id, ke_task_id_t const src_id)
 {
@@ -484,16 +466,14 @@ static int gattc_read_req_ind_handler(ke_msg_id_t const msgid, struct gattc_writ
     return (KE_MSG_CONSUMED);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the @ref HTPT_MEAS_INTV_UPD_CFM message.
  * @param[in] msgid Id of the message received (probably unused).
  * @param[in] param Pointer to the parameters of the message.
  * @param[in] dest_id ID of the receiving task instance (probably unused).
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int htpt_meas_intv_chg_cfm_handler(ke_msg_id_t const msgid, struct htpt_meas_intv_chg_cfm const *param,
                                       ke_task_id_t const dest_id, ke_task_id_t const src_id)
 {
@@ -539,8 +519,7 @@ static int htpt_meas_intv_chg_cfm_handler(ke_msg_id_t const msgid, struct htpt_m
 
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles @ref GATTC_CMP_EVT for GATTC_NOTIFY and GATT_INDICATE message meaning
  * that Measurement notification/indication has been correctly sent to peer device
  *
@@ -550,8 +529,7 @@ static int htpt_meas_intv_chg_cfm_handler(ke_msg_id_t const msgid, struct htpt_m
  * @param[in] dest_id   ID of the receiving task instance
  * @param[in] src_id    ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int gattc_cmp_evt_handler(ke_msg_id_t const msgid, struct gattc_cmp_evt const *param,
                                  ke_task_id_t const dest_id, ke_task_id_t const src_id)
 {
@@ -563,8 +541,7 @@ static int gattc_cmp_evt_handler(ke_msg_id_t const msgid, struct gattc_cmp_evt c
 
 /*
  * GLOBAL VARIABLE DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /// Default State handlers definition
 const struct ke_msg_handler htpt_default_state[] =

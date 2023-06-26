@@ -1,20 +1,16 @@
-/**
-****************************************************************************************
-* \file spi_3wire.c
-* \brief custom app 3-wire SPI low level driver.
-****************************************************************************************
-*/
+/*****************************************************************************************
+ * \file spi_3wire.c
+ * \brief custom app 3-wire SPI low level driver.
+*****************************************************************************************/
 
-/**
-****************************************************************************************
-* \addtogroup USER
-* \{
-* \addtogroup USER_DRIVERS
-* \{
-* \addtogroup SPI_3WIRE_DRV
-* \{
-****************************************************************************************
-*/
+/*****************************************************************************************
+ * \addtogroup USER
+ * \{
+ * \addtogroup USER_DRIVERS
+ * \{
+ * \addtogroup SPI_3WIRE_DRV
+ * \{
+*****************************************************************************************/
  
 #include <stdint.h>
 #include "port_platform.h"
@@ -25,6 +21,7 @@ uint16_t TsradCounter;
 SPI_Pin sdio;
 SPI_Pin cs;
 
+
 void deactivate_3wire_spi(void)
 {
     GPIO_SetActive(cs.port, cs.pin);                                            // leave CS high        
@@ -33,6 +30,7 @@ void deactivate_3wire_spi(void)
 	SetBits16(SPI_CTRL_REG, SPI_ON, 0);                                         // close SPI block, if opened
 	SetBits16(CLK_PER_REG, SPI_ENABLE, 0);                                      // disable clock for SPI
 }
+
 
 uint16_t do_transaction(uint16_t data)
 {
@@ -54,6 +52,7 @@ uint16_t do_transaction(uint16_t data)
     return data_read;
 }
 
+
 void write_to_3wire_SPI_register(uint8_t registerIndex, uint8_t valueToWrite)
 {
     GPIO_SetInactive(cs.port, cs.pin);                              // pull CS low   
@@ -64,6 +63,7 @@ void write_to_3wire_SPI_register(uint8_t registerIndex, uint8_t valueToWrite)
     GPIO_SetActive(cs.port, cs.pin);                                // set CS high
     GPIO_SetPinFunction( sdio.port, sdio.pin, INPUT_PULLUP, PID_SPI_DI);  // configure SDIO as input        
 }    
+
 
 uint8_t read_from_3wire_SPI_register(uint8_t registerIndex, bool is_last_transaction)
 {
@@ -85,32 +85,35 @@ uint8_t read_from_3wire_SPI_register(uint8_t registerIndex, bool is_last_transac
     return dataRead;
 }   
 
+
 void burst_write_to_3wire_SPI_register(uint8_t registerIndex)
 { 
    GPIO_SetPinFunction( sdio.port, sdio.pin, OUTPUT, PID_SPI_DO);   // configure SDIO as output 
-
-   do_transaction((uint16_t)(registerIndex));// MSB set to HIGH - A6..A0 Address of register to write to
-
+   do_transaction((uint16_t)(registerIndex));    // MSB set to HIGH - A6..A0 Address of register to write to
    GPIO_SetPinFunction( sdio.port, sdio.pin, INPUT_PULLUP, PID_SPI_DI);    // configure SDIO as input  
 }   
 
+
 uint8_t burst_read_from_3wire_SPI_register(void)
 {
-    return do_transaction(0x0000);                             // read received byte
+    return do_transaction(0x0000);                  // read received byte
 }   
+
 
 void spi3wire_cs_high(void)
 {
-    GPIO_SetActive(cs.port, cs.pin);                              // set CS high 
+    GPIO_SetActive(cs.port, cs.pin);                // set CS high 
 }
+
 
 void spi3wire_cs_low(void)
 {
-    GPIO_SetInactive(cs.port, cs.pin);                            // set CS low 
+    GPIO_SetInactive(cs.port, cs.pin);              // set CS low 
 }
 
-/**
+
+/******
 * \}
 * \}
 * \}
-*/
+*****/

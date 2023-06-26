@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file mkimage.c
  *
@@ -11,8 +10,7 @@
  *
  * <bluetooth.support@diasemi.com> and contributors.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 #define _XOPEN_SOURCE 700
 #include <stdint.h>
 #include <stdlib.h>
@@ -685,8 +683,7 @@ static int parse_offset(const char* s, unsigned* offset)
 	return 0;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Parses a BD address.
  *
  * @param[in]   s           String containing a BD address formated as XX:XX:XX:XX:XX:XX
@@ -695,8 +692,7 @@ static int parse_offset(const char* s, unsigned* offset)
  *                          Lest significant byte comes first.
  *
  * @return int  0 on success,
- ****************************************************************************************
- */
+******************************************************************************************/
 static int parse_bd_addr(const char* s, unsigned char* out_bd_addr)
 {
     int rc;
@@ -718,8 +714,7 @@ static int parse_bd_addr(const char* s, unsigned char* out_bd_addr)
     return EXIT_SUCCESS;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Parses the argument list of the cfg option
  *
  * @param[in]   s           String containing a comma separated argument list
@@ -727,8 +722,7 @@ static int parse_bd_addr(const char* s, unsigned char* out_bd_addr)
  * @param[out]  bd_addr     Accepts the 6 byte BD address value (least significant byte first).
  *
  * @return int  0 on success,
- ****************************************************************************************
- */
+******************************************************************************************/
 static int parse_prod_header_cfg(const char* s, unsigned* cfg_offset, unsigned char* bd_addr)
 {
     const char DELIMETER[] = ",";

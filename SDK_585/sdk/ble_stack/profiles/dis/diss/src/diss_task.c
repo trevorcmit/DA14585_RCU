@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file diss_task.c
  *
@@ -8,21 +7,17 @@
  * Copyright (C) RivieraWaves 2009-2015
  *
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @addtogroup DISSTASK
  * @{
- ****************************************************************************************
- */
+******************************************************************************************/
 
 
 /*
  * INCLUDE FILES
- ****************************************************************************************
- */
+******************************************************************************************/
 #include "rwip_config.h"
 
 #if (BLE_DIS_SERVER)
@@ -36,11 +31,9 @@
 
 /*
  * FUNCTION DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the @ref DISS_SET_VALUE_REQ message.
  *
  * @param[in] msgid Id of the message received (probably unused).
@@ -48,8 +41,7 @@
  * @param[in] dest_id ID of the receiving task instance (probably unused).
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int diss_set_value_req_handler(ke_msg_id_t const msgid,
                                       struct diss_set_value_req const *param,
                                       ke_task_id_t const dest_id,
@@ -122,8 +114,7 @@ static int diss_set_value_req_handler(ke_msg_id_t const msgid,
 
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the read request from peer device
  *
  * @param[in] msgid Id of the message received (probably unused).
@@ -131,8 +122,7 @@ static int diss_set_value_req_handler(ke_msg_id_t const msgid,
  * @param[in] dest_id ID of the receiving task instance (probably unused).
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int gattc_read_req_ind_handler(ke_msg_id_t const msgid,
                                       struct gattc_read_req_ind const *param,
                                       ke_task_id_t const dest_id,
@@ -208,8 +198,7 @@ static int gattc_read_req_ind_handler(ke_msg_id_t const msgid,
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the value confirmation from application
  *
  * @param[in] msgid Id of the message received (probably unused).
@@ -217,8 +206,7 @@ static int gattc_read_req_ind_handler(ke_msg_id_t const msgid,
  * @param[in] dest_id ID of the receiving task instance (probably unused).
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int diss_value_cfm_handler(ke_msg_id_t const msgid,
                                       struct diss_value_cfm const *param,
                                       ke_task_id_t const dest_id,
@@ -262,8 +250,7 @@ static int diss_value_cfm_handler(ke_msg_id_t const msgid,
 
 /*
  * GLOBAL VARIABLE DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /// Default State handlers definition
 const struct ke_msg_handler diss_default_state[] =

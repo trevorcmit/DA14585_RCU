@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file gapc.h
  *
@@ -7,15 +6,13 @@
  *
  * Copyright (C) RivieraWaves 2009-2014
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
 
 #ifndef _GAPC_H_
 #define _GAPC_H_
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @addtogroup GAPC Generic Access Profile Controller
  * @ingroup GAP
  * @brief  Generic Access Profile Controller.
@@ -26,14 +23,12 @@
  * connection.
  *
  * @{
- ****************************************************************************************
- */
+******************************************************************************************/
 
 
 /*
  * INCLUDE FILES
- ****************************************************************************************
- */
+******************************************************************************************/
 #include "rwip_config.h"
 
 #if (BLE_CENTRAL || BLE_PERIPHERAL)
@@ -48,8 +43,7 @@
 
 /*
  * DEFINES
- ****************************************************************************************
- */
+******************************************************************************************/
 
 
 /// Link security status. This status represents the authentication/authorization/bonding levels of the connection
@@ -154,8 +148,7 @@ enum gapc_env_values
 
 /*
  * TYPE DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /// GAP controller environment variable structure.
 struct gapc_env_tag
@@ -230,34 +223,28 @@ struct gapc_env_lecb_tag
 
 /*
  * MACROS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 
 /*
  * GLOBAL VARIABLE DECLARATIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 extern struct gapc_env_tag* gapc_env[GAPC_IDX_MAX];
 
 /*
  * FUNCTION DECLARATIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Initialize Generic Access Profile Controller Module.
  *
  * @param[in] reset  true if it's requested by a reset; false if it's boot initialization
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 void gapc_init(bool reset);
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief A connection has been created, initialize Controller task.
  *
  * This function find first available task index available for new connection.
@@ -269,16 +256,14 @@ void gapc_init(bool reset);
  * @param[in] laddr_type Local BD Address Type (PUBLIC or RAND)
  *
  * @return Connection index allocated to the new connection.
- ****************************************************************************************
- */
+******************************************************************************************/
 uint8_t gapc_con_create(struct hci_le_con_cmp_evt const *con_params,
                         ke_task_id_t requester, struct bd_addr* laddr, uint8_t laddr_type);
 
 uint8_t gapc_con_create_enh(struct hci_le_enh_con_cmp_evt const *con_params,
                         ke_task_id_t requester, struct bd_addr* laddr, uint8_t laddr_type);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief A connection has been disconnected, uninitialized Controller task.
  *
  * unregister connection, and destroy environment variable allocated for current connection.
@@ -286,13 +271,11 @@ uint8_t gapc_con_create_enh(struct hci_le_enh_con_cmp_evt const *con_params,
  * @param[in] conidx  Connection index
  *
  * @return Connection index of the connection.
- ****************************************************************************************
- */
+******************************************************************************************/
 uint8_t gapc_con_cleanup(uint8_t conidx);
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Send Disconnection indication to specific task
  *
  * @param[in] conidx  Connection index
@@ -300,79 +283,66 @@ uint8_t gapc_con_cleanup(uint8_t conidx);
  * @param[in] conhdl  Connection handle
  * @param[in] dest_id Message destination ID
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 void gapc_send_disconect_ind(uint8_t conidx,  uint8_t reason, uint8_t conhdl,
                               ke_task_id_t dest_id);
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Retrieve connection index from connection handle.
  *
  * @param[in] conhdl Connection handle
  *
  * @return Return found connection index, GAP_INVALID_CONIDX if not found.
- ****************************************************************************************
- */
+******************************************************************************************/
 uint8_t gapc_get_conidx(uint16_t conhdl);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Retrieve connection handle from connection index.
  *
  * @param[in] conidx Connection index
  *
  * @return Return found connection handle, GAP_INVALID_CONHDL if not found.
- ****************************************************************************************
- */
+******************************************************************************************/
 uint16_t gapc_get_conhdl(uint8_t conidx);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Retrieve connection role from connection index.
  *
  * @param[in] conidx Connection index
  *
  * @return Return found connection role
- ****************************************************************************************
- */
+******************************************************************************************/
 uint8_t gapc_get_role(uint8_t conidx);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Retrieve connection address information on current link.
  *
  * @param[in] conidx Connection index
  * @param[in] src    Connection information source
  *
  * @return Return found connection address
- ****************************************************************************************
- */
+******************************************************************************************/
 struct gap_bdaddr* gapc_get_bdaddr(uint8_t conidx, uint8_t src);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Retrieve connection CSRK information on current link.
  *
  * @param[in] conidx Connection index
  * @param[in] src    Connection information source
  *
  * @return Return found connection CSRK
- ****************************************************************************************
- */
+******************************************************************************************/
 struct gap_sec_key* gapc_get_csrk(uint8_t conidx, uint8_t src);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Return the sign counter value for the specified connection index.
  *
  * @param[in] conidx Connection index
  * @param[in] src    Connection information source
  *
  * @return the requested signCounter value
- ****************************************************************************************
- */
+******************************************************************************************/
 uint32_t gapc_get_sign_counter(uint8_t conidx, uint8_t src);
 
 /**
@@ -385,8 +355,7 @@ uint32_t gapc_get_sign_counter(uint8_t conidx, uint8_t src);
  */
 void gapc_send_complete_evt(uint8_t conidx, uint8_t op_type, uint8_t status);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Send operation completed message with status error code not related to a
  * running operation.
  *
@@ -394,50 +363,42 @@ void gapc_send_complete_evt(uint8_t conidx, uint8_t op_type, uint8_t status);
  * @param[in] operation Operation code
  * @param[in] requester requester of operation
  * @param[in] status    Error status code
- ****************************************************************************************
- */
+******************************************************************************************/
 void gapc_send_error_evt(uint8_t conidx, uint8_t operation, const ke_task_id_t requester, uint8_t status);
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Get operation on going
  *
  * @param[in] conidx        Connection Index
  * @param[in] op_type       Operation type.
  *
  * @return operation code on going
- ****************************************************************************************
- */
+******************************************************************************************/
 uint8_t gapc_get_operation(uint8_t conidx, uint8_t op_type);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Get operation pointer
  *
  * @param[in] conidx        Connection Index
  * @param[in] op_type       Operation type.
  *
  * @return operation pointer on going
- ****************************************************************************************
- */
+******************************************************************************************/
 void* gapc_get_operation_ptr(uint8_t conidx, uint8_t op_type);
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Set operation pointer
  *
  * @param[in] conidx        Connection Index
  * @param[in] op_type       Operation type.
  * @param[in] op            Operation pointer.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 void gapc_set_operation_ptr(uint8_t conidx, uint8_t op_type, void* op);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Operation execution not finish, request kernel to reschedule it in order to
  * continue its execution
  *
@@ -445,110 +406,92 @@ void gapc_set_operation_ptr(uint8_t conidx, uint8_t op_type, void* op);
  * @param[in] op_type       Operation type.
  *
  * @return if operation has been rescheduled (not done if operation pointer is null)
- ****************************************************************************************
- */
+******************************************************************************************/
 bool gapc_reschedule_operation(uint8_t conidx, uint8_t op_type);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Get requester of on going operation
  *
  * @param[in] conidx        Connection Index
  * @param[in] op_type       Operation type.
  *
  * @return task that requests to execute the operation
- ****************************************************************************************
- */
+******************************************************************************************/
 ke_task_id_t gapc_get_requester(uint8_t conidx, uint8_t op_type);
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Check if current link support security requirements.
  *
  * @param[in] conidx  Connection index
  * @param[in] sec_req Link security requirement to test
  *
  * @return True if link requirement is supported, False else.
- ****************************************************************************************
- */
+******************************************************************************************/
 bool gapc_is_sec_set(uint8_t conidx, uint8_t sec_req);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Retrieve the encryption key size of the connection
  *
  * @param[in] conidx Connection index
  *
  * @return encryption key size (size is 7 - 16 byte range)
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 uint8_t gapc_get_enc_keysize(uint8_t conidx);
 
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Set the encryption key size of the connection
  *
  * @param[in] conidx Connection index
  * @param[in] key_size encryption key size (size is 7 - 16 byte range)
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 void gapc_set_enc_keysize(uint8_t conidx, uint8_t key_size);
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Update link status, current link is now encrypted
  *
  * @param[in] conidx Connection index
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 void gapc_link_encrypted(uint8_t conidx);
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Update link authentication level
  *
  * @param[in] conidx Connection index
  * @param[in] auth   Link authentication level
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 void gapc_auth_set(uint8_t conidx, uint8_t auth);
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Update task state
  *
  * @param[in] conidx Connection index
  * @param[in] state to update
  * @param[in] set state to busy (true) or idle (false)
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 void gapc_update_state(uint8_t conidx, ke_state_t state, bool busy);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Check LECB security permissions
  *
  * @param[in] lecb     Credit based channel
  * @param[in] conidx   Connection Index
  *
  * @return Returns status of the channel
- ****************************************************************************************
- */
+******************************************************************************************/
 uint8_t gapc_check_lecb_sec_perm(struct gapc_env_lecb_tag *lecb, uint8_t conidx);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Search channel depending on the parameter
  *
  * @param[in] conidx        Connection Index
@@ -556,12 +499,10 @@ uint8_t gapc_check_lecb_sec_perm(struct gapc_env_lecb_tag *lecb, uint8_t conidx)
  * @param[in] mode          label of the parameter
  *
  * @return Returns NULL or address of the channel
- ****************************************************************************************
- */
+******************************************************************************************/
 struct gapc_env_lecb_tag* gapc_search_lecb_channel(uint8_t conidx, uint16_t parameter, uint16_t mode);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Check validity of the parameters in order to send the frame
  *
  * @param[in] conidx        Connection Index
@@ -569,24 +510,20 @@ struct gapc_env_lecb_tag* gapc_search_lecb_channel(uint8_t conidx, uint16_t para
  * @param[in] sdu_size      Total length of the SDU
  *
  * @return Returns current number of credits
- ****************************************************************************************
- */
+******************************************************************************************/
 uint16_t gapc_lecnx_check_tx(uint8_t conidx, uint16_t cid, uint16_t sdu_size);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Check validity of the parameters in order to receive the frame
  *
  * @param[in] conidx        Connection Index
  * @param[in] cid           Channel identifier
  *
  * @return Returns current number of credits
- ****************************************************************************************
- */
+******************************************************************************************/
 uint16_t gapc_lecnx_check_rx(uint8_t conidx, uint16_t cid);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Get field of a LE credit based structure
  *
  * @param[in] conidx        Connection Index
@@ -596,30 +533,25 @@ uint16_t gapc_lecnx_check_rx(uint8_t conidx, uint16_t cid);
  * @param[out] value        requested value if successful
  *
  * @return status of the operation
- ****************************************************************************************
- */
+******************************************************************************************/
 uint16_t gapc_lecnx_get_field(uint8_t conidx, uint16_t cid, uint8_t field, bool src_dest, uint16_t *value);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Get Service Change Client Configuration
  *
  * @param[in] conidx Connection index
  *
  * @return Service Change Client Configuration
- ****************************************************************************************
- */
+******************************************************************************************/
 bool gapc_svc_chg_ccc_get(uint8_t conidx);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Set Service Change Client Configuration
  *
  * @param[in] conidx Connection index
  * @param[in] enable True if CCC is enabled, False else
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 void gapc_svc_chg_ccc_set(uint8_t conidx, bool enable);
 
 #endif // (BLE_CENTRAL || BLE_PERIPHERAL)

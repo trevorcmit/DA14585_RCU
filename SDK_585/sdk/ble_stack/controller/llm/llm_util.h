@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file llm_util.h
  *
@@ -7,14 +6,12 @@
  *
  * Copyright (C) RivieraWaves 2009-2014
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #ifndef LLM_UTIL_H_
 #define LLM_UTIL_H_
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @addtogroup LLMUTIL
  * @ingroup LLM
  * @brief Link layer manager utilities definitions
@@ -22,14 +19,12 @@
  * full description
  *
  * @{
- ****************************************************************************************
- */
+******************************************************************************************/
 
 
 /*
  * INCLUDE FILES
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #include <string.h>
 #include "compiler.h"
@@ -49,8 +44,7 @@
 
 /*
  * DEFINES
- ****************************************************************************************
- */
+******************************************************************************************/
 extern const ec_point ecc_p256_G;
 
 ///Constant nibble to use as top 4 MSBs, to have at least 2 transitions
@@ -67,10 +61,8 @@ enum bl_flag_wl
 };
 /*
  * FUNCTION DECLARATIONS
- ****************************************************************************************
- */
-/**
- ****************************************************************************************
+******************************************************************************************/
+/*****************************************************************************************
  * @brief Checks if the channel map contains at least 1 channel
  *
  * This function checks if advertising or data channel map contains at least 1 channel.
@@ -80,12 +72,10 @@ enum bl_flag_wl
  *
  * @return If the channel map is correct or not.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 uint8_t llm_util_check_map_validity(uint8_t *channel_map, uint8_t nb_octet);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Checks if the device address is available in the white list.
  *
  * This function checks if the bd address if present in the WL and return the status
@@ -97,13 +87,11 @@ uint8_t llm_util_check_map_validity(uint8_t *channel_map, uint8_t nb_octet);
  *
  * @return If the device address has been found or not.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 bool llm_util_bd_addr_in_wl(struct bd_addr const *bd_address, uint8_t bd_addr_type ,
                             uint16_t *position);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Checks the validity of the device address
  *
  * This function checks if the address type and value are available, no NULL, available
@@ -114,12 +102,10 @@ bool llm_util_bd_addr_in_wl(struct bd_addr const *bd_address, uint8_t bd_addr_ty
  *
  * @return If the device address is correct or not.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 uint8_t llm_util_check_address_validity( struct bd_addr *bd_address, uint8_t addr_type);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Apply the BD address
  *
  * This function applies the BD address corresponding to the current address type on the
@@ -127,22 +113,18 @@ uint8_t llm_util_check_address_validity( struct bd_addr *bd_address, uint8_t add
  *
  * @param[in] addr_type           Type of the requested address
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 void llm_util_apply_bd_addr(uint8_t addr_type);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Set the public address
  *
  * @param[in]  bd_addr           Public address
- ****************************************************************************************
- */
+******************************************************************************************/
 void llm_util_set_public_addr(struct bd_addr *bd_addr);
 
 #if (BLE_CENTRAL || BLE_OBSERVER)
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Check if the advertiser address has been already received.
  *
  * This function checks in case where the filtering is enabled if the address is already
@@ -153,8 +135,7 @@ void llm_util_set_public_addr(struct bd_addr *bd_addr);
  *
  * @return If the device address has been found or not.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE bool llm_util_check_adv_report_list(struct bd_addr *adv_bd_addr, uint8_t adv_type)
 {
     // Get first ADV device in the list
@@ -209,14 +190,12 @@ __INLINE bool llm_util_check_adv_report_list(struct bd_addr *adv_bd_addr, uint8_
     return (found);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Set the default scan parameters values
  *
  * This function set the default values for the scan parameters
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE void llm_util_set_param_scan_dft(void)
 {
     // Allocate a structure containing scan parameters
@@ -236,8 +215,7 @@ __INLINE void llm_util_set_param_scan_dft(void)
 }
 #endif //(BLE_CENTRAL || BLE_OBSERVER)
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Gets the size of the packet received.
  *
  * This function gets the length of the packet received.
@@ -246,16 +224,14 @@ __INLINE void llm_util_set_param_scan_dft(void)
  *
  * @return The length of the data.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE uint8_t llm_util_rxlen_getf(struct co_buf_rx_desc *rxdesc)
 {
     uint16_t localVal =  rxdesc->rxheader;
     return ((localVal & BLE_RXADVLEN_MASK) >> BLE_RXADVLEN_LSB);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Gets the type of the packet received.
  *
  * This function gets the type of the packet received.
@@ -264,16 +240,14 @@ __INLINE uint8_t llm_util_rxlen_getf(struct co_buf_rx_desc *rxdesc)
  *
  * @return The type of the packet.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE uint16_t llm_util_rxtype_getf(struct co_buf_rx_desc *rxdesc)
 {
     uint16_t localVal =  rxdesc->rxheader;
     return ((localVal & BLE_RXTYPE_MASK) >> BLE_RXTYPE_LSB);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Gets the type of advertiser address.
  *
  * This function gets the the advertiser address type of the packet received.
@@ -282,8 +256,7 @@ __INLINE uint16_t llm_util_rxtype_getf(struct co_buf_rx_desc *rxdesc)
  *
  * @return The type of the address.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE uint8_t llm_util_rxtxadd_getf(struct co_buf_rx_desc *rxdesc)
 {
     uint16_t localVal =  rxdesc->rxheader;
@@ -342,8 +315,7 @@ __INLINE void llm_util_aa_gen(uint8_t *acc_addr)
 
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Fulfills the payload for the transmit test mode.
  *
  * This function fulfills the payload for the transmit test mode.
@@ -351,8 +323,7 @@ __INLINE void llm_util_aa_gen(uint8_t *acc_addr)
  * @param[in] pattern_type         type of the pattern.
  * @param[in] payload_len          length of the payload.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE void llm_util_gen_pattern(uint8_t pattern_type, uint8_t payload_len ,
         uint8_t *payload)
 {
@@ -387,14 +358,12 @@ __INLINE void llm_util_gen_pattern(uint8_t pattern_type, uint8_t payload_len ,
 
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Set the default advertising parameters values
  *
  * This function set the default values for the advertising parameters
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 #if (BLE_PERIPHERAL || BLE_BROADCASTER)
 __INLINE void llm_util_set_param_adv_dft(void)
 {
@@ -434,14 +403,12 @@ __INLINE void llm_util_set_param_adv_dft(void)
 }
 #endif //(BLE_PERIPHERAL || BLE_BROADCASTER)
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Chek the status of the test mode
  *
  * This function sends an event to the host when the TX or RX test mode is finished
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE void llm_util_chk_tst_mode(void)
 {
     //if the current state is not IDLE
@@ -477,14 +444,12 @@ __INLINE void llm_util_chk_tst_mode(void)
 }
 
 #if (BLE_BROADCASTER || BLE_PERIPHERAL)
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Check the type set for the advertising directed
  *
  * @return The type of the advertising directed: Low or High Duty Cycle
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE uint8_t llm_util_chk_advdirect_type(void)
 {
     if(llm_le_env.advertising_params->adv_ldc_flag)
@@ -497,48 +462,39 @@ __INLINE uint8_t llm_util_chk_advdirect_type(void)
     }
 }
 #endif
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Check the event mask
  *
  * @param[in]     event_id     event to check
  *
  * @return     True: event can be sent / False: event is masked
- ****************************************************************************************
- */
+******************************************************************************************/
 bool llm_util_check_evt_mask(uint8_t event_id);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Get the channel map
  *
  * @param[out] map    Pointer to channel map buffer
- ****************************************************************************************
- */
+******************************************************************************************/
 void llm_util_get_channel_map(struct le_chnl_map *map);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Get supported features
  *
  * @param[out] feats    Pointer to supported features buffer
- ****************************************************************************************
- */
+******************************************************************************************/
 void llm_util_get_supp_features(struct le_features *feats);
 
 #if (BLE_BROADCASTER || BLE_PERIPHERAL)
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Check if advertising data need to be updated and update it if yes
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 void llm_util_adv_data_update(void);
 #endif//(BLE_BROADCASTER || BLE_PERIPHERAL)
 
 #if (BLE_CENTRAL || BLE_PERIPHERAL)
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Checks if the device address is already in the black list.
  *
  * This function checks if the bd address if present in the connected list and return
@@ -550,11 +506,9 @@ void llm_util_adv_data_update(void);
  *
  * @return If the device address has been found or not.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 uint8_t llm_util_bl_check(struct bd_addr *bd_addr_to_add, uint16_t *conhdl, bool wl_flag_action);
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief aDD the device address in the BLACK list.
  *
  * This function checks if the bd address if present in the connected list and return
@@ -568,12 +522,10 @@ uint8_t llm_util_bl_check(struct bd_addr *bd_addr_to_add, uint16_t *conhdl, bool
  *
  * @return If the device address has been added or not.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 uint8_t llm_util_bl_add(struct bd_addr *bd_addr_to_add, uint8_t bd_addr_type, uint16_t conhdl, bool wl_used);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Remove the bd address if already connected.
  *
  * This function checks if the bd address if present in the connected list, extract the
@@ -583,8 +535,7 @@ uint8_t llm_util_bl_add(struct bd_addr *bd_addr_to_add, uint8_t bd_addr_type, ui
  *
  * @return If the bd address has been removed or not.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 uint8_t llm_util_bl_rem(uint16_t conhdl);
 #endif
 

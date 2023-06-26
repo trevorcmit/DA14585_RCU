@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file app_task.c
  *
@@ -8,20 +7,16 @@
  * Copyright (C) RivieraWaves 2009-2013
  * Copyright (C) 2017 Modified by Dialog Semiconductor
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @addtogroup APPTASK
  * @{
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /*
  * INCLUDE FILES
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #include "rwip_config.h"            // SW configuration
 
@@ -47,19 +42,16 @@
 
 /*
  * FUNCTION DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles ready indication from the GAP. - Reset the stack.
  * @param[in] msgid     Id of the message received.
  * @param[in] param     Pointer to the parameters of the message.
  * @param[in] dest_id   ID of the receiving task instance (TASK_GAP).
  * @param[in] src_id    ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int gapm_device_ready_ind_handler(ke_msg_id_t const msgid,
                                          void const *param,
                                          ke_task_id_t const dest_id,
@@ -79,16 +71,14 @@ static int gapm_device_ready_ind_handler(ke_msg_id_t const msgid,
     return (KE_MSG_CONSUMED);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles GAP manager command complete events.
  * @param[in] msgid     Id of the message received.
  * @param[in] param     Pointer to the parameters of the message.
  * @param[in] dest_id   ID of the receiving task instance (TASK_GAP).
  * @param[in] src_id    ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int gapm_cmp_evt_handler(ke_msg_id_t const msgid,
                                 struct gapm_cmp_evt const *param,
                                 ke_task_id_t const dest_id,
@@ -184,16 +174,14 @@ static int gapm_cmp_evt_handler(ke_msg_id_t const msgid,
     return (KE_MSG_CONSUMED);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles connection complete event from the GAP. Will enable profile.
  * @param[in] msgid     Id of the message received.
  * @param[in] param     Pointer to the parameters of the message.
  * @param[in] dest_id   ID of the receiving task instance (TASK_GAP).
  * @param[in] src_id    ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int gapc_connection_req_ind_handler(ke_msg_id_t const msgid,
                                            struct gapc_connection_req_ind const *param,
                                            ke_task_id_t const dest_id,
@@ -218,16 +206,14 @@ static int gapc_connection_req_ind_handler(ke_msg_id_t const msgid,
     return (KE_MSG_CONSUMED);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles GAP controller command complete events.
  * @param[in] msgid     Id of the message received.
  * @param[in] param     Pointer to the parameters of the message.
  * @param[in] dest_id   ID of the receiving task instance (TASK_GAP).
  * @param[in] src_id    ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int gapc_cmp_evt_handler(ke_msg_id_t const msgid,
                                 struct gapc_cmp_evt const *param,
                                 ke_task_id_t const dest_id,
@@ -267,16 +253,14 @@ static int gapc_cmp_evt_handler(ke_msg_id_t const msgid,
     return (KE_MSG_CONSUMED);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles disconnection complete event from the GAP.
  * @param[in] msgid     Id of the message received.
  * @param[in] param     Pointer to the parameters of the message.
  * @param[in] dest_id   ID of the receiving task instance (TASK_GAP).
  * @param[in] src_id    ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int gapc_disconnect_ind_handler(ke_msg_id_t const msgid,
                                        struct gapc_disconnect_ind const *param,
                                        ke_task_id_t const dest_id,
@@ -550,8 +534,7 @@ static int gapc_le_pkt_size_ind_handler(ke_msg_id_t msgid,
 
 /*
  * LOCAL VARIABLES DEFINITION
- ****************************************************************************************
- */
+******************************************************************************************/
 
 static const struct ke_msg_handler app_gap_process_handlers[]=
 {
@@ -580,8 +563,7 @@ const struct ke_msg_handler app_default_state[] =
 
 /*
  * GLOBAL VARIABLES DEFINITION
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /* Specifies the message handlers that are common to all states. */
 const struct ke_state_handler app_default_handler = KE_STATE_HANDLER(app_default_state);
@@ -591,8 +573,7 @@ ke_state_t app_state[APP_IDX_MAX] __attribute__((section("retention_mem_area0"),
 
 /*
  * FUNCTION DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 enum process_event_response app_gap_process_handler (ke_msg_id_t const msgid,
                                                      void const *param,

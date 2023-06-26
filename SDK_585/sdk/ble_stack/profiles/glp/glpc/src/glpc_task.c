@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file glpc_task.c
  *
@@ -8,21 +7,17 @@
  * Copyright (C) RivieraWaves 2009-2015
  *
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @addtogroup GLPCTASK
  * @{
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /*
  * INCLUDE FILES
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #include "rwip_config.h"
 
@@ -36,14 +31,12 @@
 
 /*
  * TYPE DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 
 /*
  * DEFINES
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /// State machine used to retrieve Glucose service characteristics information
 const struct prf_char_def glpc_gls_char[GLPC_CHAR_MAX] =
@@ -83,11 +76,9 @@ const struct prf_char_desc_def glpc_gls_char_desc[GLPC_DESC_MAX] =
 
 /*
  * LOCAL FUNCTIONS DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the @ref GLPC_ENABLE_REQ message.
  * The handler enables the Glucose Profile Collector Role.
  * @param[in] msgid Id of the message received (probably unused).
@@ -95,8 +86,7 @@ const struct prf_char_desc_def glpc_gls_char_desc[GLPC_DESC_MAX] =
  * @param[in] dest_id ID of the receiving task instance (probably unused).
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int glpc_enable_req_handler(ke_msg_id_t const msgid,
                                    struct glpc_enable_req const *param,
                                    ke_task_id_t const dest_id,
@@ -150,8 +140,7 @@ static int glpc_enable_req_handler(ke_msg_id_t const msgid,
     return (KE_MSG_CONSUMED);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the @ref GATTC_SDP_SVC_IND_HANDLER message.
  * The handler stores the found service details for service discovery.
  * @param[in] msgid Id of the message received (probably unused).
@@ -159,8 +148,7 @@ static int glpc_enable_req_handler(ke_msg_id_t const msgid,
  * @param[in] dest_id ID of the receiving task instance (probably unused).
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int gattc_sdp_svc_ind_handler(ke_msg_id_t const msgid,
                                              struct gattc_sdp_svc_ind const *ind,
                                              ke_task_id_t const dest_id,
@@ -194,8 +182,7 @@ static int gattc_sdp_svc_ind_handler(ke_msg_id_t const msgid,
     return (KE_MSG_CONSUMED);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the @ref GATTC_CMP_EVT message.
  * This generic event is received for different requests, so need to keep track.
  * @param[in] msgid Id of the message received (probably unused).
@@ -203,8 +190,7 @@ static int gattc_sdp_svc_ind_handler(ke_msg_id_t const msgid,
  * @param[in] dest_id ID of the receiving task instance (probably unused).
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int gattc_cmp_evt_handler(ke_msg_id_t const msgid,
                                 struct gattc_cmp_evt const *param,
                                 ke_task_id_t const dest_id,
@@ -357,8 +343,7 @@ static int gattc_cmp_evt_handler(ke_msg_id_t const msgid,
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the @ref GLPC_READ_FEATURES_REQ message.
  * Send by application task, it's used to retrieve Glucose Sensor features.
  *
@@ -367,8 +352,7 @@ static int gattc_cmp_evt_handler(ke_msg_id_t const msgid,
  * @param[in] dest_id ID of the receiving task instance (probably unused).
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int glpc_read_features_req_handler(ke_msg_id_t const msgid,
                                           void const *param,
                                           ke_task_id_t const dest_id,
@@ -419,8 +403,7 @@ static int glpc_read_features_req_handler(ke_msg_id_t const msgid,
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the @ref GATTC_READ_IND message.
  * Generic event received after every simple read command sent to peer server.
  * @param[in] msgid Id of the message received (probably unused).
@@ -428,8 +411,7 @@ static int glpc_read_features_req_handler(ke_msg_id_t const msgid,
  * @param[in] dest_id ID of the receiving task instance (probably unused).
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int gattc_read_ind_handler(ke_msg_id_t const msgid,
                                     struct gattc_read_ind const *param,
                                     ke_task_id_t const dest_id,
@@ -460,8 +442,7 @@ static int gattc_read_ind_handler(ke_msg_id_t const msgid,
     return (KE_MSG_CONSUMED);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the @ref GLPC_REGISTER_REQ message.
  * When receiving this request, Glucose collector register to measurement notifications
  * and RACP indications.
@@ -471,8 +452,7 @@ static int gattc_read_ind_handler(ke_msg_id_t const msgid,
  * @param[in] dest_id ID of the receiving task instance (probably unused).
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int glpc_register_req_handler(ke_msg_id_t const msgid,
                                      struct glpc_register_req const *param,
                                      ke_task_id_t const dest_id,
@@ -532,8 +512,7 @@ static int glpc_register_req_handler(ke_msg_id_t const msgid,
 
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the @ref GLPC_RACP_REQ message.
  * When receiving this request, Glucose collector send a RACP command to Glucose sensor.
  *
@@ -542,8 +521,7 @@ static int glpc_register_req_handler(ke_msg_id_t const msgid,
  * @param[in] dest_id ID of the receiving task instance (probably unused).
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int glpc_racp_req_handler(ke_msg_id_t const msgid,
                                      struct glpc_racp_req const *param,
                                      ke_task_id_t const dest_id,
@@ -604,16 +582,14 @@ static int glpc_racp_req_handler(ke_msg_id_t const msgid,
     return (KE_MSG_CONSUMED);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the @ref GATTC_EVENT_IND message.
  * @param[in] msgid Id of the message received (probably unused).
  * @param[in] param Pointer to the parameters of the message.
  * @param[in] dest_id ID of the receiving task instance (probably unused).
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int gattc_event_ind_handler(ke_msg_id_t const msgid,
                                          struct gattc_event_ind const *param,
                                          ke_task_id_t const dest_id,
@@ -709,8 +685,7 @@ static int gattc_event_ind_handler(ke_msg_id_t const msgid,
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief RACP request not executed by peer device or is freezed.
  * It can be a connection problem, disconnect the link.
  *
@@ -721,8 +696,7 @@ static int gattc_event_ind_handler(ke_msg_id_t const msgid,
  *
  * @return If the message was consumed or not.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 static int glpc_racp_req_timeout_handler(ke_msg_id_t const msgid, void const *param,
                                          ke_task_id_t const dest_id, ke_task_id_t const src_id)
 {
@@ -750,8 +724,7 @@ static int glpc_racp_req_timeout_handler(ke_msg_id_t const msgid, void const *pa
 
 /*
  * GLOBAL VARIABLE DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /// Default State handlers definition
 const struct ke_msg_handler glpc_default_state[] =

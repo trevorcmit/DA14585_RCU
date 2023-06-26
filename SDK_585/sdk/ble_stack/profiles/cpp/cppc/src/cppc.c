@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file cppc.c
  *
@@ -9,21 +8,17 @@
  *
  * $ Rev $
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @addtogroup CPPC
  * @{
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /*
  * INCLUDE FILES
- ****************************************************************************************
- */
+******************************************************************************************/
 #include "cpp_common.h"
 
 #if (BLE_CP_COLLECTOR)
@@ -33,17 +28,14 @@
 
 /*
  * GLOBAL VARIABLES DECLARATION
- ****************************************************************************************
- */
+******************************************************************************************/
 
 
 /*
  * LOCAL FUNCTION DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Initialization of the CPPC module.
  * This function performs all the initializations of the Profile module.
  *  - Creation of database (if it's a service)
@@ -60,8 +52,7 @@
  * @param[in]     param      Configuration parameters of profile collector or service (32 bits aligned)
  *
  * @return status code to know if profile initialization succeed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static uint8_t cppc_init(struct prf_task_env* env, uint16_t* start_hdl, uint16_t app_task, uint8_t sec_lvl,  void* params)
 {
     uint8_t idx;
@@ -93,15 +84,13 @@ static uint8_t cppc_init(struct prf_task_env* env, uint16_t* start_hdl, uint16_t
     return GAP_ERR_NO_ERROR;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Clean-up connection dedicated environment parameters
  * This function performs cleanup of ongoing operations
  * @param[in|out]    env        Collector or Service allocated environment data.
  * @param[in]        conidx     Connection index
  * @param[in]        reason     Detach reason
- ****************************************************************************************
- */
+******************************************************************************************/
 static void cppc_cleanup(struct prf_task_env* env, uint8_t conidx, uint8_t reason)
 {
     struct cppc_env_tag* cppc_env = (struct cppc_env_tag*) env->env;
@@ -122,15 +111,13 @@ static void cppc_cleanup(struct prf_task_env* env, uint8_t conidx, uint8_t reaso
     ke_state_set(KE_BUILD_ID(env->task, conidx), CPPC_FREE);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Destruction of the CPPC module - due to a reset for instance.
  * This function clean-up allocated memory (attribute database is destroyed by another
  * procedure)
  *
  * @param[in|out]    env        Collector or Service allocated environment data.
- ****************************************************************************************
- */
+******************************************************************************************/
 static void cppc_destroy(struct prf_task_env* env)
 {
     uint8_t idx;
@@ -147,14 +134,12 @@ static void cppc_destroy(struct prf_task_env* env)
     ke_free(cppc_env);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles Connection creation
  *
  * @param[in|out]    env        Collector or Service allocated environment data.
  * @param[in]        conidx     Connection index
- ****************************************************************************************
- */
+******************************************************************************************/
 static void cppc_create(struct prf_task_env* env, uint8_t conidx)
 {
     /* Put CPP Client in Idle state */
@@ -172,8 +157,7 @@ const struct prf_task_cbs cppc_itf =
 
 /*
  * GLOBAL FUNCTIONS DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 const struct prf_task_cbs* cppc_prf_itf_get(void)
 {
@@ -246,8 +230,7 @@ void cppc_send_cmp_evt(struct cppc_env_tag *cppc_env, uint8_t conidx, uint8_t op
 
 /*
  * LOCAL FUNCTIONS DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 uint16_t cppc_get_read_handle_req (struct cppc_env_tag *cppc_env, uint8_t conidx, struct cpps_read_cmd *param)
 {

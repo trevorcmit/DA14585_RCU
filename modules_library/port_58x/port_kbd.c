@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * \file port_kbd.c
  *
@@ -11,11 +10,9 @@
  *
  * <bluetooth.support@diasemi.com>
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \addtogroup APP_UTILS
  * \{
  * \addtogroup KEYBOARD
@@ -30,8 +27,7 @@
 
 /*
  * INCLUDE FILES
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #include "app_task.h"
 #include "systick.h"
@@ -106,8 +102,7 @@
 
 /*
  * Debouncing internals
- ****************************************************************************************
- */
+******************************************************************************************/
 #define DEBOUNCE_COUNTER_PRESS      ((int)(1 + ( ((kbd_params.press_debounce_counter_in_us - kbd_params.full_scan_cycle_in_us) / kbd_params.partial_scan_cycle_in_us) + 0.999 ) ) - 1)
 
 #define DEBOUNCE_COUNTER_RELEASE    ((int)( (kbd_params.release_debounce_counter_in_us / kbd_params.partial_scan_cycle_in_us) + 0.999 ) - 1)
@@ -127,8 +122,7 @@ struct debounce_counter_t {
 
 /*
  * Scanning 
- ****************************************************************************************
- */
+******************************************************************************************/
  
 enum key_scan_states current_scan_state __PORT_RETAINED;
 static int scanning_substate            __PORT_RETAINED;
@@ -450,8 +444,7 @@ typedef int kbd_output_input_mode_regs_check[ (sizeof(kbd_input_mode_regs) / siz
 
 /*
  * NON RETAINED VARIABLE DECLARATIONS (GLOBAL + STATIC)
- ****************************************************************************************
- */
+******************************************************************************************/
  
 static bool systick_hit = false;
 static bool wkup_hit = false;      // does not have to be a RETAINED var since the KBD application wakes up from Deep Sleep only from a key press!
@@ -459,16 +452,13 @@ static bool wkup_hit = false;      // does not have to be a RETAINED var since t
 
 /*
  * LOCAL FUNCTIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief It programs the Keyboard Controller to scan any key press 
  *                coming from the "inactive rows" and inform the system after 
  *                DEBOUNCE_TIME_PRESS msec (optionally) to do a full key scan.
- ****************************************************************************************
- */
+******************************************************************************************/
 static void kbd_scan_enable_kbd_irq(void)
 {
     SetWord16(GPIO_DEBOUNCE_REG, 0x2000 | 0); // T ms debouncing
@@ -486,8 +476,7 @@ static void kbd_scan_enable_kbd_irq(void)
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief Does debouncing for a key (called even when the key is considered as pressed
  *        after press debouncing has finished).
  *
@@ -497,8 +486,7 @@ static void kbd_scan_enable_kbd_irq(void)
  *
  * \return  0, key is ignored
  *          1, key is accepted and should be checked for ghosting
- ****************************************************************************************
- */
+******************************************************************************************/
 static inline int kbd_scan_debounce_key(const uint16_t output, const uint16_t input, const bool pressed)
 {
     const uint16_t my_intersection = (output << 8) | input;
@@ -623,12 +611,10 @@ static inline int kbd_scan_debounce_key(const uint16_t output, const uint16_t in
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief Processes scan results. If debouncing and deghosting allow it,
  *        the keycodes of the detected keys are placed in the keycode buffer. 
- ****************************************************************************************
- */
+******************************************************************************************/
 static inline void kbd_scan_process_scandata(void)
 {	
     scan_t new_scan_status[KBD_NR_ROW_OUTPUTS];
@@ -713,14 +699,12 @@ static inline void kbd_scan_process_scandata(void)
     }
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief Programs the Wakeup Timer to scan a specific key press for a predefined
  *        duration and wakes-up the system.
  *
  * \param[in]   press
- ****************************************************************************************
- */
+******************************************************************************************/
 static void kbd_scan_enable_delayed_wakeup_irq(bool press)
 {
     if (kbd_params.delayed_wakeup) {
@@ -743,22 +727,18 @@ enum key_scan_states {
 
 /*
  * FUNCTION DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 
 /*
  * GPIO handling 
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief
  *
  * \param[in]   idx
- ****************************************************************************************
- */
+******************************************************************************************/
 static void kbd_scan_set_row_to_low(int idx)
 {
     if (kbd_out_bitmasks[idx]) {
@@ -768,13 +748,11 @@ static void kbd_scan_set_row_to_low(int idx)
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief
  *
  * \param[in]   idx
- ****************************************************************************************
- */
+******************************************************************************************/
 static void kbd_scan_set_column_to_input_pullup(int idx)
 {
     if (kbd_input_mode_regs[idx]) {
@@ -783,13 +761,11 @@ static void kbd_scan_set_column_to_input_pullup(int idx)
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief
  *
  * \param[in]   idx
- ****************************************************************************************
- */
+******************************************************************************************/
 static void kbd_scan_set_row_to_input_highz(int idx)
 {
     if (kbd_out_bitmasks[idx]) {
@@ -800,15 +776,12 @@ static void kbd_scan_set_row_to_input_highz(int idx)
 
 /*
  * Keyboard "membrane" handling
- ****************************************************************************************
- */
+******************************************************************************************/
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief Set all columns to "input pull-up" state
- ****************************************************************************************
- */
+******************************************************************************************/
 static void kbd_scan_membrane_input_setup(void)
 {	
 	for (int i = 0; i < KBD_NR_COLUMN_INPUTS; ++i) 
@@ -816,11 +789,9 @@ static void kbd_scan_membrane_input_setup(void)
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief Set all rows to "high-Z" state to enable SW scanning
- ****************************************************************************************
- */
+******************************************************************************************/
 static void kbd_scan_membrane_output_wakeup(void)
 {
 	for (int i = 0; i < KBD_NR_ROW_OUTPUTS; ++i)
@@ -830,11 +801,9 @@ static void kbd_scan_membrane_output_wakeup(void)
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief Set all rows to "low" state to enable HW scanning (WKUP-TIMER)
- ****************************************************************************************
- */
+******************************************************************************************/
 static void kbd_scan_membrane_output_sleep(void)
 {	
 	kbd_membrane_status = 0;
@@ -848,11 +817,9 @@ static void kbd_scan_membrane_output_sleep(void)
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief
- ****************************************************************************************
- */
+******************************************************************************************/
 static void port_kbd_scan_init_vars(void)
 {
     int i;  
@@ -884,11 +851,9 @@ static void port_kbd_scan_init_vars(void)
     kbd_new_key_detected = false;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief stops the systick timer
- ****************************************************************************************
- */
+******************************************************************************************/
 static void kbd_scan_timer_stop(void)
 {
 	// leave systick in a known state
@@ -897,11 +862,9 @@ static void kbd_scan_timer_stop(void)
     systick_hit = false;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief
- ****************************************************************************************
- */
+******************************************************************************************/
 static void kbd_scan_init_wkup(void)
 {
     port_wkup_disable_irq(WKUP_KBD_CHANNEL);
@@ -909,16 +872,14 @@ static void kbd_scan_init_wkup(void)
     wkup_hit = false;    
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief   Handler of a dummy TASK_APP msg sent to trigger the timer
  *
  * \remarks In case of delayed start, a dummy message is sent to the TASK_APP.
  *          This msg is put in the queue when the BLE is woken up. When the
  *          handler is called, it is certain that the BLE is running and 
  *          the timer may start.
- ****************************************************************************************
- */                                    
+******************************************************************************************/                                    
 static void port_kbd_scan_msg_handler(void)
 {
     if (kbd_params.delayed_wakeup) {
@@ -969,19 +930,16 @@ void port_kbd_scan_init(void)
 
 /*
  * Keyboard scanning
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief Handles the scanning of the key matrix and the processing of the results
  *
  * \param[in] row - number of row to scan
  *
  * \return  false, when scanning of the rows in the current scan cycle is not completed
  *          true, when all rows have been scanned
- ****************************************************************************************
- */
+******************************************************************************************/
 static bool kbd_scan_matrix(int *row)
 {
 	// 1. Find which row has the pressed key 
@@ -1136,11 +1094,9 @@ static bool kbd_scan_matrix(int *row)
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief Updates the value of the scan cycle time and starts SysTick.
- ****************************************************************************************
- */
+******************************************************************************************/
 static void kbd_scan_update_scan_times(void)
 {
     if (kbd_params.full_scan_cycle_in_us < kbd_params.partial_scan_cycle_in_us) {
@@ -1164,16 +1120,14 @@ static void kbd_scan_update_scan_times(void)
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief Update full_scan status according to whether an interrupt was
  *        reported from the keyboard controller or not. Decide whether the next state
  *        will be KEY_SCANNING (because there's keyboard activity) or INACTIVE.
  *
  * \return true, if scanning will continue
  *         false, if scanning stops and IDLE is the next state
- ****************************************************************************************
- */
+******************************************************************************************/
 static bool kbd_scan_update_status(void)
 {
     bool ret;
@@ -1252,15 +1206,12 @@ static bool kbd_scan_update_status(void)
 
 /*
  * SysTick handler
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief ISR of the SysTick IRQ - Forces execution of the state machine once every
  *        SysTick interval
- ****************************************************************************************
- */
+******************************************************************************************/
 static void port_kbd_scan_systick_Handler(void) 
 { 
 	ASSERT_ERROR(kbd_membrane_status != 0);
@@ -1269,11 +1220,9 @@ static void port_kbd_scan_systick_Handler(void)
         systick_hit = true;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief Activates key scanning hardware and state machine (by enabling the SysTick IRQ).
- ****************************************************************************************
- */
+******************************************************************************************/
 static void port_kbd_scan_start(void)
 {
     port_kbd_scan_init_vars();
@@ -1292,12 +1241,10 @@ static void port_kbd_scan_start(void)
     GLOBAL_INT_RESTORE();
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief Programs the Wakeup Timer to scan any key press and wake-up the system
  *        (optionally after DEBOUNCE_TIME_PRESS msec)
- ****************************************************************************************
- */
+******************************************************************************************/
 static void kbd_scan_enable_wakeup_irq(void)
 {
 #ifdef HAS_POWERUP_BUTTON	
@@ -1322,15 +1269,12 @@ void port_kbd_scan_stop(void)
 
 /*
  * Keyboard Controller
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/****************************************************************************************
  * \brief ISR of the Keyboard Controller IRQ. It clears the interrupt and triggers
  *        a full key scan.
- ****************************************************************************************
- */
+*****************************************************************************************/
 void KEYBRD_Handler(void)
 {
     // Clear it first
@@ -1348,45 +1292,44 @@ void KEYBRD_Handler(void)
 }
 
 
-/*
+/***************************************************************************************
  * Wakeup timer
- ****************************************************************************************
- */
+****************************************************************************************/
 
 void port_kbd_scan_wakeup_handler(void)
 {	
-	/*
+	/******************************************************************
 	* Init System Power Domain blocks: GPIO, WD Timer, Sys Timer, etc.
 	* Power up and init Peripheral Power Domain blocks,
 	* and finally release the pad latches.
-	*/
-#ifdef HAS_CONNECTION_FSM     
-    if(kbd_params.delayed_wakeup) {
-        /*
-        * Notify HID Application to start delay monitoring
-        */
-        if (app_con_fsm_get_state() == IDLE_ST) {
-            ASSERT_WARNING(monitor_kbd_delayed_start_st != MONITOR_IDLE);
-            
-            if (monitor_kbd_delayed_start_st == MONITOR_PRESS) {    // press
-                trigger_kbd_delayed_start_st = PRESSED_TRIGGER;
-            } else {                                                // release
-                trigger_kbd_delayed_start_st = RELEASED_TRIGGER;
+	*******************************************************************/
+    #ifdef HAS_CONNECTION_FSM     
+        if (kbd_params.delayed_wakeup)
+        {
+            /** Notify HID Application to start delay monitoring */
+            if (app_con_fsm_get_state() == IDLE_ST) {
+                ASSERT_WARNING(monitor_kbd_delayed_start_st != MONITOR_IDLE);
+                
+                if (monitor_kbd_delayed_start_st == MONITOR_PRESS) {    // press
+                    trigger_kbd_delayed_start_st = PRESSED_TRIGGER;
+                } else {                                                // release
+                    trigger_kbd_delayed_start_st = RELEASED_TRIGGER;
+                }
+                monitor_kbd_delayed_start_st = MONITOR_IDLE;
             }
-            monitor_kbd_delayed_start_st = MONITOR_IDLE;
-        }
-        else {
-            trigger_kbd_delayed_start_st = NO_TRIGGER;
+            else {
+                trigger_kbd_delayed_start_st = NO_TRIGGER;
+                wkup_hit = true;
+            }
+        } 
+        else 
+    #endif    
+        {
+            /*
+            * Notify HID Application to start scanning
+            */
             wkup_hit = true;
         }
-    } else 
-#endif    
-    {
-        /*
-        * Notify HID Application to start scanning
-        */
-        wkup_hit = true;
-    }
 #ifdef HAS_POWERUP_BUTTON      
     if(force_power_off == 1) {        
         force_power_off = 2;
@@ -1440,12 +1383,10 @@ void port_kbd_scan_enable_delayed_scanning(bool press)
     }
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief Sets up the hardware for key scanning. Normally, the keyboard scanning is
  *        active only when connected or disconnected but bonded
- ****************************************************************************************
- */
+******************************************************************************************/
 static void kbd_scan_enable_scanning(void)
 {
     arch_restore_sleep_mode();

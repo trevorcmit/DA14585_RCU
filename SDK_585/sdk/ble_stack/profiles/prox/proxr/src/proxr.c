@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file proxr.c
  *
@@ -8,20 +7,16 @@
  * Copyright (C) RivieraWaves 2009-2015
  *
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @addtogroup PROXR
  * @{
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /*
  * INCLUDE FILES
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #include "rwip_config.h"
 
@@ -34,8 +29,7 @@
 
 /*
  * LOCAL FUNCTION DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 static uint8_t proxr_init(struct prf_task_env* env, uint16_t* start_hdl, uint16_t app_task,
                             uint8_t sec_lvl, struct proxr_db_cfg* params)
@@ -114,14 +108,12 @@ static void proxr_destroy(struct prf_task_env* env)
     ke_free(proxr_env);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles Connection creation
  *
  * @param[in|out]    env        Collector or Service allocated environment data.
  * @param[in]        conidx     Connection index
- ****************************************************************************************
- */
+******************************************************************************************/
 static void proxr_create(struct prf_task_env* env, uint8_t conidx)
 {
     struct proxr_env_tag* proxr_env = (struct proxr_env_tag*) env->env;
@@ -129,15 +121,13 @@ static void proxr_create(struct prf_task_env* env, uint8_t conidx)
     proxr_env->lls_alert_lvl[conidx] = PROXR_ALERT_NONE;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles Disconnection
  *
  * @param[in|out]    env        Collector or Service allocated environment data.
  * @param[in]        conidx     Connection index
  * @param[in]        reason     Detach reason
- ****************************************************************************************
- */
+******************************************************************************************/
 static void proxr_cleanup(struct prf_task_env* env, uint8_t conidx, uint8_t reason)
 {
     struct proxr_env_tag* proxr_env = (struct proxr_env_tag*) env->env;
@@ -166,8 +156,7 @@ static void proxr_cleanup(struct prf_task_env* env, uint8_t conidx, uint8_t reas
 
 /*
  * PROXIMITY PROFILE ATTRIBUTES DEFINITION
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /// Full LLS Database Description - Used to add attributes into the database
 const struct attm_desc proxr_lls_att_db[LLS_IDX_NB] =
@@ -204,8 +193,7 @@ const struct attm_desc proxr_txps_att_db[TXPS_IDX_NB] =
 
 /*
  * GLOBAL VARIABLE DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 
 /// PROXR Task interface required by profile manager
@@ -219,8 +207,7 @@ const struct prf_task_cbs proxr_itf =
 
 /*
  * FUNCTION DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 const struct prf_task_cbs* proxr_prf_itf_get(void)
 {

@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file hrps_task.c
  *
@@ -8,21 +7,17 @@
  * Copyright (C) RivieraWaves 2009-2015
  *
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @addtogroup HRPSTASK
  * @{
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /*
  * INCLUDE FILES
- ****************************************************************************************
- */
+******************************************************************************************/
 #include "rwip_config.h"
 
 #if (BLE_HR_SENSOR)
@@ -38,11 +33,9 @@
 
 /*
  * LOCAL FUNCTIONS DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the @ref HRPS_ENABLE_REQ message.
  * The handler enables the Heart Rate Sensor Profile.
  * @param[in] msgid Id of the message received (probably unused).
@@ -50,8 +43,7 @@
  * @param[in] dest_id ID of the receiving task instance (probably unused).
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int hrps_enable_req_handler(ke_msg_id_t const msgid,
                                    struct hrps_enable_req const *param,
                                    ke_task_id_t const dest_id,
@@ -93,16 +85,14 @@ static int hrps_enable_req_handler(ke_msg_id_t const msgid,
      return (KE_MSG_CONSUMED);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the @ref HRPS_MEAS_SEND_REQ message.
  * @param[in] msgid Id of the message received (probably unused).
  * @param[in] param Pointer to the parameters of the message.
  * @param[in] dest_id ID of the receiving task instance (probably unused).
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int hrps_meas_send_req_handler(ke_msg_id_t const msgid,
                                       struct hrps_meas_send_req const *param,
                                       ke_task_id_t const dest_id,
@@ -146,8 +136,7 @@ static int hrps_meas_send_req_handler(ke_msg_id_t const msgid,
     return (msg_status);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the @ref GL2C_CODE_ATT_WR_CMD_IND message.
  * The handler compares the new values with current ones and notifies them if they changed.
  * @param[in] msgid Id of the message received (probably unused).
@@ -155,8 +144,7 @@ static int hrps_meas_send_req_handler(ke_msg_id_t const msgid,
  * @param[in] dest_id ID of the receiving task instance (probably unused).
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int gattc_write_req_ind_handler(ke_msg_id_t const msgid,
                                       struct gattc_write_req_ind const *param,
                                       ke_task_id_t const dest_id,
@@ -242,8 +230,7 @@ static int gattc_write_req_ind_handler(ke_msg_id_t const msgid,
     return (KE_MSG_CONSUMED);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles @ref GATTC_CMP_EVT for GATTC_NOTIFY message meaning that Measurement
  * notification has been correctly sent to peer device (but not confirmed by peer device).
  * *
@@ -252,8 +239,7 @@ static int gattc_write_req_ind_handler(ke_msg_id_t const msgid,
  * @param[in] dest_id   ID of the receiving task instance
  * @param[in] src_id    ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int gattc_cmp_evt_handler(ke_msg_id_t const msgid,  struct gattc_cmp_evt const *param,
                                  ke_task_id_t const dest_id, ke_task_id_t const src_id)
 {
@@ -265,8 +251,7 @@ static int gattc_cmp_evt_handler(ke_msg_id_t const msgid,  struct gattc_cmp_evt 
     return (KE_MSG_CONSUMED);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the read request from peer device
  *
  * @param[in] msgid Id of the message received (probably unused).
@@ -274,8 +259,7 @@ static int gattc_cmp_evt_handler(ke_msg_id_t const msgid,  struct gattc_cmp_evt 
  * @param[in] dest_id ID of the receiving task instance (probably unused).
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int gattc_read_req_ind_handler(ke_msg_id_t const msgid,
                                       struct gattc_read_req_ind const *param,
                                       ke_task_id_t const dest_id,
@@ -337,8 +321,7 @@ static int gattc_read_req_ind_handler(ke_msg_id_t const msgid,
 
 /*
  * GLOBAL VARIABLE DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /* Default State handlers definition. */
 const struct ke_msg_handler hrps_default_state[] =

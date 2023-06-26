@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file glps_task.c
  *
@@ -8,20 +7,16 @@
  * Copyright (C) RivieraWaves 2009-2015
  *
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @addtogroup GLPSTASK
  * @{
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /*
  * INCLUDE FILES
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #include "rwip_config.h"
 
@@ -35,17 +30,14 @@
 
 /*
  *  GLUCOSE PROFILE ATTRIBUTES
- ****************************************************************************************
- */
+******************************************************************************************/
 
 
 /*
  * LOCAL FUNCTIONS DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the @ref GLPS_ENABLE_REQ message.
  * The handler enables the Glucose Sensor Profile and initialize readable values.
  * @param[in] msgid Id of the message received (probably unused).off
@@ -53,8 +45,7 @@
  * @param[in] dest_id ID of the receiving task instance (probably unused).
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int glps_enable_req_handler(ke_msg_id_t const msgid,
                                    struct glps_enable_req const *param,
                                    ke_task_id_t const dest_id,
@@ -85,16 +76,14 @@ static int glps_enable_req_handler(ke_msg_id_t const msgid,
     return (KE_MSG_CONSUMED);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the @ref GLPS_MEAS_SEND_REQ message.
  * @param[in] msgid Id of the message received (probably unused).
  * @param[in] param Pointer to the parameters of the message.
  * @param[in] dest_id ID of the receiving task instance (probably unused).
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int glps_meas_send_req_handler(ke_msg_id_t const msgid,
                                       struct glps_send_meas_with_ctx_cmd const *param,
                                       ke_task_id_t const dest_id,
@@ -196,8 +185,7 @@ static int glps_meas_send_req_handler(ke_msg_id_t const msgid,
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the @ref GLPS_SEND_RACP_RSP_CMD message.
  * Send when a RACP requests is finished
  *
@@ -206,8 +194,7 @@ static int glps_meas_send_req_handler(ke_msg_id_t const msgid,
  * @param[in] dest_id ID of the receiving task instance (probably unused).
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int glps_send_racp_rsp_cmd_handler(ke_msg_id_t const msgid,
                                      struct glps_send_racp_rsp_cmd const *param,
                                      ke_task_id_t const dest_id,
@@ -296,8 +283,7 @@ static int glps_send_racp_rsp_cmd_handler(ke_msg_id_t const msgid,
     return (KE_MSG_CONSUMED);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the attribute info request message.
  *
  * @param[in] msgid Id of the message received (probably unused).
@@ -305,8 +291,7 @@ static int glps_send_racp_rsp_cmd_handler(ke_msg_id_t const msgid,
  * @param[in] dest_id ID of the receiving task instance (probably unused).
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int gattc_att_info_req_ind_handler(ke_msg_id_t const msgid,
         struct gattc_att_info_req_ind *param,
         ke_task_id_t const dest_id,
@@ -352,8 +337,7 @@ static int gattc_att_info_req_ind_handler(ke_msg_id_t const msgid,
         return (KE_MSG_CONSUMED);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the @ref GATT_CODE_ATT_WR_CMD_IND message.
  * The handler compares the new values with current ones and notifies them if they changed.
  * @param[in] msgid Id of the message received (probably unused).
@@ -361,8 +345,7 @@ static int gattc_att_info_req_ind_handler(ke_msg_id_t const msgid,
  * @param[in] dest_id ID of the receiving task instance (probably unused).
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int gattc_write_req_ind_handler(ke_msg_id_t const msgid,
                                       struct gattc_write_req_ind *param,
                                       ke_task_id_t const dest_id,
@@ -550,8 +533,7 @@ static int gattc_write_req_ind_handler(ke_msg_id_t const msgid,
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the read request from peer device
  *
  * @param[in] msgid Id of the message received (probably unused).
@@ -559,8 +541,7 @@ static int gattc_write_req_ind_handler(ke_msg_id_t const msgid,
  * @param[in] dest_id ID of the receiving task instance (probably unused).
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int gattc_read_req_ind_handler(ke_msg_id_t const msgid,
                                       struct gattc_read_req_ind const *param,
                                       ke_task_id_t const dest_id,
@@ -621,8 +602,7 @@ static int gattc_read_req_ind_handler(ke_msg_id_t const msgid,
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles @ref GATTC_CMP_EVT for GATTC_NOTIFY and GATT_INDICATE message meaning
  * that Measurement notification/indication has been correctly sent to peer device
  *
@@ -632,8 +612,7 @@ static int gattc_read_req_ind_handler(ke_msg_id_t const msgid,
  * @param[in] dest_id   ID of the receiving task instance
  * @param[in] src_id    ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int gattc_cmp_evt_handler(ke_msg_id_t const msgid, struct gattc_cmp_evt const *param,
                                  ke_task_id_t const dest_id, ke_task_id_t const src_id)
 {
@@ -702,8 +681,7 @@ static int gattc_cmp_evt_handler(ke_msg_id_t const msgid, struct gattc_cmp_evt c
 
 /*
  * GLOBAL VARIABLE DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /// Default State handlers definition
 const struct ke_msg_handler glps_default_state[] =

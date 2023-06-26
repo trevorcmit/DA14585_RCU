@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file dma.h
  *
@@ -11,8 +10,7 @@
  *
  * <bluetooth.support@diasemi.com> and contributors.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #ifndef DMA_H_
 #define DMA_H_
@@ -192,8 +190,7 @@ typedef enum
     DMA_SENSE_LEVEL_SENSITIVE = 0x0,
     DMA_SENSE_POSITIVE_EDGE_SENSITIVE = (1<<13),
 } dma_sense_t;
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief   DMA channel transfer callback
  *
  * \details This function is called by the DMA driver when the
@@ -204,8 +201,7 @@ typedef enum
  *
  * \return  None 
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 typedef void (*hw_dma_transfer_cb)(void *user_data, uint16_t len);
 
 /**
@@ -240,20 +236,17 @@ typedef struct
 *****************************************************************************************
 */
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief   Initialize DMA Channel
  *
  * \param   [in] channel_setup pointer to struct of type DMA_Setup
  *
  * \return  None
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 void dma_channel_initialization(DMA_setup *channel_setup);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief   Update DMA source address and length
  *
  * \details When DMA is configured for some peripheral, it could be enough to setup only source 
@@ -269,13 +262,11 @@ void dma_channel_initialization(DMA_setup *channel_setup);
  *
  * \return  None
  * 
- ****************************************************************************************
- */
+******************************************************************************************/
 void dma_channel_update_source(dma_channel_t channel, void* addr, uint16_t length,
                                                                         hw_dma_transfer_cb cb);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief   Update DMA destination address and length
  *
  * \details When DMA is configured for some peripheral, it could be enough to setup
@@ -291,13 +282,11 @@ void dma_channel_update_source(dma_channel_t channel, void* addr, uint16_t lengt
  *
  * \return  None
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 void dma_channel_update_destination(dma_channel_t channel, void *addr, uint16_t length,
                                                                         hw_dma_transfer_cb cb);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief   Update DMA interrupt trigger index
  *
  * \details DMA channel can trigger an interrupt after arbitrary transfer has finished.
@@ -310,13 +299,11 @@ void dma_channel_update_destination(dma_channel_t channel, void *addr, uint16_t 
  *
  * \return  None
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 void dma_channel_update_int_ix(dma_channel_t channel, uint16_t int_ix);
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief   Enables or disables a DMA channel
  *
  * \param   [in]  channel_number DMA channel number to start/stop
@@ -324,12 +311,10 @@ void dma_channel_update_int_ix(dma_channel_t channel, uint16_t int_ix);
  *
  * \return  None
  *
- ****************************************************************************************
- */ 
+******************************************************************************************/ 
 void dma_channel_enable(dma_channel_t channel_number, dma_state_t dma_on);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief   Stop DMA channel if operation is in progress
  *
  * \details If no transfer is in progress nothing happens.
@@ -338,12 +323,10 @@ void dma_channel_enable(dma_channel_t channel_number, dma_state_t dma_on);
  *
  * \param   [in] channel_number DMA channel number to stop
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 void dma_channel_stop(dma_channel_t channel_number);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief   Read number of transmitted bytes so far
  *
  * \details Use this function to see how many bytes were transfered
@@ -357,43 +340,37 @@ void dma_channel_stop(dma_channel_t channel_number);
  *          0 - if transfer is already finished,
  *          undefined if called or not started channel
  *
- ****************************************************************************************
- */
+******************************************************************************************/
  uint16_t dma_channel_transfered_bytes(dma_channel_t channel_number);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief   Freezes the DMA 
  *
  * \param   None
  *
  * \return  None
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 static inline void dma_freeze(void)
 {
     SetBits16(SET_FREEZE_REG, FRZ_DMA, 1);
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief   Unfreezes the DMA 
  *
  * \param   None
  *
  * \return  None
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 static inline void dma_unfreeze(void)
 {
     SetBits16(RESET_FREEZE_REG, FRZ_DMA, 1);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief   Checks whether a DMA channel is enabled (active) or not
  *
  * \param   None  
@@ -405,20 +382,17 @@ static inline void dma_unfreeze(void)
  *              <li> true if the DMA channel is enabled
  *              <li> false if the DMA channel is disabled
  *          </ul>
- ****************************************************************************************
- */
+******************************************************************************************/
 bool dma_channel_active(void);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief   DMA initialization minimal
  *
  * \param   channel_setup The setup of the channel
  *
  * \return  None
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 void dma_channel_initialization_minimal(DMA_setup *channel_setup);
 
 #endif /* HW_DMA_H_ */

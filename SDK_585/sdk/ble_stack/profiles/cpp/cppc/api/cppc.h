@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file cppc.h
  *
@@ -9,25 +8,21 @@
  *
  * $ Rev $
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #ifndef _CPPC_H_
 #define _CPPC_H_
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @addtogroup CPPC Cycling Power Profile Collector
  * @ingroup CPP
  * @brief Cycling Power Profile Collector
  * @{
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /*
  * INCLUDE FILES
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #include "cpp_common.h"
 
@@ -40,8 +35,7 @@
 
 /*
  * ENUMERATIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /// Internal codes for reading/writing a CPS characteristic with one single request
 enum cppc_code
@@ -70,8 +64,7 @@ enum cppc_code
 
 /*
  * STRUCTURES
- ****************************************************************************************
- */
+******************************************************************************************/
 
 struct cppc_cnx_env
 {
@@ -107,121 +100,99 @@ struct cppc_cmd
 
 /*
  * GLOBAL VARIABLE DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /// Pool of Cycling Power Profile Collector task environments.
 extern struct cppc_env_tag **cppc_envs;
 
 /*
  * GLOBAL FUNCTION DECLARATIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Retrieve CPP client profile interface
  * @return CPP client profile interface
- ****************************************************************************************
- */
+******************************************************************************************/
 const struct prf_task_cbs* cppc_prf_itf_get(void);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Send Cycling Power ATT DB discovery results to CPPC host.
  * @param[in] cppc_env environment variable
  * @param[in] conidx Connection index
  * @param[in] status Satus
- ****************************************************************************************
- */
+******************************************************************************************/
 void cppc_enable_rsp_send(struct cppc_env_tag *cppc_env, uint8_t conidx, uint8_t status);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Send a CPPC_CMP_EVT message when no connection exists (no environment)
  * @param[in] src_id Source task
  * @param[in] dest_id Destination task
  * @param[in] operation Operation
- ****************************************************************************************
- */
+******************************************************************************************/
 void cppc_send_no_conn_cmp_evt(uint8_t src_id, uint8_t dest_id, uint8_t operation);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Send a CPPC_CMP_EVT message to the task which enabled the profile
  * @param[in] cppc_env environment variable
  * @param[in] conidx Connection index
  * @param[in] operation Operation
  * @param[in] status Satus
- ****************************************************************************************
- */
+******************************************************************************************/
 void cppc_send_cmp_evt(struct cppc_env_tag *cppc_env, uint8_t conidx, uint8_t operation, uint8_t status);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Gets correct read handle according to the request
  * @param[in] cppc_env environment variable
  * @param[in] conidx Connection index
  * @param[in] param Pointer to the parameters of the message.
  * @return handle
- ****************************************************************************************
- */
+******************************************************************************************/
 uint16_t cppc_get_read_handle_req (struct cppc_env_tag *cppc_env, uint8_t conidx, struct cpps_read_cmd *param);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Gets correct write handle according to the request
  * @param[in] conidx Connection index
  * @param[in] param Pointer to the parameters of the message.
  * @param[in] cppc_env environment variable
  * @param[out] handle handle
  * @return status of the operation
- ****************************************************************************************
- */
+******************************************************************************************/
 uint8_t cppc_get_write_desc_handle_req (uint8_t conidx, struct cppc_cfg_ntfind_cmd *param, struct cppc_env_tag *cppc_env, uint16_t *handle);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Unpacks measurement data and sends the indication
  * @param[in] conidx Connection index
  * @param[in] param Pointer to the parameters of the message.
  * @param[in] cppc_env environment variable
  * @return length
- ****************************************************************************************
- */
+******************************************************************************************/
 uint8_t cppc_unpack_meas_ind (uint8_t conidx, struct gattc_event_ind const *param, struct cppc_env_tag *cppc_env);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Unpacks Vector data and sends the indication
  * @param[in] conidx Connection index
  * @param[in] param Pointer to the parameters of the message.
  * @param[in] cppc_env environment variable
  * @return length
- ****************************************************************************************
- */
+******************************************************************************************/
 uint8_t cppc_unpack_vector_ind (uint8_t conidx, struct gattc_event_ind const *param, struct cppc_env_tag *cppc_env);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Packs Control Point data
  * @param[in] param Pointer to the parameters of the message.
  * @param[out] req packed message
  * @param[out] status status of the operation
  * @return length
- ****************************************************************************************
- */
+******************************************************************************************/
 uint8_t cppc_pack_ctnl_pt_req (struct cppc_ctnl_pt_cfg_req *param, uint8_t *req, uint8_t *status);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Unpacks Control Point data and sends the indication
  * @param[in] conidx Connection index
  * @param[in] param Pointer to the parameters of the message.
  * @param[in] cppc_env environment variable
  * @return length
- ****************************************************************************************
- */
+******************************************************************************************/
 uint8_t cppc_unpack_ctln_pt_ind (uint8_t conidx, struct gattc_event_ind const *param,struct cppc_env_tag *cppc_env);
 
 

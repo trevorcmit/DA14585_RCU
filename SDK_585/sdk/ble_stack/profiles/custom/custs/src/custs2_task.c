@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file custs2_task.c
  *
@@ -11,8 +10,7 @@
  *
  * <bluetooth.support@diasemi.com> and contributors.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #include "rwble_config.h"              // SW configuration
 
@@ -36,18 +34,15 @@
 
 /*
  * FUNCTION DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Stores characteristic value.
  * @param[in] att_idx  Custom attribut index.
  * @param[in] length   Value length.
  * @param[in] data     Pointer to value data.
  * @return 0 on success.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int custs2_att_set_value(uint8_t att_idx, uint16_t length, const uint8_t *data)
 {
     struct custs2_env_tag *custs2_env = PRF_ENV_GET(CUSTS2, custs2);
@@ -86,16 +81,14 @@ static int custs2_att_set_value(uint8_t att_idx, uint16_t length, const uint8_t 
     return 0;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Read characteristic value from.
  * Function checks if attribute exists, and if so return its length and pointer to data.
  * @param[in]  att_idx  Custom attribute index.
  * @param[out] length   Pointer to variable that receive length of the attribute.
  * @param[out] data     Pointer to variable that receive pointer characteristic value.
  * @return 0 on success, ATT_ERR_ATTRIBUTE_NOT_FOUND if there is no value for such attribyte.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int custs2_att_get_value(uint8_t att_idx, uint16_t *length, const uint8_t **data)
 {
     struct custs2_env_tag *custs2_env = PRF_ENV_GET(CUSTS2, custs2);
@@ -126,13 +119,11 @@ static int custs2_att_get_value(uint8_t att_idx, uint16_t *length, const uint8_t
     return val ? 0 : ATT_ERR_ATTRIBUTE_NOT_FOUND;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Sets initial values for all Clinet Characteristic Configurations.
  * @param[in]  att_db     Custom service attribute definition table.
  * @param[in]  max_nb_att Number of elements in att_db.
- ****************************************************************************************
- */
+******************************************************************************************/
 void custs2_init_ccc_values(const struct attm_desc_128 *att_db, int max_nb_att)
 {
     // Default values 0 means no notification
@@ -152,14 +143,12 @@ void custs2_init_ccc_values(const struct attm_desc_128 *att_db, int max_nb_att)
     }
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Set value of CCC for given attribute and connection index.
  * @param[in] conidx   Connection index.
  * @param[in] att_idx  CCC attribute index.
  * @param[in] cc       Value to store.
- ****************************************************************************************
- */
+******************************************************************************************/
 void custs2_set_ccc_value(uint8_t conidx, uint8_t att_idx, uint16_t ccc)
 {
     uint16_t length;
@@ -176,14 +165,12 @@ void custs2_set_ccc_value(uint8_t conidx, uint8_t att_idx, uint16_t ccc)
     custs2_att_set_value(att_idx, length, new_value);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Read value of CCC for given attribute and connection index.
  * @param[in]  conidx   Connection index.
  * @param[in]  att_idx  Custom attribute index.
  * @return Value of CCC.
- ****************************************************************************************
- */
+******************************************************************************************/
 static uint16_t custs2_get_ccc_value(uint8_t conidx, uint8_t att_idx)
 {
     uint16_t length;
@@ -270,8 +257,7 @@ static void custs2_exe_operation(void)
     }
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the @ref GATTC_CMP_EVT message.
  * @details The GATTC_CMP_EVT message that signals the completion of a GATTC_NOTIFY
  *          operation is sent back as soon as the notification PDU has been sent over
@@ -285,8 +271,7 @@ static void custs2_exe_operation(void)
  * @param[in] dest_id   ID of the receiving task instance
  * @param[in] src_id    ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int gattc_cmp_evt_handler(ke_msg_id_t const msgid,
                                  struct gattc_cmp_evt const *param,
                                  ke_task_id_t const dest_id,
@@ -302,16 +287,14 @@ static int gattc_cmp_evt_handler(ke_msg_id_t const msgid,
     return (KE_MSG_CONSUMED);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the @ref CUSTS2_VAL_SET_REQ message.
  * @param[in] msgid Id of the message received (probably unused).
  * @param[in] param Pointer to the parameters of the message.
  * @param[in] dest_id ID of the receiving task instance (probably unused).
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int custs2_val_set_req_handler(ke_msg_id_t const msgid,
                                       struct custs2_val_set_req const *param,
                                       ke_task_id_t const dest_id,
@@ -324,16 +307,14 @@ static int custs2_val_set_req_handler(ke_msg_id_t const msgid,
     return (KE_MSG_CONSUMED);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the @ref CUSTS2_VAL_NTF_REQ message.
  * @param[in] msgid Id of the message received (probably unused).
  * @param[in] param Pointer to the parameters of the message.
  * @param[in] dest_id ID of the receiving task instance (probably unused).
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int custs2_val_ntf_req_handler(ke_msg_id_t const msgid,
                                       struct custs2_val_ntf_ind_req const *param,
                                       ke_task_id_t const dest_id,
@@ -377,16 +358,14 @@ static int custs2_val_ntf_req_handler(ke_msg_id_t const msgid,
     return KE_MSG_NO_FREE;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the @ref CUSTS2_VAL_IND_REQ message.
  * @param[in] msgid Id of the message received (probably unused).
  * @param[in] param Pointer to the parameters of the message.
  * @param[in] dest_id ID of the receiving task instance (probably unused).
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int custs2_val_ind_req_handler(ke_msg_id_t const msgid,
                                       struct custs2_val_ind_req const *param,
                                       ke_task_id_t const dest_id,
@@ -446,16 +425,14 @@ static int custs2_val_ind_req_handler(ke_msg_id_t const msgid,
     return (KE_MSG_CONSUMED);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the @ref GATTC_READ_REQ_IND message.
  * @param[in] msgid Id of the message received (probably unused).
  * @param[in] param Pointer to the parameters of the message.
  * @param[in] dest_id ID of the receiving task instance (probably unused).
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int gattc_read_req_ind_handler(ke_msg_id_t const msgid, struct gattc_read_req_ind const *param,
                                       ke_task_id_t const dest_id, ke_task_id_t const src_id)
 {
@@ -501,16 +478,14 @@ static int gattc_read_req_ind_handler(ke_msg_id_t const msgid, struct gattc_read
     return (KE_MSG_CONSUMED);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the @ref GATTC_WRITE_REQ_IND message.
  * @param[in] msgid Id of the message received (probably unused).
  * @param[in] param Pointer to the parameters of the message.
  * @param[in] dest_id ID of the receiving task instance (probably unused).
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int gattc_write_req_ind_handler(ke_msg_id_t const msgid, const struct gattc_write_req_ind *param,
                                       ke_task_id_t const dest_id, ke_task_id_t const src_id)
 {
@@ -585,8 +560,7 @@ static int gattc_write_req_ind_handler(ke_msg_id_t const msgid, const struct gat
 
 /*
  * GLOBAL VARIABLE DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /// Default State handlers definition
 const struct ke_msg_handler custs2_default_state[] =

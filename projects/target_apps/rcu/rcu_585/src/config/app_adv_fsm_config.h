@@ -22,13 +22,11 @@
 // Define the device name used in the advertisement data during advertising             
 #define APP_DFLT_DEVICE_NAME    USER_DEVICE_NAME
                                                     
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * If defined the APP_DFLT_DEVICE_NAME will be automatically appended in advertising 
  * data. If it does not fit, a partial name will be appended in advertising data. The 
  * full name will be appended in scan response data.
- ****************************************************************************************
- */
+******************************************************************************************/
 #define AUTO_APPEND_DEVICE_NAME_IN_ADV_DATA
 
 // Advertising data
@@ -122,12 +120,10 @@ static const adv_configuration_t adv_fsm_config = {
 };
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * Basic advertising platform functions
  * Define here which function will be used by the Advertising FSM
- ****************************************************************************************
- */
+******************************************************************************************/
 static const adv_util_funcs_t app_adv_fsm_funcs= {
     .adv_start_dir_adv = port_adv_fsm_start_adv_directed,
     .adv_start_und_adv = port_adv_fsm_start_adv_undirected,

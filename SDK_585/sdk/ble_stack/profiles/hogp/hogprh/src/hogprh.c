@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file hogprh.c
  *
@@ -8,21 +7,17 @@
  * Copyright (C) RivieraWaves 2009-2015
  *
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @addtogroup HOGPRH
  * @{
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /*
  * INCLUDE FILES
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #include "rwip_config.h"
 
@@ -34,8 +29,7 @@
 #include "gap.h"
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Initialization of the HOGPRH module.
  * This function performs all the initializations of the Profile module.
  *  - Creation of datahide (if it's a service)
@@ -52,8 +46,7 @@
  * @param[in]     param      Configuration parameters of profile collector or service (32 bits aligned)
  *
  * @return status code to know if profile initialization succeed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static uint8_t hogprh_init(struct prf_task_env* env, uint16_t* start_hdl, uint16_t app_task, uint8_t sec_lvl,  void* params)
 {
     uint8_t idx;
@@ -86,15 +79,13 @@ static uint8_t hogprh_init(struct prf_task_env* env, uint16_t* start_hdl, uint16
     return GAP_ERR_NO_ERROR;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Destruction of the HOGPRH module - due to a reset for instance.
  * This function clean-up allocated memory (attribute datahide is destroyed by another
  * procedure)
  *
  * @param[in|out]    env        Collector or Service allocated environment data.
- ****************************************************************************************
- */
+******************************************************************************************/
 static void hogprh_destroy(struct prf_task_env* env)
 {
     uint8_t idx;
@@ -118,29 +109,25 @@ static void hogprh_destroy(struct prf_task_env* env)
     ke_free(hogprh_env);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles Connection creation
  *
  * @param[in|out]    env        Collector or Service allocated environment data.
  * @param[in]        conidx     Connection index
- ****************************************************************************************
- */
+******************************************************************************************/
 static void hogprh_create(struct prf_task_env* env, uint8_t conidx)
 {
     /* Put HID Client in Idle state */
     ke_state_set(KE_BUILD_ID(env->task, conidx), HOGPRH_IDLE);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles Disconnection
  *
  * @param[in|out]    env        Collector or Service allocated environment data.
  * @param[in]        conidx     Connection index
  * @param[in]        reason     Detach reason
- ****************************************************************************************
- */
+******************************************************************************************/
 static void hogprh_cleanup(struct prf_task_env* env, uint8_t conidx, uint8_t reason)
 {
     struct hogprh_env_tag* hogprh_env = (struct hogprh_env_tag*) env->env;
@@ -162,8 +149,7 @@ static void hogprh_cleanup(struct prf_task_env* env, uint8_t conidx, uint8_t rea
 
 /*
  * GLOBAL VARIABLE DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /// HOGPRH Task interface required by profile manager
 const struct prf_task_cbs hogprh_itf =
@@ -177,8 +163,7 @@ const struct prf_task_cbs hogprh_itf =
 
 /*
  * GLOBAL FUNCTIONS DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 const struct prf_task_cbs* hogprh_prf_itf_get(void)
 {

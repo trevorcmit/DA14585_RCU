@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file bass.c
  *
@@ -8,20 +7,16 @@
  * Copyright (C) RivieraWaves 2009-2015
  *
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @addtogroup BASS
  * @{
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /*
  * INCLUDE FILES
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #include "rwip_config.h"
 
@@ -34,8 +29,7 @@
 
 /*
  * BAS ATTRIBUTES DEFINITION
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /// Full BAS Database Description - Used to add attributes into the database
 const struct attm_desc bas_att_db[BAS_IDX_NB] =
@@ -56,11 +50,9 @@ const struct attm_desc bas_att_db[BAS_IDX_NB] =
 
 /*
  * LOCAL FUNCTION DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Initialization of the BASS module.
  * This function performs all the initializations of the Profile module.
  *  - Creation of database (if it's a service)
@@ -77,8 +69,7 @@ const struct attm_desc bas_att_db[BAS_IDX_NB] =
  * @param[in]     param      Configuration parameters of profile collector or service (32 bits aligned)
  *
  * @return status code to know if profile initialization succeed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static uint8_t bass_init (struct prf_task_env* env, uint16_t* start_hdl, uint16_t app_task, uint8_t sec_lvl,  struct bass_db_cfg* params)
 {
     uint16_t shdl[BASS_NB_BAS_INSTANCES_MAX];
@@ -181,15 +172,13 @@ static uint8_t bass_init (struct prf_task_env* env, uint16_t* start_hdl, uint16_
 
     return status;
 }
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Destruction of the BASS module - due to a reset for instance.
  * This function clean-up allocated memory (attribute database is destroyed by another
  * procedure)
  *
  * @param[in|out]    env        Collector or Service allocated environment data.
- ****************************************************************************************
- */
+******************************************************************************************/
 static void bass_destroy(struct prf_task_env* env)
 {
     struct bass_env_tag* bass_env = (struct bass_env_tag*) env->env;
@@ -205,14 +194,12 @@ static void bass_destroy(struct prf_task_env* env)
     ke_free(bass_env);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles Connection creation
  *
  * @param[in|out]    env        Collector or Service allocated environment data.
  * @param[in]        conidx     Connection index
- ****************************************************************************************
- */
+******************************************************************************************/
 static void bass_create(struct prf_task_env* env, uint8_t conidx)
 {
     struct bass_env_tag* bass_env = (struct bass_env_tag*) env->env;
@@ -222,15 +209,13 @@ static void bass_create(struct prf_task_env* env, uint8_t conidx)
     bass_env->ntf_cfg[conidx] = 0;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles Disconnection
  *
  * @param[in|out]    env        Collector or Service allocated environment data.
  * @param[in]        conidx     Connection index
  * @param[in]        reason     Detach reason
- ****************************************************************************************
- */
+******************************************************************************************/
 static void bass_cleanup(struct prf_task_env* env, uint8_t conidx, uint8_t reason)
 {
     struct bass_env_tag* bass_env = (struct bass_env_tag*) env->env;
@@ -241,15 +226,13 @@ static void bass_cleanup(struct prf_task_env* env, uint8_t conidx, uint8_t reaso
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief  Trigger battery level notification
  *
  * @param bass_env profile environment
  * @param conidx   peer destination connection index
  * @param svc_idx  Service index
- ****************************************************************************************
- */
+******************************************************************************************/
 static void bass_notify_batt_lvl(struct bass_env_tag* bass_env, uint8_t conidx, uint8_t svc_idx)
 {
     // Allocate the GATT notification message
@@ -270,8 +253,7 @@ static void bass_notify_batt_lvl(struct bass_env_tag* bass_env, uint8_t conidx, 
 
 /*
  * GLOBAL VARIABLE DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /// BASS Task interface required by profile manager
 const struct prf_task_cbs bass_itf =
@@ -285,8 +267,7 @@ const struct prf_task_cbs bass_itf =
 
 /*
  * GLOBAL FUNCTIONS DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 const struct prf_task_cbs* bass_prf_itf_get(void)
 {

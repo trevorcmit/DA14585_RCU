@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * \file app_kbd.c
  *
@@ -11,11 +10,9 @@
  *
  * <bluetooth.support@diasemi.com>
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
- /**
- ****************************************************************************************
+ /*****************************************************************************************
  * \addtogroup APP_UTILS
  * \{
  * \addtogroup KEYBOARD
@@ -24,8 +21,7 @@
  * \brief Keyboard (HID) Application
  *
  * \{
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #ifdef HAS_KBD
 
@@ -94,13 +90,11 @@ uint8_t kbd_fn_modifier                                               __PORT_RET
         uint8_t multi_key_pressed[sizeof(multi_key_combinations)/sizeof(struct multi_key_combinations_t)] __PORT_RETAINED;
 #endif
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief
  *
  * \param[in] notification
- ****************************************************************************************
- */
+******************************************************************************************/
 static inline void app_kbd_send_notification(enum kbd_notification notification)
 {
     if (kbd_params.notify_callback) {
@@ -108,15 +102,13 @@ static inline void app_kbd_send_notification(enum kbd_notification notification)
     }
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief
  *
  * \param[in] row
  * \param[in] column
  * \param[in] pressed
- ****************************************************************************************
- */
+******************************************************************************************/
 static inline void app_kbd_send_key_detection(uint16_t row, uint16_t column, bool pressed)
 {
     if (kbd_params.key_detect_callback) {
@@ -124,11 +116,9 @@ static inline void app_kbd_send_key_detection(uint16_t row, uint16_t column, boo
     }
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief Handles the initialization of all retained variables used for key scanning
- ****************************************************************************************
- */
+******************************************************************************************/
 static void kbd_init_retained_vars(void)
 {
         kbd_keycode_buffer_head = 0;
@@ -153,8 +143,7 @@ void app_kbd_stop(void)
     }    
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief Processes multi-key combinations.
  *
  * \param[in] output
@@ -162,8 +151,7 @@ void app_kbd_stop(void)
  * \param[in] pressed
  *
  * \return true if combination has been found
- ****************************************************************************************
- */
+******************************************************************************************/
 static bool process_multi_key_combinations(const uint16_t output, const uint16_t input, const bool pressed)
 {
         bool found = false;
@@ -436,15 +424,13 @@ bool app_kbd_buffer_has_data(void)
 }
 
 #ifdef ASCII_DEBUG
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief
  *
  * \param[in] hut
  *
  * \return
- ****************************************************************************************
- */
+******************************************************************************************/
 static inline uint8_t kbd_hut_to_ascii(const uint8_t hut)
 {
 	// roughly
@@ -452,16 +438,14 @@ static inline uint8_t kbd_hut_to_ascii(const uint8_t hut)
 }
 #endif
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief Process a keycode that has been placed into the keycode_buffer 
  *
  * \param[in] keycode_idx The keycode index
  *
  * \return    16 LSBs contain the keycode. 16 MSBs contain the follwing flags:
  *            KBD_KEY_FULL_RELEASE, KBD_CUNSUME_KEY, KBD_KEY_PRESSED_FLAG 
- ****************************************************************************************
- */
+******************************************************************************************/
 static uint32_t kbd_process_keycode(struct keycode_buffer_tag *keycode_idx)
 {
         uint32_t ret = KBD_CUNSUME_KEY;
@@ -525,15 +509,13 @@ static uint32_t kbd_process_keycode(struct keycode_buffer_tag *keycode_idx)
         return ret;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief Processes the keycodes that have been written in the keycode_buffer
  *        and prepares the necessary HID reports. 
  *
  * \return    16 LSBs contain the keycode. 16 MSBs contain the follwing flags:
  *            KBD_KEY_FULL_RELEASE, KBD_CUNSUME_KEY, KBD_KEY_PRESSED_FLAG 
- ****************************************************************************************
- */
+******************************************************************************************/
 static uint32_t get_kbd_keycode(void)
 {
         while(app_kbd_buffer_has_data() == true) {

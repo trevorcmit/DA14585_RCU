@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file systick.c
  *
@@ -11,8 +10,7 @@
  *
  * <bluetooth.support@diasemi.com> and contributors.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #include <stdio.h>
 #include "systick.h"
@@ -20,15 +18,13 @@
 
 systick_callback_function_t callback_function = NULL;
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Register Callback function for SysTick exception.
  *
  * @param[in] callback  Callback function's reference.
  *
  * @return void
- ****************************************************************************************
- */
+******************************************************************************************/
 void systick_register_callback(systick_callback_function_t callback)
 {
     callback_function = callback;
@@ -40,8 +36,7 @@ void SysTick_Handler(void)
         callback_function();
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Function to start the SysTick timer
  *
  * @param[in] usec      the duration of the countdown
@@ -49,8 +44,7 @@ void SysTick_Handler(void)
  *                      to 0, FALSE not to
  *
  * @return void
- ****************************************************************************************
- */
+******************************************************************************************/
 void systick_start(uint32_t usec, uint8_t exception)
 {
     SetBits32(&SysTick->CTRL, SysTick_CTRL_ENABLE_Msk, 0);          // disable systick
@@ -61,30 +55,26 @@ void systick_start(uint32_t usec, uint8_t exception)
     SetBits32(&SysTick->CTRL, SysTick_CTRL_ENABLE_Msk, 1);          // enable systick
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Function to stop the SysTick timer
  *
  * @param[in] void
  *
  * @return void
- ****************************************************************************************
- */
+******************************************************************************************/
 void systick_stop(void)
 {
     SetBits32(&SysTick->VAL,  SysTick_VAL_CURRENT_Msk, 0);            // clear the Current Value Register and the COUNTFLAG to 0
     SetBits32(&SysTick->CTRL, SysTick_CTRL_ENABLE_Msk, 0);            // disable systick
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Function to create a delay
  *
  * @param[in] usec the duration of the delay
  *
  * @return void
- ****************************************************************************************
- */
+******************************************************************************************/
 void systick_wait(uint32_t usec)
 {
     systick_start(usec, false);
@@ -96,15 +86,13 @@ void systick_wait(uint32_t usec)
     systick_stop();
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Function to read the current value of the timer
  *
  * @param[in] void
  *
  * @return the current value of the timer
- ****************************************************************************************
- */
+******************************************************************************************/
 uint32_t systick_value(void)
 {
     return GetBits32(&SysTick->VAL, SysTick_VAL_CURRENT_Msk);

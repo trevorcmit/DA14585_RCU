@@ -1,5 +1,4 @@
-/**
- *****************************************************************************************
+/******************************************************************************************
  *
  * @file app_bond_db.c
  *
@@ -14,17 +13,14 @@
  *****************************************************************************************
  */
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @addtogroup APP_BOND_DB
  * @{
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /*
  * INCLUDE FILES
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #include "rwip_config.h"             // SW configuration
 #include "rwip.h"
@@ -41,15 +37,13 @@
 
 /*
  * DEFINES
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #define BOND_DB_SLOT_NOT_FOUND          (-1)
 
 /*
  * TYPE DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 struct bond_db
 {
@@ -61,15 +55,13 @@ struct bond_db
 
 /*
  * GLOBAL VARIABLE DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 static struct bond_db bdb __attribute__((section("retention_mem_area0"), zero_init)); //@RETENTION MEMORY
 
 /*
  * FUCTION DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #if defined (USER_CFG_APP_BOND_DB_USE_SPI_FLASH)
 
@@ -98,14 +90,12 @@ static void bond_db_load_flash(void)
     spi_release();
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Erase Flash sectors where bond database is stored
  * @param[in] scheduler_en  True: Enable rwip_scheduler while Flash is being erased
  *                          False: Do not enable rwip_scheduler. Blocking mode
  * @return ret              Error code or success (ERR_OK)
- ****************************************************************************************
- */
+******************************************************************************************/
 static int8_t bond_db_erase_flash_sectors(bool scheduler_en)
 {
     uint32_t sector_nb;
@@ -164,14 +154,12 @@ static int8_t bond_db_erase_flash_sectors(bool scheduler_en)
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Store Bond Database to Flash memory
  * @param[in] scheduler_en  True: Enable rwip_scheduler while Flash is being erased
  *                          False: Do not enable rwip_scheduler. Blocking mode
  * @return none
- ****************************************************************************************
- */
+******************************************************************************************/
 static void bond_db_store_flash(bool scheduler_en)
 {
     int8_t ret;
@@ -218,12 +206,10 @@ static void bond_db_store_eeprom(void)
 
 #endif
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Load Bond Database from external memory
  * @return none
- ****************************************************************************************
- */
+******************************************************************************************/
 static inline void bond_db_load_ext(void)
 {
     #if defined (USER_CFG_APP_BOND_DB_USE_SPI_FLASH)
@@ -233,15 +219,13 @@ static inline void bond_db_load_ext(void)
     #endif
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Store Bond Database to external memory
  * @param[in] scheduler_en  Only used if external memory is Flash
                             True: Enable rwip_scheduler while Flash is being erased
  *                          False: Do not enable rwip_scheduler. Blocking mode
  * @return none
- ****************************************************************************************
- */
+******************************************************************************************/
 static inline void bond_db_store_ext(bool scheduler_en)
 {
     #if defined (USER_CFG_APP_BOND_DB_USE_SPI_FLASH)
@@ -251,14 +235,12 @@ static inline void bond_db_store_ext(bool scheduler_en)
     #endif
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Store Bond data entry to external memory
  * @param[in] *data  Data to be stored
  * @param[in] *idx   Entry in the database
  * @return none
- ****************************************************************************************
- */
+******************************************************************************************/
 static void bond_db_store_at_idx(struct bond_db_data *data, int idx)
 {
     // Update the cache
@@ -281,8 +263,7 @@ void bond_db_init(void)
     }
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Updates the least recently used ID of each slot, using the following criteria
  *        * Least recently used: LRU ID = APP_BOND_DB_MAX_BONDED_PEERS-1
  *        * Most recently used: LRU ID = 0
@@ -293,8 +274,7 @@ void bond_db_init(void)
  * @param[in] slot_to_write          Slot to write
  * @param[in] slot_to_replace_found  True if slot_to_write is not the oldest written slot
  * @return void
- ****************************************************************************************
- */
+******************************************************************************************/
 static void bond_db_update_lru(int slot_to_write, bool slot_to_replace_found)
 {
     uint8_t idx = 0;

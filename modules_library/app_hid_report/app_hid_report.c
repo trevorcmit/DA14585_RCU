@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * \file app_hid_report.c
  *
@@ -11,19 +10,16 @@
  *
  * <bluetooth.support@diasemi.com>
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \addtogroup APP_UTILS
  * \{
  * \addtogroup HID
  * \{
  * \addtogroup APP_HID
  * \{
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #include "port_platform.h"
 #include "app_hid_report.h"
@@ -77,15 +73,13 @@ uint8_t extended_key_report_st[HID_REPORT_EXTENDED_REPORT_SIZE]      __PORT_RETA
 struct roll_over_tag roll_over_info                                  __PORT_RETAINED;   // holds all the keys being pressed during a RollOver (Phantom state) state
 const uint8_t empty_report[HID_REPORT_NORMAL_REPORT_SIZE] = {0,0,0,0,0,0,0,0};
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief Pulls one member from the beginning of the list
  *
  * \param[in] list The list to use
  *
  * \return the member at the beginning of the list, if found, else NULL
- ****************************************************************************************
- */
+******************************************************************************************/
 static hid_rep_node_t *app_hid_report_pull_from_list(hid_rep_node_t **list)
 {
         hid_rep_node_t *node;
@@ -101,8 +95,7 @@ static hid_rep_node_t *app_hid_report_pull_from_list(hid_rep_node_t **list)
         return node;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief Push one member to the beginning of the list
  *
  * \param[in] list The list to use
@@ -110,8 +103,7 @@ static hid_rep_node_t *app_hid_report_pull_from_list(hid_rep_node_t **list)
  *
  * \return   APP_HID_ERR_OK if the member is successfully pushed or 
  *           else APP_HID_ERR_ERROR
- ****************************************************************************************
- */
+******************************************************************************************/
 static int app_hid_report_return_to_list(hid_rep_node_t **list, hid_rep_node_t *node)
 {
         if (!node) {
@@ -124,16 +116,14 @@ static int app_hid_report_return_to_list(hid_rep_node_t **list, hid_rep_node_t *
         return APP_HID_ERR_OK;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief Pushes one member at the end of the list
  *
  * \param[in]   list    The list to use
  * \param[in]   node    Member to add to the list
  *
  * \return   APP_HID_ERR_OK if the member is successfully pushed or else APP_HID_ERR_ERROR
- ****************************************************************************************
- */
+******************************************************************************************/
 static int app_hid_report_push_to_list(hid_rep_node_t **list, hid_rep_node_t *node)
 {
         hid_rep_node_t *p;
@@ -156,16 +146,14 @@ static int app_hid_report_push_to_list(hid_rep_node_t **list, hid_rep_node_t *no
         return APP_HID_ERR_OK;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief Finds the last instance of a specific type in a list
  *
  * \param[in]   list    The list to use
  * \param[in]   type    The type of the instance to search for (FREE, PRESS, RELEASE, EXTENDED, CUSTOM)
  *
  * \return  the last instance of a specific type in a list, if found, else NULL
- ****************************************************************************************
- */
+******************************************************************************************/
 hid_rep_node_t *app_hid_report_search_in_list(hid_rep_node_t *list, enum KEY_BUFF_TYPE type)
 {
         hid_rep_node_t *node;
@@ -180,14 +168,12 @@ hid_rep_node_t *app_hid_report_search_in_list(hid_rep_node_t *list, enum KEY_BUF
         return last_found;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief Sends a boot report
  *
  * \return  false, if sending the HID boot report failed
  *          true, if the HID boot report was successfully sent
- ****************************************************************************************
- */
+******************************************************************************************/
 static bool app_hid_report_send_boot_report(void)
 {
         hid_rep_node_t *p;
@@ -226,14 +212,12 @@ static bool app_hid_report_send_boot_report(void)
         return false;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief Sends an hid report
  *
  * \return  false, if sending the HID report failed
  *          true, if the HID report was successfully sent
- ****************************************************************************************
- */
+******************************************************************************************/
 static bool app_hid_report_send_hid_report(void)
 {
         hid_rep_node_t *p;
@@ -282,15 +266,13 @@ static bool app_hid_report_send_hid_report(void)
         return false;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief Sends the first key report in the trm list, if any, to HOGPD.
  *        A notification will be sent to the Host, if notifications are enabled. 
  *
  * \return  false, if sending the key report failed
  *          true, if the key report was successfully sent
- ****************************************************************************************
- */
+******************************************************************************************/
 static bool send_hid_report(void)
 {
 #if (BLE_HID_DEVICE)    
@@ -307,11 +289,9 @@ static bool send_hid_report(void)
         }
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief Clears rollover data 
- ****************************************************************************************
- */
+******************************************************************************************/
 static void clear_rollover_data(void) 
 {
         for (int i = 0; i < HID_REPORT_ROLL_OVER_BUF_SIZE; i++)
@@ -376,15 +356,13 @@ enum hid_report_status app_hid_report_send_report(void)
         return HID_REPORTS_AVAILABLE;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief Get the last report pending of the specified type.
  *
  * \param   report_id The HID report id to search for
  *
  * \return  A pointer to the report data if found, else NULL.
- ****************************************************************************************
- */
+******************************************************************************************/
 static uint8_t * app_hid_report_get_last_report_data(uint8_t report_id)
 {
         hid_rep_node_t *p_report, *p_tmp;
@@ -483,15 +461,13 @@ uint8_t * app_hid_report_add_report(uint8_t report_id, enum KEY_BUFF_TYPE type, 
         return NULL;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief Adds a NORMAL key report of the in the trm list. 
  *
  * \param[in]   type        The type of the report to add (PRESS, RELEASE)       
  *
  * \return  A pointer to the newly allocated report
- ****************************************************************************************
- */
+******************************************************************************************/
 static uint8_t* add_normal_report(enum KEY_BUFF_TYPE type)
 {
         uint8_t *pReportData, *_pReportData;
@@ -504,15 +480,13 @@ static uint8_t* add_normal_report(enum KEY_BUFF_TYPE type)
         return pReportData;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief Brings all used entries at the beginning of the report
  *
  * \param[in]   buf     The buffer       
  * \param[in]   start   the entry index at which to start sorting       
  * \param[in]   len     the count of the entries to sort     
- ****************************************************************************************
- */
+******************************************************************************************/
 static void sort_report_data(uint8_t *buf, int start, int len)
 {
         // bring all used entries at the beginning of the report
@@ -530,15 +504,13 @@ static void sort_report_data(uint8_t *buf, int start, int len)
         }
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief Sorts the rollover data
  *
  * \param[in]   buf     The buffer       
  * \param[in]   start
  * \param[in]   len     the count of the entries to sort     
- ****************************************************************************************
- */
+******************************************************************************************/
 static void sort_rollover_data(uint16_t *buf, int start, int len)
 {
         // bring all used entries at the beginning of the report

@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file user_commands.c
  *
@@ -11,13 +10,11 @@
  *
  * <bluetooth.support@diasemi.com> and contributors.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
  
  /*
  * INCLUDE FILES
- ****************************************************************************************
- */
+******************************************************************************************/
  
 #include "user_commands.h"
 #include "hci_int.h"
@@ -33,8 +30,7 @@ const struct hci_cmd_desc_tag hci_cmd_desc_tab_user_vs[] =
 
 const uint8_t  user_commands_num = ARRAY_LEN (hci_cmd_desc_tab_user_vs);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles the reception of the vs1 user hci command.
  *
  * @param[in] msgid Id of the message received (probably unused).
@@ -43,8 +39,7 @@ const uint8_t  user_commands_num = ARRAY_LEN (hci_cmd_desc_tab_user_vs);
  * @param[in] src_id ID of the sending task instance.
  *
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int user_commands_vs1_handler(ke_msg_id_t const msgid, 
                                          struct hci_vs1_user_cmd const *param,
                                          ke_task_id_t const dest_id, 
@@ -65,8 +60,7 @@ static int user_commands_vs1_handler(ke_msg_id_t const msgid,
     return (KE_MSG_CONSUMED);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles the reception of the vs1 user hci command.
  *
  * @param[in] msgid Id of the message received (probably unused).
@@ -75,8 +69,7 @@ static int user_commands_vs1_handler(ke_msg_id_t const msgid,
  * @param[in] src_id ID of the sending task instance.
  *
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int user_commands_vs2_handler(ke_msg_id_t const msgid, 
                                    struct hci_vs2_user_cmd const *param,
                                    ke_task_id_t const dest_id, 

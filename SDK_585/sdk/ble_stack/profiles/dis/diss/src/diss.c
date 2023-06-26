@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file diss.c
  *
@@ -8,20 +7,16 @@
  * Copyright (C) RivieraWaves 2009-2015
  *
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @addtogroup DISS
  * @{
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /*
  * INCLUDE FILES
- ****************************************************************************************
- */
+******************************************************************************************/
 #include "rwip_config.h"
 
 #if (BLE_DIS_SERVER)
@@ -33,8 +28,7 @@
 
 /*
  * MACROS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /// Maximal length for Characteristic values - 128 bytes
 #define DIS_VAL_MAX_LEN                         (128)
@@ -48,8 +42,7 @@
 
 /*
  * DIS ATTRIBUTES
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /// Full DIS Database Description - Used to add attributes into the database
 const struct attm_desc diss_att_db[DIS_IDX_NB] =
@@ -107,11 +100,9 @@ const struct attm_desc diss_att_db[DIS_IDX_NB] =
 
 /*
  * LOCAL FUNCTION DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Initialization of the DISS module.
  * This function performs all the initializations of the Profile module.
  *  - Creation of database (if it's a service)
@@ -128,8 +119,7 @@ const struct attm_desc diss_att_db[DIS_IDX_NB] =
  * @param[in]     param      Configuration parameters of profile collector or service (32 bits aligned)
  *
  * @return status code to know if profile initialization succeed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static uint8_t diss_init (struct prf_task_env* env, uint16_t* start_hdl, uint16_t app_task, uint8_t sec_lvl,  struct diss_db_cfg* params)
 {
     //------------------ create the attribute database for the profile -------------------
@@ -173,15 +163,13 @@ static uint8_t diss_init (struct prf_task_env* env, uint16_t* start_hdl, uint16_
 
     return status;
 }
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Destruction of the DISS module - due to a reset for instance.
  * This function clean-up allocated memory (attribute database is destroyed by another
  * procedure)
  *
  * @param[in|out]    env        Collector or Service allocated environment data.
- ****************************************************************************************
- */
+******************************************************************************************/
 static void diss_destroy(struct prf_task_env* env)
 {
     struct diss_env_tag* diss_env = (struct diss_env_tag*) env->env;
@@ -198,28 +186,24 @@ static void diss_destroy(struct prf_task_env* env)
     ke_free(diss_env);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles Connection creation
  *
  * @param[in|out]    env        Collector or Service allocated environment data.
  * @param[in]        conidx     Connection index
- ****************************************************************************************
- */
+******************************************************************************************/
 static void diss_create(struct prf_task_env* env, uint8_t conidx)
 {
     /* Nothing to do */
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles Disconnection
  *
  * @param[in|out]    env        Collector or Service allocated environment data.
  * @param[in]        conidx     Connection index
  * @param[in]        reason     Detach reason
- ****************************************************************************************
- */
+******************************************************************************************/
 static void diss_cleanup(struct prf_task_env* env, uint8_t conidx, uint8_t reason)
 {
     /* Nothing to do */
@@ -227,8 +211,7 @@ static void diss_cleanup(struct prf_task_env* env, uint8_t conidx, uint8_t reaso
 
 /*
  * GLOBAL VARIABLE DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /// DISS Task interface required by profile manager
 const struct prf_task_cbs diss_itf =
@@ -241,8 +224,7 @@ const struct prf_task_cbs diss_itf =
 
 /*
  * FUNCTION DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 const struct prf_task_cbs* diss_prf_itf_get(void)
 {

@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file scpps.c
  *
@@ -8,20 +7,16 @@
  * Copyright (C) RivieraWaves 2009-2015
  *
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @addtogroup SCPPS
  * @{
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /*
  * INCLUDE FILES
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #include "rwip_config.h"
 
@@ -35,8 +30,7 @@
 
 /*
  * SCPP ATTRIBUTES DEFINITION
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /// Full SCPS Database Description - Used to add attributes into the database
 const struct attm_desc scpps_att_db[SCPS_IDX_NB] =
@@ -59,11 +53,9 @@ const struct attm_desc scpps_att_db[SCPS_IDX_NB] =
 
 /*
  * LOCAL FUNCTION DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Initialization of the SCPPS module.
  * This function performs all the initializations of the Profile module.
  *  - Creation of database (if it's a service)
@@ -80,8 +72,7 @@ const struct attm_desc scpps_att_db[SCPS_IDX_NB] =
  * @param[in]     param      Configuration parameters of profile collector or service (32 bits aligned)
  *
  * @return status code to know if profile initialization succeed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static uint8_t scpps_init (struct prf_task_env* env, uint16_t* start_hdl, uint16_t app_task, uint8_t sec_lvl,  struct scpps_db_cfg* params)
 {
     struct scpps_env_tag* scpps_env = NULL;
@@ -134,15 +125,13 @@ static uint8_t scpps_init (struct prf_task_env* env, uint16_t* start_hdl, uint16
 
     return status;
 }
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Destruction of the SCPPS module - due to a reset for instance.
  * This function clean-up allocated memory (attribute database is destroyed by another
  * procedure)
  *
  * @param[in|out]    env        Collector or Service allocated environment data.
- ****************************************************************************************
- */
+******************************************************************************************/
 static void scpps_destroy(struct prf_task_env* env)
 {
     struct scpps_env_tag* scpps_env = (struct scpps_env_tag*) env->env;
@@ -152,28 +141,24 @@ static void scpps_destroy(struct prf_task_env* env)
     ke_free(scpps_env);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles Connection creation
  *
  * @param[in|out]    env        Collector or Service allocated environment data.
  * @param[in]        conidx     Connection index
- ****************************************************************************************
- */
+******************************************************************************************/
 static void scpps_create(struct prf_task_env* env, uint8_t conidx)
 {
     /* Nothing to do */
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles Disconnection
  *
  * @param[in|out]    env        Collector or Service allocated environment data.
  * @param[in]        conidx     Connection index
  * @param[in]        reason     Detach reason
- ****************************************************************************************
- */
+******************************************************************************************/
 static void scpps_cleanup(struct prf_task_env* env, uint8_t conidx, uint8_t reason)
 {
     struct scpps_env_tag* scpps_env = (struct scpps_env_tag*) env->env;
@@ -185,8 +170,7 @@ static void scpps_cleanup(struct prf_task_env* env, uint8_t conidx, uint8_t reas
 
 /*
  * GLOBAL VARIABLE DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /// SCPPS Task interface required by profile manager
 const struct prf_task_cbs scpps_itf =
@@ -200,8 +184,7 @@ const struct prf_task_cbs scpps_itf =
 
 /*
  * GLOBAL FUNCTIONS DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 const struct prf_task_cbs* scpps_prf_itf_get(void)
 {

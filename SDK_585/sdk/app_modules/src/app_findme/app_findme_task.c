@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file app_findme_task.c
  *
@@ -11,20 +10,16 @@
  *
  * <bluetooth.support@diasemi.com> and contributors.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @addtogroup APPTASK
  * @{
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /*
  * INCLUDE FILES
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #include "rwip_config.h"               // SW configuration
 
@@ -41,20 +36,17 @@
 
 /*
  * FUNCTION DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #if (BLE_FINDME_TARGET)
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles Alert indication from findme target.
  * @param[in] msgid     Id of the message received.
  * @param[in] param     Pointer to the parameters of the message.
  * @param[in] dest_id   ID of the receiving task instance (TASK_GAP).
  * @param[in] src_id    ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int findt_alert_ind_handler(ke_msg_id_t const msgid,
                                    struct findt_alert_ind const *param,
                                    ke_task_id_t const dest_id,
@@ -65,16 +57,14 @@ static int findt_alert_ind_handler(ke_msg_id_t const msgid,
     return (KE_MSG_CONSUMED);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles APP_FINDT_TIMER message.
  * @param[in] msgid     Id of the message received.
  * @param[in] param     Pointer to the parameters of the message.
  * @param[in] dest_id   ID of the receiving task instance (TASK_GAP).
  * @param[in] src_id    ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int app_findt_timer_handler(ke_msg_id_t const msgid,
                                    void const *param,
                                    ke_task_id_t const dest_id,
@@ -98,16 +88,14 @@ static int app_findt_timer_handler(ke_msg_id_t const msgid,
 #endif // BLE_FINDME_TARGET
 
 #if (BLE_FINDME_LOCATOR)
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles FINDL_ENABLE_RSP from findme locator.
  * @param[in] msgid     Id of the message received.
  * @param[in] param     Pointer to the parameters of the message.
  * @param[in] dest_id   ID of the receiving task instance (TASK_GAP).
  * @param[in] src_id    ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int findl_enable_rsp_handler(ke_msg_id_t const msgid,
                                     struct findl_enable_rsp const *param,
                                     ke_task_id_t const dest_id,
@@ -118,16 +106,14 @@ static int findl_enable_rsp_handler(ke_msg_id_t const msgid,
     return (KE_MSG_CONSUMED);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles FINDL_SET_ALERT_RSP from findme locator.
  * @param[in] msgid     Id of the message received.
  * @param[in] param     Pointer to the parameters of the message.
  * @param[in] dest_id   ID of the receiving task instance (TASK_GAP).
  * @param[in] src_id    ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int findl_set_alert_rsp_handler(ke_msg_id_t const msgid,
                                        struct findl_set_alert_rsp const *param,
                                        ke_task_id_t const dest_id,
@@ -143,8 +129,7 @@ static int findl_set_alert_rsp_handler(ke_msg_id_t const msgid,
 
 /*
  * GLOBAL VARIABLES DEFINITION
- ****************************************************************************************
- */
+******************************************************************************************/
 
 static const struct ke_msg_handler app_findme_process_handlers[]=
 {
@@ -161,8 +146,7 @@ static const struct ke_msg_handler app_findme_process_handlers[]=
 
 /*
  * FUNCTION DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 enum process_event_response app_findme_process_handler(ke_msg_id_t const msgid,
                                                        void const *param,

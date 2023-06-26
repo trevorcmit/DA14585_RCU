@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file spi_flash.c
  *
@@ -11,8 +10,7 @@
  *
  * <bluetooth.support@diasemi.com> and contributors.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
 
 #include "spi_flash.h"
@@ -33,29 +31,25 @@ const SPI_FLASH_DEVICE_PARAMETERS_BY_JEDEC_ID_t SPI_FLASH_KNOWN_DEVICES_PARAMETE
     {MX25R2035F_JEDEC_ID, MX25R2035F_JEDEC_ID_MATCHING_BITMASK, MX25R2035F_TOTAL_FLASH_SIZE, MX25R2035F_PAGE_SIZE, MX25R2035F_MEM_PROT_BITMASK, MX25R2035F_MEM_PROT_NONE},
 };
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Initialize SPI Flash
  * @param[in ]spi_flash_size_param:         Flash Size
  * @param[in] spi_flash_page_size_param:    Flash Page Size
- ****************************************************************************************
- */
+******************************************************************************************/
 void spi_flash_init(uint32_t spi_flash_size_param, uint32_t spi_flash_page_size_param)
 {
     spi_flash_size = spi_flash_size_param;
     spi_flash_page_size = spi_flash_page_size_param;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Detect the SPI flash device, based on the JEDEC manufacturer id and the
  *        manufacturer-defined data(2 bytes) which is retrieved when the command 9Fh
  *        is issued. If the device is successfully identified, the total memory size
  *        and page size are retrieved from a lookup table.
  * @return the index of the device in the SPI_FLASH_KNOWN_DEVICES_PARAMETERS_LIST or
  *         (SPI_FLASH_AUTO_DETECT_NOT_DETECTED) if the device is not found
- ****************************************************************************************
- */
+******************************************************************************************/
 int8_t spi_flash_auto_detect(void)
 {
     uint32_t jedec_id;
@@ -86,12 +80,10 @@ int8_t spi_flash_auto_detect(void)
     return SPI_FLASH_AUTO_DETECT_NOT_DETECTED;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Read Status Register
  * @return  Status Register value
- ****************************************************************************************
- */
+******************************************************************************************/
 uint8_t spi_flash_read_status_reg(void)
 {
     //no 'add spi_flash_wait_till_ready()' here
@@ -99,13 +91,11 @@ uint8_t spi_flash_read_status_reg(void)
     return spi_transaction((uint16_t)(READ_STATUS_REG<<8));
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Wait till flash is ready for next action
 * @return  Success : ERR_OK
 *          Failure : ERR_TIMEOUT
- ****************************************************************************************
- */
+******************************************************************************************/
 int8_t spi_flash_wait_till_ready (void)
 {
     uint32_t statusReadCount;
@@ -117,12 +107,10 @@ int8_t spi_flash_wait_till_ready (void)
     return ERR_TIMEOUT;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Issue a Write Enable Command
  * @return error code or success (ERR_OK)
- ****************************************************************************************
- */
+******************************************************************************************/
 int8_t spi_flash_set_write_enable(void)
 {
     uint32_t commandSendCount;
@@ -145,12 +133,10 @@ int8_t spi_flash_set_write_enable(void)
     return ERR_TIMEOUT;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Issue a Write Enable Volatile Command
  * @return error code or success (ERR_OK)
- ****************************************************************************************
- */
+******************************************************************************************/
 int8_t spi_flash_write_enable_volatile(void)
 {
     uint32_t commandSendCount;
@@ -173,12 +159,10 @@ int8_t spi_flash_write_enable_volatile(void)
     return ERR_TIMEOUT;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Issue a Write Disable Command
  * @return error code or success (ERR_OK)
- ****************************************************************************************
- */
+******************************************************************************************/
 int8_t spi_flash_set_write_disable(void)
 {
     uint32_t commandSendCount;
@@ -201,13 +185,11 @@ int8_t spi_flash_set_write_disable(void)
     return ERR_TIMEOUT;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Write Status Register
  * @param[in] dataToWrite:   Value to be written to Status Register
  * @return error code or success (ERR_OK)
- ****************************************************************************************
- */
+******************************************************************************************/
 int32_t spi_flash_write_status_reg(uint8_t dataToWrite)
 {
     int8_t spi_flash_status;
@@ -220,8 +202,7 @@ int32_t spi_flash_write_status_reg(uint8_t dataToWrite)
     return spi_flash_wait_till_ready();
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Read data from a given starting address (up to the end of the flash)
  *
  * @param[in] *rd_data_ptr:  Points to the position the read data will be stored
@@ -229,8 +210,7 @@ int32_t spi_flash_write_status_reg(uint8_t dataToWrite)
  * @param[in] size:          Size of the data to be read
  *
  * @return  Number of read bytes or error code
- ****************************************************************************************
- */
+******************************************************************************************/
 int32_t spi_flash_read_data (uint8_t *rd_data_ptr, uint32_t address, uint32_t size)
 {
     int8_t spi_flash_status;
@@ -265,16 +245,14 @@ int32_t spi_flash_read_data (uint8_t *rd_data_ptr, uint32_t address, uint32_t si
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Program page (up to <SPI Flash page size> bytes) starting at given address
  *
  * @param[in] *wr_data_ptr:  Pointer to the data to be written
  * @param[in] address:       Starting address of data to be written
  * @param[in] size:          Size of the data to be written (should not be larger than SPI Flash page size)
  * @return error code or success (ERR_OK)
- ****************************************************************************************
- */
+******************************************************************************************/
 int32_t spi_flash_page_program(uint8_t *wr_data_ptr, uint32_t address, uint16_t size)
 {
     int8_t spi_flash_status;
@@ -305,15 +283,13 @@ int32_t spi_flash_page_program(uint8_t *wr_data_ptr, uint32_t address, uint16_t 
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Issue a command to Erase a given address
  *
  * @param[in] address:  Address that belongs to the block64/block32/sector range
  * @param[in] spiEraseModule: BLOCK_ERASE_64, BLOCK_ERASE_32, SECTOR_ERASE
  * @return error code or success (ERR_OK)
- ****************************************************************************************
- */
+******************************************************************************************/
 int8_t spi_flash_block_erase(uint32_t address, SPI_erase_module_t spiEraseModule)
 {
     if (spi_flash_set_write_enable() != ERR_OK)         // send [Write Enable] instruction
@@ -343,13 +319,11 @@ int8_t spi_flash_block_erase_no_wait(uint32_t address, SPI_erase_module_t spiEra
     return ERR_OK;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Erase chip
  * @note In order for the erasure to succeed, all locking options must be disabled.
  * @return error code or success (ERR_OK)
- ****************************************************************************************
- */
+******************************************************************************************/
 int8_t spi_flash_chip_erase(void)
 {
     uint8_t status;
@@ -365,12 +339,10 @@ int8_t spi_flash_chip_erase(void)
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Get Manufacturer / Device ID
  * @return  Manufacturer/Device ID (0 in case of time-out)
- ****************************************************************************************
- */
+******************************************************************************************/
 int16_t spi_read_flash_memory_man_and_dev_id(void)
 {
     int8_t spi_flash_status;
@@ -392,12 +364,10 @@ int16_t spi_read_flash_memory_man_and_dev_id(void)
 
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Get Unique ID Number
  * @return  Unique ID Number (0 in case of time-out)
- ****************************************************************************************
- */
+******************************************************************************************/
 uint64_t spi_read_flash_unique_id(void)
 {
     int8_t spi_flash_status;
@@ -420,12 +390,10 @@ uint64_t spi_read_flash_unique_id(void)
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Get JEDEC ID
  * @return  JEDEC ID
- ****************************************************************************************
- */
+******************************************************************************************/
 int32_t spi_read_flash_jedec_id(void)
 {
     int8_t spi_flash_status;
@@ -445,8 +413,7 @@ int32_t spi_read_flash_jedec_id(void)
     return jedec_id;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Write data to flash across page boundaries and at any starting address
  *
  * @param[in] *wr_data_ptr:  Pointer to the data to be written
@@ -454,8 +421,7 @@ int32_t spi_read_flash_jedec_id(void)
  * @param[in] size:          Size of the data to be written (can be larger than SPI Flash page size)
  *
  * @return  Number of bytes actually written
- ****************************************************************************************
- */
+******************************************************************************************/
 int32_t spi_flash_write_data (uint8_t *wr_data_ptr, uint32_t address, uint32_t size)
 {
     uint32_t bytes_written;
@@ -489,13 +455,11 @@ int32_t spi_flash_write_data (uint8_t *wr_data_ptr, uint32_t address, uint32_t s
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Sends the Power-Down instruction
  * Remark: The function spi_flash_release_from_powerdown() is used to enable the IC again
  * The power-down state will be entered tDP (3uS for W25X10CL) after CS is returned to high.
- ****************************************************************************************
- */
+******************************************************************************************/
 int32_t spi_flash_power_down(void)
 {
     int8_t spi_flash_status;
@@ -510,14 +474,12 @@ int32_t spi_flash_power_down(void)
     return ERR_OK;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Sends the Release from Power-Down instruction
  * Remark: This function is used to restore the IC from power-down mode
  * You must ensure that the CS line will stay high after this instruction is sent for
  * at least tRES1 DP (3uS for W25X10CL).
- ****************************************************************************************
- */
+******************************************************************************************/
 int32_t spi_flash_release_from_power_down(void)
 {
     // Toggle the CS# for at least 20ns to release from deep power down
@@ -528,13 +490,11 @@ int32_t spi_flash_release_from_power_down(void)
     return ERR_OK;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Selects the memory protection configuration
  * @param[in] SPI_flash_memory_protection_setting
  * @return error code or success (ERR_OK)
- ****************************************************************************************
- */
+******************************************************************************************/
 int32_t spi_flash_configure_memory_protection(uint8_t spi_flash_memory_protection_setting)
 {
     if (spi_flash_detected_device == 0)
@@ -547,13 +507,11 @@ int32_t spi_flash_configure_memory_protection(uint8_t spi_flash_memory_protectio
         ((spi_flash_memory_protection_setting)&(spi_flash_detected_device->memory_protection_bitmask)));
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Erase chip, removing all memory areas protection prior to erasure
  * @param forced: Protection for the whole memory array is removed prior to chip erasure
  * @return error code or success (ERR_OK)
- ****************************************************************************************
- */
+******************************************************************************************/
 int8_t spi_flash_chip_erase_forced(void)
 {
     int32_t result;
@@ -568,8 +526,7 @@ int8_t spi_flash_chip_erase_forced(void)
     return spi_flash_chip_erase();
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Fill memory page (up to <SPI Flash page size> bytes) with a given 1-byte value
  *        starting at given address
  *
@@ -577,8 +534,7 @@ int8_t spi_flash_chip_erase_forced(void)
  * @param[in] address:       Starting address
  * @param[in] size:          Size of the area to be filled (should not be larger than SPI Flash page size)
  * @return error code or success (ERR_OK)
- ****************************************************************************************
- */
+******************************************************************************************/
 int8_t spi_flash_page_fill(uint8_t value, uint32_t address, uint16_t size)
 {
     int8_t spi_flash_status;
@@ -608,8 +564,7 @@ int8_t spi_flash_page_fill(uint8_t value, uint32_t address, uint16_t size)
     return spi_flash_wait_till_ready();
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Fill memory with a 1-byte value, across page boundaries and at any starting address
  *
  * @param[in] value:    The value with which memory will be filled
@@ -617,8 +572,7 @@ int8_t spi_flash_page_fill(uint8_t value, uint32_t address, uint16_t size)
  * @param[in] size:     Size of the area to be filled (can be larger than SPI Flash page size)
  *
  * @return  Number of bytes actually written
- ****************************************************************************************
- */
+******************************************************************************************/
 int32_t spi_flash_fill (uint8_t value, uint32_t address, uint32_t size)
 {
     uint32_t bytes_written;
@@ -651,8 +605,7 @@ int32_t spi_flash_fill (uint8_t value, uint32_t address, uint32_t size)
     return bytes_written;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Initializes spi and spi_flash drivers, discovers jedec id and releases from power down
  *
  * @param[in] cs_port:  Chip select port

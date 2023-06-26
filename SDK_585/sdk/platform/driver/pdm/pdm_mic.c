@@ -11,8 +11,7 @@
  *
  * <bluetooth.support@diasemi.com> and contributors.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #include "dma.h"
 #include "pdm_mic.h"
@@ -23,16 +22,14 @@ bool mic_circular;
 uint16_t mic_int_threshold;
 DMA_setup DMA_Setup_for_PDM_to_buffer;
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief       Function to perform a quick initiliazation of the DMA instead of a complete one.
  *
  * \param       new_buffer The buffer to store the data to.
  *
  * \return      None
  *
- ****************************************************************************************
- */ 
+******************************************************************************************/ 
 static void DMA_reinit(uint32_t *new_buffer) {
         DMA_Setup_for_PDM_to_buffer.dest_address = (uint32_t)new_buffer;
         dma_channel_initialization_minimal(&DMA_Setup_for_PDM_to_buffer);
@@ -57,8 +54,7 @@ static void my_uart_callback(uint8_t res)
         uart_finished = true;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief       DMA Callback that dumps the data through UART
  *
  * \param       user_data & length provided from DMA handler
@@ -92,8 +88,7 @@ void DMA_callback(void *user_data, uint16_t len)
 }
 
 #else
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief       DMA Callback that reads the pdm data and restarts the DMA
  *
  * \param       user_data & length provided from DMA handler
@@ -129,8 +124,7 @@ void DMA_callback(void *user_data, uint16_t len)
 
 #endif
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief       DMA_init 
  *
  * \param       user_data & length provided from DMA handler

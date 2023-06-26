@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file app_easy_timer.c
  *
@@ -11,20 +10,16 @@
  *
  * <bluetooth.support@diasemi.com> and contributors.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @addtogroup APP
  * @{
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /*
  * INCLUDE FILES
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #include "rwip_config.h"             // SW configuration
 
@@ -39,8 +34,7 @@
 
 /*
  * DEFINES
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #define APP_TIMER_MAX_NUM                         (APP_TIMER_API_LAST_MES - APP_TIMER_API_MES0 + 1)
 //HND: Timer handler values = 1...APP_TIMER_MAX_NUM
@@ -56,8 +50,7 @@
 
 /*
  * GLOBAL VARIABLE DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 struct create_timer_struct
 {
@@ -85,17 +78,14 @@ static timer_callback modified_timer_callbacks[APP_TIMER_MAX_NUM] __attribute__(
 
 /*
  * FUNCTION DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Place a callback in the first available position in the timer callback array.
  * @param[in] fn The callback to be added
  * @return The handler of the timer for future reference. EASY_TIMER_INVALID_TIMER if
  * there is no timer available
- ****************************************************************************************
- */
+******************************************************************************************/
 static timer_hnd set_callback(timer_callback fn)
 {
     int i;
@@ -110,12 +100,10 @@ static timer_hnd set_callback(timer_callback fn)
     return EASY_TIMER_INVALID_TIMER;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Empty callback used when canceling a timer.
  * @return void
- ****************************************************************************************
- */
+******************************************************************************************/
 static void timer_canceled_handler(timer_hnd handler)
 {
     //this functions puts an empty handler in the
@@ -125,12 +113,10 @@ static void timer_canceled_handler(timer_hnd handler)
     //tick.
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Empty callback used when modifying a timer.
  * @return void
- ****************************************************************************************
- */
+******************************************************************************************/
 static void timer_modified_handler(timer_hnd handler)
 {
     //this functions puts an empty handler in the
@@ -140,13 +126,11 @@ static void timer_modified_handler(timer_hnd handler)
     //tick.
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Call the callback of a specific timer handler if it exists.
  * @param[in] timer_id The handler to call
  * @return void
- ****************************************************************************************
- */
+******************************************************************************************/
 static void call_callback(const timer_hnd timer_id)
 {
     if APP_EASY_TIMER_HND_IS_VALID(timer_id)
@@ -165,14 +149,12 @@ static void call_callback(const timer_hnd timer_id)
     }
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Helper function that creates a timer.
  * @param[in] timer_id The timer handler
  * @param[in] delay    The delay of the timer
  * @return void
- ****************************************************************************************
- */
+******************************************************************************************/
 static void create_timer(timer_hnd timer_id, uint16_t delay)
 {
     if (app_check_BLE_active())
@@ -192,8 +174,7 @@ static void create_timer(timer_hnd timer_id, uint16_t delay)
     }
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handler function that is called when the TASK_APP receives the APP_CREATE_TIMER
  *        message. Called after the ble wakes up in the case where the ble is sleeping 
  *        when trying to set a new timer.
@@ -202,8 +183,7 @@ static void create_timer(timer_hnd timer_id, uint16_t delay)
  * @param[in] dest_id ID of the receiving task instance
  * @param[in] src_id ID of the sending task instance
  * @return KE_MSG_CONSUMED
- ****************************************************************************************
- */
+******************************************************************************************/
 static int create_timer_handler(ke_msg_id_t const msgid,
                                 struct create_timer_struct const *param,
                                 ke_task_id_t const dest_id,
@@ -217,8 +197,7 @@ static int create_timer_handler(ke_msg_id_t const msgid,
     return KE_MSG_CONSUMED;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handler function that is called when the TASK_APP receives the APP_CANCEL_TIMER
  *        message.
  * @param[in] msgid Id of the message received
@@ -226,8 +205,7 @@ static int create_timer_handler(ke_msg_id_t const msgid,
  * @param[in] dest_id ID of the receiving task instance
  * @param[in] src_id ID of the sending task instance
  * @return KE_MSG_CONSUMED
- ****************************************************************************************
- */
+******************************************************************************************/
 static int cancel_timer_handler(ke_msg_id_t const msgid,
                                 struct cancel_timer_struct const *param,
                                 ke_task_id_t const dest_id,
@@ -261,8 +239,7 @@ static int cancel_timer_handler(ke_msg_id_t const msgid,
     return KE_MSG_CONSUMED;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handler function that is called when the TASK_APP receives the APP_MODIFY_TIMER
  *        message.
  * @param[in] msgid Id of the message received
@@ -270,8 +247,7 @@ static int cancel_timer_handler(ke_msg_id_t const msgid,
  * @param[in] dest_id ID of the receiving task instance
  * @param[in] src_id ID of the sending task instance
  * @return KE_MSG_CONSUMED
- ****************************************************************************************
- */
+******************************************************************************************/
 static int modify_timer_handler(ke_msg_id_t const msgid,
                                 struct modify_timer_struct const *param,
                                 ke_task_id_t const dest_id,
@@ -296,16 +272,14 @@ static int modify_timer_handler(ke_msg_id_t const msgid,
     return KE_MSG_CONSUMED;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief The actual timer handler that calls the user callback.
  * @param[in] msgid Id of the message received
  * @param[in] param No parameters are required
  * @param[in] dest_id ID of the receiving task instance
  * @param[in] src_id ID of the sending task instance
  * @return KE_MSG_CONSUMED
- ****************************************************************************************
- */
+******************************************************************************************/
 static int call_callback_handler(ke_msg_id_t const msgid,
                                  void const *param,
                                  ke_task_id_t const dest_id,

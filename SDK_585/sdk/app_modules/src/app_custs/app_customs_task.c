@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file app_customs_task.c
  *
@@ -11,20 +10,16 @@
  *
  * <bluetooth.support@diasemi.com> and contributors.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @addtogroup APPTASK
  * @{
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /*
  * INCLUDE FILES
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #include "rwble_config.h"              // SW configuration
 
@@ -41,16 +36,13 @@
 #if (BLE_CUSTOM1_SERVER)
 /*
  * FUNCTION DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #if 0
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles CUSTOM 1 Server profile database creation confirmation.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int app_custs1_create_db_cfm_handler(ke_msg_id_t const msgid,
                                             struct custs1_create_db_cfm const *param,
                                             ke_task_id_t const dest_id,
@@ -71,12 +63,10 @@ static int app_custs1_create_db_cfm_handler(ke_msg_id_t const msgid,
     return (KE_MSG_CONSUMED);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles disable indication from the CUSTOM 1 Server profile.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int app_custs1_disable_ind_handler(ke_msg_id_t const msgid,
                                           struct custs1_disable_ind const *param,
                                           ke_task_id_t const dest_id,
@@ -87,8 +77,7 @@ static int app_custs1_disable_ind_handler(ke_msg_id_t const msgid,
 
 /*
  * GLOBAL VARIABLE DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 static const struct ke_msg_handler app_custs1_process_handlers[] =
 {
@@ -99,8 +88,7 @@ static const struct ke_msg_handler app_custs1_process_handlers[] =
 
 /*
  * FUNCTION DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 enum process_event_response app_custs1_process_handler(ke_msg_id_t const msgid,
                                                        void const *param,
@@ -120,16 +108,13 @@ enum process_event_response app_custs1_process_handler(ke_msg_id_t const msgid,
 #if (BLE_CUSTOM2_SERVER)
 /*
  * FUNCTION DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #if 0
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles CUSTOM 2 Server profile database creation confirmation.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int app_custs2_create_db_cfm_handler(ke_msg_id_t const msgid,
                                             struct custs2_create_db_cfm const *param,
                                             ke_task_id_t const dest_id,
@@ -150,12 +135,10 @@ static int app_custs2_create_db_cfm_handler(ke_msg_id_t const msgid,
     return (KE_MSG_CONSUMED);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles disable indication from the CUSTOM 2 Server profile.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int app_custs2_disable_ind_handler(ke_msg_id_t const msgid,
                                           struct custs2_disable_ind const *param,
                                           ke_task_id_t const dest_id,
@@ -166,8 +149,7 @@ static int app_custs2_disable_ind_handler(ke_msg_id_t const msgid,
 
 /*
  * GLOBAL VARIABLE DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 static const struct ke_msg_handler app_custs2_process_handlers[] =
 {
@@ -178,8 +160,7 @@ static const struct ke_msg_handler app_custs2_process_handlers[] =
 
 /*
  * FUNCTION DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 enum process_event_response app_custs2_process_handler(ke_msg_id_t const msgid,
                                                        void const *param,

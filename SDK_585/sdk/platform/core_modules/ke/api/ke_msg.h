@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file ke_msg.h
  *
@@ -8,14 +7,12 @@
  * Copyright (C) RivieraWaves 2009-2014
  *
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #ifndef _KE_MSG_H_
 #define _KE_MSG_H_
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @defgroup MSG Message Exchange
  * @ingroup KERNEL
  * @brief Message scheduling module.
@@ -43,8 +40,7 @@
  * can be used.
  *
  * @{
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #include <stddef.h>          // standard definition
 #include <stdint.h>          // standard integer
@@ -96,37 +92,32 @@ enum ke_msg_status_tag
     KE_MSG_SAVED,        ///< not consumed, will be pushed in the saved queue
 };
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Convert a parameter pointer to a message pointer
  *
  * @param[in]  param_ptr Pointer to the parameter member of a ke_msg
  *                       Usually retrieved by a ke_msg_alloc()
  *
  * @return The pointer to the ke_msg
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE struct ke_msg * ke_param2msg(void const *param_ptr)
 {
     return (struct ke_msg*) (((uint8_t*)param_ptr) - offsetof(struct ke_msg, param));
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Convert a message pointer to a parameter pointer
  *
  * @param[in]  msg Pointer to the ke_msg.
  *
  * @return The pointer to the param member
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE void * ke_msg2param(struct ke_msg const *msg)
 {
     return (void*) (((uint8_t*) msg) + offsetof(struct ke_msg, param));
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Convenient wrapper to ke_msg_alloc()
  *
  * This macro calls ke_msg_alloc() and cast the returned pointer to the
@@ -139,25 +130,21 @@ __INLINE void * ke_msg2param(struct ke_msg const *msg)
  * @param[in] param_str parameter structure tag
  *
  * @return Pointer to the parameter member of the ke_msg.
- ****************************************************************************************
- */
+******************************************************************************************/
 #define KE_MSG_ALLOC(id, dest, src, param_str) \
     (struct param_str*) ke_msg_alloc(id, dest, src, sizeof(struct param_str))
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Convenient wrapper to ke_msg_free()
  *
  * This macro calls ke_msg_free() with the appropriate msg pointer as parameter, according
  * to the message parameter pointer passed.
  *
  * @param[in] param_ptr parameter structure pointer
- ****************************************************************************************
- */
+******************************************************************************************/
 #define KE_MSG_FREE(param_ptr) ke_msg_free(ke_param2msg((param_ptr)))
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Convenient wrapper to ke_msg_alloc()
  *
  * This macro calls ke_msg_alloc() and cast the returned pointer to the
@@ -172,13 +159,11 @@ __INLINE void * ke_msg2param(struct ke_msg const *msg)
  * @param[in] length    length for the data
  *
  * @return Pointer to the parameter member of the ke_msg.
- ****************************************************************************************
- */
+******************************************************************************************/
 #define KE_MSG_ALLOC_DYN(id, dest, src, param_str,length)  (struct param_str*)ke_msg_alloc(id, dest, src, \
     (sizeof(struct param_str) + length));
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Allocate memory for a message
  *
  * This primitive allocates memory for a message that has to be sent. The memory
@@ -203,13 +188,11 @@ __INLINE void * ke_msg2param(struct ke_msg const *msg)
  *         structure is empty, the pointer will point to the end of the message
  *         and should not be used (except to retrieve the message pointer or to
  *         send the message)
- ****************************************************************************************
- */
+******************************************************************************************/
 void *ke_msg_alloc(ke_msg_id_t const id, ke_task_id_t const dest_id,
                    ke_task_id_t const src_id, uint16_t const param_len);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Message sending.
  *
  * Send a message previously allocated with any ke_msg_alloc()-like functions.
@@ -222,13 +205,11 @@ void *ke_msg_alloc(ke_msg_id_t const id, ke_task_id_t const dest_id,
  *
  * @param[in] param_ptr  Pointer to the parameter member of the message that
  *                       should be sent.
- ****************************************************************************************
- */
+******************************************************************************************/
 
 void ke_msg_send(void const *param_ptr);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Basic message sending.
  *
  * Send a message that has a zero length parameter member. No allocation is
@@ -237,12 +218,10 @@ void ke_msg_send(void const *param_ptr);
  * @param[in] id        Message identifier
  * @param[in] dest_id   Destination Identifier
  * @param[in] src_id    Source Identifier
- ****************************************************************************************
- */
+******************************************************************************************/
 void ke_msg_send_basic(ke_msg_id_t const id, ke_task_id_t const dest_id, ke_task_id_t const src_id);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Message forwarding.
  *
  * Forward a message to another task by changing its destination and source tasks IDs.
@@ -251,12 +230,10 @@ void ke_msg_send_basic(ke_msg_id_t const id, ke_task_id_t const dest_id, ke_task
  *                       should be sent.
  * @param[in] dest_id New destination task of the message.
  * @param[in] src_id New source task of the message.
- ****************************************************************************************
- */
+******************************************************************************************/
 void ke_msg_forward(void const *param_ptr, ke_task_id_t const dest_id, ke_task_id_t const src_id);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Message forwarding.
  *
  * Forward a message to another task by changing its message ID and its destination and source tasks IDs.
@@ -266,44 +243,37 @@ void ke_msg_forward(void const *param_ptr, ke_task_id_t const dest_id, ke_task_i
  * @param[in] msg_id  New ID of the message.
  * @param[in] dest_id New destination task of the message.
  * @param[in] src_id  New source task of the message.
- ****************************************************************************************
- */
+******************************************************************************************/
 void ke_msg_forward_new_id(void const *param_ptr,
                            ke_msg_id_t const msg_id, ke_task_id_t const dest_id, ke_task_id_t const src_id);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Free allocated message
  *
  * @param[in] msg   Pointer to the message to be freed (not the parameter member!)
- ****************************************************************************************
- */
+******************************************************************************************/
 void ke_msg_free(struct ke_msg const *param);
 
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Retrieve destination task identifier of a kernel message
  *
  * @param[in] param_ptr  Pointer to the parameter member of the message.
  *
  * @return message destination task
- ****************************************************************************************
- */
+******************************************************************************************/
 ke_msg_id_t ke_msg_dest_id_get(void const *param_ptr);
 
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Retrieve source task identifier of a kernel message
  *
  * @param[in] param_ptr  Pointer to the parameter member of the message.
  *
  * @return message source task
- ****************************************************************************************
- */
+******************************************************************************************/
 ke_msg_id_t ke_msg_src_id_get(void const *param_ptr);
 
 /**

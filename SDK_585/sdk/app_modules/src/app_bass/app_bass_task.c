@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file app_bass_task.c
  *
@@ -11,20 +10,16 @@
  *
  * <bluetooth.support@diasemi.com> and contributors.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @addtogroup APPTASK
  * @{
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /*
  * INCLUDE FILES
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #include "rwip_config.h"
 
@@ -42,8 +37,7 @@
 
 /*
  * LOCAL FUNCTION DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 static int bass_enable_rsp_handler(ke_msg_id_t const msgid,
                                    struct bass_enable_rsp const *param,
@@ -73,16 +67,14 @@ static int bass_batt_level_ntf_cfg_ind_handler(ke_msg_id_t const msgid,
     return (KE_MSG_CONSUMED);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles Battery Level polling timer
  * @param[in] msgid     Id of the message received.
  * @param[in] param     Pointer to the parameters of the message.
  * @param[in] dest_id   ID of the receiving task instance (TASK_GAP).
  * @param[in] src_id    ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int app_bass_timer_handler(ke_msg_id_t const msgid,
                                   void const *param,
                                   ke_task_id_t const dest_id,
@@ -96,16 +88,14 @@ static int app_bass_timer_handler(ke_msg_id_t const msgid,
 }
 
 #ifndef CUSTOM_BATTERY_LEVEL_ALERT_LED_HANDLING
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles Battery Alert time.
  * @param[in] msgid     Id of the message received.
  * @param[in] param     Pointer to the parameters of the message.
  * @param[in] dest_id   ID of the receiving task instance (TASK_GAP).
  * @param[in] src_id    ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int app_bass_alert_timer_handler(ke_msg_id_t const msgid,
                                         void const *param,
                                         ke_task_id_t const dest_id,
@@ -133,8 +123,7 @@ static int app_bass_alert_timer_handler(ke_msg_id_t const msgid,
 
 /*
  * LOCAL VARIABLES DEFINITION
- ****************************************************************************************
- */
+******************************************************************************************/
 
 static const struct ke_msg_handler app_bass_process_handlers[] =
 {
@@ -147,8 +136,7 @@ static const struct ke_msg_handler app_bass_process_handlers[] =
 
 /*
  * GLOBAL FUNCTION DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 enum process_event_response app_bass_process_handler(ke_msg_id_t const msgid,
                                                      void const *param,

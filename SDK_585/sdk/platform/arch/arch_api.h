@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file arch_api.h
  *
@@ -11,16 +10,14 @@
  *
  * <bluetooth.support@diasemi.com> and contributors.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #ifndef _ARCH_API_H_
 #define _ARCH_API_H_
 
 /*
  * INCLUDE FILES
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #include <stdbool.h>
 #include "nvds.h"
@@ -48,27 +45,22 @@ struct arch_sleep_env_tag
     sleep_state_t slp_state;
 };
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief       Disable all sleep modes. The system operates in active / idle modes only.
  * @param       void
  * @return      void
- ****************************************************************************************
- */
+******************************************************************************************/
 void arch_disable_sleep(void);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief       Activates extended sleep mode. Selects betweeen extended sleep with OTP
  *              copy on or extended sleep with OTP copy off.
  * @param[in]   otp_copy        OTP copy on or off
  * @return      void
- ****************************************************************************************
- */
+******************************************************************************************/
 void arch_set_extended_sleep(bool otp_copy);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief       Activates deep sleep mode. The system can boot again under a POR 
  *              (power on reset) or external wake-up interrupt condition.
  * @param[in]   ext_wakeup      External wake-up interrupt flag:
@@ -80,46 +72,36 @@ void arch_set_extended_sleep(bool otp_copy);
  * @note        A POR condition always reboots the system.
  *              The GPIO(s), which may generate the POR or the wake-up interrupt, must 
  *              have already been configured before putting the system in deep sleep.
- ****************************************************************************************
- */
+******************************************************************************************/
 void arch_set_deep_sleep(bool ext_wakeup);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief       Activates selected sleep mode.
  * @param       sleep_state     Selected sleep mode.
  * @return      void
- ****************************************************************************************
- */
+******************************************************************************************/
 void arch_set_sleep_mode(sleep_state_t sleep_state);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief       Get the current sleep mode of operation.
  * @return      The current sleep mode of operation.
- ****************************************************************************************
- */
+******************************************************************************************/
 uint8_t arch_get_sleep_mode(void);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief       Restore the sleep mode to what it was before disabling. App should not modify the sleep mode directly.
  * @details     Restores the sleep mode. 
  * @return      void
- ****************************************************************************************
- */
+******************************************************************************************/
 void arch_restore_sleep_mode(void);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief       Disable sleep but save the sleep mode status. Store the sleep mode used by the app.
  * @return      void
- ****************************************************************************************
- */
+******************************************************************************************/
 void arch_force_active_mode(void);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief       Puts the BLE core to permanent sleep. Only an external event can wake it up.\
  *              BLE sleeps forever waiting a forced wakeup. After waking up from an external 
  *              event, if the system has to wake BLE up it needs to restore the default mode 
@@ -131,22 +113,18 @@ void arch_force_active_mode(void);
  * @exception   Warning Assertion
  *              if rwip_env.ext_wakeup_enable is 0 since it wouldn't be possible to wake-up the 
  *              BLE core in this case.
- ****************************************************************************************
- */
+******************************************************************************************/
 void arch_ble_ext_wakeup_on(void);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief       Takes the BLE core out of the permanent sleep mode.Restore BLE cores' operation to default mode. The BLE core will wake up every 
  *              10sec even if no BLE events are scheduled. If an event is to be scheduled 
  *              earlier, then BLE will wake up sooner to serve it.
  * @return      void
- ****************************************************************************************
- */
+******************************************************************************************/
 void arch_ble_ext_wakeup_off(void);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief       Checks whether the BLE core is in permanent sleep mode or not.
  *              Returns the current mode of operation of the BLE core (external wakeup or default).
  * @param       void
@@ -156,12 +134,10 @@ void arch_ble_ext_wakeup_off(void);
  *                  <li> false, if default mode is selected
  *                  <li> true, if BLE sleeps forever waiting for a forced wakeup
  *              </ul>
- ****************************************************************************************
- */
+******************************************************************************************/
 bool arch_ble_ext_wakeup_get(void);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief       Wake the BLE core via an external request. If the BLE core is sleeping (permanently or not and external wake-up is enabled)
  *              then this function wakes it up. 
  *              A call to app_ble_ext_wakeup_off() should follow if the BLE core was in permanent sleep.
@@ -172,17 +148,14 @@ bool arch_ble_ext_wakeup_get(void);
  *                  <li> false, if the BLE core is not sleeping
  *                  <li> true, if the BLE core was woken-up successfully
  *              </ul>
- ****************************************************************************************
- */
+******************************************************************************************/
 bool arch_ble_force_wakeup(void);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief       Modifies the system startup sleep delay. It can be called in app_init() to modify the default delay (2 sec);
  * @param[in]   Delay in BLE slots (0.625 usec)
  * @return      void
- ****************************************************************************************
- */
+******************************************************************************************/
 
 __INLINE void arch_startup_sleep_delay_set(uint32_t delay)
 {
@@ -206,13 +179,11 @@ typedef enum
 
 }last_ble_evt;
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief       Used for application's tasks synchronisation with ble events. 
  * @param       void
  * @return      Last BLE event. See last_ble_evt enumaration
- ****************************************************************************************
- */
+******************************************************************************************/
 last_ble_evt arch_last_rwble_evt_get(void);
 
 /*
@@ -221,13 +192,11 @@ last_ble_evt arch_last_rwble_evt_get(void);
 ##############################################################################
 */
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Creates sw cursor in power profiler tool. Used for Development/ Debugging 
  *
  * @return void 
- ****************************************************************************************
- */
+******************************************************************************************/
  
 void arch_set_pxact_gpio(void);
 
@@ -239,8 +208,7 @@ void arch_set_pxact_gpio(void);
 
 /*
  * LOW POWER CLOCK - Used for CFG_LP_CLK configuration
- ****************************************************************************************
- */
+******************************************************************************************/
 #define LP_CLK_XTAL32       0x00
 #define LP_CLK_RCX20        0xAA
 #define LP_CLK_FROM_OTP     0xFF
@@ -291,29 +259,25 @@ typedef struct
 
 extern arch_ble_metrics_t            metrics;
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Returns a pointer to ble metrics structure keeping device's statistics. 
  *
  * @param[in]  void
  *
   @return     arch_ble_metrics_t          Pointer to ble metrics structure         
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE arch_ble_metrics_t * arch_ble_metrics_get(void)
 {
     return &metrics;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Reset the counters of ble metrics structure. 
  *
  * @param[in]  void
  *
  * @return     void         
- ****************************************************************************************
- */
+******************************************************************************************/
 __INLINE void arch_ble_metrics_reset(void)
 {
     memset(&metrics, 0, sizeof(arch_ble_metrics_t));

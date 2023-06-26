@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file battery.c
  *
@@ -11,13 +10,11 @@
  *
  * <bluetooth.support@diasemi.com> and contributors.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /*
  * INCLUDE FILES
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #include <stdlib.h>
 #include <stdint.h>
@@ -31,16 +28,13 @@ static const uint8_t battery_filter_option=0;
 
 /*
  * FUNCTION DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Calculates battery level percentage for CR2032 batteries
  * @param[in] adc_sample  adc sample
  * @return Battery level. 0 - 100%
- ****************************************************************************************
- */
+******************************************************************************************/
 uint8_t batt_cal_cr2032(uint16_t adc_sample)
 {
     uint8_t batt_lvl;
@@ -59,13 +53,11 @@ uint8_t batt_cal_cr2032(uint16_t adc_sample)
     return batt_lvl;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Calculates battery level percentage for CR2032 batteries
  * @param[in] adc_sample  adc sample
  * @return Battery level. 0 - 100%
- ****************************************************************************************
- */
+******************************************************************************************/
 uint8_t batt_cal_cr1225(uint16_t adc_sample)
 {
     uint8_t batt_lvl;
@@ -80,13 +72,11 @@ uint8_t batt_cal_cr1225(uint16_t adc_sample)
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Calculates battery level percentage for a single AAA battery.
  * @param[in] adc_sample  adc sample
  * @return Battery level  0 - 100%
- ****************************************************************************************
- */
+******************************************************************************************/
 uint8_t batt_cal_aaa(uint16_t adc_sample)
 {
     uint8_t batt_lvl;
@@ -112,13 +102,11 @@ uint8_t batt_cal_aaa(uint16_t adc_sample)
     return batt_lvl;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Filters the adc_sample_value.
  * @param[in] new_adc_value The adc_sample value
  * @return The filtered output
- ****************************************************************************************
- */
+******************************************************************************************/
 static inline uint16_t battery_moving_average_filter(uint16_t new_adc_value)
 {
     static uint32_t old_value __attribute__((section("retention_mem_area0"),zero_init));
@@ -133,13 +121,11 @@ static inline uint16_t battery_moving_average_filter(uint16_t new_adc_value)
     return ( old_value >> filter_coefficient);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Filters the adc_sample_value.
  * @param[in] new_adc_value The adc_sample value
  * @return The filtered output
- ****************************************************************************************
- */
+******************************************************************************************/
 static inline uint16_t battery_moving_average_with_reaction_filter(uint16_t new_adc_value)
 {
     static uint32_t old_value __attribute__((section("retention_mem_area0"),zero_init));
@@ -163,13 +149,11 @@ static inline uint16_t battery_moving_average_with_reaction_filter(uint16_t new_
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Filters the adc_sample_value according to the constant battery_filter_option.
  * @param[in] new_adc_value The adc_sample value
  * @return The filtered output
- ****************************************************************************************
- */
+******************************************************************************************/
 static inline uint16_t battery_filter_value (uint16_t new_adc_value)
 {
      switch(battery_filter_option)
@@ -186,13 +170,11 @@ static inline uint16_t battery_filter_value (uint16_t new_adc_value)
      return (new_adc_value);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Reads current voltage from adc module and returns battery level.
  * @param[in] batt_type     Battery type. Supported types defined in battery.h
  * @return Battery level    0 - 100%
- ****************************************************************************************
- */
+******************************************************************************************/
 uint8_t battery_get_lvl(uint8_t batt_type)
 {
     uint8_t batt_lvl;

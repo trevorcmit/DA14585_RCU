@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file app_entry_point.c
  *
@@ -11,13 +10,11 @@
  *
  * <bluetooth.support@diasemi.com> and contributors.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /*
  * INCLUDE FILES
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #include "rwip_config.h"
 #include "app_api.h"
@@ -66,8 +63,7 @@
 
 /*
  * GLOBAL VARIABLES DEFINITION
- ****************************************************************************************
- */
+******************************************************************************************/
 
 const process_event_func_t app_process_handlers[] = {
 
@@ -119,8 +115,7 @@ const process_event_func_t app_process_handlers[] = {
 
 /*
  * FUNCTION DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 int app_entry_point_handler(ke_msg_id_t const msgid,
                             void const *param,
@@ -149,15 +144,13 @@ int app_entry_point_handler(ke_msg_id_t const msgid,
     return (KE_MSG_CONSUMED);
 };
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Search for a message handler function.
  * @param[in] msg_id        Id of the message whose handler is under request
  * @param[in] handlers      Pointer to the message handler table
  * @param[in] handler_num   Range of the message handler table
  * @return The message handler function or null
- ****************************************************************************************
- */
+******************************************************************************************/
 static ke_msg_func_t handler_search(ke_msg_id_t const msg_id,
                                     const struct ke_msg_handler *handlers,
                                     const int handler_num)

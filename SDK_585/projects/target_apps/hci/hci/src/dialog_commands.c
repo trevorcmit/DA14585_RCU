@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file dialog_commands.c
  *
@@ -11,13 +10,11 @@
  *
  * <bluetooth.support@diasemi.com> and contributors.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
  
  /*
  * INCLUDE FILES
- ****************************************************************************************
- */
+******************************************************************************************/
  
 #include "dialog_commands.h"
 #include "hci_int.h"
@@ -31,8 +28,7 @@ const struct hci_cmd_desc_tag hci_cmd_desc_tab_dialog_vs[] =
 
 const uint8_t dialog_commands_num = ARRAY_LEN (hci_cmd_desc_tab_dialog_vs);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles the reception of the vs1 dialog hci command.
  *
  * @param[in] msgid Id of the message received (probably unused).
@@ -41,8 +37,7 @@ const uint8_t dialog_commands_num = ARRAY_LEN (hci_cmd_desc_tab_dialog_vs);
  * @param[in] src_id ID of the sending task instance.
  *
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int dialog_commands_vs1_handler(ke_msg_id_t const msgid, 
                                       struct hci_vs1_dialog_cmd const *param,
                                       ke_task_id_t const dest_id, 

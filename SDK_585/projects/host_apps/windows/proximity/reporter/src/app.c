@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file app.c
  *
@@ -11,8 +10,7 @@
  *
  * <bluetooth.support@diasemi.com> and contributors.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
 
 #include <stdio.h>
@@ -353,8 +351,7 @@ void app_connect_confirm(enum gap_auth auth, uint8_t svc_changed_ind_enable)
     BleSendMsg(cfm);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Fills an array with random bytes (starting from the end of the array)
  *          Assuming an array of array_size and a dynamic key size, so that key_size = M*4+N:
  *          Calls rand() M times and appends the 4 bytes of each 32 bit return value to the output array
@@ -366,8 +363,7 @@ void app_connect_confirm(enum gap_auth auth, uint8_t svc_changed_ind_enable)
  * @param[in] array_size        Total size of the array
  *
  * @return void
- ****************************************************************************************
- */
+******************************************************************************************/
 static void fill_random_byte_array(uint8_t *dst, uint8_t key_size, uint8_t array_size)
 {
     uint32_t rand_val;

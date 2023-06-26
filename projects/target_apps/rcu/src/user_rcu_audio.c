@@ -1,38 +1,20 @@
-/**
- ****************************************************************************************
- *
- * \file user_rcu_audio.c
- *
- * \brief RCU Audio function implementation.
- *
- * Copyright (C) 2017 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information  
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com>
- *
- ****************************************************************************************
- */
+/******************************************************************************************
+* \file user_rcu_audio.c
+* \brief RCU Audio function implementation.
+*****************************************************************************************/
 
-/**
- ****************************************************************************************
- * \addtogroup USER
- * \{
- * \addtogroup USER_APP
- * \{
- * \addtogroup APP_RCU_AUDIO
- *
- * \{
- ****************************************************************************************
- */
+/******************************************************************************************
+* \addtogroup USER
+* \{
+* \addtogroup USER_APP
+* \{
+* \addtogroup APP_RCU_AUDIO
+* \{
+*****************************************************************************************/
 
-
-/*
- ****************************************************************************************
- * INCLUDE FILES
- ****************************************************************************************
- */
- 
+/*****************************************************************************************
+* INCLUDE FILES
+*****************************************************************************************/
 
 #ifdef HAS_AUDIO
     #include "user_rcu.h"
@@ -60,8 +42,7 @@
 /*
  ****************************************************************************************
  * DEFINES
- ****************************************************************************************
- */
+******************************************************************************************/
 
     #if defined(AUDIO_USE_CUSTOM_PROFILE) && defined(AUDIO_USE_THREE_HID_REPORTS)
         #error "AUDIO_USE_CUSTOM_PROFILE and AUDIO_USE_THREE_HID_REPORTS cannot be defined at the same time"
@@ -120,11 +101,10 @@ typedef enum audio_ctrl_cmd {
         AUDIO_STARTED_FROM_HOST
 } audio_ctrl_cmd_t;
 
-/*
- ****************************************************************************************
+
+/****************************************************************************************
  * GLOBAL VARIABLE DEFINITIONS
- ****************************************************************************************
- */
+*****************************************************************************************/
 extern bool skip_slave_latency_flag;
 extern struct gapc_param_updated_ind user_connection_params;
 
@@ -172,10 +152,10 @@ bool audio_control_packet_pending                           __PORT_RETAINED;
 bool user_audio_test_mode __PORT_RETAINED;
     #endif
 
-/*
+
+/**************************************************************************************
  * FUNCTION DEFINITIONS
- ****************************************************************************************
- */
+***************************************************************************************/
  
 void user_audio_send_att_packet_size_report(void);
   
@@ -185,30 +165,33 @@ void user_audio_set_packet_size(void)
     extern uint8_t last_connection_idx;
     uint16_t buffer_size, min_mtu;
         
-    if (user_fixed_att_packet_size) {
+    if (user_fixed_att_packet_size)
+    {
         // Host application has set the ATT packet size
         user_audio_packet_size = user_fixed_att_packet_size - 3; // The ATT header is 3 bytes
-    } else { 
-        // automatic packet size calculation
+    } 
+    else
+    { 
+        // aAtomatic packet size calculation
         user_mtu_size = gattc_get_mtu(last_connection_idx);
-        uint16_t effective_mtu_size = user_max_att_packet_size ? co_min(user_mtu_size, user_max_att_packet_size)
-                                                               : user_mtu_size;
+        uint16_t effective_mtu_size = user_max_att_packet_size ? co_min(user_mtu_size, user_max_att_packet_size) : user_mtu_size;
         
         #if (RWBLE_SW_VERSION_MAJOR >= 8) 
-        buffer_size = l2cm_get_buffer_size(last_connection_idx); // 27 if packet length extension is not used
+            buffer_size = l2cm_get_buffer_size(last_connection_idx); // 27 if packet length extension is not used
         #else
-        buffer_size = 27;
+            buffer_size = 27;
         #endif
             
         const uint32_t BANDWIDTH_MULT = ((8 * MAX_NUM_OF_PACKETS_PER_CONNECTION * 1000000)) / (user_connection_params.con_interval*1250);
         uint32_t bandwidth;
-        if(effective_mtu_size > (buffer_size - 4)) { // The L2CAP header is 4 bytes
+        if(effective_mtu_size > (buffer_size - 4))
+        {   // The L2CAP header is 4 bytes
             // The MTU will not fit in one packet
             uint8_t packets_per_mtu = (effective_mtu_size + 4 + buffer_size - 1) / buffer_size;
-            
             bandwidth = (packets_per_mtu * buffer_size - 7) * BANDWIDTH_MULT / packets_per_mtu; // The L2CAP header is 4 bytes and the ATT header is 3 bytes
         }
-        else {
+        else
+        {
             // The MTU will fit in one packet
             bandwidth = (effective_mtu_size - 3) * BANDWIDTH_MULT; // in Kbps
         }
@@ -248,11 +231,13 @@ void user_audio_set_packet_size(void)
             min_mtu = co_max(min_mtu, 50);
             min_mtu = co_min(min_mtu, effective_mtu_size);
         }
-        else {
+        else
+        {
             min_mtu = effective_mtu_size;
         }
 
-        if(min_mtu > buffer_size - 4) {
+        if (min_mtu > buffer_size - 4)
+        {
             min_mtu = (min_mtu - (buffer_size-4))/buffer_size*buffer_size + buffer_size - 4;
         }
         
@@ -298,76 +283,70 @@ void user_audio_get_handles(void)
 }
 
     #ifdef AUDIO_CONTROL_ESCAPE_VALUE    
-/**
- ****************************************************************************************
- * \brief Send audio control command in-band with audio data. This function cannot be 
- *        used with packet based stream.
- *
- * \param[in] cmd    The command to be sent in band with audio data
- * \param[in] param  The parameter of the command
- ****************************************************************************************
- */  
-static void user_audio_send_inband_command(app_audio_inband_cmd_t cmd, uint8_t param)
-{
-    ASSERT_ERROR(param <= 0x0F);
-    
-    const uint16_t command_length = 2;
-    
-    uint8_t *buffer = app_stream_fifo_get_priority_write_dataptr(command_length);
-    
-    if(buffer == NULL) {
-        ASSERT_WARNING(buffer != NULL); // FIFO is full. In-band command will be discarded.
-        return;
-    }
-    
-    buffer[0] = AUDIO_CONTROL_ESCAPE_VALUE;
-    buffer[1] = cmd | param;
-    app_stream_fifo_commit_write_pkt(command_length, user_audio_data_hdl[user_audio_stream_report_nr]);
-}
+        /****************************************************************************************
+         * \brief Send audio control command in-band with audio data. This function cannot be used with packet based stream.
+         * \param[in] cmd    The command to be sent in band with audio data
+         * \param[in] param  The parameter of the command
+        *****************************************************************************************/  
+        static void user_audio_send_inband_command(app_audio_inband_cmd_t cmd, uint8_t param)
+        {
+            ASSERT_ERROR(param <= 0x0F);
+            
+            const uint16_t command_length = 2;
+            
+            uint8_t *buffer = app_stream_fifo_get_priority_write_dataptr(command_length);
+            
+            if (buffer == NULL)
+            {
+                ASSERT_WARNING(buffer != NULL); // FIFO is full. In-band command will be discarded.
+                return;
+            }
+            
+            buffer[0] = AUDIO_CONTROL_ESCAPE_VALUE;
+            buffer[1] = cmd | param;
+            app_stream_fifo_commit_write_pkt(command_length, user_audio_data_hdl[user_audio_stream_report_nr]);
+        }
     #endif
 
-/**
- ****************************************************************************************
+/****************************************************************************************
  * \brief Set the ADPCM mode and start audio sampling and encoding. If in-band commands
  *        are supported the AUDIO_CONTROL_SET_ADPCM_MODE_CMD is also sent to the host
- *
- * \param[in]  mode The ADPCM mode. If mode is ADPCM_MODE_MIN then the mode defined in
- *             adpcm_env.min_mode is used.
- ****************************************************************************************
- */  
+ * \param[in]  mode The ADPCM mode. If mode is ADPCM_MODE_MIN then the mode defined in adpcm_env.min_mode is used.
+*****************************************************************************************/  
 static void user_audio_set_adpm_mode_and_start(app_audio_adpcm_mode_t mode)
 {
-#ifdef CFG_AUDIO_ADAPTIVE_RATE
-    if(mode == ADPCM_MODE_MIN) {
-        mode = adpcm_env.min_mode;
-    }
-    adpcm_env.mode = mode;
-    
-    #ifdef CFG_AUDIO_IMA_ADPCM
-    app_audio_set_adpcm_mode(mode);
-    dbg_printf(DBG_APP_LVL, "ADPCM mode: %d\r\n", mode);
+    #ifdef CFG_AUDIO_ADAPTIVE_RATE
+        if (mode == ADPCM_MODE_MIN)
+        {
+            mode = adpcm_env.min_mode;
+        }
+        adpcm_env.mode = mode;
+        
+        #ifdef CFG_AUDIO_IMA_ADPCM
+            app_audio_set_adpcm_mode(mode);
+            dbg_printf(DBG_APP_LVL, "ADPCM mode: %d\r\n", mode);
+        #endif
     #endif
-#endif
 
-#if defined(CFG_AUDIO_IMA_ADPCM) && defined(AUDIO_CONTROL_ESCAPE_VALUE)
-    user_audio_send_inband_command(AUDIO_CONTROL_SET_ADPCM_MODE_CMD, mode);
-#endif
+    #if defined(CFG_AUDIO_IMA_ADPCM) && defined(AUDIO_CONTROL_ESCAPE_VALUE)
+        user_audio_send_inband_command(AUDIO_CONTROL_SET_ADPCM_MODE_CMD, mode);
+    #endif
         
     app_audio_start();
 }
 
+
 #if defined(AUDIO_CONTROL_ESCAPE_VALUE) && defined(CFG_AUDIO_ADAPTIVE_RATE)
-/**
- ****************************************************************************************
+/****************************************************************************************
  * \brief Change the ADPCM mode according to the available channel bandwidth. ADPCM
  *        rate is decreased when the stream FIFO is about to get full. ADPCM rate is 
  *        increased when channel bandwidth is enough for the new rate.
- ****************************************************************************************
- */  
+*****************************************************************************************/  
 static void user_audio_adapt_rate(void)
 {
     #ifdef CFG_AUDIO_ADAPTIVE_RATE
-    if(adpcm_env.auto_mode == false) {
+    if (adpcm_env.auto_mode == false)
+    {
         return;
     }
     
@@ -378,46 +357,52 @@ static void user_audio_adapt_rate(void)
                                                                          // FIFO level is below threshold for 1000 ms
     uint32_t timestamp = port_get_time();
         
-    if(app_stream_is_enabled() && timestamp - adpcm_env.prev_timestamp > CLOSED_LOOP_T) {
+    if (app_stream_is_enabled() && timestamp - adpcm_env.prev_timestamp > CLOSED_LOOP_T)
+    {
         adpcm_env.prev_timestamp = timestamp;
         
         uint8_t usage = app_stream_get_fifo_usage();
         dbg_printf(DBG_APP_LVL, "t: %d, f: %d\r\n", timestamp*10, usage);
         
-        if(usage < INC_THRES) {
-            if(adpcm_env.inc_step >= CLOSED_LOOP_INC_STEPS) {
+        if (usage < INC_THRES)
+        {
+            if (adpcm_env.inc_step >= CLOSED_LOOP_INC_STEPS)
+            {
                 adpcm_env.inc_step = 1;
+                if (adpcm_env.mode <= adpcm_env.min_mode) { return; }
 
-                if(adpcm_env.mode <= adpcm_env.min_mode) {
-                    return;
-                }
+                #ifdef BLE_THROUGHPUT_METRICS        
+                    extern uint32_t ble_throughput_rx_err;
+                    extern uint32_t ble_throughput_rx_pkt;
+                    
+                    uint32_t bandwidth = adpcm_env.data_bandwidth * ble_throughput_rx_pkt/( ble_throughput_rx_pkt + ble_throughput_rx_err);
+                    ble_throughput_rx_err = 0;
+                    ble_throughput_rx_pkt = 0;
+                    
+                    dbg_printf(DBG_APP_LVL, "BW: %d, required BW: %d\r\n", bandwidth, ADPM_MODE_TO_RATE(adpcm_env.mode-1));
+                    if (bandwidth < ADPM_MODE_TO_RATE(adpcm_env.mode-1) )
+                    {
+                        return;
+                    }
+                #else
+                    #warning "BLE_THROUGHPUT_METRICS must be defined to properly calculate available bandwidth"
+                #endif
 
-        #ifdef BLE_THROUGHPUT_METRICS        
-                extern uint32_t ble_throughput_rx_err;
-                extern uint32_t ble_throughput_rx_pkt;
-                
-                uint32_t bandwidth = adpcm_env.data_bandwidth * ble_throughput_rx_pkt/( ble_throughput_rx_pkt + ble_throughput_rx_err);
-                ble_throughput_rx_err = 0;
-                ble_throughput_rx_pkt = 0;
-                
-                dbg_printf(DBG_APP_LVL, "BW: %d, required BW: %d\r\n", bandwidth, ADPM_MODE_TO_RATE(adpcm_env.mode-1));
-                if(bandwidth < ADPM_MODE_TO_RATE(adpcm_env.mode-1) ) {
-                    return;
-                }
-        #else
-            #warning "BLE_THROUGHPUT_METRICS must be defined to properly calculate available bandwidth"
-        #endif
                 adpcm_env.mode--;
                 user_audio_set_adpm_mode_and_start(adpcm_env.mode);
             }
-            else {
+            else
+            {
                 adpcm_env.inc_step++;
             }
         }
-        else {
+        else
+        {
             adpcm_env.inc_step = 1;
-            if(usage > (DEC_THRES + adpcm_env.mode*10)) {
-                if(adpcm_env.mode < ADPCM_MODE_24KBPS_3_8KHZ) {
+            if (usage > (DEC_THRES + adpcm_env.mode*10))
+            {
+                if (adpcm_env.mode < ADPCM_MODE_24KBPS_3_8KHZ)
+                {
                     adpcm_env.mode++;
                     user_audio_set_adpm_mode_and_start(adpcm_env.mode);
                 }
@@ -428,8 +413,7 @@ static void user_audio_adapt_rate(void)
 }
 #endif
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief CTRL_IN packet data format
  * byte 0: stream control. 1=enable, 0=disable
  * byte 1: notification type. 0 = Audio stream enable/disable command
@@ -441,17 +425,12 @@ static void user_audio_adapt_rate(void)
  *                            6 = ATT packet size report
  * byte 2: report length
  * byte 3..19: report data
- *    For stream enable report: byte 3: 0 = Legacy Audio stream format. Data are 
- *                                          transmitted using three reports with IDs 6,7, 
- *                                          and 8
- *                                      report_id = the report ID of the HID report used
- *                                                  for streaming data 
+ *    For stream enable report: byte 3: 0 = Legacy Audio stream format. Data are transmitted using three reports with IDs 6,7, and 8
+ *                                      report_id = the report ID of the HID report used for streaming data 
  *                              byte 4: bit0: 1 = in-band control information is used
  *                                      bit1: 1 = adaptive rate control is used
- *                                      bit2: 1 = non packet based audio data, 
- *                                            0 = packet based audio data
- *                                      bit3: 1 = support enhanced command set in byte 1 
- *                                                of CTRL_OUT packet
+ *                                      bit2: 1 = non packet based audio data, 0 = packet based audio data
+ *                                      bit3: 1 = support enhanced command set in byte 1 of CTRL_OUT packet
  *                              byte 5: ADPCM mode 
  *                                           bit4..5: 2 = automatic, 
  *                                                   1 = fixed, 
@@ -459,21 +438,16 @@ static void user_audio_adapt_rate(void)
  *                                           0 is reserved for legacy mode (No ADPCM mode 
  *                                           information available)
  *                              byte 6:      1 = numberpad keyboard page
- *                                           2 = navigation keyboard page (when motion 
- *                                               is active)
+ *                                           2 = navigation keyboard page (when motion is active)
  *                                           0 = Reserved for DA14582 refdes
- *                              byte 7..8:   current ATT packet size (least significant 
- *                                           byte first)
+ *                              byte 7..8:   current ATT packet size (least significant byte first)
  *                              byte 9..10:  ATT MTU size (least significant byte first)
- *                              byte 11..12: connection interval (least significant byte 
- *                                           first in steps of 1.25msec)
+ *                              byte 11..12: connection interval (least significant byte first in steps of 1.25msec)
  *                              byte 13..14: slave latency (least significant byte first)
- *                              byte 15..16: supervision timeout (least significant byte 
- *                                           first in steps of 10msec)
+ *                              byte 15..16: supervision timeout (least significant byte first in steps of 10msec)
  *    For key report: byte 3..5: extended key report
  *                    byte 6..10: normal key report
  *                    byte 12: key page layout: 1: number page, 2: cursor page
- *
  *    For debug info report: 
  *                    byte 3: 0
  *                    byte 4: 3
@@ -483,16 +457,13 @@ static void user_audio_adapt_rate(void)
  *                    byte 8: Stream FIFO write pointer
  *                    byte 9: Stream FIFO read pointer
  *    For connection parameter report:
- *                    byte3..4  = connection interval (least significant byte first in
- *                                steps of 1.25msec)
+ *                    byte3..4  = connection interval (least significant byte first in steps of 1.25msec)
  *                    byte5..6  = slave latency
- *                    byte7..8  = supervision timeout (least significant byte first in
- *                                steps of 10msec)
+ *                    byte7..8  = supervision timeout (least significant byte first in steps of 10msec)
  *    For ATT packet size report:
  *                    byte3..4: current ATT packet size (least significant byte first)
  *                    byte5..6: ATT MTU size (least significant byte first)
- ****************************************************************************************
- */
+*****************************************************************************************/
  
 typedef enum {
     CTRL_IN_ENABLE_REPORT          = 0,
@@ -575,21 +546,18 @@ enum {
     #define CTRL_IN_ENABLE_REPORT_NON_PACKET_BASED_AUDIO_FLAG  0x04
     #define CTRL_IN_ENABLE_REPORT_ENHANCED_COMMAND_SET_FLAG    0x08
 
-/**
- ****************************************************************************************
+
+/****************************************************************************************
  * \brief Create the configuration packet that will be sent when:
  *        1. The host reads the STREAM_CTRL_IN HID report 
  *        2. The host reads the custom audio profile configuration characteristic
  *        3. The RCU sends an enable report to notification to STREAM_CTRL_IN HID report
  *           or to the custom audio profile control characteristic
- *
  * \param[out] data The data of the configuration packet
  * \param[in]  audio_command The command of the notification
  * \param[in]  report_type The report type of the notification
- *
  * \return     The size of the configuration packet
- ****************************************************************************************
- */ 
+*****************************************************************************************/ 
 static uint16_t user_audio_create_ctrl_in_packet(uint8_t *data, audio_ctrl_cmd_t audio_command, stream_report_type_t report_type)
 {
     data[CTRL_IN_ENABLE_REPORT_STREAM_EN_POS] = audio_command;
@@ -597,39 +565,39 @@ static uint16_t user_audio_create_ctrl_in_packet(uint8_t *data, audio_ctrl_cmd_t
     data[CTRL_IN_ENABLE_REPORT_LENGTH_POS   ] = CTRL_IN_ENABLE_REPORT_SIZE - CTRL_IN_ENABLE_REPORT_LENGTH_POS - 1; // length
     
     #if defined(AUDIO_USE_THREE_HID_REPORTS) || defined(AUDIO_USE_CUSTOM_PROFILE)
-    data[CTRL_IN_ENABLE_REPORT_STREAM_FORMAT_POS] = 0;
+        data[CTRL_IN_ENABLE_REPORT_STREAM_FORMAT_POS] = 0;
     #else
-    data[CTRL_IN_ENABLE_REPORT_STREAM_FORMAT_POS] = HID_AUDIO_DATA_1_REPORT_ID;
+        data[CTRL_IN_ENABLE_REPORT_STREAM_FORMAT_POS] = HID_AUDIO_DATA_1_REPORT_ID;
     #endif
     
     data[CTRL_IN_ENABLE_REPORT_STREAM_FEATURES_POS] = CTRL_IN_ENABLE_REPORT_ENHANCED_COMMAND_SET_FLAG;
     
     #if !defined(CFG_APP_STREAM_PACKET_BASED) && defined(AUDIO_CONTROL_ESCAPE_VALUE)
-    data[CTRL_IN_ENABLE_REPORT_STREAM_FEATURES_POS] |= CTRL_IN_ENABLE_REPORT_INBAND_FLAG; // use inband control information
+        data[CTRL_IN_ENABLE_REPORT_STREAM_FEATURES_POS] |= CTRL_IN_ENABLE_REPORT_INBAND_FLAG; // use inband control information
     #endif
 
     #ifndef CFG_APP_STREAM_PACKET_BASED
-    data[CTRL_IN_ENABLE_REPORT_STREAM_FEATURES_POS] |= CTRL_IN_ENABLE_REPORT_NON_PACKET_BASED_AUDIO_FLAG;
+        data[CTRL_IN_ENABLE_REPORT_STREAM_FEATURES_POS] |= CTRL_IN_ENABLE_REPORT_NON_PACKET_BASED_AUDIO_FLAG;
     #endif
     
     #ifdef CFG_AUDIO_ADAPTIVE_RATE
-    data[CTRL_IN_ENABLE_REPORT_STREAM_FEATURES_POS] |= CTRL_IN_ENABLE_REPORT_ADAPTIVE_RATE_FLAG; // use adaptive audio rate
-    data[CTRL_IN_ENABLE_REPORT_ADPCM_MODE_POS] = CTRL_IN_ENABLE_REPORT_ADPCM_AUTO_MODE_FLAG | adpcm_env.mode;
+        data[CTRL_IN_ENABLE_REPORT_STREAM_FEATURES_POS] |= CTRL_IN_ENABLE_REPORT_ADAPTIVE_RATE_FLAG; // use adaptive audio rate
+        data[CTRL_IN_ENABLE_REPORT_ADPCM_MODE_POS] = CTRL_IN_ENABLE_REPORT_ADPCM_AUTO_MODE_FLAG | adpcm_env.mode;
     #else    
-    data[CTRL_IN_ENABLE_REPORT_ADPCM_MODE_POS] = CTRL_IN_ENABLE_REPORT_ADPCM_FIXED_MODE_FLAG | ADPCM_DEFAULT_MODE;
+        data[CTRL_IN_ENABLE_REPORT_ADPCM_MODE_POS] = CTRL_IN_ENABLE_REPORT_ADPCM_FIXED_MODE_FLAG | ADPCM_DEFAULT_MODE;
     #endif
 
     #ifdef HAS_KBD    
-    extern bool user_fn_locked;
-    data[CTRL_IN_ENABLE_REPORT_KBD_PAGE_POS] = user_fn_locked ? 2 : 1;
+        extern bool user_fn_locked;
+        data[CTRL_IN_ENABLE_REPORT_KBD_PAGE_POS] = user_fn_locked ? 2 : 1;
     #else    
-    data[CTRL_IN_ENABLE_REPORT_KBD_PAGE_POS] = 0;
+        data[CTRL_IN_ENABLE_REPORT_KBD_PAGE_POS] = 0;
     #endif
     
     #if APP_STREAM_USE_CIRCULAR_BUFFER
-    port_write16(data + CTRL_IN_ENABLE_REPORT_ATT_PACKET_SIZE_LSB_POS       , user_audio_packet_size+3);
+        port_write16(data + CTRL_IN_ENABLE_REPORT_ATT_PACKET_SIZE_LSB_POS, user_audio_packet_size+3);
     #else
-    port_write16(data + CTRL_IN_ENABLE_REPORT_ATT_PACKET_SIZE_LSB_POS       , APP_STREAM_PACKET_SIZE+3);
+        port_write16(data + CTRL_IN_ENABLE_REPORT_ATT_PACKET_SIZE_LSB_POS, APP_STREAM_PACKET_SIZE+3);
     #endif
     
     port_write16(data + CTRL_IN_ENABLE_REPORT_ATT_MTU_SIZE_LSB_POS          , user_mtu_size);
@@ -640,29 +608,24 @@ static uint16_t user_audio_create_ctrl_in_packet(uint8_t *data, audio_ctrl_cmd_t
     return CTRL_IN_ENABLE_REPORT_SIZE;
 }
 
-/**
- ****************************************************************************************
+
+/****************************************************************************************
  * \brief Create the configuration packet that will be sent when the host reads 
- *        the STREAM_CTRL_IN HID report or the custom audio profile configuration 
- *        characteristic.
- *
+ *        the STREAM_CTRL_IN HID report or the custom audio profile configuration characteristic.
  * \param[out] data The data of the configuration packet
  * \return The size of the configuration packet
- ****************************************************************************************
- */ 
+*****************************************************************************************/ 
 static uint16_t user_audio_create_configuration_packet(uint8_t *data)
 {
     return user_audio_create_ctrl_in_packet(data, AUDIO_STOP, CTRL_IN_CONFIG);
 }
 
-/**
- ****************************************************************************************
+
+/****************************************************************************************
  * \brief Send an enable packet notification to the STREAM_CTRL_IN HID report or to the 
  *        custom audio profile control characteristic.
- *
  * \param[in]  audio_command The command to be sent
- ****************************************************************************************
- */  
+*****************************************************************************************/  
 static void user_audio_send_enable(audio_ctrl_cmd_t audio_command)
 {    
 #ifdef CFG_AUDIO_ADAPTIVE_RATE
@@ -687,11 +650,9 @@ static void user_audio_send_enable(audio_ctrl_cmd_t audio_command)
 }
 
 #if APP_STREAM_USE_CIRCULAR_BUFFER
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief Send a CTRL_IN_ATT_PACKET_SIZE_REPORT packet notification
- ****************************************************************************************
- */  
+******************************************************************************************/  
 static void user_audio_send_att_packet_size_report(void)
 {
     uint8_t pkt_data[user_audio_report_length];
@@ -720,8 +681,7 @@ void user_audio_send_conn_params_report(void)
     port_send_notification(user_audio_ctrl_in_hdl, pkt_data, CTRL_IN_CONN_PARAMS_REPORT_SIZE, false);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief CTRL_OUT packet data format
  * byte 0: stream enable. 1=enable, 0=disable
  * byte 1: command: 0x00 = stream enable/disable
@@ -758,8 +718,7 @@ void user_audio_send_conn_params_report(void)
  *           byte 9..10  = press duration
  *           byte 10..11 = repeat counter
  *           byte 12..13 = repeat interval
- ****************************************************************************************
- */
+******************************************************************************************/
 enum {
     CTRL_OUT_STREAM_ENABLE       = 0x00,
     CTRL_OUT_AUDIO_MODE          = 0x0F,
@@ -864,15 +823,13 @@ void user_rcu_audio_kbd_emul_timer_handler(void)
 
 #endif
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief Process the control packet written from the host to either HID CTRL_OUT report
  *        or to the custom audio profile control characteristic.
  *
  * \param[in]  data    The data of the control packet
  * \param[in]  length  The length of the control packet
- ****************************************************************************************
- */  
+******************************************************************************************/  
 static void user_audio_process_ctrl_packet(const uint8_t *data, uint16_t length)
 {
     #ifdef HAS_PWR_MGR
@@ -1197,8 +1154,7 @@ void user_rcu_audio_test_mode_timer_handler(void)
 /*
  ****************************************************************************************
  * Audio module callbacks
- ****************************************************************************************
- */ 
+******************************************************************************************/ 
 void user_audio_on_disconnect(void)
 {
     user_audio_stop(true);   
@@ -1342,8 +1298,7 @@ uint8_t user_audio_on_system_powered(void)
 /*
  ****************************************************************************************
  * Custom Audio profile functions
- ****************************************************************************************
- */  
+******************************************************************************************/  
 
 enum process_event_response user_audio_process_custom_profile_handler(ke_msg_id_t const msgid, void const *param)
 {
@@ -1398,16 +1353,13 @@ void user_audio_set_config_data(void)
 /*
  ****************************************************************************************
  * Callback functions
- ****************************************************************************************
- */
+******************************************************************************************/
     #ifndef AUDIO_USE_CUSTOM_PROFILE
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief Called when STREAM_CTRL_OUT HID report is written
  * param[in] conidx
  * param[in] report_info
- ****************************************************************************************
- */
+******************************************************************************************/
 void user_audio_write_ctrl_out_callback(uint8_t conidx, struct hogpd_report_info *report_info)
 {
         #if (RWBLE_SW_VERSION_MAJOR >= 8)     
@@ -1421,15 +1373,13 @@ void user_audio_write_ctrl_out_callback(uint8_t conidx, struct hogpd_report_info
     user_audio_process_ctrl_packet(report_data, length);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief Called when STREAM_CTRL_IN HID report is read
  *
  * param[in] conidx
  * param[out] report_data
  * param[out] report_length
- ****************************************************************************************
- */
+******************************************************************************************/
 void user_audio_read_ctrl_in_callback(uint8_t conidx, uint8_t *report_data, uint16_t *report_length)
 {
     *report_length = user_audio_create_configuration_packet(report_data);

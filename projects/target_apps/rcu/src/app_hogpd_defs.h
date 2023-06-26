@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file app_hogpd_defs.h
  *
@@ -11,8 +10,7 @@
  *
  * <bluetooth.support@diasemi.com>
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #ifndef _APP_HOGPD_DEFS_H_
 #define _APP_HOGPD_DEFS_H_
@@ -171,21 +169,21 @@ typedef struct {
 #define HID_USAGE_SENSOR_UNITS_CENTIMETER						 0x65,0x11
                                                                  
 #ifdef DEFINE_NON_HID_UNITS                                      
-#define HID_USAGE_SENSOR_UNITS_CELSIUS							 “Use Unit(Kelvin) and subtract 273.15”
-#define HID_USAGE_SENSOR_UNITS_KILOGRAM							 “Use Unit(gram) and UnitExponent(0x03)”
-#define HID_USAGE_SENSOR_UNITS_METER							 “Use Unit(centimeter) and UnitExponent(0x02)”
-#define HID_USAGE_SENSOR_UNITS_BAR								 “Use Unit(Pascal) and UnitExponent(0x05)”
-#define HID_USAGE_SENSOR_UNITS_KNOT								 “Use Unit(m/s) and multiply by 1852/3600”
-#define HID_USAGE_SENSOR_UNITS_PERCENT							 “Use Unit(Not_Specified)”
-#define HID_USAGE_SENSOR_UNITS_G								 “Use Unit(m/s2) and divide by 9.8”
-#define HID_USAGE_SENSOR_UNITS_MILLISECOND						 “Use Unit(second) and UnitExponent(0x0D)”
-#define HID_USAGE_SENSOR_UNITS_MILLIGAUSS						 “Use Unit(Gauss) and UnitExponent(0x0D)”
+#define HID_USAGE_SENSOR_UNITS_CELSIUS							 ï¿½Use Unit(Kelvin) and subtract 273.15ï¿½
+#define HID_USAGE_SENSOR_UNITS_KILOGRAM							 ï¿½Use Unit(gram) and UnitExponent(0x03)ï¿½
+#define HID_USAGE_SENSOR_UNITS_METER							 ï¿½Use Unit(centimeter) and UnitExponent(0x02)ï¿½
+#define HID_USAGE_SENSOR_UNITS_BAR								 ï¿½Use Unit(Pascal) and UnitExponent(0x05)ï¿½
+#define HID_USAGE_SENSOR_UNITS_KNOT								 ï¿½Use Unit(m/s) and multiply by 1852/3600ï¿½
+#define HID_USAGE_SENSOR_UNITS_PERCENT							 ï¿½Use Unit(Not_Specified)ï¿½
+#define HID_USAGE_SENSOR_UNITS_G								 ï¿½Use Unit(m/s2) and divide by 9.8ï¿½
+#define HID_USAGE_SENSOR_UNITS_MILLISECOND						 ï¿½Use Unit(second) and UnitExponent(0x0D)ï¿½
+#define HID_USAGE_SENSOR_UNITS_MILLIGAUSS						 ï¿½Use Unit(Gauss) and UnitExponent(0x0D)ï¿½
 #endif
 
 //data type usage switches -- we use them as modifiers for sensor properties & data fields
 //to create thresholds, for example.
 //NOTE: the usage tables actually define these as two bytes, but in order
-//to get the define macros to work so these are ‘or-ed’ these are defined
+//to get the define macros to work so these are ï¿½or-edï¿½ these are defined
 //here as only one byte.
 #define HID_USAGE_SENSOR_DATA_MOD_NONE							 0x00 // US
 #define HID_USAGE_SENSOR_DATA_MOD_CHANGE_SENSITIVITY_ABS		 0x10 // US

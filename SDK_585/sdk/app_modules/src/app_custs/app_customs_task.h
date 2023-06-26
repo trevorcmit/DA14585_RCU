@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file app_customs_task.h
  *
@@ -11,16 +10,14 @@
  *
  * <bluetooth.support@diasemi.com> and contributors.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #ifndef _APP_CUSTOMS_TASK_H_
 #define _APP_CUSTOMS_TASK_H_
 
 /*
  * INCLUDE FILES
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #include "rwip_config.h"     // SW configuration
 
@@ -32,12 +29,10 @@
 
 /*
  * FUNCTION DECLARATIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #if BLE_CUSTOM1_SERVER
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Process handler for the Application Custom 1 Service messages.
  * @param[in] msgid   Id of the message received
  * @param[in] param   Pointer to the parameters of the message
@@ -45,8 +40,7 @@
  * @param[in] src_id  ID of the sending task instance
  * @param[in] msg_ret Result of the message handler
  * @return Returns if the message is handled by the process handler
- ****************************************************************************************
- */
+******************************************************************************************/
 enum process_event_response app_custs1_process_handler(ke_msg_id_t const msgid,
                                                        void const *param,
                                                        ke_task_id_t const dest_id,
@@ -55,8 +49,7 @@ enum process_event_response app_custs1_process_handler(ke_msg_id_t const msgid,
 #endif // BLE_CUSTOM1_SERVER
 
 #if BLE_CUSTOM2_SERVER
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Process handler for the Application Custom 2 Service messages.
  * @param[in] msgid   Id of the message received
  * @param[in] param   Pointer to the parameters of the message
@@ -64,8 +57,7 @@ enum process_event_response app_custs1_process_handler(ke_msg_id_t const msgid,
  * @param[in] src_id  ID of the sending task instance
  * @param[in] msg_ret Result of the message handler
  * @return Returns if the message is handled by the process handler
- ****************************************************************************************
- */
+******************************************************************************************/
 enum process_event_response app_custs2_process_handler(ke_msg_id_t const msgid,
                                                        void const *param,
                                                        ke_task_id_t const dest_id,

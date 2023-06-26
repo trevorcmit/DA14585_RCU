@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file rdtest_api.h
  *
@@ -11,16 +10,14 @@
  *
  * <bluetooth.support@diasemi.com> and contributors.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #ifndef _RDTEST_API_H_
 #define _RDTEST_API_H_
 
 /*
  * INCLUDE FILES
- ****************************************************************************************
- */
+******************************************************************************************/
  
 #include <stdint.h>
 #include "rdtest_lowlevel.h"
@@ -28,11 +25,9 @@
 
 /*
  * FUNCTION DECLARATIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Initialize ports
  *
  * This function initialize ports and put CPLD in known (safe) state. Version can later
@@ -45,8 +40,7 @@
  */
 void rdtest_initialize(uint8_t version);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Controls the Vpp
  *
  * This function control the Vpp OTP programming voltage
@@ -58,8 +52,7 @@ void rdtest_initialize(uint8_t version);
  */
 void rdtest_vppcontrol(uint8_t state);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Controls the pulsewidth
  *
  * This function controls the pulsewidth selection
@@ -71,8 +64,7 @@ void rdtest_vppcontrol(uint8_t state);
  */
 void rdtest_select_pulsewidth(uint8_t length);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Connect or disconnects
  *
  * This function connect or disconnects an FTDI-uart to DUT_connector
@@ -84,8 +76,7 @@ void rdtest_select_pulsewidth(uint8_t length);
  */
 void rdtest_uart_connect(uint16_t connectmap16);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Internal loopback
  *
  * This function control CPLD internal loopback, only port only!
@@ -97,8 +88,7 @@ void rdtest_uart_connect(uint16_t connectmap16);
  */
 void rdtest_make_loopback(uint8_t port);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Connect Vbat
  *
  * This function connect Vbat to DUT_connector
@@ -110,8 +100,7 @@ void rdtest_make_loopback(uint8_t port);
  */
 void rdtest_vbatcontrol(uint16_t connectmap16);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Reset pulse
  *
  * This function generate a reset pulse to all devices
@@ -123,8 +112,7 @@ void rdtest_vbatcontrol(uint16_t connectmap16);
  */
 void rdtest_resetpulse(uint16_t delayms);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Xtal-measurement to uart pin
  *
  * This function route xtal-measurement pulse to uart pin
@@ -136,8 +124,7 @@ void rdtest_resetpulse(uint16_t delayms);
  */
 void rdtest_pulse_to_uart(uint16_t connectmap16);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Xtal-measurement
  *
  * This function generate 1 xtal-measurement pulse

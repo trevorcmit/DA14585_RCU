@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file bass_task.c
  *
@@ -8,21 +7,17 @@
  * Copyright (C) RivieraWaves 2009-2015
  *
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @addtogroup BASSTASK
  * @{
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /*
  * INCLUDE FILES
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #include "rwip_config.h"
 
@@ -40,12 +35,10 @@
 
 /*
  * GLOBAL FUNCTIONS DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the @ref BAPS_ENABLE_REQ message.
  * The handler enables the Battery 'Profile' Server Role.
  * @param[in] msgid Id of the message received (probably unused).
@@ -53,8 +46,7 @@
  * @param[in] dest_id ID of the receiving task instance (probably unused).
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int bass_enable_req_handler(ke_msg_id_t const msgid,
                                    struct bass_enable_req const *param,
                                    ke_task_id_t const dest_id,
@@ -98,16 +90,14 @@ static int bass_enable_req_handler(ke_msg_id_t const msgid,
     return msg_status;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the @ref BAPS_BATT_LEVEL_SEND_REQ message.
  * @param[in] msgid Id of the message received (probably unused).
  * @param[in] param Pointer to the parameters of the message.
  * @param[in] dest_id ID of the receiving task instance (probably unused).
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int bass_batt_level_upd_req_handler(ke_msg_id_t const msgid,
                                             struct bass_batt_level_upd_req const *param,
                                             ke_task_id_t const dest_id,
@@ -151,8 +141,7 @@ static int bass_batt_level_upd_req_handler(ke_msg_id_t const msgid,
     return (msg_status);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the attribute info request message.
  *
  * @param[in] msgid Id of the message received (probably unused).
@@ -160,8 +149,7 @@ static int bass_batt_level_upd_req_handler(ke_msg_id_t const msgid,
  * @param[in] dest_id ID of the receiving task instance (probably unused).
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int gattc_att_info_req_ind_handler(ke_msg_id_t const msgid,
         struct gattc_att_info_req_ind *param,
         ke_task_id_t const dest_id,
@@ -200,16 +188,14 @@ static int gattc_att_info_req_ind_handler(ke_msg_id_t const msgid,
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the @ref GATTC_WRITE_REQ_IND message.
  * @param[in] msgid Id of the message received (probably unused).
  * @param[in] param Pointer to the parameters of the message.
  * @param[in] dest_id ID of the receiving task instance (probably unused).
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int gattc_write_req_ind_handler(ke_msg_id_t const msgid, struct gattc_write_req_ind const *param,
                                       ke_task_id_t const dest_id, ke_task_id_t const src_id)
 {
@@ -269,16 +255,14 @@ static int gattc_write_req_ind_handler(ke_msg_id_t const msgid, struct gattc_wri
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the @ref GATTC_READ_REQ_IND message.
  * @param[in] msgid Id of the message received (probably unused).
  * @param[in] param Pointer to the parameters of the message.
  * @param[in] dest_id ID of the receiving task instance (probably unused).
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int gattc_read_req_ind_handler(ke_msg_id_t const msgid, struct gattc_read_req_ind const *param,
                                       ke_task_id_t const dest_id, ke_task_id_t const src_id)
 {
@@ -347,8 +331,7 @@ static int gattc_read_req_ind_handler(ke_msg_id_t const msgid, struct gattc_read
 
     return (KE_MSG_CONSUMED);
 }
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles @ref GATTC_CMP_EVT for GATTC_NOTIFY message meaning that Measurement
  * notification has been correctly sent to peer device (but not confirmed by peer device).
  * *
@@ -357,8 +340,7 @@ static int gattc_read_req_ind_handler(ke_msg_id_t const msgid, struct gattc_read
  * @param[in] dest_id   ID of the receiving task instance
  * @param[in] src_id    ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int gattc_cmp_evt_handler(ke_msg_id_t const msgid,  struct gattc_cmp_evt const *param,
                                  ke_task_id_t const dest_id, ke_task_id_t const src_id)
 {
@@ -372,8 +354,7 @@ static int gattc_cmp_evt_handler(ke_msg_id_t const msgid,  struct gattc_cmp_evt 
 
 /*
  * GLOBAL VARIABLE DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /// Default State handlers definition
 const struct ke_msg_handler bass_default_state[] =

@@ -1,89 +1,75 @@
-/**
- ****************************************************************************************
- *
+/*****************************************************************************************
  * \file app_flash.h
- *
  * \brief Implementation of SPI flash handling functions.
- *
- * Copyright (C) 2017 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information  
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com>
- *
- ****************************************************************************************
- */
+*****************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \addtogroup APP_UTILS
  * \{
  * \addtogroup FLASH
  * \{
  * \addtogroup APP_FLASH
  * \{
- ****************************************************************************************	 	 
- */
+*****************************************************************************************/
 
-/*
+/*****************************************************************************************
  * INCLUDE FILES
- ****************************************************************************************
- */
+*****************************************************************************************/
 
 #ifdef HAS_SPI_FLASH_STORAGE
 
-#include "app_flash.h"
+    #include "app_flash.h"
 
-#ifdef NV_DEBUG_BASE_ADDR
-    #define APP_FLASH_BASE      NV_DEBUG_BASE_ADDR
-#else
-    #define APP_FLASH_BASE      0x3E000
-#endif
+    #ifdef NV_DEBUG_BASE_ADDR
+        #define APP_FLASH_BASE      NV_DEBUG_BASE_ADDR
+    #else
+        #define APP_FLASH_BASE      0x3E000
+    #endif
 
-#define APP_FLASH_MSG_SIZE  SPI_FLASH_SECTOR - APP_DBG_REGS_SIZE
-#define APP_FLASH_REGS_BASE APP_FLASH_BASE + APP_FLASH_MSG_SIZE
+    #define APP_FLASH_MSG_SIZE  SPI_FLASH_SECTOR - APP_DBG_REGS_SIZE
+    #define APP_FLASH_REGS_BASE APP_FLASH_BASE + APP_FLASH_MSG_SIZE
 
-bool power_up_delay;
+    bool power_up_delay;
 
-SPI_Pad_t spi_FLASH_CS_Pad;
+    SPI_Pad_t spi_FLASH_CS_Pad;
 
-void app_spi_flash_power_down(void)
-{
-    app_spi_flash_peripheral_init(SPI_XTAL_DIV_2);
-    app_spi_flash_peripheral_release();
-}
+    void app_spi_flash_power_down(void)
+    {
+        app_spi_flash_peripheral_init(SPI_XTAL_DIV_2);
+        app_spi_flash_peripheral_release();
+    }
 
 
-void app_spi_flash_peripheral_init(SPI_XTAL_Freq_t freq)
-{
-#ifdef HAS_FLASH_SPI_POWER_DOWN
-    // power_up_delay is used to delay the first write operation
-    // until SPI Flash is ready after power up.
-    power_up_delay=true; 
-#endif
+    void app_spi_flash_peripheral_init(SPI_XTAL_Freq_t freq)
+    {
+        #ifdef HAS_FLASH_SPI_POWER_DOWN
+            // power_up_delay is used to delay the first write operation
+            // until SPI Flash is ready after power up.
+            power_up_delay=true; 
+        #endif
 
-    //Initialize the SPI interface and power up the SPI flash if needed
-    //in case it is shared with another device on different pins.
-    activate_spi_flash_gpios();
-        
-	spi_FLASH_CS_Pad.pin  = (GPIO_PIN)app_flash_pins[FLASH_SPI_CS_PIN].pin;
-    spi_FLASH_CS_Pad.port = (GPIO_PORT)app_flash_pins[FLASH_SPI_CS_PIN].port;
-    // Enable SPI & SPI FLASH
-    spi_flash_init(SPI_FLASH_SIZE, SPI_FLASH_PAGE);
-    spi_init(&spi_FLASH_CS_Pad, SPI_MODE_8BIT, SPI_ROLE_MASTER, SPI_CLK_IDLE_POL_LOW,
-             SPI_PHA_MODE_0, SPI_MINT_DISABLE, freq);
+        // Initialize the SPI interface and power up the SPI flash if needed
+        // in case it is shared with another device on different pins.
+        activate_spi_flash_gpios();
+            
+        spi_FLASH_CS_Pad.pin  = (GPIO_PIN)app_flash_pins[FLASH_SPI_CS_PIN].pin;
+        spi_FLASH_CS_Pad.port = (GPIO_PORT)app_flash_pins[FLASH_SPI_CS_PIN].port;
 
-    //The Flash is kept in power_down so we need to power it up
-    spi_flash_release_from_power_down();
-}
+        // Enable SPI & SPI FLASH
+        spi_flash_init(SPI_FLASH_SIZE, SPI_FLASH_PAGE);
+        spi_init(&spi_FLASH_CS_Pad, SPI_MODE_8BIT, SPI_ROLE_MASTER, SPI_CLK_IDLE_POL_LOW, SPI_PHA_MODE_0, SPI_MINT_DISABLE, freq);
 
-void app_spi_flash_peripheral_release(void)
-{
-#ifndef FLASH_SPI_DISABLE_SW_POWERDOWN
-    spi_flash_power_down();
-#endif
-    deactivate_spi_flash_gpios();
-}
+        // The Flash is kept in power_down so we need to power it up
+        spi_flash_release_from_power_down();
+    }
+
+    void app_spi_flash_peripheral_release(void)
+    {
+        #ifndef FLASH_SPI_DISABLE_SW_POWERDOWN
+            spi_flash_power_down();
+        #endif
+            deactivate_spi_flash_gpios();
+    }
 
 size_t app_spi_flash_write_random_page_data(const void *data, uint32_t address, size_t size)
 {

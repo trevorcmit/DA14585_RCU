@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file dialog_commands.c
  *
@@ -11,13 +10,11 @@
  *
  * <bluetooth.support@diasemi.com> and contributors.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
  
  /*
  * INCLUDE FILES
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #include "dialog_commands.h"
 #include "hci_int.h"
@@ -38,8 +35,7 @@
 
 /*
  * DEFINES
- ****************************************************************************************
- */
+******************************************************************************************/
  
 // Value to generate 1s timeout when checking for a rising edge on the input pulse
 #define PULSE_TIMEOUT    0x8CB6
@@ -49,16 +45,14 @@
 
 /*
  * GLOBAL VARIABLE DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 volatile uint8_t test_data_pattern;
 volatile uint8_t test_freq;
 
 /*
  * LOCAL FUNCTIONS DECLARATIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 extern void uart_finish_transfers_func(void);
 static uint8_t hci_otp_rd_data_cmd_cmp_evt_pk(uint8_t *out, uint8_t *in, uint16_t* out_len, uint16_t in_len);
@@ -94,8 +88,7 @@ const struct hci_cmd_desc_tag hci_cmd_desc_tab_dialog_vs[] =
 
 const uint8_t dialog_commands_num = ARRAY_LEN (hci_cmd_desc_tab_dialog_vs);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles the reception of the custom_action dialog hci command.
  *
  * @param[in] msgid Id of the message received (probably unused).
@@ -104,8 +97,7 @@ const uint8_t dialog_commands_num = ARRAY_LEN (hci_cmd_desc_tab_dialog_vs);
  * @param[in] src_id ID of the sending task instance.
  *
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int dialog_commands_custom_action_handler(ke_msg_id_t const msgid, 
                                                  struct hci_custom_action_dialog_cmd const *param,
                                                  ke_task_id_t const dest_id, 
@@ -121,8 +113,7 @@ static int dialog_commands_custom_action_handler(ke_msg_id_t const msgid,
     return (KE_MSG_CONSUMED);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles the reception of the audio_test dialog hci command.
  *
  * @param[in] msgid Id of the message received (probably unused).
@@ -131,8 +122,7 @@ static int dialog_commands_custom_action_handler(ke_msg_id_t const msgid,
  * @param[in] src_id ID of the sending task instance.
  *
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int dialog_commands_audio_test_handler(ke_msg_id_t const msgid, 
                                               void const *param,
                                               ke_task_id_t const dest_id, 
@@ -147,8 +137,7 @@ static int dialog_commands_audio_test_handler(ke_msg_id_t const msgid,
     return (KE_MSG_CONSUMED);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles the reception of the firmware_version dialog hci command.
  *
  * @param[in] msgid Id of the message received (probably unused).
@@ -157,8 +146,7 @@ static int dialog_commands_audio_test_handler(ke_msg_id_t const msgid,
  * @param[in] src_id ID of the sending task instance.
  *
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int dialog_commands_firmware_version_get_handler(ke_msg_id_t const msgid, 
                                                         void const *param,
                                                         ke_task_id_t const dest_id, 
@@ -177,8 +165,7 @@ static int dialog_commands_firmware_version_get_handler(ke_msg_id_t const msgid,
     return (KE_MSG_CONSUMED);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles the reception of the change_uart_pins_action dialog hci command.
  *
  * @param[in] msgid Id of the message received (probably unused).
@@ -187,8 +174,7 @@ static int dialog_commands_firmware_version_get_handler(ke_msg_id_t const msgid,
  * @param[in] src_id ID of the sending task instance.
  *
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int dialog_commands_change_uart_pins_action_handler(ke_msg_id_t const msgid, 
                                                            struct hci_change_uart_pins_action_dialog_cmd const *param,
                                                            ke_task_id_t const dest_id, 
@@ -215,8 +201,7 @@ static int dialog_commands_change_uart_pins_action_handler(ke_msg_id_t const msg
     return (KE_MSG_CONSUMED);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles the reception of the register_rw dialog hci command.
  *
  * @param[in] msgid Id of the message received (probably unused).
@@ -225,8 +210,7 @@ static int dialog_commands_change_uart_pins_action_handler(ke_msg_id_t const msg
  * @param[in] src_id ID of the sending task instance.
  *
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int dialog_commands_register_rw_handler(ke_msg_id_t const msgid, 
                                                struct hci_register_rw_dialog_cmd const *param,
                                                ke_task_id_t const dest_id, 
@@ -263,8 +247,7 @@ static int dialog_commands_register_rw_handler(ke_msg_id_t const msgid,
     return (KE_MSG_CONSUMED);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles the reception of the tx_start_continue_test dialog hci command.
  *
  * @param[in] msgid Id of the message received (probably unused).
@@ -273,8 +256,7 @@ static int dialog_commands_register_rw_handler(ke_msg_id_t const msgid,
  * @param[in] src_id ID of the sending task instance.
  *
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int dialog_commands_tx_start_continue_test_handler(ke_msg_id_t const msgid, 
                                                           struct hci_tx_start_continue_test_dialog_cmd const *param,
                                                           ke_task_id_t const dest_id, 
@@ -291,8 +273,7 @@ static int dialog_commands_tx_start_continue_test_handler(ke_msg_id_t const msgi
     return (KE_MSG_CONSUMED);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles the reception of the otp_rw dialog hci command.
  *
  * @param[in] msgid Id of the message received (probably unused).
@@ -301,8 +282,7 @@ static int dialog_commands_tx_start_continue_test_handler(ke_msg_id_t const msgi
  * @param[in] src_id ID of the sending task instance.
  *
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int dialog_commands_otp_rw_handler(ke_msg_id_t const msgid, 
                                           struct hci_otp_rw_dialog_cmd const *param,
                                           ke_task_id_t const dest_id, 
@@ -346,8 +326,7 @@ static int dialog_commands_otp_rw_handler(ke_msg_id_t const msgid,
     return (KE_MSG_CONSUMED);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles the reception of the xtal_trim dialog hci command.
  *
  * @param[in] msgid Id of the message received (probably unused).
@@ -356,8 +335,7 @@ static int dialog_commands_otp_rw_handler(ke_msg_id_t const msgid,
  * @param[in] src_id ID of the sending task instance.
  *
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int dialog_commands_xtal_trim_handler(ke_msg_id_t const msgid, 
                                              struct hci_xtal_trim_dialog_cmd const *param,
                                              ke_task_id_t const dest_id, 
@@ -477,8 +455,7 @@ static int dialog_commands_xtal_trim_handler(ke_msg_id_t const msgid,
     return (KE_MSG_CONSUMED);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles the reception of the tx_start_continue_test dialog hci command.
  *
  * @param[in] msgid Id of the message received (probably unused).
@@ -487,8 +464,7 @@ static int dialog_commands_xtal_trim_handler(ke_msg_id_t const msgid,
  * @param[in] src_id ID of the sending task instance.
  *
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int dialog_commands_tx_end_continue_test_handler(ke_msg_id_t const msgid, 
                                                         void const *param,
                                                         ke_task_id_t const dest_id, 
@@ -506,8 +482,7 @@ static int dialog_commands_tx_end_continue_test_handler(ke_msg_id_t const msgid,
     return (KE_MSG_CONSUMED);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles the reception of the start_prod_rx_test dialog hci command.
  *
  * @param[in] msgid Id of the message received (probably unused).
@@ -516,8 +491,7 @@ static int dialog_commands_tx_end_continue_test_handler(ke_msg_id_t const msgid,
  * @param[in] src_id ID of the sending task instance.
  *
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int dialog_commands_start_prod_rx_test_handler(ke_msg_id_t const msgid, 
                                                       struct hci_start_prod_rx_dialog_cmd const *param,
                                                       ke_task_id_t const dest_id, 
@@ -533,8 +507,7 @@ static int dialog_commands_start_prod_rx_test_handler(ke_msg_id_t const msgid,
     return (KE_MSG_CONSUMED);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles the reception of the end_prod_rx_test dialog hci command.
  *
  * @param[in] msgid Id of the message received (probably unused).
@@ -543,8 +516,7 @@ static int dialog_commands_start_prod_rx_test_handler(ke_msg_id_t const msgid,
  * @param[in] src_id ID of the sending task instance.
  *
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int dialog_commands_end_prod_rx_test_handler(ke_msg_id_t const msgid, 
                                                     void const *param,
                                                     ke_task_id_t const dest_id, 
@@ -566,8 +538,7 @@ static int dialog_commands_end_prod_rx_test_handler(ke_msg_id_t const msgid,
     return (KE_MSG_CONSUMED);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles the reception of the unmodulated_on dialog hci command.
  *
  * @param[in] msgid Id of the message received (probably unused).
@@ -576,8 +547,7 @@ static int dialog_commands_end_prod_rx_test_handler(ke_msg_id_t const msgid,
  * @param[in] src_id ID of the sending task instance.
  *
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int dialog_commands_unmodulated_on_handler(ke_msg_id_t const msgid, 
                                                   struct hci_unmodulated_on_dialog_cmd const *param,
                                                   ke_task_id_t const dest_id, 
@@ -678,8 +648,7 @@ static int dialog_commands_unmodulated_on_handler(ke_msg_id_t const msgid,
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles the reception of the tx_test dialog hci command.
  *
  * @param[in] msgid Id of the message received (probably unused).
@@ -688,8 +657,7 @@ static int dialog_commands_unmodulated_on_handler(ke_msg_id_t const msgid,
  * @param[in] src_id ID of the sending task instance.
  *
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int dialog_commands_tx_test_handler(ke_msg_id_t const msgid, 
                                            struct hci_tx_test_dialog_cmd const *param,
                                            ke_task_id_t const dest_id, 
@@ -710,8 +678,7 @@ static int dialog_commands_tx_test_handler(ke_msg_id_t const msgid,
     return (KE_MSG_CONSUMED);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles the reception of the sleep_test dialog hci command.
  *
  * @param[in] msgid Id of the message received (probably unused).
@@ -720,8 +687,7 @@ static int dialog_commands_tx_test_handler(ke_msg_id_t const msgid,
  * @param[in] src_id ID of the sending task instance.
  *
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int dialog_commands_sleep_test_handler(ke_msg_id_t const msgid, 
                                               struct hci_sleep_test_dialog_cmd const *param,
                                               ke_task_id_t const dest_id, 
@@ -763,8 +729,7 @@ static int dialog_commands_sleep_test_handler(ke_msg_id_t const msgid,
     return (KE_MSG_CONSUMED);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles the reception of the rdtest dialog hci command.
  *
  * @param[in] msgid Id of the message received (probably unused).
@@ -773,8 +738,7 @@ static int dialog_commands_sleep_test_handler(ke_msg_id_t const msgid,
  * @param[in] src_id ID of the sending task instance.
  *
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int dialog_commands_rdtester_handler(ke_msg_id_t const msgid, 
                                             struct hci_rdtest_dialog_cmd const *param,
                                             ke_task_id_t const dest_id, 
@@ -829,8 +793,7 @@ static int dialog_commands_rdtester_handler(ke_msg_id_t const msgid,
     return (KE_MSG_CONSUMED);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles the reception of the otp_read dialog hci command.
  *
  * @param[in] msgid Id of the message received (probably unused).
@@ -839,8 +802,7 @@ static int dialog_commands_rdtester_handler(ke_msg_id_t const msgid,
  * @param[in] src_id ID of the sending task instance.
  *
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int dialog_commands_otp_read_handler(ke_msg_id_t const msgid, 
                                             struct hci_otp_read_dialog_cmd const *param,
                                             ke_task_id_t const dest_id, 
@@ -880,8 +842,7 @@ static int dialog_commands_otp_read_handler(ke_msg_id_t const msgid,
     return (KE_MSG_CONSUMED);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles the reception of the otp_read dialog hci command.
  *
  * @param[in] msgid Id of the message received (probably unused).
@@ -890,8 +851,7 @@ static int dialog_commands_otp_read_handler(ke_msg_id_t const msgid,
  * @param[in] src_id ID of the sending task instance.
  *
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 
 static int dialog_commands_otp_write_handler(ke_msg_id_t const msgid, 
                                              struct hci_otp_write_dialog_cmd const *param,
@@ -935,8 +895,7 @@ static int dialog_commands_otp_write_handler(ke_msg_id_t const msgid,
     return (KE_MSG_CONSUMED);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles the reception of the sensor_test dialog hci command.
  *
  * @param[in] msgid Id of the message received (probably unused).
@@ -945,8 +904,7 @@ static int dialog_commands_otp_write_handler(ke_msg_id_t const msgid,
  * @param[in] src_id ID of the sending task instance.
  *
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 
 static int dialog_commands_sensor_test_handler(ke_msg_id_t const msgid, 
                                                struct hci_sensor_test_dialog_cmd const *param,
@@ -1058,8 +1016,7 @@ static int dialog_commands_sensor_test_handler(ke_msg_id_t const msgid,
     return (KE_MSG_CONSUMED);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles the reception of the gpio_set dialog hci command.
  *
  * @param[in] msgid Id of the message received (probably unused).
@@ -1068,8 +1025,7 @@ static int dialog_commands_sensor_test_handler(ke_msg_id_t const msgid,
  * @param[in] src_id ID of the sending task instance.
  *
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int dialog_commands_gpio_set_handler(ke_msg_id_t const msgid, 
                                             struct hci_gpio_set_dialog_cmd const *param,
                                             ke_task_id_t const dest_id, 
@@ -1140,8 +1096,7 @@ static int dialog_commands_gpio_set_handler(ke_msg_id_t const msgid,
     return (KE_MSG_CONSUMED);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles the reception of the gpio_read dialog hci command.
  *
  * @param[in] msgid Id of the message received (probably unused).
@@ -1150,8 +1105,7 @@ static int dialog_commands_gpio_set_handler(ke_msg_id_t const msgid,
  * @param[in] src_id ID of the sending task instance.
  *
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int dialog_commands_gpio_read_handler(ke_msg_id_t const msgid, 
                                             struct hci_gpio_read_dialog_cmd const *param,
                                             ke_task_id_t const dest_id, 
@@ -1194,8 +1148,7 @@ static int dialog_commands_gpio_read_handler(ke_msg_id_t const msgid,
     return (KE_MSG_CONSUMED);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles the reception of the uart_loop dialog hci command.
  *
  * @param[in] msgid Id of the message received (probably unused).
@@ -1204,8 +1157,7 @@ static int dialog_commands_gpio_read_handler(ke_msg_id_t const msgid,
  * @param[in] src_id ID of the sending task instance.
  *
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int dialog_commands_uart_loop_handler(ke_msg_id_t const msgid, 
                                             struct hci_uart_loop_dialog_cmd const *param,
                                             ke_task_id_t const dest_id, 
@@ -1220,8 +1172,7 @@ static int dialog_commands_uart_loop_handler(ke_msg_id_t const msgid,
     return (KE_MSG_CONSUMED);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles the reception of the uart_baud dialog hci command.
  *
  * @param[in] msgid Id of the message received (probably unused).
@@ -1230,8 +1181,7 @@ static int dialog_commands_uart_loop_handler(ke_msg_id_t const msgid,
  * @param[in] src_id ID of the sending task instance.
  *
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int dialog_commands_uart_baud_handler(ke_msg_id_t const msgid,
                                             struct hci_uart_baud_dialog_cmd const *param,
                                             ke_task_id_t const dest_id,

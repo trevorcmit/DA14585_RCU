@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file user_config.h
  *
@@ -11,16 +10,14 @@
  *
  * <bluetooth.support@diasemi.com> and contributors.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #ifndef _USER_CONFIG_H_
 #define _USER_CONFIG_H_
 
 /*
  * INCLUDE FILES
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #include "app_user_config.h"
 #include "arch_api.h"
@@ -30,8 +27,7 @@
 
 /*
  * DEFINES
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /************************************************************
  * Select memory medium for bond data storage:
@@ -84,8 +80,7 @@
 
 /*
  * VARIABLES
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /******************************************
  * Default sleep mode. Possible values are:
@@ -103,8 +98,7 @@ const static sleep_state_t app_default_sleep_mode = ARCH_EXT_SLEEP_OTP_COPY_ON;
  *
  * Advertising configuration
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 static const struct advertise_configuration user_adv_conf = {
     /**
      * Own BD address source of the device:
@@ -193,8 +187,7 @@ static const struct advertise_configuration user_adv_conf = {
  *    - The Flags data type may be omitted, hence the user can use all the 31 bytes for 
  *      data.
  *    - The maximum length of the user defined response data shall be 31 bytes.
- ****************************************************************************************
- */
+******************************************************************************************/
 /// Advertising data
 #define USER_ADVERTISE_DATA         ("\x05"\
                                     ADV_TYPE_COMPLETE_LIST_16BIT_SERVICE_IDS\
@@ -223,8 +216,7 @@ static const struct advertise_configuration user_adv_conf = {
  *   application supports it.
  * - The Bluetooth device name can be up to 248 bytes.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 /// Device name
 #define USER_DEVICE_NAME        "DIALOG-ALL-IN"
 
@@ -236,8 +228,7 @@ static const struct advertise_configuration user_adv_conf = {
  *
  * GAPM configuration
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 static const struct gapm_configuration user_gapm_conf = {
     /// Device Role: Central, Peripheral, Observer, Broadcaster or All roles. (@see enum gap_role)
     .role = GAP_ROLE_PERIPHERAL,
@@ -327,8 +318,7 @@ static const struct gapm_configuration user_gapm_conf = {
  *
  * Parameter update configuration
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 static const struct connection_param_configuration user_connection_param_conf = {
     /// Connection interval minimum measured in ble double slots (1.25ms)
     /// use the macro MS_TO_DOUBLESLOTS to convert from milliseconds (ms) to double slots
@@ -359,8 +349,7 @@ static const struct connection_param_configuration user_connection_param_conf = 
  *
  * Default handlers configuration (applies only for @app_default_handlers.c)
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 static const struct default_handlers_configuration  user_default_hnd_conf = {
     //Configure the advertise operation used by the default handlers
     //Possible values:
@@ -383,8 +372,7 @@ static const struct default_handlers_configuration  user_default_hnd_conf = {
  *
  * Central configuration (not used by current example)
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 static const struct central_configuration user_central_conf = {
     /// GAPM requested operation:
     /// - GAPM_CONNECTION_DIRECT: Direct connection operation
@@ -483,8 +471,7 @@ static const struct central_configuration user_central_conf = {
  *
  * Security related configuration
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 static const struct security_configuration user_security_conf = {
     /**************************************************************************************
      * IO capabilities (@see gap_io_cap)

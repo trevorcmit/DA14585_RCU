@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file app_task.c
  *
@@ -11,8 +10,7 @@
  *
  * <bluetooth.support@diasemi.com> and contributors.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
 
 #include "app_task.h"
@@ -26,8 +24,7 @@
 #include "ble_msg.h"
 #include "user_config.h"
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Extracts device name from adv data if present and copy it to app_env.
  *
  * @param[in] adv_data      Pointer to advertise data.
@@ -35,8 +32,7 @@
  * @param[in] dev_indx      Devices index in device list.
  *
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 void app_find_device_name(unsigned char * adv_data, unsigned char adv_data_len, unsigned char dev_indx)
 {
     unsigned char indx = 0;
@@ -246,8 +242,7 @@ int gapc_connection_req_ind_handler(ke_msg_id_t msgid,
     return 0;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles Disconnection completion event.
  *
  * @param[in] msgid     Id of the message received.
@@ -256,8 +251,7 @@ int gapc_connection_req_ind_handler(ke_msg_id_t msgid,
  * @param[in] src_id    ID of the sending task instance.
  *
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 int gapc_disconnect_ind_handler(ke_msg_id_t msgid,
                                 struct gapc_disconnect_ind *param,
                                 ke_task_id_t dest_id,

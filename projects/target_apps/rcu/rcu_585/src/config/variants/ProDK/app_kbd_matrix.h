@@ -69,8 +69,7 @@ enum modifier_keys {
 // extra sets for 'hidden modifiers', e.g. the 'Fn' key
 #define KBD_NR_SETS (1)
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * The key map.
  * 00xx:   regular key
  * FCxx:   modifier key.
@@ -80,8 +79,7 @@ enum modifier_keys {
  * K_CODE: unknown key code - nothing is sent to the other side but the key is examined 
  *         for ghosting
  * KEY_UNUSED: if the key is not used
- ****************************************************************************************
- */
+******************************************************************************************/
 static const uint16_t kbd_keymap[KBD_NR_SETS][KBD_NR_ROW_OUTPUTS][KBD_NR_COLUMN_INPUTS] =
 {
   {
@@ -99,8 +97,7 @@ static const uint16_t kbd_keymap[KBD_NR_SETS][KBD_NR_ROW_OUTPUTS][KBD_NR_COLUMN_
   }
 };
 
-/**
- *******************************************************************************************
+/********************************************************************************************
  * Definition of multi-key combinations. For each combination a row is added in the     
  * multi_key_combinations matrix. In each row the following members must be defined:    
  *    i) an array with MULTI_KEY_NUM_OF_KEYS elements of type multi_key_t containing    

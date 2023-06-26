@@ -53,8 +53,7 @@
 /*! \file bmi160_support.c
     \brief BMI160 Sensor Driver Support Header File */
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \addtogroup USER
  * \{
  * \addtogroup USER_DRIVERS
@@ -62,8 +61,7 @@
  * \addtogroup BMI160_DRV
  *
  * \{
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #include "bmi160_support.h"
 #include "bmi160.h"
@@ -936,13 +934,11 @@ s8 bmi160_i2c_bus_write(u8 dev_addr, u8 reg_addr, u8 *reg_data, u8 cnt)
         #define ERR_OK                  0
         #define ERR_TIMEOUT             -1
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Wait till flash is ready for next action
  * @return  Success : ERR_OK
  *          Failure : ERR_TIMEOUT
- ****************************************************************************************
- */
+******************************************************************************************/
 static int8_t spi_wait_till_ready(void)
 {
     for (uint32_t readCount = 0; readCount < MAX_READY_WAIT_COUNT; readCount++) {
@@ -953,8 +949,7 @@ static int8_t spi_wait_till_ready(void)
     return ERR_TIMEOUT;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Read data from a given starting address
  *
  * @param[in] *rd_data_ptr:  Points to the position the read data will be stored
@@ -962,8 +957,7 @@ static int8_t spi_wait_till_ready(void)
  * @param[in] size:          Size of the data to be read
  *
  * @return  Number of read bytes or error code
- ****************************************************************************************
- */
+******************************************************************************************/
 static int32_t spi_read_data(uint8_t *rd_data_ptr, uint32_t address, uint32_t size)
 {
     if (spi_wait_till_ready() != ERR_OK) {
@@ -987,8 +981,7 @@ s8 bmi160_spi_bus_read(u8 dev_addr, u8 reg_addr, u8 *reg_data, u8 cnt)
                                                         : 0;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Write data to any starting address
  *
  * @param[in] *wr_data_ptr:  Pointer to the data to be written
@@ -996,8 +989,7 @@ s8 bmi160_spi_bus_read(u8 dev_addr, u8 reg_addr, u8 *reg_data, u8 cnt)
  * @param[in] size:          Size of the data to be written
  *
  * @return  Number of bytes actually written
- ****************************************************************************************
- */
+******************************************************************************************/
 static int32_t spi_write_data(uint8_t *wr_data_ptr, uint32_t address, uint32_t size)
 {
     spi_set_bitmode(SPI_MODE_8BIT);

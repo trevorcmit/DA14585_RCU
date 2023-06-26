@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file llm.h
  *
@@ -7,25 +6,21 @@
  *
  * Copyright (C) RivieraWaves 2009-2014
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #ifndef LLM_H_
 #define LLM_H_
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @addtogroup CONTROLLER
  * @ingroup ROOT
  * @brief BLE Lower Layers
  *
  * The CONTROLLER contains the modules allowing the physical link establishment,
  * maintenance and management.
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @addtogroup LLM LLM
  * @ingroup CONTROLLER
  * @brief Link Layer Manager
@@ -33,16 +28,14 @@
  * The link layer manager contains the modules allowing the physical link establishment,
  * and all the non-connected states.
  * @{
- ****************************************************************************************
- */
+******************************************************************************************/
 
 
 
 
 /*
  * INCLUDE FILES
- ****************************************************************************************
- */
+******************************************************************************************/
 #include "co_bt.h"
 #include "co_math.h"
 #include "co_utils.h"
@@ -53,8 +46,7 @@
 
 /*
  * DEFINES
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #if (BLE_CHNL_ASSESS)
 /// Default Channel Assessment Timer duration (5s - Multiple of 10ms)
@@ -101,8 +93,7 @@
 
 /*
  * TYPE DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 /// Advertising parameters
 struct advertising_pdu_params
 {
@@ -440,8 +431,7 @@ extern const struct le_states llm_local_le_states;
 
 /*
  * DEFINES
- ****************************************************************************************
- */
+******************************************************************************************/
 // Length of resolvable random address prand part
 #define LLM_RAND_ADDR_PRAND_LEN            (3)
 // Length of resolvable random address hash part
@@ -603,48 +593,39 @@ enum
 
 /*
  * GLOBAL VARIABLE DECLARATIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 extern struct llm_le_env_tag llm_le_env;
 extern struct llm_bt_env_tag llm_bt_env;
 
 /*
  * FUNCTION DECLARATIONS
- ****************************************************************************************
- */
-/**
- ****************************************************************************************
+******************************************************************************************/
+/*****************************************************************************************
  * @brief Initialization of the BLE LLM task
  *
  * This function initializes the the LLC task, as well as the environment of the LLM
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 void llm_init(bool reset);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Sends the NOP event.
  *
  * This function sends the No Operation command completed event to the host when all the
  * Initializations are done.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 void llm_ble_ready(void);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handle the command clear the white list.
  *
  * This function clear the public and private white lists.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 void llm_wl_clr(void);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handle the command set advertising parameters.
  *
  * This function checks the parameters , fulfill the advertising packet with the useful
@@ -655,12 +636,10 @@ void llm_wl_clr(void);
  *
  * @return The status of the parameters validity
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 uint8_t llm_set_adv_param(struct hci_le_set_adv_param_cmd const *param);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handle the command set advertising data.
  *
  * This function checks the parameters , fulfill the advertising packet with the data
@@ -670,14 +649,12 @@ uint8_t llm_set_adv_param(struct hci_le_set_adv_param_cmd const *param);
  *
  * @return The status of the parameters validity
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 #if (BLE_BROADCASTER || BLE_PERIPHERAL)
 uint8_t llm_set_adv_data(struct hci_le_set_adv_data_cmd const *param);
 #endif
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handle the command set advertising enable.
  *
  * This function checks the parameters , starts or stops the requested advertising mode.
@@ -687,12 +664,10 @@ uint8_t llm_set_adv_data(struct hci_le_set_adv_data_cmd const *param);
  *
  * @return The status of the parameters validity
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 uint8_t llm_set_adv_en(struct hci_le_set_adv_en_cmd const *param);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handle the command set scanning parameters.
  *
  * This function checks the parameters , fulfill the scanning packet with the useful
@@ -703,12 +678,10 @@ uint8_t llm_set_adv_en(struct hci_le_set_adv_en_cmd const *param);
  *
  * @return The status of the parameters validity
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 uint8_t llm_set_scan_param(struct hci_le_set_scan_param_cmd const *param);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handle the command set scanning enable.
  *
  * This function checks the parameters , starts or stops the requested scanning mode.
@@ -718,12 +691,10 @@ uint8_t llm_set_scan_param(struct hci_le_set_scan_param_cmd const *param);
  *
  * @return The status of the parameters validity
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 uint8_t llm_set_scan_en(struct hci_le_set_scan_en_cmd const *param);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handle the command set scanning response data.
  *
  * This function checks the parameters , fulfill the scanning packet with the data
@@ -733,12 +704,10 @@ uint8_t llm_set_scan_en(struct hci_le_set_scan_en_cmd const *param);
  *
  * @return The status of the parameters validity
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 uint8_t llm_set_scan_rsp_data(struct hci_le_set_scan_rsp_data_cmd const *param);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handle the command start transmit test mode.
  *
  * This function checks the parameters , set the transmit mode parameters, turn on the
@@ -749,12 +718,10 @@ uint8_t llm_set_scan_rsp_data(struct hci_le_set_scan_rsp_data_cmd const *param);
  *
  * @return The status of the parameters validity
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 uint8_t llm_test_mode_start_tx(struct hci_le_tx_test_cmd const *param);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handle the command start receive test mode.
  *
  * This function checks the parameters , set the receive mode parameters, turn on the
@@ -765,12 +732,10 @@ uint8_t llm_test_mode_start_tx(struct hci_le_tx_test_cmd const *param);
  *
  * @return The status of the parameters validity
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 uint8_t llm_test_mode_start_rx(struct hci_le_rx_test_cmd const *param);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handle the command add device in the white list.
  *
  * This function adds the device in the white list, according to the type (public or
@@ -781,12 +746,10 @@ uint8_t llm_test_mode_start_rx(struct hci_le_rx_test_cmd const *param);
  *
  * @return The status of the parameters validity
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 uint8_t llm_wl_dev_add(struct hci_le_add_dev_to_wlst_cmd const *param);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handle the command remove device in the white list.
  *
  * This function removes the device in the white list, according to the type (public or
@@ -797,12 +760,10 @@ uint8_t llm_wl_dev_add(struct hci_le_add_dev_to_wlst_cmd const *param);
  *
  * @return The status of the parameters validity
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 uint8_t llm_wl_dev_rem(struct hci_le_add_dev_to_wlst_cmd const *param);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handle the command create connection.
  *
  * This function checks the parameters, fulfill the connect_req pdu with the useful
@@ -814,12 +775,10 @@ uint8_t llm_wl_dev_rem(struct hci_le_add_dev_to_wlst_cmd const *param);
  *
  * @return The status of the parameters validity
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 uint8_t llm_create_con(struct hci_le_create_con_cmd *param);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handle the command start encryption.
  *
  * This function sets the key and the data to be encrypted in the encryption engine and
@@ -828,46 +787,38 @@ uint8_t llm_create_con(struct hci_le_create_con_cmd *param);
  * @param[in] param        Pointer on the structure which contains all the parameters
  *                         needed to star tthe encryption engine.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 void llm_encryption_start(struct llm_enc_req const *param);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handle the end of the encryption process.
  *
  * This function provide to the host or the LLC the data encrypted by the engine.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 void llm_encryption_done(void);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Sends the command complete event.
  *
  * This function notify the host that the command is completed.
  *
  * @param[in] opcode        Command opcode
  * @param[in] status        Status on the completion of the command.
- ****************************************************************************************
- */
+******************************************************************************************/
 void llm_common_cmd_complete_send(uint16_t opcode, uint8_t status);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Sends the command status event.
  *
  * This function notify the host that the command is understood.
  *
  * @param[in] opcode        Command opcode
  * @param[in] status        Status on the completion of the command.
- ****************************************************************************************
- */
+******************************************************************************************/
 void llm_common_cmd_status_send(uint16_t opcode, uint8_t status);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Sets the value for the advertising report.
  *
  * This function gets the information from the received advertising packet and sets the
@@ -876,14 +827,12 @@ void llm_common_cmd_status_send(uint16_t opcode, uint8_t status);
  * @param[out] desc        Pointer on the received advertising.
  * @param[out] event       Pointer on the advertising report event.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 void llm_adv_report_set(struct hci_le_adv_report_evt *event, struct co_buf_rx_desc *desc);
 
 void llm_direct_adv_report_set(struct hci_le_direct_adv_report_evt *event, struct co_buf_rx_desc *desc);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles the connection request pdu.
  *
  * This function extracts the parameters from the packet received and takes the
@@ -891,13 +840,11 @@ void llm_direct_adv_report_set(struct hci_le_direct_adv_report_evt *event, struc
  *
  * @param[in] rxdesc         Pointer on the received pdu packet.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 void llm_con_req_ind(struct co_buf_rx_desc *rxdesc);
 
 #if (BLE_CENTRAL || BLE_OBSERVER)
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles the advertising packet.
  *
  * This function extracts the parameters from the advertising packet received and
@@ -905,13 +852,11 @@ void llm_con_req_ind(struct co_buf_rx_desc *rxdesc);
  *
  * @param[in] rxdesc         Pointer on the received advertising packet.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 void llm_le_adv_report_ind(struct co_buf_rx_desc *rxdesc);
 #endif // BLE_CENTRAL || BLE_OBSERVER
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles the transmission confirmation of the packet.
  *
  * This function sends the connection complete event to the host and start the LLC task
@@ -920,36 +865,29 @@ void llm_le_adv_report_ind(struct co_buf_rx_desc *rxdesc);
  * @param[in] rxdesc         Pointer on the received advertising packet who has generated
  *                           the sending of the connect_req pdu.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 void llm_con_req_tx_cfm(struct co_buf_rx_desc *rxdesc);
 
 #if (BLE_CHNL_ASSESS)
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief This function returns the number of packets to receive on a channel before being
  * able to disable a channel.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 uint16_t llm_get_chnl_assess_nb_pkt(void);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief This function returns the number of bad packets to receive on a channel before being
  * able to disable a channel.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 uint16_t llm_get_chnl_assess_nb_bad_pkt(void);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief This function returns the minimal RSSI value used in the Channel Assessment
  * mechanism.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 int8_t llm_get_min_rssi(void);
 #endif //(BLE_CHNL_ASSESS)
 

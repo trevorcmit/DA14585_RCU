@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file wucpt_quadec.c
  *
@@ -11,8 +10,7 @@
  *
  * <bluetooth.support@diasemi.com> and contributors.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /* Important note: If, upon reception of interrupt from the wakeup timer or the quadrature
  *                  decoder, the system resumes from sleep mode and you wish to resume peripherals
@@ -30,8 +28,7 @@
 
 /*
  * INCLUDE FILES
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #include <stdio.h>
 #include <stdint.h>
@@ -41,8 +38,7 @@
 
 /*
  * GLOBAL VARIABLES
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #ifdef USE_ARCH_WKUPCT_DEB_TIME
 extern uint16_t arch_wkupct_deb_time;
@@ -50,8 +46,7 @@ extern uint16_t arch_wkupct_deb_time;
 
 /*
  * LOCAL VARIABLES
- ****************************************************************************************
- */
+******************************************************************************************/
 
 wkupct_quad_IRQ_status_t wkupct_quad_IRQ_status __attribute__((section("retention_mem_area0"), zero_init));
 static uint32_t* QUADDEC_callback               __attribute__((section("retention_mem_area0"), zero_init)); // Quadrature decoder handler callback
@@ -59,8 +54,7 @@ static void* WKUPCT_callback                    __attribute__((section("retentio
 
 /*
  * FUNCTION DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 wkupct_quadec_error_t wkupct_quad_disable_IRQ(void)
 {

@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file tips.c
  *
@@ -8,20 +7,16 @@
  * Copyright (C) RivieraWaves 2009-2015
  *
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @addtogroup TIPS
  * @{
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /*
  * INCLUDE FILES
- ****************************************************************************************
- */
+******************************************************************************************/
 #include "rwip_config.h"
 
 #if (BLE_TIP_SERVER)
@@ -32,8 +27,7 @@
 
 /*
  * CTS, NDCS, RTUS ATTRIBUTES
- ****************************************************************************************
- */
+******************************************************************************************/
 /// Full CTS Database Description - Used to add attributes into the database
 const struct attm_desc cts_att_db[CTS_IDX_NB] =
 {
@@ -88,8 +82,7 @@ const struct attm_desc rtus_att_db[RTUS_IDX_NB] =
 };
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Initialization of the TIPS module.
  * This function performs all the initializations of the Profile module.
  *  - Creation of database (if it's a service)
@@ -106,8 +99,7 @@ const struct attm_desc rtus_att_db[RTUS_IDX_NB] =
  * @param[in]     param      Configuration parameters of profile collector or service (32 bits aligned)
  *
  * @return status code to know if profile initialization succeed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static uint8_t tips_init(struct prf_task_env* env, uint16_t* start_hdl, uint16_t app_task, uint8_t sec_lvl, struct tips_db_cfg* params)
 {
     // Service content flag
@@ -223,15 +215,13 @@ static uint8_t tips_init(struct prf_task_env* env, uint16_t* start_hdl, uint16_t
     return status;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Destruction of the TIPS module - due to a reset for instance.
  * This function clean-up allocated memory (attribute database is destroyed by another
  * procedure)
  *
  * @param[in|out]    env        Collector or Service allocated environment data.
- ****************************************************************************************
- */
+******************************************************************************************/
 static void tips_destroy(struct prf_task_env* env)
 {
     uint8_t idx;
@@ -251,14 +241,12 @@ static void tips_destroy(struct prf_task_env* env)
     ke_free(tips_env);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles Connection creation
  *
  * @param[in|out]    env        Collector or Service allocated environment data.
  * @param[in]        conidx     Connection index
- ****************************************************************************************
- */
+******************************************************************************************/
 static void tips_create(struct prf_task_env* env, uint8_t conidx)
 {
     struct tips_env_tag* tips_env = (struct tips_env_tag*) env->env;
@@ -271,15 +259,13 @@ static void tips_create(struct prf_task_env* env, uint8_t conidx)
     ke_state_set(KE_BUILD_ID(env->task, conidx), TIPS_IDLE);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles Disconnection
  *
  * @param[in|out]    env        Collector or Service allocated environment data.
  * @param[in]        conidx     Connection index
  * @param[in]        reason     Detach reason
- ****************************************************************************************
- */
+******************************************************************************************/
 static void tips_cleanup(struct prf_task_env* env, uint8_t conidx, uint8_t reason)
 {
     struct tips_env_tag* tips_env = (struct tips_env_tag*) env->env;
@@ -294,8 +280,7 @@ static void tips_cleanup(struct prf_task_env* env, uint8_t conidx, uint8_t reaso
 
 /*
  * GLOBAL VARIABLE DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /// TIPS Task interface required by profile manager
 const struct prf_task_cbs tips_itf =
@@ -308,8 +293,7 @@ const struct prf_task_cbs tips_itf =
 
 /*
  * EXPORTED FUNCTIONS DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 const struct prf_task_cbs* tips_prf_itf_get(void)
 {

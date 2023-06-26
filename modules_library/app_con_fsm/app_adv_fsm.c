@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * \file app_adv_fsm.c
  *
@@ -11,11 +10,9 @@
  *
  * <bluetooth.support@diasemi.com>
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \addtogroup APP_UTILS
  * \{
  * \addtogroup BONDING
@@ -115,15 +112,13 @@ __attribute__((unused)) static const char adv_events_names[][20] = {
     #endif
 };
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief Get the advertising settings index, depending on the undirected advertising state
  *
  * \param[in] state The undirected advertising state for which we need the settings index
  *
  * \return adv_settings_idx_t The settings index
- ****************************************************************************************
- */
+******************************************************************************************/
 static adv_settings_idx_t adv_fsm_get_adv_settings_idx(adv_states state)
 {
     switch(state)
@@ -152,13 +147,11 @@ static adv_settings_idx_t adv_fsm_get_adv_settings_idx(adv_states state)
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief Set a notification to be sent by the adv fsm to the main fsm
  *
  * \param[in] notif     The type of the notification to be sent
- ****************************************************************************************
- */
+******************************************************************************************/
 static void app_adv_fsm_set_and_send_notification(adv_notification_types_t notif)
 {
     adv_fsm_next_notification = notif;
@@ -166,11 +159,9 @@ static void app_adv_fsm_set_and_send_notification(adv_notification_types_t notif
 
 
 #ifdef AUTO_APPEND_DEVICE_NAME_IN_ADV_DATA
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief   Sets the advertising and the scan response data
- ****************************************************************************************
- */
+******************************************************************************************/
 static void app_adv_fsm_set_adv_data(void)
 {
         adv_settings_idx_t adv_state_default_settings = adv_fsm_get_adv_settings_idx(ADV_UNDIRECTED);
@@ -270,14 +261,12 @@ static void app_adv_fsm_set_adv_data(void)
 #endif
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief Send the undirected advertising request to the BLE stack
  *
  * \param[in] undFilterP              The advertising filter policy
  * \param[in] adv_state_settings_idx  The undirected advertising settings idx
- ****************************************************************************************
- */
+******************************************************************************************/
 static void send_adv_undirected_request(uint8_t undFilterP, uint8_t adv_state_settings_idx)
 {
         start_adv_data_t data;
@@ -330,14 +319,12 @@ static void send_adv_undirected_request(uint8_t undFilterP, uint8_t adv_state_se
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief Starts Undirected Advertising
  *
  * \param[in] filterPolicy      The advertising filter policy
  * \param[in] adv_settings_idx  The undirected advertising settings idx
- ****************************************************************************************
- */
+******************************************************************************************/
 static void start_adv_undirected(uint8_t filterPolicy, adv_settings_idx_t adv_settings_idx)
 {
         send_adv_undirected_request(filterPolicy, (uint8_t)adv_settings_idx);
@@ -350,12 +337,10 @@ static void start_adv_undirected(uint8_t filterPolicy, adv_settings_idx_t adv_se
 
 
 #ifdef HAS_SPECIAL_ADVERTISING
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief Starts Undirected Special Advertising, uses manufacturer specific data provided 
  * by adv_special_data
- ****************************************************************************************
- */
+******************************************************************************************/
 static void start_adv_undirected_special(void)
 {
     start_adv_data_t data;
@@ -393,13 +378,11 @@ static void start_adv_undirected_special(void)
 }
 #endif
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief Starts Directed Advertising to a given peer address
  *
  * \param[in] peerAddr  The address to which the directed advertising will be performed
- ****************************************************************************************
- */
+******************************************************************************************/
 static void start_adv_directed(struct bd_addr *peerAddr)
 {
         start_adv_direct_data_t data;
@@ -427,15 +410,13 @@ static void start_adv_directed(struct bd_addr *peerAddr)
  ************************************************************************************/
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief Common event handler when being in undirected advertising states
  *
  * \param[in] adv_fsm_evt  The incoming event
  *
  * \return adv_states The resulting advertising state after handling the incoming event
- ****************************************************************************************
- */
+******************************************************************************************/
 static adv_states adv_state_handle_undirected_common(adv_fsm_events_t adv_fsm_evt)
 {
     switch(adv_fsm_evt)
@@ -502,15 +483,13 @@ static adv_states adv_state_handle_undirected_common(adv_fsm_events_t adv_fsm_ev
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief Event handler when being in SLOW undirected advertising state (ADV_UNDIRECTED_SLOW)
  *
  * \param[in] adv_fsm_evt  The incoming event
  *
  * \return adv_states The resulting advertising state after handling the incoming event
- ****************************************************************************************
- */
+******************************************************************************************/
 static adv_states adv_state_handle_undirected_slow(adv_fsm_events_t adv_fsm_evt)
 {
     switch(adv_fsm_evt)
@@ -528,15 +507,13 @@ static adv_states adv_state_handle_undirected_slow(adv_fsm_events_t adv_fsm_evt)
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief Event handler when being in default Undirected Advertising state (ADV_UNDIRECTED)
  *
  * \param[in] adv_fsm_evt  The incoming event
  *
  * \return adv_states The resulting advertising state after handling the incoming event
- ****************************************************************************************
- */
+******************************************************************************************/
 static adv_states adv_state_handle_undirected(adv_fsm_events_t adv_fsm_evt)
 {
     switch(adv_fsm_evt)
@@ -568,15 +545,13 @@ static adv_states adv_state_handle_undirected(adv_fsm_events_t adv_fsm_evt)
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief Event handler when being in Limited Undirected Advertising state (ADV_UNDIRECTED_LIM)
  *
  * \param[in] adv_fsm_evt  The incoming event
  *
  * \return adv_states The resulting advertising state after handling the incoming event
- ****************************************************************************************
- */
+******************************************************************************************/
 static adv_states adv_state_handle_undirected_lim(adv_fsm_events_t adv_fsm_evt)
 {
     switch(adv_fsm_evt)
@@ -616,16 +591,14 @@ static adv_states adv_state_handle_undirected_lim(adv_fsm_events_t adv_fsm_evt)
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief Event handler when being in Undirected Advertising 
  *       - no pairing state (ADV_UNDIRECTED_NO_PAIRING)
  *
  * \param[in] adv_fsm_evt  The incoming event
  *
  * \return adv_states The resulting advertising state after handling the incoming event
- ****************************************************************************************
- */
+******************************************************************************************/
 static adv_states adv_state_handle_undirected_no_pair(adv_fsm_events_t adv_fsm_evt)
 {
     switch(adv_fsm_evt)
@@ -656,15 +629,13 @@ static adv_states adv_state_handle_undirected_no_pair(adv_fsm_events_t adv_fsm_e
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief Event handler when being in Directed Advertising state (ADV_DIRECTED)
  *
  * \param[in] adv_fsm_evt  The incoming event
  *
  * \return adv_states The resulting advertising state after handling the incoming event
- ****************************************************************************************
- */
+******************************************************************************************/
 static adv_states adv_state_handle_directed(adv_fsm_events_t adv_fsm_evt)
 {
     switch(adv_fsm_evt)
@@ -746,15 +717,13 @@ static adv_states adv_state_handle_directed(adv_fsm_events_t adv_fsm_evt)
 }         
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief Event handler when being in Idle state (ADV_IDLE)
  *
  * \param[in] adv_fsm_evt  The incoming event
  *
  * \return adv_states The resulting advertising state after handling the incoming event
- ****************************************************************************************
- */
+******************************************************************************************/
 static adv_states adv_state_handle_con_fsm_evt_when_idle(adv_fsm_events_t adv_fsm_evt)
 {
      switch(adv_fsm_evt)
@@ -821,15 +790,13 @@ static adv_states adv_state_handle_con_fsm_evt_when_idle(adv_fsm_events_t adv_fs
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief Event handler when being in Advertise Event Pending State (ADV_FSM_EVENT_PENDING)
  *
  * \param[in] adv_fsm_evt  The incoming event
  *
  * \return adv_states The resulting advertising state after handling the incoming event
- ****************************************************************************************
- */
+******************************************************************************************/
 static adv_states adv_state_handle_con_fsm_event_pending(adv_fsm_events_t adv_fsm_evt)
 {
     adv_fsm_events_t temp_pending_evt;
@@ -888,15 +855,13 @@ static adv_states adv_state_handle_con_fsm_event_pending(adv_fsm_events_t adv_fs
 
 
 #ifdef HAS_SPECIAL_ADVERTISING
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * \brief Event handler when being in Special Undirected Advertising State(ADV_SPECIAL)
  *
  * \param[in] adv_fsm_evt  The incoming event
  *
  * \return adv_states The resulting advertising state after handling the incoming event
- ****************************************************************************************
- */
+******************************************************************************************/
 static adv_states adv_state_handle_special(adv_fsm_events_t adv_fsm_evt)
 {
     switch(adv_fsm_evt)

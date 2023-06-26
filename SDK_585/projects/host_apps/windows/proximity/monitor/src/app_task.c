@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file app_task.c
  *
@@ -11,8 +10,7 @@
  *
  * <bluetooth.support@diasemi.com> and contributors.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
 
 #include "app_task.h" 
@@ -31,8 +29,7 @@
 extern unsigned int proxm_trans_in_prog;
 extern uint8_t last_char[MAX_CONN_NUMBER];
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Extracts device name from adv data if present and copy it to app_env.
  *
  * @param[in] adv_data      Pointer to advertise data.
@@ -40,8 +37,7 @@ extern uint8_t last_char[MAX_CONN_NUMBER];
  * @param[in] dev_indx      Devices index in device list.
  *
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static void app_find_device_name(unsigned char * adv_data, unsigned char adv_data_len, unsigned char dev_indx)
 {
     unsigned char indx = 0;

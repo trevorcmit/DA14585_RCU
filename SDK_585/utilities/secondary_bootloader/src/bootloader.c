@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file bootloader.c
  *
@@ -11,8 +10,7 @@
  *
  * <bluetooth.support@diasemi.com> and contributors.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #include <stdio.h>
 #include <stdint.h>
@@ -56,14 +54,12 @@ static int FlashRead(unsigned long destination_buffer,unsigned long source_addr,
 #endif
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Return the bank index of the active (latest and valid) image 
  * @param[in] destination_buffer: buffer to put the data
  * @param[in] source_addr: starting position to read the data from spi
  * @param[in] len: size of data to read  
- ****************************************************************************************
- */
+******************************************************************************************/
 static uint8_t findlatest(uint8_t id1, uint8_t id2)
 {
     if (id1==0xFF && id2==0) return 2;
@@ -74,13 +70,11 @@ static uint8_t findlatest(uint8_t id1, uint8_t id2)
 
 extern uint32_t crc32(uint32_t crc, const void *buf, size_t size);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Load the active (latest and valid) image from a non-volatile memory
  * @return Success (0) or Error Code.
  * 
- ****************************************************************************************
- */
+******************************************************************************************/
 static int loadActiveImage(void)
 {
     uint32_t codesize1=0;

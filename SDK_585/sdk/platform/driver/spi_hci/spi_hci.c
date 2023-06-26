@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file spi_hci.c
  *
@@ -13,20 +12,16 @@
  *
  * <bluetooth.support@diasemi.com> and contributors.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
  
- /**
- ****************************************************************************************
+ /*****************************************************************************************
  * @addtogroup SPI
  * @{
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /*
  * INCLUDE FILES
- ****************************************************************************************
- */
+******************************************************************************************/
 #include "spi_hci.h"        // 5-wire SPI driver header file
 #include "reg_spi.h"        // SPI register access functions
 #include <stdint.h>
@@ -71,23 +66,19 @@ struct spi_env_tag
 
 /*
  * GLOBAL VARIABLE DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 /// SPI environment structure
 static struct spi_env_tag spi_env __attribute__((section("retention_mem_area0"),zero_init)); //@RETENTION MEMORY
 
 /*
  * LOCAL FUNCTION DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Serves the receive data interrupt requests. It reads incoming data from SPI
  *        while SPI_INT_BIT is 1, and saves them to the receive buffer pointer.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 static void spi_receive_data_isr(void)
 {
     void (*callback) (uint8_t) = NULL;
@@ -159,14 +150,12 @@ static void spi_receive_data_isr(void)
 }
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Serves the transmit data requests. It asserts the DREADY signal to request a
  *        transmit to the master and when the master provides a clock signal the data
  *        transaction is performed. Upon completion, it de-asserts the DREADY signal.
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 static void spi_transmit_isr(void)
 {
     uint8_t tmp;
@@ -243,13 +232,11 @@ static void spi_transmit_isr(void)
     NVIC_EnableIRQ(SPI_IRQn);       // Enable SPI interrupt to CPU
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Initialization function of the SPI module. 
  *
  * Initializes SPI module as slave and enables SPI FIFO mode.
- ****************************************************************************************
- */
+******************************************************************************************/
 void spi_hci_slave_init(void)
 {
     SetBits16(CLK_PER_REG, SPI_DIV, 0);           // Set SPI internal clock divider
@@ -274,13 +261,11 @@ void spi_hci_slave_init(void)
     NVIC_SetPriority(SPI_IRQn,0);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Flow off function of the SPI external interface API. 
  *
  * Calls spi_hci_set_flow() with on=1, clears pending SPI IRQs and enables SPI interrupts.
- ****************************************************************************************
- */
+******************************************************************************************/
 void spi_hci_flow_on_func(void)
 {
     uint8_t tmp;
@@ -313,13 +298,11 @@ void spi_hci_flow_on_func(void)
     NVIC_EnableIRQ(SPI_IRQn);        // Disable SPI interrupt to CPU, if MINT is '1'
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Flow off function of the SPI external interface API. 
  *
  * Calls spi_hci_set_flow() with on=0.
- ****************************************************************************************
- */
+******************************************************************************************/
 bool spi_hci_flow_off_func(void)
 {
     uint8_t tmp;
@@ -354,15 +337,13 @@ bool spi_hci_flow_off_func(void)
     return true;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Read function of the SPI external interface API. 
  *
  * @param[in] *bufptr:   Pointer to the memory location the read data will be stored.
  * @param[in] size:      Size of the data to be read in bytes.
  * @param[in] *callback: Pointer to the callback function.
- ****************************************************************************************
- */
+******************************************************************************************/
 void spi_hci_read_func(uint8_t *bufptr, uint32_t size,void (*callback) (uint8_t))
 {
     // Sanity check
@@ -380,15 +361,13 @@ void spi_hci_read_func(uint8_t *bufptr, uint32_t size,void (*callback) (uint8_t)
       
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Write function of the SPI external interface API. 
  *
  * @param[in] *bufptr:   Pointer to the memory location of the data to be written.
  * @param[in] size:      Size of the data to be written in bytes.
  * @param[in] *callback: Pointer to the callback function.
- ****************************************************************************************
- */
+******************************************************************************************/
 void spi_hci_write_func(uint8_t *bufptr, uint32_t size, void (*callback) (uint8_t))
 {
     // Sanity check
@@ -408,11 +387,9 @@ void spi_hci_write_func(uint8_t *bufptr, uint32_t size, void (*callback) (uint8_
     spi_hci_flow_on_func();     // Send flow on byte
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Exported function for SPI interrupt handler. 
- ****************************************************************************************
- */
+******************************************************************************************/
 void SPI_Handler(void)
 {
     spi_receive_data_isr();

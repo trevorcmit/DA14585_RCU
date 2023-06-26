@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file app.c
  *
@@ -8,20 +7,16 @@
  * Copyright (C) RivieraWaves 2009-2013
  * Copyright (C) 2017 Modified by Dialog Semiconductor
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @addtogroup APP
  * @{
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /*
  * INCLUDE FILES
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #include "rwip_config.h"        // SW configuration
 
@@ -49,15 +44,13 @@
 
 /*
  * DEFINES
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #define APP_EASY_GAP_MAX_CONNECTION     APP_EASY_MAX_ACTIVE_CONNECTION
 
 /*
  * GLOBAL VARIABLE DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /// Application Environment Structure
 struct app_env_tag app_env[APP_EASY_MAX_ACTIVE_CONNECTION] __attribute__((section("retention_mem_area0"),zero_init)); //@RETENTION MEMORY
@@ -95,8 +88,7 @@ const struct prf_func_callbacks prf_funcs[] =
 
 /*
  * LOCAL VARIABLE DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /// Application Task Descriptor
 static const struct ke_task_desc TASK_DESC_APP = {NULL,
@@ -121,16 +113,13 @@ static struct bd_addr app_random_addr                                           
 
 /*
  * FUNCTION DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Check if the task_id has an entry in the user_prf_func
  * @param[in] task_id The task_id to check
  * @return true if the task_id has an entry in the user_prf_func.
- ****************************************************************************************
- */
+******************************************************************************************/
 static bool app_task_in_user_app(enum KE_API_ID task_id)
 {
     uint8_t i = 0;
@@ -146,12 +135,10 @@ static bool app_task_in_user_app(enum KE_API_ID task_id)
      return false;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Initialize the database for all the included profiles.
  * @return true if succeeded, else false
- ****************************************************************************************
- */
+******************************************************************************************/
 static bool app_db_init_next(void)
 {
     static uint8_t i __attribute__((section("retention_mem_area0"), zero_init)); //@RETENTION MEMORY;
@@ -226,14 +213,12 @@ bool app_db_init(void)
     return end_db_create;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Calls all the enable function of the profile registered in prf_func,
  *        custs_prf_func and user_prf_func.
  * @param[in] conidx The connection handle
  * @return void
- ****************************************************************************************
- */
+******************************************************************************************/
 void app_prf_enable(uint8_t conidx)
  {
      uint8_t i = 0;
@@ -275,16 +260,14 @@ void app_prf_enable(uint8_t conidx)
 #endif
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Append the device name in the advertising data or scan response data.
  * @param[in|out] len        The advertising or scan response data length.
  * @param[in] name_length    The device name length.
  * @param[in|out] data       Pointer to the buffer which will carry the device name.
  * @param[in] name_data     The device name.
  * @return void
- ****************************************************************************************
- */
+******************************************************************************************/
 static void append_device_name(uint8_t *len,
                                const uint8_t name_length,
                                uint8_t *data,
@@ -303,14 +286,12 @@ static void append_device_name(uint8_t *len,
     *len += name_length + 2;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Generate a 48-bit static random address. The static random address is generated
  *        only once in a device power cycle and it is stored in the retention RAM.
  *        The two MSB shall be equal to '1'.
  * @return void
- ****************************************************************************************
- */
+******************************************************************************************/
 static void generate_static_random_address()
 {
     // Check if the static random address is already generated.
@@ -326,14 +307,12 @@ static void generate_static_random_address()
     }
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Create advertising message for nonconnectable undirected event (ADV_NONCONN_IND).
  * @return gapm_start_advertise_cmd     Pointer to the advertising message
  * @note This function supports also the advertising with scan response (ADV_SCAN_IND),
  * if the scan response data are NOT empty.
- ****************************************************************************************
- */
+******************************************************************************************/
 static struct gapm_start_advertise_cmd* app_easy_gap_non_connectable_advertise_start_create_msg(void)
 {
     // Allocate a message for GAP
@@ -384,12 +363,10 @@ static struct gapm_start_advertise_cmd* app_easy_gap_non_connectable_advertise_s
     return adv_cmd;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Create advertising message for connectable undirected event (ADV_IND).
  * @return gapm_start_advertise_cmd Pointer to the advertising message
- ****************************************************************************************
- */
+******************************************************************************************/
 static struct gapm_start_advertise_cmd* app_easy_gap_undirected_advertise_start_create_msg(void)
 {
     // Allocate a message for GAP
@@ -442,16 +419,14 @@ static struct gapm_start_advertise_cmd* app_easy_gap_undirected_advertise_start_
     return adv_cmd;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Create advertising message for connectable directed event (ADV_DIRECT_IND). It
  *        supports the low duty cycle directed advertising mode.
  * @param[in] ldc_enable       Enable/disable low duty cycle mode.
  *                                 - 0 = disabled
  *                                 - 1 = enabled
  * @return gapm_start_advertise_cmd Pointer to the advertising message
- ****************************************************************************************
- */
+******************************************************************************************/
 static struct gapm_start_advertise_cmd* app_easy_gap_directed_advertise_start_create_msg(uint8_t ldc_enable)
 {
     // Allocate a message for GAP
@@ -502,12 +477,10 @@ void app_easy_gap_update_adv_data(uint8_t *update_adv_data,
     ke_msg_send(cmd);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Create parameter update request message.
  * @return gapc_param_update_cmd Pointer to the parameter update request message
- ****************************************************************************************
- */
+******************************************************************************************/
 static struct gapc_param_update_cmd* app_easy_gap_param_update_msg_create(uint8_t conidx)
 {
     // Allocate a message for GAP
@@ -528,12 +501,10 @@ static struct gapc_param_update_cmd* app_easy_gap_param_update_msg_create(uint8_
     return param_update_cmd[conidx];
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Create GAPM_START_CONNECTION_CMD message (connection message).
  * @return gapm_start_connection_cmd Pointer to GAPM_START_CONNECTION_CMD message
- ****************************************************************************************
- */
+******************************************************************************************/
 static struct gapm_start_connection_cmd* app_easy_gap_start_connection_to_msg_create(void)
 {
     // Allocate a message for GAP
@@ -609,12 +580,10 @@ static struct gapm_start_connection_cmd* app_easy_gap_start_connection_to_msg_cr
     return start_connection_cmd;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Create GAPM_SET_DEV_CONFIG_CMD message (device configuration).
  * @return gapm_set_dev_config_cmd Pointer to GAPM_SET_DEV_CONFIG_CMD message
- ****************************************************************************************
- */
+******************************************************************************************/
 static struct gapm_set_dev_config_cmd* app_easy_gap_dev_config_create_msg(void)
 {
     const uint8_t tmp_addr[] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
@@ -664,12 +633,10 @@ static struct gapm_set_dev_config_cmd* app_easy_gap_dev_config_create_msg(void)
     return set_dev_config_cmd;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Advertising stop handler.
  * @return void
- ****************************************************************************************
- */
+******************************************************************************************/
 static void app_easy_gap_advertise_stop_handler(timer_hnd handler)
 {
     void (*timeout_callback)(void);

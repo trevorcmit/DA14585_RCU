@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "*.ms": "BluespecSystemVerilog",
+        "app_audio_codec.h": "c"
+    },
+    // "C_Cpp.dimInactiveRegions": false
+}

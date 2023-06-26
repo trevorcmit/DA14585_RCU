@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file app_sec_task.c
  *
@@ -8,20 +7,16 @@
  * Copyright (C) RivieraWaves 2009-2013
  * Copyright (C) 2017 Modified by Dialog Semiconductor
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @addtogroup APPSECTASK
  * @{
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /*
  * INCLUDE FILES
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #include "rwip_config.h"
 
@@ -34,19 +29,16 @@
 
 /*
  * LOCAL FUNCTION DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of bond request command.
  * @param[in] msgid     Id of the message received
  * @param[in] param     Pointer to the parameters of the message
  * @param[in] dest_id   ID of the receiving task instance (TASK_GAP)
  * @param[in] src_id    ID of the sending task instance
  * @return If the message was consumed or not
- ****************************************************************************************
- */
+******************************************************************************************/
 static int gapc_bond_req_ind_handler(ke_msg_id_t const msgid,
                                      struct gapc_bond_req_ind *param,
                                      ke_task_id_t const dest_id,
@@ -110,16 +102,14 @@ static int gapc_bond_req_ind_handler(ke_msg_id_t const msgid,
     return (KE_MSG_CONSUMED);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of bond indication.
  * @param[in] msgid     Id of the message received
  * @param[in] param     Pointer to the parameters of the message
  * @param[in] dest_id   ID of the receiving task instance (TASK_GAP)
  * @param[in] src_id    ID of the sending task instance
  * @return If the message was consumed or not
- ****************************************************************************************
- */
+******************************************************************************************/
 static int gapc_bond_ind_handler(ke_msg_id_t const msgid,
                                  struct gapc_bond_ind *param,
                                  ke_task_id_t const dest_id,
@@ -173,16 +163,14 @@ static int gapc_bond_ind_handler(ke_msg_id_t const msgid,
     return (KE_MSG_CONSUMED);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of encrypt request command.
  * @param[in] msgid     Id of the message received
  * @param[in] param     Pointer to the parameters of the message
  * @param[in] dest_id   ID of the receiving task instance (TASK_GAP)
  * @param[in] src_id    ID of the sending task instance
  * @return If the message was consumed or not
- ****************************************************************************************
- */
+******************************************************************************************/
 static int gapc_encrypt_req_ind_handler(ke_msg_id_t const msgid,
                                         struct gapc_encrypt_req_ind *param,
                                         ke_task_id_t const dest_id,
@@ -193,16 +181,14 @@ static int gapc_encrypt_req_ind_handler(ke_msg_id_t const msgid,
     return (KE_MSG_CONSUMED);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of encrypt indication.
  * @param[in] msgid     Id of the message received
  * @param[in] param     Pointer to the parameters of the message
  * @param[in] dest_id   ID of the receiving task instance (TASK_GAP)
  * @param[in] src_id    ID of the sending task instance
  * @return If the message was consumed or not
- ****************************************************************************************
- */
+******************************************************************************************/
 static int gapc_encrypt_ind_handler(ke_msg_id_t const msgid,
                                     struct gapc_encrypt_ind *param,
                                     ke_task_id_t const dest_id,
@@ -215,8 +201,7 @@ static int gapc_encrypt_ind_handler(ke_msg_id_t const msgid,
 
 /*
  * GLOBAL VARIABLES DEFINITION
- ****************************************************************************************
- */
+******************************************************************************************/
 
 static const struct ke_msg_handler app_sec_process_handlers[] =
 {
@@ -228,8 +213,7 @@ static const struct ke_msg_handler app_sec_process_handlers[] =
 
 /*
  * GLOBAL FUNCTION DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 enum process_event_response app_sec_process_handler(ke_msg_id_t const msgid,
                                                     void const *param,

@@ -28,14 +28,12 @@
 /*
 * VARIABLES
 */
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * Default sleep mode. Possible values are:
  *  - ARCH_SLEEP_OFF
  *  - ARCH_EXT_SLEEP_ON
  *  - ARCH_EXT_SLEEP_OTP_COPY_ON
- ****************************************************************************************
- */
+******************************************************************************************/
 const static sleep_state_t app_default_sleep_mode = ARCH_EXT_SLEEP_ON;
 
 /**
@@ -101,8 +99,7 @@ static const struct advertise_configuration user_adv_conf = {
     .peer_addr_type = 0,
 };
 
-/**
- *******************************************************************************************
+/********************************************************************************************
  * Advertising or scan response data for the following cases:
  * ADV_IND: Connectable undirected advertising event.
  *    - The maximum length of the user defined advertising data shall be 28 bytes.
@@ -250,11 +247,9 @@ static const struct gapm_configuration user_gapm_conf = {
 
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * Parameter update configuration
- ****************************************************************************************
- */
+******************************************************************************************/
 /// Connection interval minimum measured in ble double slots (1.25ms)
 /// use the macro MS_TO_DOUBLESLOTS to convert from milliseconds (ms) to double slots
 

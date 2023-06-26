@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file glps.c
  *
@@ -8,20 +7,16 @@
  * Copyright (C) RivieraWaves 2009-2015
  *
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @addtogroup GLPS
  * @{
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /*
  * INCLUDE FILES
- ****************************************************************************************
- */
+******************************************************************************************/
 #include "rwip_config.h"
 
 #if (BLE_GL_SENSOR)
@@ -34,8 +29,7 @@
 
 /*
  * GLOBAL VARIABLE DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /// Full GLPS Database Description - Used to add attributes into the database
 static const struct attm_desc glps_att_db[GLS_IDX_NB] =
@@ -74,17 +68,14 @@ static const struct attm_desc glps_att_db[GLS_IDX_NB] =
 
 /*
  * DEFINES
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #define GLPS_FILTER_USER_FACING_TIME_SIZE (7)
 
 /*
  * LOCAL FUNCTION DEFINITIONS
- ****************************************************************************************
- */
-/**
- ****************************************************************************************
+******************************************************************************************/
+/*****************************************************************************************
  * @brief Initialization of the GLPS module.
  * This function performs all the initializations of the Profile module.
  *  - Creation of database (if it's a service)
@@ -101,8 +92,7 @@ static const struct attm_desc glps_att_db[GLS_IDX_NB] =
  * @param[in]     param      Configuration parameters of profile collector or service (32 bits aligned)
  *
  * @return status code to know if profile initialization succeed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static uint8_t glps_init (struct prf_task_env* env, uint16_t* start_hdl, uint16_t app_task, uint8_t sec_lvl, struct glps_db_cfg* params)
 {
     //------------------ create the attribute database for the profile -------------------
@@ -157,15 +147,13 @@ static uint8_t glps_init (struct prf_task_env* env, uint16_t* start_hdl, uint16_
     return status;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Destruction of the GLPS module - due to a reset for instance.
  * This function clean-up allocated memory (attribute database is destroyed by another
  * procedure)
  *
  * @param[in|out]    env        Collector or Service allocated environment data.
- ****************************************************************************************
- */
+******************************************************************************************/
 static void glps_destroy(struct prf_task_env* env)
 {
     uint8_t idx;
@@ -185,14 +173,12 @@ static void glps_destroy(struct prf_task_env* env)
     ke_free(glps_env);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles Connection creation
  *
  * @param[in|out]    env        Collector or Service allocated environment data.
  * @param[in]        conidx     Connection index
- ****************************************************************************************
- */
+******************************************************************************************/
 static void glps_create(struct prf_task_env* env, uint8_t conidx)
 {
     struct glps_env_tag* glps_env = (struct glps_env_tag*) env->env;
@@ -205,15 +191,13 @@ static void glps_create(struct prf_task_env* env, uint8_t conidx)
     ke_state_set(KE_BUILD_ID(env->task, conidx), GLPS_IDLE);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles Disconnection
  *
  * @param[in|out]    env        Collector or Service allocated environment data.
  * @param[in]        conidx     Connection index
  * @param[in]        reason     Detach reason
- ****************************************************************************************
- */
+******************************************************************************************/
 static void glps_cleanup(struct prf_task_env* env, uint8_t conidx, uint8_t reason)
 {
     struct glps_env_tag* glps_env = (struct glps_env_tag*) env->env;
@@ -231,8 +215,7 @@ static void glps_cleanup(struct prf_task_env* env, uint8_t conidx, uint8_t reaso
 
 /*
  * GLOBAL VARIABLE DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /// GLPS Task interface required by profile manager
 const struct prf_task_cbs glps_itf =
@@ -245,8 +228,7 @@ const struct prf_task_cbs glps_itf =
 
 /*
  * EXPORTED FUNCTIONS DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 const struct prf_task_cbs* glps_prf_itf_get(void)
 {

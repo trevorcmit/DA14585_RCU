@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file hci.h
  *
@@ -8,27 +7,23 @@
  * Copyright (C) RivieraWaves 2009-2014
  *
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #ifndef HCI_H_
 #define HCI_H_
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @addtogroup HCI Host Controller Interface
  * @ingroup ROOT
  * @brief HCI module handling communication between lower and higher layers in split
  * architecture.
  * @{
- ****************************************************************************************
- */
+******************************************************************************************/
 
 
 /*
  * INCLUDE FILES
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #include "rwip_config.h"       // SW configuration
 
@@ -42,8 +37,7 @@
 
 /*
  * DEFINES
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #if (BLE_EMB_PRESENT || BLE_HOST_PRESENT)
 #if (BLE_CENTRAL || BLE_PERIPHERAL)
@@ -57,8 +51,7 @@
 
 /*
  * TYPE DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /// Message API of the HCI task
 enum HCI_MSG
@@ -98,14 +91,12 @@ enum HCI_CMD_HDR
 
 /*
  * GLOBAL VARIABLE DECLARATIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 
 /*
  * FUNCTION DECLARATIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /**
 ****************************************************************************************
@@ -122,8 +113,7 @@ void hci_init(void);
 void hci_reset(void);
 
 #if (BLE_EMB_PRESENT || BT_EMB_PRESENT)
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Function called when an internal task needs to send a HCI message to Host
  *
  * This function decides whether the message is sent externally onto HCI Transport Layer
@@ -142,8 +132,7 @@ void hci_send_2_host(void *param);
 #endif // (BLE_EMB_PRESENT || BT_EMB_PRESENT)
 
 #if BLE_HOST_PRESENT
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Function called when an internal task needs to send a HCI message to Controller
  *
  * This function decides whether the message is sent externally onto HCI Transport Layer
@@ -162,8 +151,7 @@ void hci_send_2_controller(void *param);
 #endif //BLE_HOST_PRESENT
 
 #if  (BT_EMB_PRESENT)
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Register BD address for a BT ACL connection
  *
  * @param[in]  link_id  BT ACL connection link ID
@@ -171,8 +159,7 @@ void hci_send_2_controller(void *param);
  *****************************************************************************************
  */
 void hci_bt_acl_bdaddr_register(uint8_t link_id, struct bd_addr* bd_addr);
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Register connection handle for a BT ACL connection
  *
  * @param[in]  link_id  BT ACL connection link ID
@@ -180,8 +167,7 @@ void hci_bt_acl_bdaddr_register(uint8_t link_id, struct bd_addr* bd_addr);
  */
 void hci_bt_acl_conhdl_register(uint8_t link_id);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Unregister a BT ACL connection
  *
  * @param[in]  link_id  BT ACL connection link ID
@@ -190,8 +176,7 @@ void hci_bt_acl_conhdl_register(uint8_t link_id);
 void hci_bt_acl_bdaddr_unregister(uint8_t link_id);
 #endif //(BT_EMB_PRESENT)
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Set the event mask
  *
  * @param[in] evt_msk Pointer to the new event mask
@@ -203,8 +188,7 @@ void hci_bt_acl_bdaddr_unregister(uint8_t link_id);
 uint8_t hci_evt_mask_set(struct evt_mask const *evt_msk, uint8_t page);
 
 #if (BT_EMB_PRESENT)
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Add an event filter according to the parameters of the HCI command
  *
  * Note: the consistency of the parameters according to the input has already been checked by HCI during the special
@@ -220,8 +204,7 @@ uint8_t hci_evt_filter_add(struct hci_set_evt_filter_cmd const *param);
 
 #if (TL_ITF)
 #if  (BLE_EMB_PRESENT || BT_EMB_PRESENT)
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Get the maximum parameter size for a specific command
  *
  * This function is used by TL to know the theoretical maximum parameters size for a
@@ -236,8 +219,7 @@ uint8_t hci_evt_filter_add(struct hci_set_evt_filter_cmd const *param);
  */
 uint8_t hci_cmd_get_max_param_size(uint16_t opcode);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Indicates that a HCI command has been received
  *
  * This function is used by TL to indicate the reception of a HCI command.
@@ -249,8 +231,7 @@ uint8_t hci_cmd_get_max_param_size(uint16_t opcode);
  */
 void hci_cmd_received(uint16_t opcode, uint8_t length, uint8_t *payload);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Allocates the reception buffer for ACL TX data
  *
  * @param[in]   hdl_flags Connection handle and data flags from HCI ACL packet header
@@ -261,8 +242,7 @@ void hci_cmd_received(uint16_t opcode, uint8_t length, uint8_t *payload);
  */
 uint8_t* hci_acl_tx_data_alloc(uint16_t hdl_flags, uint16_t len);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Indicates that a HCI ACL TX data packet has been received
  *
  * This function is used by TL to indicate the reception of a HCI ACL TX data.
@@ -276,8 +256,7 @@ void hci_acl_tx_data_received(uint16_t hdl_flags, uint16_t datalen, uint8_t * pa
 #endif // (BLE_EMB_PRESENT || BT_EMB_PRESENT)
 
 #if BLE_HOST_PRESENT
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Allocates the reception buffer for ACL RX data
  *
  * @param[in]   hdl_flags Connection handle and data flags from HCI ACL RX packet header
@@ -288,8 +267,7 @@ void hci_acl_tx_data_received(uint16_t hdl_flags, uint16_t datalen, uint8_t * pa
  */
 uint8_t* hci_acl_rx_data_alloc(uint16_t hdl_flags, uint16_t len);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Indicates that a HCI ACL RX data packet has been received
  *
  * This function is used by TL to indicate the reception of a HCI ACL RX data.
@@ -301,8 +279,7 @@ uint8_t* hci_acl_rx_data_alloc(uint16_t hdl_flags, uint16_t len);
  */
 void hci_acl_rx_data_received(uint16_t hdl_flags, uint16_t datalen, uint8_t * payload);
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Indicates that a HCI event has been received
  *
  * This function is used by TL to indicate the reception of a HCI event.

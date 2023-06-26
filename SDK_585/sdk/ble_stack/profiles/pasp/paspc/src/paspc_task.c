@@ -1,5 +1,4 @@
-/**
- ****************************************************************************************
+/*****************************************************************************************
  *
  * @file paspc_task.c
  *
@@ -9,21 +8,17 @@
  *
  * $ Rev $
  *
- ****************************************************************************************
- */
+******************************************************************************************/
 
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @addtogroup PASPCTASK
  * @{
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /*
  * INCLUDE FILES
- ****************************************************************************************
- */
+******************************************************************************************/
 
 #include "pasp_common.h"
 
@@ -37,8 +32,7 @@
 
 /*
  * STRUCTURES
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /// State machine used to retrieve Phone Alert Status service characteristics information
 const struct prf_char_def paspc_pass_char[PASPC_CHAR_MAX] =
@@ -72,19 +66,16 @@ const struct prf_char_desc_def paspc_pass_char_desc[PASPC_DESC_MAX] =
 
 /*
  * LOCAL FUNCTIONS DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the @ref PASPC_ENABLE_REQ message.
  * @param[in] msgid Id of the message received.
  * @param[in] param Pointer to the parameters of the message.
  * @param[in] dest_id ID of the receiving task instance.
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int paspc_enable_req_handler(ke_msg_id_t const msgid,
                                     struct paspc_enable_req const *param,
                                     ke_task_id_t const dest_id,
@@ -157,16 +148,14 @@ static int paspc_enable_req_handler(ke_msg_id_t const msgid,
     return (KE_MSG_CONSUMED);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the @ref PASPC_READ_CMD message.
  * @param[in] msgid Id of the message received.
  * @param[in] param Pointer to the parameters of the message.
  * @param[in] dest_id ID of the receiving task instance.
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int paspc_read_cmd_handler(ke_msg_id_t const msgid,
                                   struct paspc_read_cmd const *param,
                                   ke_task_id_t const dest_id,
@@ -269,16 +258,14 @@ static int paspc_read_cmd_handler(ke_msg_id_t const msgid,
     return (int)msg_status;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the @ref PASPC_WRITE_CMD message.
  * @param[in] msgid Id of the message received.
  * @param[in] param Pointer to the parameters of the message.
  * @param[in] dest_id ID of the receiving task instance.
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int paspc_write_cmd_handler(ke_msg_id_t const msgid,
                                    struct paspc_write_cmd const *param,
                                    ke_task_id_t const dest_id,
@@ -402,8 +389,7 @@ static int paspc_write_cmd_handler(ke_msg_id_t const msgid,
     return (int)msg_status;
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the @ref GATTC_SDP_SVC_IND_HANDLER message.
  * The handler stores the found service details for service discovery.
  * @param[in] msgid Id of the message received (probably unused).
@@ -411,8 +397,7 @@ static int paspc_write_cmd_handler(ke_msg_id_t const msgid,
  * @param[in] dest_id ID of the receiving task instance (probably unused).
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int gattc_sdp_svc_ind_handler(ke_msg_id_t const msgid,
                                              struct gattc_sdp_svc_ind const *ind,
                                              ke_task_id_t const dest_id,
@@ -446,16 +431,14 @@ static int gattc_sdp_svc_ind_handler(ke_msg_id_t const msgid,
     return (KE_MSG_CONSUMED);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the @ref GATTC_CMP_EVT message.
  * @param[in] msgid Id of the message received.
  * @param[in] param Pointer to the parameters of the message.
  * @param[in] dest_id ID of the receiving task instance.
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int gattc_cmp_evt_handler(ke_msg_id_t const msgid,
                                  struct gattc_cmp_evt const *param,
                                  ke_task_id_t const dest_id,
@@ -551,8 +534,7 @@ static int gattc_cmp_evt_handler(ke_msg_id_t const msgid,
     return (KE_MSG_CONSUMED);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the @ref GATTC_READ_IND message.
  * Generic event received after every simple read command sent to peer server.
  * @param[in] msgid Id of the message received (probably unused).
@@ -560,8 +542,7 @@ static int gattc_cmp_evt_handler(ke_msg_id_t const msgid,
  * @param[in] dest_id ID of the receiving task instance (probably unused).
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int gattc_read_ind_handler(ke_msg_id_t const msgid,
                                     struct gattc_read_ind const *param,
                                     ke_task_id_t const dest_id,
@@ -623,16 +604,14 @@ static int gattc_read_ind_handler(ke_msg_id_t const msgid,
     return (KE_MSG_CONSUMED);
 }
 
-/**
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles reception of the @ref GATTC_EVENT_IND message.
  * @param[in] msgid Id of the message received (probably unused).
  * @param[in] param Pointer to the parameters of the message.
  * @param[in] dest_id ID of the receiving task instance (probably unused).
  * @param[in] src_id ID of the sending task instance.
  * @return If the message was consumed or not.
- ****************************************************************************************
- */
+******************************************************************************************/
 static int gattc_event_ind_handler(ke_msg_id_t const msgid,
                                    struct gattc_event_ind const *param,
                                    ke_task_id_t const dest_id,
@@ -676,8 +655,7 @@ static int gattc_event_ind_handler(ke_msg_id_t const msgid,
 
 /*
  * GLOBAL VARIABLE DEFINITIONS
- ****************************************************************************************
- */
+******************************************************************************************/
 
 /// Specifies the default message handlers
 const struct ke_msg_handler paspc_default_state[] =
