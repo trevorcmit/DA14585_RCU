@@ -8,13 +8,7 @@
  * events produced by the application and provides a variety of notifications back to it.
  *
  * Define symbol HAS_CONNECTION_FSM to include this module in the application.
- *
- * Copyright (C) 2017 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information  
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com>
- *
+* 
  *****************************************************************************************
  */
  

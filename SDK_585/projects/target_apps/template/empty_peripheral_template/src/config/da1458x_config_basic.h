@@ -3,13 +3,7 @@
  * @file da1458x_config_basic.h
  *
  * @brief Basic compile configuration file.
- *
- * Copyright (C) 2014 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com> and contributors.
- *
+  *
 ******************************************************************************************/
 
 #ifndef _DA1458X_CONFIG_BASIC_H_

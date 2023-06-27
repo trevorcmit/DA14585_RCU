@@ -3,13 +3,7 @@
  * @file user_commands.h
  *
  * @brief User_commands header file.
- *
- * Copyright (C) 2017 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com> and contributors.
- *
+  *
 ******************************************************************************************/
 
 #ifndef USER_COMMANDS_H_

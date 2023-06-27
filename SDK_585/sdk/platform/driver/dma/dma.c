@@ -1,15 +1,6 @@
 /*****************************************************************************************
- *
  * @file dma.h
- *
  * @brief Implementation of the DMA Low Level Driver
- *
- * Copyright (C) 2017 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com> and contributors.
- *
 ******************************************************************************************/
  
 #define HW_CONFIG_DMA_CHANNELS_COUNT 4
@@ -22,6 +13,7 @@ static struct hw_dma_callback_data {
 } dma_callbacks_user_data[HW_CONFIG_DMA_CHANNELS_COUNT];
 
 #define DMA_CHN_REG(reg, chan) ((volatile uint16_t *)(reg) + ((chan) * 8))
+
 
 void dma_channel_initialization(DMA_setup *channel_setup)
 {
@@ -77,31 +69,32 @@ void dma_channel_initialization(DMA_setup *channel_setup)
         channel_setup->dma_sense;
     
     // Set DMA_REQ_MUX_REG for the requested channel / trigger combination
-    if(channel_setup->dma_req_mux != DMA_TRIG_NONE)
+    if (channel_setup->dma_req_mux != DMA_TRIG_NONE)
     {
         switch (channel_setup->channel_number)
         {
             case DMA_CHANNEL_0:
             case DMA_CHANNEL_1:
-                    GLOBAL_INT_DISABLE();
-                    SetBits16(DMA_REQ_MUX_REG, DMA01_SEL, channel_setup->dma_req_mux);
-                    GLOBAL_INT_RESTORE();
-                    break;
+                GLOBAL_INT_DISABLE();
+                SetBits16(DMA_REQ_MUX_REG, DMA01_SEL, channel_setup->dma_req_mux);
+                GLOBAL_INT_RESTORE();
+                break;
             case DMA_CHANNEL_2:
             case DMA_CHANNEL_3:
-                    GLOBAL_INT_DISABLE();
-                    SetBits16(DMA_REQ_MUX_REG, DMA23_SEL, channel_setup->dma_req_mux);
-                    GLOBAL_INT_RESTORE();
-                    break;
+                GLOBAL_INT_DISABLE();
+                SetBits16(DMA_REQ_MUX_REG, DMA23_SEL, channel_setup->dma_req_mux);
+                GLOBAL_INT_RESTORE();
+                break;
             default:
-                    break;
+                break;
         }
-        /*
+
+        /*******************************************************************************
          * When different DMA channels are used for same device it is important
          * that only one trigger is set for specific device at a time.
          * Having same trigger for different channels can cause unpredictable results.
          * Following code also should help when SPI1 is assigned to non 0 channel.
-         */
+        *******************************************************************************/
         GLOBAL_INT_DISABLE();
         switch (channel_setup->channel_number)
         {
@@ -118,8 +111,9 @@ void dma_channel_initialization(DMA_setup *channel_setup)
         }
         GLOBAL_INT_RESTORE();
     }
-    src_address = channel_setup->src_address;
-    dest_address = channel_setup->dest_address;
+
+    src_address  = channel_setup -> src_address;
+    dest_address = channel_setup -> dest_address;
 
     // Set source address registers
     *dma_x_a_start_low_reg = (src_address & 0xffff);
@@ -134,7 +128,8 @@ void dma_channel_initialization(DMA_setup *channel_setup)
     {
         // If user explicitly set this number use it
         *dma_x_int_reg = channel_setup->irq_nr_of_trans - 1;
-    } else
+    } 
+    else
     {
         // If user passed 0, use transfer length to fire interrupt after transfer ends
         *dma_x_int_reg = channel_setup->length - 1;
@@ -147,11 +142,11 @@ void dma_channel_initialization(DMA_setup *channel_setup)
         dma_callbacks_user_data[channel_setup->channel_number].callback = channel_setup->callback;
     else
         dma_callbacks_user_data[channel_setup->channel_number].callback = NULL;
+
     dma_callbacks_user_data[channel_setup->channel_number].user_data = channel_setup->user_data;
 }
 
-void dma_channel_update_source(dma_channel_t channel, void *addr, uint16_t length,
-                                                                        hw_dma_transfer_cb cb)
+void dma_channel_update_source(dma_channel_t channel, void *addr, uint16_t length, hw_dma_transfer_cb cb)
 {
     uint32_t phy_addr = (uint32_t) addr;
 
@@ -166,7 +161,6 @@ void dma_channel_update_source(dma_channel_t channel, void *addr, uint16_t lengt
     // Look up DMAX_LEN_REG address
     volatile uint16_t *dma_x_len_reg = DMA_CHN_REG(DMA0_LEN_REG, channel);
 
-
     volatile uint16_t *dma_x_int_reg = DMA_CHN_REG(DMA0_INT_REG, channel);
 
     // Set source address registers
@@ -174,9 +168,7 @@ void dma_channel_update_source(dma_channel_t channel, void *addr, uint16_t lengt
     *dma_x_a_start_high_reg = (phy_addr >> 16);
 
     *dma_x_int_reg = length - 1;
-
-    // Set the transfer length
-    *dma_x_len_reg = length - 1;
+    *dma_x_len_reg = length - 1; // Set the transfer length
 }
 
 void dma_channel_initialization_minimal(DMA_setup *channel_setup)
@@ -212,8 +204,7 @@ void dma_channel_initialization_minimal(DMA_setup *channel_setup)
     dma_callbacks_user_data[channel_setup->channel_number].user_data = channel_setup->user_data;
 }
 
-void dma_channel_update_destination(dma_channel_t channel, void *addr, uint16_t length,
-                                                                        hw_dma_transfer_cb cb)
+void dma_channel_update_destination(dma_channel_t channel, void *addr, uint16_t length, hw_dma_transfer_cb cb)
 {
     uint32_t phy_addr = (uint32_t) addr;
 
@@ -234,15 +225,12 @@ void dma_channel_update_destination(dma_channel_t channel, void *addr, uint16_t 
     *dma_x_b_start_high_reg = (phy_addr >> 16);
 
     *dma_x_int_reg = length - 1;
-
-    // Set the transfer length
-    *dma_x_len_reg = length - 1;
+    *dma_x_len_reg = length - 1; // Set the transfer length
 }
 
 void dma_channel_update_int_ix(dma_channel_t channel, uint16_t int_ix)
 {
     volatile uint16_t *dma_x_int_reg = DMA_CHN_REG(DMA0_INT_REG, channel);
-
     *dma_x_int_reg = int_ix;
 }
 
@@ -261,6 +249,7 @@ void dma_channel_enable(dma_channel_t channel_number, dma_state_t dma_on)
         {
             SetBits16(&dma_ctrl, IRQ_ENABLE, 1);
         }
+
         // Start the chosen DMA channel
         *dma_x_ctrl_reg = dma_ctrl;
         NVIC_EnableIRQ(DMA_IRQn);
@@ -276,11 +265,8 @@ void dma_channel_enable(dma_channel_t channel_number, dma_state_t dma_on)
 
 /*****************************************************************************************
  * \brief   DMA helper function
- *
  * \param   [in]  
- *
  * \return  None
- *
 ******************************************************************************************/
 static inline void dma_helper(dma_channel_t channel_number, uint16_t len, bool stop_dma)
 {
@@ -300,34 +286,33 @@ static inline void dma_helper(dma_channel_t channel_number, uint16_t len, bool s
     NVIC_EnableIRQ(DMA_IRQn);
 }
 
+
 bool dma_channel_active(void)
 {
     int dma_on;
-
     dma_on =  GetBits16(DMA0_CTRL_REG, DMA_ON);
     dma_on |= GetBits16(DMA1_CTRL_REG, DMA_ON);
     dma_on |= GetBits16(DMA2_CTRL_REG, DMA_ON);
     dma_on |= GetBits16(DMA3_CTRL_REG, DMA_ON);
-#if (HW_CONFIG_DMA_CHANNELS_COUNT > 4)
-    dma_on |= GetBits16(DMA4_CTRL_REG, DMA_ON);
-    dma_on |= GetBits16(DMA5_CTRL_REG, DMA_ON);
-#endif        
-#if (HW_CONFIG_DMA_CHANNELS_COUNT > 6)    
-    dma_on |= GetBits16(DMA6_CTRL_REG, DMA_ON);         
-    dma_on |= GetBits16(DMA7_CTRL_REG, DMA_ON);
-#endif        
+
+    #if (HW_CONFIG_DMA_CHANNELS_COUNT > 4)
+        dma_on |= GetBits16(DMA4_CTRL_REG, DMA_ON);
+        dma_on |= GetBits16(DMA5_CTRL_REG, DMA_ON);
+    #endif
+
+    #if (HW_CONFIG_DMA_CHANNELS_COUNT > 6)    
+        dma_on |= GetBits16(DMA6_CTRL_REG, DMA_ON);         
+        dma_on |= GetBits16(DMA7_CTRL_REG, DMA_ON);
+    #endif
+
     return (dma_on == 1);
 }
 
 /*****************************************************************************************
  * \brief   Capture DMA Interrupt Handler 
- *
  * \details Calls the user interrupt handler
- *
  * \param   None 
- *
  * \return  None
- *
 ******************************************************************************************/
 void DMA_Handler(void)
 {
@@ -344,24 +329,19 @@ void DMA_Handler(void)
         {
             bool stop;
 
-            /*
-             * DMAx_INT_REG shows after how many transfers the interrupt
-             * is generated
-             */
+            // DMAx_INT_REG shows after how many transfers the interrupt is generated
             dma_x_int_reg = DMA_CHN_REG(DMA0_INT_REG, i);
 
-            /*
-             * DMAx_LEN_REG shows the length of the DMA transfer
-             */
+            // DMAx_LEN_REG shows the length of the DMA transfer
             dma_x_len_reg = DMA_CHN_REG(DMA0_LEN_REG, i);
 
             dma_x_ctrl_reg = DMA_CHN_REG(DMA0_CTRL_REG, i);
 
-            /*
+            /*****************************
              * Stop DMA if:
              *  - transfer is completed
              *  - mode is not circular
-             */
+            *****************************/
         
             stop = (*dma_x_int_reg == *dma_x_len_reg)
                     && (!GetBits16(dma_x_ctrl_reg, CIRCULAR));
@@ -371,6 +351,7 @@ void DMA_Handler(void)
     }
 }
 
+
 void dma_channel_stop(dma_channel_t channel_number)
 {
     // Stopping DMA will clear DMAx_IDX_REG so read it before
@@ -378,9 +359,9 @@ void dma_channel_stop(dma_channel_t channel_number)
     dma_helper(channel_number, *dma_x_idx_reg, true);
 }
 
+
 uint16_t dma_channel_transfered_bytes(dma_channel_t channel_number)
 {
     volatile uint16_t *dma_x_int_reg = DMA_CHN_REG(DMA0_IDX_REG, channel_number);
-
     return *dma_x_int_reg;
 }

@@ -8,13 +8,7 @@
  * The poll function is meant to be used to check if the touch event FIFO has any events (not empty)
  * and pop these events for further processing by the user application. The events supported by 
  * IQS263 touch module are touch, proximity, tap, wheel sliding and flick left/right gestures.
- *
- * Copyright (C) 2017 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information  
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com>
- *
+ * 
 ******************************************************************************************/
 
 #ifndef _AZOTOUCH_IQS_263_H_

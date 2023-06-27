@@ -3,13 +3,7 @@
  * \file user_rcu_motion.h
  *
  * \brief RCU motion function implementation header file.
- *
- * Copyright (C) 2017 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information  
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com>
- *
+ * 
 ******************************************************************************************/
 
 #ifndef _USER_RCU_MOTION_H_

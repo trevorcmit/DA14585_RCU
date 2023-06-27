@@ -4,12 +4,6 @@
  *
  * @brief Header file for uart interface.
  *
- * Copyright (C) 2012 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com> and contributors.
- *
 ******************************************************************************************/
 
 #ifndef _UART_H_

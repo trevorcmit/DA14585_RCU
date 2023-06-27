@@ -1,15 +1,6 @@
 /*****************************************************************************************
- *
  * \file port_multi_bond.c
- *
  * \brief Special (multi) bonding procedure
- *
- * Copyright (C) 2017 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information  
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com>
- *
 ******************************************************************************************/
 
 /*****************************************************************************************
@@ -20,85 +11,83 @@
  * \addtogroup PORT_MULTI_BOND
  * \brief Special (multi) bonding procedure.
  * \{
- ****************************************************************************************	 
- */
+*****************************************************************************************/
 
 #ifdef HAS_CONNECTION_FSM
 
-/*
- * INCLUDE FILES
-******************************************************************************************/
+    /*****************************************************************************************
+     * INCLUDE FILES
+    ******************************************************************************************/
 
-#include "rwip_config.h"             // SW configuration
+    #include "rwip_config.h"             // SW configuration
 
-#include "app_nv_prom.h"
-#include "app_con_fsm.h"
-#include "port_con_fsm.h"
-#include "port_multi_bond.h"
-#include "app_white_list.h"
-#include "attm_db.h"
-#include "gattc_task.h"
-#include <app_con_fsm_config.h>
+    #include "app_nv_prom.h"
+    #include "app_con_fsm.h"
+    #include "port_con_fsm.h"
+    #include "port_multi_bond.h"
+    #include "app_white_list.h"
+    #include "attm_db.h"
+    #include "gattc_task.h"
+    #include <app_con_fsm_config.h>
 
-struct usage_array_s {
-    uint8_t pos[MAX_BOND_PEER];
-};
+    struct usage_array_s {
+        uint8_t pos[MAX_BOND_PEER];
+    };
 
-struct irk_array_s {
-    struct gap_sec_key irk[MAX_BOND_PEER];
-};
+    struct irk_array_s {
+        struct gap_sec_key irk[MAX_BOND_PEER];
+    };
 
-extern bool bd_address_requested;
+    extern bool bd_address_requested;
 
-extern struct bd_addr dev_bdaddr;
-extern enum multi_bond_host_rejection multi_bond_enabled; 
+    extern struct bd_addr dev_bdaddr;
+    extern enum multi_bond_host_rejection multi_bond_enabled; 
 
-#if (BLE_APP_PRESENT)
+    #if (BLE_APP_PRESENT)
 
-#define ATTR_TYPE   0
-#define CCC_TYPE    1
+    #define ATTR_TYPE   0
+    #define CCC_TYPE    1
 
-// Load IRKs in irk_array. Depends on the MBOND_LOAD_INFO_AT_INIT setting.
-// IRKs won't be loaded if MBOND_LOAD_INFO_AT_INIT is 1 since the info is already available.
-// They will be loaded if MBOND_LOAD_INFO_AT_INIT is 0 though.
-// Do not modify!
-#if (MBOND_LOAD_INFO_AT_INIT)
-    #define MBOND_LOAD_IRKS_AT_INIT     (0)
-#else
-    #define MBOND_LOAD_IRKS_AT_INIT     (1)
-#endif
+    // Load IRKs in irk_array. Depends on the MBOND_LOAD_INFO_AT_INIT setting.
+    // IRKs won't be loaded if MBOND_LOAD_INFO_AT_INIT is 1 since the info is already available.
+    // They will be loaded if MBOND_LOAD_INFO_AT_INIT is 0 though.
+    // Do not modify!
+    #if (MBOND_LOAD_INFO_AT_INIT)
+        #define MBOND_LOAD_IRKS_AT_INIT     (0)
+    #else
+        #define MBOND_LOAD_IRKS_AT_INIT     (1)
+    #endif
 
-#define NV_STORAGE_MAGIC_ADDR           (NV_STORAGE_BASE_ADDR + 0x04)
-#define NV_STORAGE_STATUS_ADDR          (NV_STORAGE_BASE_ADDR + 0x08)
-#define NV_STORAGE_USAGE_ADDR           (NV_STORAGE_BASE_ADDR + 0x09)
-#define NV_STORAGE_BOND_DATA_ADDR       (NV_STORAGE_BASE_ADDR + 0x10)   // Up to 7 bonds (0x10 - 0x09 = 7)
+    #define NV_STORAGE_MAGIC_ADDR           (NV_STORAGE_BASE_ADDR + 0x04)
+    #define NV_STORAGE_STATUS_ADDR          (NV_STORAGE_BASE_ADDR + 0x08)
+    #define NV_STORAGE_USAGE_ADDR           (NV_STORAGE_BASE_ADDR + 0x09)
+    #define NV_STORAGE_BOND_DATA_ADDR       (NV_STORAGE_BASE_ADDR + 0x10)   // Up to 7 bonds (0x10 - 0x09 = 7)
 
-/*
- * Retained variables
-******************************************************************************************/
-uint8_t multi_bond_status                       __PORT_RETAINED;
-uint8_t multi_bond_active_peer_pos              __PORT_RETAINED; 
-uint8_t multi_bond_next_peer_pos                __PORT_RETAINED;
-uint8_t multi_bond_resolved_peer_pos            __PORT_RETAINED;
-struct usage_array_s bond_usage                 __PORT_RETAINED;
-struct irk_array_s irk_array                    __PORT_RETAINED; // stored in RetRAM for power saving reasons
-struct bonding_info_s bond_array[MAX_BOND_PEER]  __PORT_RETAINED; // stored in RetRAM for power saving reasons
-struct bonding_info_s bond_info                  __PORT_RETAINED; // Bonding info for current host
-struct bd_addr alt_dev_bdaddr                   __PORT_RETAINED;
+    /*
+    * Retained variables
+    ******************************************************************************************/
+    uint8_t multi_bond_status                       __PORT_RETAINED;
+    uint8_t multi_bond_active_peer_pos              __PORT_RETAINED; 
+    uint8_t multi_bond_next_peer_pos                __PORT_RETAINED;
+    uint8_t multi_bond_resolved_peer_pos            __PORT_RETAINED;
+    struct usage_array_s bond_usage                 __PORT_RETAINED;
+    struct irk_array_s irk_array                    __PORT_RETAINED; // stored in RetRAM for power saving reasons
+    struct bonding_info_s bond_array[MAX_BOND_PEER]  __PORT_RETAINED; // stored in RetRAM for power saving reasons
+    struct bonding_info_s bond_info                  __PORT_RETAINED; // Bonding info for current host
+    struct bd_addr alt_dev_bdaddr                   __PORT_RETAINED;
 
-// Only one of irk_array and bond_array will be used eventually.
-#if (MBOND_LOAD_INFO_AT_INIT && MBOND_LOAD_IRKS_AT_INIT)
-#error "Either the IRKs will be loaded into the RetRAM or the whole bonding info. Not both!"
-#endif
+    // Only one of irk_array and bond_array will be used eventually.
+    #if (MBOND_LOAD_INFO_AT_INIT && MBOND_LOAD_IRKS_AT_INIT)
+        #error "Either the IRKs will be loaded into the RetRAM or the whole bonding info. Not both!"
+    #endif
 
-/*
- * Local variables
-******************************************************************************************/
-int attribute_handle;
+    /*****************************************************************************************
+     * Local variables
+    ******************************************************************************************/
+    int attribute_handle;
 	
 /*****************************************************************************************
  * \brief       Clear the NV memory.
- *
  * \warning     nv_prom_init() must be called before calling this function.  
  *              nv_prom_release() must be called after this function exits.
 ******************************************************************************************/

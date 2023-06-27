@@ -3,13 +3,7 @@
  * @file hw_otpc.c
  *
  * @brief Implementation of the OTP Controller Low Level Driver.
- *
- * Copyright (C) 2016 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com> and contributors.
- *
+  *
 ******************************************************************************************/
 
 

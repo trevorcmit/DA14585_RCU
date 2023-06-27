@@ -9,13 +9,7 @@
  * and pop these events for further processing by the user application. The IQS572 module supports
  * tracking, single and double finger tap, 2-finger scrolling, swipe gestures, zoom gestures and touch
  * and hold recognition.
- *
- * Copyright (C) 2017 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information  
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com>
- *
+ * 
 ******************************************************************************************/
 
 

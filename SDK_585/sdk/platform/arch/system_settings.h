@@ -4,12 +4,6 @@
  *
  * @brief DA1458x RF preferred settings.
  *
- * Copyright (C) 2012 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com> and contributors.
- *
 ******************************************************************************************/
 
 #ifndef _SYSTEM_SETTINGS_H_

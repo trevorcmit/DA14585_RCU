@@ -4,12 +4,6 @@
  *
  * @brief Configuration file for the profiles used in the application. 
  *
- * Copyright (C) 2015 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com> and contributors.
- *
 ******************************************************************************************/
 
 #ifndef _USER_PROFILES_CONFIG_H_

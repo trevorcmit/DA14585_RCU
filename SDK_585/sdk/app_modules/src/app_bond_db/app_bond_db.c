@@ -1,17 +1,7 @@
 /******************************************************************************************
- *
  * @file app_bond_db.c
- *
  * @brief Bond database code file.
- *
- * Copyright (C) 2012-2017 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com> and contributors.
- *
- *****************************************************************************************
- */
+******************************************************************************************/
 
 /*****************************************************************************************
  * @addtogroup APP_BOND_DB
@@ -27,13 +17,13 @@
 
 #if (BLE_APP_PRESENT)
 
-#include "app_bond_db.h"
+    #include "app_bond_db.h"
 
-#if defined (USER_CFG_APP_BOND_DB_USE_SPI_FLASH)
-#include "spi_flash.h"
-#elif defined (USER_CFG_APP_BOND_DB_USE_I2C_EEPROM)
-#include "i2c_eeprom.h"
-#endif
+    #if defined (USER_CFG_APP_BOND_DB_USE_SPI_FLASH)
+    #include "spi_flash.h"
+    #elif defined (USER_CFG_APP_BOND_DB_USE_I2C_EEPROM)
+    #include "i2c_eeprom.h"
+    #endif
 
 /*
  * DEFINES

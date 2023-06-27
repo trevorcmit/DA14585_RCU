@@ -1,80 +1,72 @@
-/*
- ****************************************************************************************
- *
+/****************************************************************************************
  * @file pdm_mic.c
- *
  * @brief PDM MIC audio interface driver.
- *
- * Copyright (C) 2017 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com> and contributors.
- *
-******************************************************************************************/
-
+****************************************************************************************/
 #include "dma.h"
 #include "pdm_mic.h"
 #include <app_audio_config.h>
 
+// Setup some variables
 pdm_mic_data_available_cb mic_callback;
 bool mic_circular;
 uint16_t mic_int_threshold;
 DMA_setup DMA_Setup_for_PDM_to_buffer;
 
-/*****************************************************************************************
- * \brief       Function to perform a quick initiliazation of the DMA instead of a complete one.
- *
- * \param       new_buffer The buffer to store the data to.
- *
- * \return      None
- *
-******************************************************************************************/ 
-static void DMA_reinit(uint32_t *new_buffer) {
-        DMA_Setup_for_PDM_to_buffer.dest_address = (uint32_t)new_buffer;
-        dma_channel_initialization_minimal(&DMA_Setup_for_PDM_to_buffer);
+
+/********************************************************************************************
+ * \brief   Function to perform a quick initiliazation of the DMA instead of a complete one.
+ * \param   new_buffer The buffer to store the data to.
+ * \return  None
+********************************************************************************************/ 
+static void DMA_reinit(uint32_t *new_buffer)
+{
+    DMA_Setup_for_PDM_to_buffer.dest_address = (uint32_t)new_buffer;
+    dma_channel_initialization_minimal(&DMA_Setup_for_PDM_to_buffer);
 }
+
 
 /* Note: App should not modify the sleep mode until all messages have been printed out */
 #ifdef CFG_AUDIO_DEBUG_PDM_TO_UART
-#include "uart.h"
 
-#define PDM_INPUT_BUFFER_LENGTH (1000)
+    #include "uart.h"
 
-uint8_t uart_finished;
-uint32_t input_buffer[PDM_INPUT_BUFFER_LENGTH] __attribute__((section("user_pdm_buffer_area"),zero_init));                         
 
-static void my_uart_callback(uint8_t res)
-{
-    #ifdef CFG_PRINTF_UART2
-        uart2_finish_transfers();
-    #else
-        uart_finish_transfers();
-    #endif
-        uart_finished = true;
-}
+    #define PDM_INPUT_BUFFER_LENGTH (1000)
 
-/*****************************************************************************************
- * \brief       DMA Callback that dumps the data through UART
- *
- * \param       user_data & length provided from DMA handler
- *
- * \return      None
- *
- ****************************************************************************************
-*/ 
-void DMA_callback(void *user_data, uint16_t len)
-{
-    #if defined(USE_AUDIO_MARK) && DEVELOPMENT_DEBUG
-        GPIO_ConfigurePin(AUDIO_MARK_PORT, AUDIO_MARK_PIN, OUTPUT, PID_GPIO, true );
-    #endif
+
+    uint8_t uart_finished;
+    uint32_t input_buffer[PDM_INPUT_BUFFER_LENGTH] __attribute__((section("user_pdm_buffer_area"),zero_init));                         
+
+
+    static void my_uart_callback(uint8_t res)
+    {
+        #ifdef CFG_PRINTF_UART2
+            uart2_finish_transfers();
+        #else
+            uart_finish_transfers();
+        #endif
+            uart_finished = true;
+    }
+
+    /*****************************************************************************************
+     * \brief       DMA Callback that dumps the data through UART
+     * \param       user_data & length provided from DMA handler
+     * \return      None
+    *****************************************************************************************/ 
+    void DMA_callback(void *user_data, uint16_t len)
+    {
+        #if defined(USE_AUDIO_MARK) && DEVELOPMENT_DEBUG
+            GPIO_ConfigurePin(AUDIO_MARK_PORT, AUDIO_MARK_PIN, OUTPUT, PID_GPIO, true );
+        #endif
+
         uint8_t *my_buf = (uint8_t*) &input_buffer;
 
-        for (uint32_t i = 0; i < PDM_INPUT_BUFFER_LENGTH * 4; i++) {
-                uart_finished = false;
-                uart2_write(my_buf, 1, my_uart_callback);
-                while(uart_finished == false);
-                my_buf++;
+        for (uint32_t i = 0; i < PDM_INPUT_BUFFER_LENGTH * 4; i++)
+        {
+            uart_finished = false;
+            uart2_write(my_buf, 1, my_uart_callback);
+            while(uart_finished==false);
+            my_buf++;
         }
 
         // The UART bandwidth is not enough to transfer all audio data.
@@ -82,34 +74,33 @@ void DMA_callback(void *user_data, uint16_t len)
         // for data to be transfered to the UART
         ASSER_WARNING(0);
 
-    #if defined(USE_AUDIO_MARK) && DEVELOPMENT_DEBUG
-        GPIO_ConfigurePin(AUDIO_MARK_PORT, AUDIO_MARK_PIN, OUTPUT, PID_GPIO, false );
-    #endif
-}
+        #if defined(USE_AUDIO_MARK) && DEVELOPMENT_DEBUG
+            GPIO_ConfigurePin(AUDIO_MARK_PORT, AUDIO_MARK_PIN, OUTPUT, PID_GPIO, false );
+        #endif
+    }
 
 #else
-/*****************************************************************************************
- * \brief       DMA Callback that reads the pdm data and restarts the DMA
- *
- * \param       user_data & length provided from DMA handler
- *
- * \return      None
- *
- ****************************************************************************************
-*/
-void DMA_callback(void *user_data, uint16_t len)
-{
-    #if defined(USE_AUDIO_MARK) && DEVELOPMENT_DEBUG
-        GPIO_ConfigurePin(AUDIO_MARK_PORT, AUDIO_MARK_PIN, OUTPUT, PID_GPIO, true );
-    #endif                
-        ASSERT_ERROR(mic_callback != NULL); // mic_callback should be provided
-            
-        if(mic_circular == true) {
+    /*****************************************************************************************
+     * \brief       DMA Callback that reads the pdm data and restarts the DMA
+     * \param       user_data & length provided from DMA handler
+     * \return      None
+    *****************************************************************************************/
+    void DMA_callback(void *user_data, uint16_t len)
+    {
+        #if defined(USE_AUDIO_MARK) && DEVELOPMENT_DEBUG
+            GPIO_ConfigurePin(AUDIO_MARK_PORT, AUDIO_MARK_PIN, OUTPUT, PID_GPIO, true );
+        #endif                
+            ASSERT_ERROR(mic_callback != NULL); // mic_callback should be provided
+                
+        if (mic_circular==true)
+        {
             uint32_t *new_buffer_pos = mic_callback(dma_channel_transfered_bytes(DMA_CHANNEL_2));
             dma_channel_update_int_ix(DMA_CHANNEL_2, (uint32_t)new_buffer_pos + mic_int_threshold-1);
         }
-        else {            
-            if (GetBits16(DMA2_CTRL_REG, DMA_ON) == true) {
+        else
+        {            
+            if (GetBits16(DMA2_CTRL_REG, DMA_ON)==true)
+            {
                 ASSERT_ERROR(0);
             }
             uint32_t * buffer = mic_callback(DMA_Setup_for_PDM_to_buffer.length);
@@ -117,10 +108,10 @@ void DMA_callback(void *user_data, uint16_t len)
             dma_channel_enable(DMA_CHANNEL_2, DMA_STATE_ENABLED);
         }
 
-    #if defined(USE_AUDIO_MARK) && DEVELOPMENT_DEBUG
-        GPIO_ConfigurePin(AUDIO_MARK_PORT, AUDIO_MARK_PIN, OUTPUT, PID_GPIO, false );
-    #endif   
-}
+        #if defined(USE_AUDIO_MARK) && DEVELOPMENT_DEBUG
+            GPIO_ConfigurePin(AUDIO_MARK_PORT, AUDIO_MARK_PIN, OUTPUT, PID_GPIO, false );
+        #endif   
+    }
 
 #endif
 

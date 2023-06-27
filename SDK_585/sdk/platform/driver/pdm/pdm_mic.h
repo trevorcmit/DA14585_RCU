@@ -3,13 +3,7 @@
  * @file pdm_mic.h
  *
  * @brief PDM MIC audio interface driver.
- *
- * Copyright (C) 2017 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com> and contributors.
- *
+  *
 ******************************************************************************************/
 
 #ifndef PDM_MIC_H_

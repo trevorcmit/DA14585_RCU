@@ -3,13 +3,7 @@
  * \file app_audio_codec.c
  *
  * \brief Functions for compressing Audio samples
- *
- * Copyright (C) 2017 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information  
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com>
- *
+* 
  *****************************************************************************************
  */
 
@@ -32,9 +26,9 @@
 #define FILTER_LENGTH 38
 
 #ifdef CFG_AUDIO_IMA_ADPCM
-static const signed char indexTable[16] = {
-        -1, -1, -1, -1, 2, 4, 6, 8, -1, -1, -1, -1, 2, 4, 6, 8
-};
+    static const signed char indexTable[16] = {
+            -1, -1, -1, -1, 2, 4, 6, 8, -1, -1, -1, -1, 2, 4, 6, 8
+    };
                       
 static const short stepSizeTable[89] = {
         7,     8,     9,    10,    11,    12,    13,    14,    16,    17,    

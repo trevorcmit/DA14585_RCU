@@ -1,4 +1,4 @@
-;#<FEEDBACK># ARM Linker, 5060960: Last Updated: Mon Jun 26 16:22:18 2023
+;#<FEEDBACK># ARM Linker, 5060960: Last Updated: Tue Jun 27 13:12:09 2023
 ;VERSION 0.2
 ;FILE adc.o
 adc_disable <= USED 0
@@ -362,12 +362,7 @@ i2c_routine <= USED 0
 ;FILE diss.o
 ;FILE dma.o
 dma_channel_active <= USED 0
-dma_channel_initialization <= USED 0
-dma_channel_initialization_minimal <= USED 0
-dma_channel_stop <= USED 0
-dma_channel_transfered_bytes <= USED 0
 dma_channel_update_destination <= USED 0
-dma_channel_update_int_ix <= USED 0
 dma_channel_update_source <= USED 0
 ;FILE gpio.o
 GPIO_ConfigurePinPower <= USED 0
@@ -445,12 +440,7 @@ dummyf <= USED 0
 ;FILE nvds.o
 ;FILE patch.o
 ;FILE pdm.o
-pdm_disable <= USED 0
-pdm_enable <= USED 0
 ;FILE pdm_mic.o
-DMA_callback <= USED 0
-pdm_mic_start <= USED 0
-pdm_mic_stop <= USED 0
 ;FILE pll_vcocal_lut.o
 GPADC_init <= USED 0
 MedianOfFive <= USED 0
@@ -470,7 +460,6 @@ write_HW_LUT <= USED 0
 write_one_SW_LUT_entry <= USED 0
 ;FILE port_adv_fsm.o
 ;FILE port_audio.o
-audio_mic_callback <= USED 0
 declare_audio_gpios <= USED 0
 init_audio_gpios <= USED 0
 ;FILE port_con_fsm.o
@@ -548,10 +537,17 @@ SystemCoreClockUpdate <= USED 0
 systick_value <= USED 0
 systick_wait <= USED 0
 ;FILE timer0.o
+timer0_disable_irq <= USED 0
+timer0_enable_irq <= USED 0
+timer0_init <= USED 0
+timer0_register_callback <= USED 0
 timer0_release <= USED 0
+timer0_set <= USED 0
 timer0_set_pwm_high_counter <= USED 0
 timer0_set_pwm_low_counter <= USED 0
 timer0_set_pwm_on_counter <= USED 0
+timer0_start <= USED 0
+timer0_stop <= USED 0
 ;FILE timer2.o
 timer2_enable <= USED 0
 timer2_init <= USED 0

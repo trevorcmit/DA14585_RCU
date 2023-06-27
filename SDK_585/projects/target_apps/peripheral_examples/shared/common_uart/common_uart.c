@@ -5,12 +5,6 @@
  * @brief (Do not use for your designs) - (legacy) uart initialization & print functions
  *        Please, refer to the Peripheral Drivers documentation for the current uart.c driver
  *
- * Copyright (C) 2012 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com> and contributors.
- *
 ******************************************************************************************/
  
 #include <stdint.h>

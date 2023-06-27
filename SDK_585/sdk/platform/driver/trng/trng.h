@@ -3,13 +3,7 @@
  * @file trng.h
  *
  * @brief True Random Number Generator header file.
- *
- * Copyright (C) 2014 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com> and contributors.
- *
+  *
 ******************************************************************************************/
 
 #ifndef _TRNG_H_

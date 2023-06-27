@@ -1,23 +1,21 @@
-/**
-****************************************************************************************
-* \file user_custs1_def.h
-* \brief Dialog audio service database declarations.
-****************************************************************************************
-*/
+/****************************************************************************************
+ * \file user_custs1_def.h
+ * \brief Dialog audio service database declarations.
+*****************************************************************************************/
 #ifndef _USER_CUSTS1_DEF_H_
 #define _USER_CUSTS1_DEF_H_
 
-/**
-****************************************************************************************
-* \addtogroup CONFIGURATION
-* \{
-* \addtogroup PROFILE_CONFIG
-* \{
-* \addtogroup DLG_AUDIO_SVC_CFG
-* \brief Dialog Audio Service implementation
-* \{
-****************************************************************************************
-*/
+
+/*****************************************************************************************
+ * \addtogroup CONFIGURATION
+ * \{
+ * \addtogroup PROFILE_CONFIG
+ * \{
+ * \addtogroup DLG_AUDIO_SVC_CFG
+ * \brief Dialog Audio Service implementation
+ * \{
+*****************************************************************************************/
+
 
 // INCLUDE FILES
 #include "attm_db_128.h"

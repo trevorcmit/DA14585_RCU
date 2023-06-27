@@ -4,12 +4,6 @@
  *
  * @brief stdbool.h implementation for C compilers that do not support this header.
  *
- * Copyright (C) 2012 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com> and contributors.
- *
 ******************************************************************************************/
 
 #ifndef STDBOOL_H_

@@ -3,13 +3,7 @@
  * \file iqs263_i2c.h
  *
  * \brief IQS263 driver over i2c interface header file.
- *
- * Copyright (C) 2017 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information  
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com>
- *
+ * 
 ******************************************************************************************/
 
 #ifndef _I2C_IQS263_H_

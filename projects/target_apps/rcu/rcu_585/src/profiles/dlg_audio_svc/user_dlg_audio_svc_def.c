@@ -3,13 +3,7 @@
  * \file user_dlg_audio_svc_def.c
  *
  * \brief Custom1 Server (CUSTS1) profile database definitions.
- *
- * Copyright (C) 2017 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information  
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com>
- *
+ * 
 ******************************************************************************************/
 
 /**

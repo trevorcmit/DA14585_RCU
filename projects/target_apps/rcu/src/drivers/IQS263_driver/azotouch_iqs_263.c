@@ -3,13 +3,7 @@
  * \file azotouch_iqs_263.c
  *
  * \brief Azoteq IQS 263 module library sourcecode
- *
- * Copyright (C) 2017 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information  
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com>
- *
+ * 
 ******************************************************************************************/
 
 /*****************************************************************************************

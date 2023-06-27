@@ -4,12 +4,6 @@
  *
  * @brief Timer0 PWM example
  *
- * Copyright (C) 2012 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com> and contributors.
- *
 ******************************************************************************************/
 #include <stdio.h>
 #include <stdint.h>
@@ -34,7 +28,7 @@ uint16_t timer0_pwm_test_expiration_counter;
 
 /*****************************************************************************************
  * @brief Main routine of the timer0 pwm example
- * 
+  * 
 ******************************************************************************************/
 int main (void)
 {

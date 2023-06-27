@@ -1,9 +1,7 @@
-/**
-****************************************************************************************
-* \file app_audio_config.h
-* \brief  Audio application configuration header file
-****************************************************************************************
-*/
+/*****************************************************************************************
+ * \file app_audio_config.h
+ * \brief  Audio application configuration header file
+*****************************************************************************************/
 #ifndef _APP_AUDIO_CONFIG_H_
 #define _APP_AUDIO_CONFIG_H_
 
@@ -14,17 +12,13 @@
 
 
 /*****************************************************************************************
- * Define CFG_AUDIO_ADAPTIVE_RATE to enable dynamic                                  
- * sampling rate and ADPCM configuration changing                                    
+ * Define CFG_AUDIO_ADAPTIVE_RATE to enable dynamic sampling rate and ADPCM configuration changing.
+ * Define CFG_AUDIO_IMA_ADPCM to use IMA ADPCM encoding. If not defined aLaw encoding will be used.
+ * When CFG_AUDIO_DC_BLOCK is define, DC blocking filter is enabled.                             
 ******************************************************************************************/
 #define CFG_AUDIO_ADAPTIVE_RATE
-
-
-/*****************************************************************************************
- * Define CFG_AUDIO_IMA_ADPCM to use IMA ADPCM encoding.                             
- * If not defined aLaw encoding will be used                                         
-******************************************************************************************/
 #define CFG_AUDIO_IMA_ADPCM
+#define CFG_AUDIO_DC_BLOCK
 
 
 /*****************************************************************************************
@@ -32,20 +26,13 @@
  * 1: 48 Kbit/s = ima 3Bps, 16 Khz.                                                  
  * 2: 32 Kbit/s = ima 4Bps, 8 Khz (downsample).                                      
  * 3: 24 Kbit/s = ima 3Bps, 8 Khz (downsample).                                      
- * do not use enum. Enums are not recognized by the preprocessor                     
+ * Do not use enum. Enums are not recognized by the preprocessor                     
 ******************************************************************************************/
 #define ADPCM_DEFAULT_MODE 0      
 
 
 /*****************************************************************************************
- * \brief When CFG_AUDIO_DC_BLOCK is define, DC blocking filter is enabled
-*****************************************************************************************/
-#define CFG_AUDIO_DC_BLOCK
-
-
-/*****************************************************************************************
- * \brief When CFG_AUDIO_ENABLE_DC_BLOCK_FADING is defined fading in DC blocking 
- *        filter is enabled
+ * \brief When CFG_AUDIO_ENABLE_DC_BLOCK_FADING is defined fading in DC blocking filter is enabled
 ******************************************************************************************/
 // #define CFG_AUDIO_ENABLE_DC_BLOCK_FADING
 
@@ -95,20 +82,20 @@
 
 
 /****************************************************************************************
-* \brief Number of samples to get from the audio hardware peripheral. All samples are 
-*        read at once and form an audio slot which is stored in the audio buffer. 
-*        CPU will be interrupted every AUDIO_NR_SAMP_PER_SLOT*[sampling time] to get 
-*        the audio samples from the hardware peripheral. e.g. If AUDIO_NR_SAMP_PER_SLOT
-*        is 40 and sampling rate is 16KHz then the CPU will be interrupted every 40*1/16000 = 2.5msec
+ * \brief Number of samples to get from the audio hardware peripheral. All samples are 
+ *        read at once and form an audio slot which is stored in the audio buffer. 
+ *        CPU will be interrupted every AUDIO_NR_SAMP_PER_SLOT*[sampling time] to get 
+ *        the audio samples from the hardware peripheral. e.g. If AUDIO_NR_SAMP_PER_SLOT
+ *        is 40 and sampling rate is 16KHz then the CPU will be interrupted every 40*1/16000 = 2.5msec
 *****************************************************************************************/
 #define AUDIO_NR_SAMP_PER_SLOT 40
 
 
 /****************************************************************************************
-* \brief Number of audio slots that can be stored in the audio buffer. The size of the
-*        audio buffer is AUDIO_BUFFER_NR_SLOTS*AUDIO_NR_SAMP_PER_SLOT.
-*        The size of the buffer must be fine tuned according to the maximum time needed
-*        by the system to get and process the audio samples of the slot.
+ * \brief Number of audio slots that can be stored in the audio buffer. The size of the
+ *        audio buffer is AUDIO_BUFFER_NR_SLOTS*AUDIO_NR_SAMP_PER_SLOT.
+ *        The size of the buffer must be fine tuned according to the maximum time needed
+ *        by the system to get and process the audio samples of the slot.
 *****************************************************************************************/
 #define AUDIO_BUFFER_NR_SLOTS  3
 
@@ -121,34 +108,34 @@
 //#define AUDIO_SBUF_SIZE 380 // This is the size when CFG_APP_STREAM_PACKET_BASED is defined 
 
 
-/****************************************************************************************
+/**************************************************************************
 * \brief Emulate waveforms. This is used to test the audio interface.                                                            
-*****************************************************************************************/
+**************************************************************************/
 // #define CFG_AUDIO_EMULATE_PDM_MIC_TRIANGULAR // 1 Hz triangular waveform
-#define CFG_AUDIO_EMULATE_PDM_MIC // 222 Hz sine waveform
+#undef CFG_AUDIO_EMULATE_PDM_MIC // 222 Hz sine waveform
 
 
-/****************************************************************************************
+/***************************************
 * \brief Audio pin name definition                                                                 
-*****************************************************************************************/
+***************************************/
 enum audio_pin_ids {
     AUDIO_CLK_PIN,
     AUDIO_DATA_PIN,
 };
 
 
-/****************************************************************************************
+/***********************************
 * \brief Audio pin configuration                                                                 
-*****************************************************************************************/
+***********************************/
 static const pin_type_t app_audio_pins[] = {
     [AUDIO_CLK_PIN]  = {.port = GPIO_PORT_2, .pin = GPIO_PIN_1, .high = 0, .mode_function = OUTPUT | PID_PDM_CLK },
     [AUDIO_DATA_PIN] = {.port = GPIO_PORT_2, .pin = GPIO_PIN_0, .high = 0, .mode_function = INPUT  | PID_PDM_DATA},
 };
 
 
-/****************************************************************************************
+/****************************************************************************************************
 * \brief This callback will be called to notify the application that new audio data are available.
-*****************************************************************************************/
+****************************************************************************************************/
 #define AUDIO_NOTIFICATION_CB user_audio_callback
 
 

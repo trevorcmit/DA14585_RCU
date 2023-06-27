@@ -4,12 +4,6 @@
  *
  * @brief Reception of ble messages sent from DA14585 embedded application over UART interface.
  *
- * Copyright (C) 2012 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com> and contributors.
- *
 ******************************************************************************************/
 
 #include "ble_msg.h"

@@ -3,13 +3,7 @@
  * \file user_hogpd_config.h
  *
  * \brief HOGPDD configuration file.
- *
- * Copyright (C) 2017 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information  
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com>
- *
+ * 
 ******************************************************************************************/
 
 #ifndef _USER_HOGPD_CONFIG_H_

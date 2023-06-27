@@ -3,13 +3,7 @@
  * @file spi_flash.c
  *
  * @brief flash memory driver extension for Macronix devices file.
- *
- * Copyright (C) 2016 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com> and contributors.
- *
+  *
 ******************************************************************************************/
 
 #include "spi_flash.h"

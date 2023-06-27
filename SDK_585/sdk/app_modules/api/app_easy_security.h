@@ -4,12 +4,6 @@
  *
  * @brief Application security helper functions header file.
  *
- * Copyright (C) 2015 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com> and contributors.
- *
 ******************************************************************************************/
 
 #ifndef _APP_EASY_SECURITY_H_

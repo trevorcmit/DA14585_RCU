@@ -5,13 +5,7 @@
  * \brief The port_adv_fsm module provides an abstraction layer to platform specific 
  * advertising related functions such as starting/stopping advertising, as well as 
  * handling of advertising timers.
- *
- * Copyright (C) 2017 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information  
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com>
- *
+ * 
 ******************************************************************************************/
  
 /*****************************************************************************************

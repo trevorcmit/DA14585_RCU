@@ -6,13 +6,7 @@
  *
  * Define symbol HAS_SPI_FLASH_STORAGE, HAS_SPI_EEPROM_STORAGE or HAS_I2C_EEPROM_STORAGE 
  * to include this module in the application.
- *
- * Copyright (C) 2017 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information  
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com>
- *
+ * 
 ******************************************************************************************/
 
 /*****************************************************************************************

@@ -1,18 +1,7 @@
 /*****************************************************************************************
- *
  * @file i2c_core.c
- *
  * @brief device driver over i2c interface.
- *
- * Copyright (C) 2012. Dialog Semiconductor Ltd, unpublished work. This computer 
- * program includes Confidential, Proprietary Information and is a Trade Secret of 
- * Dialog Semiconductor Ltd.  All use, disclosure, and/or reproduction is prohibited 
- * unless authorized in writing. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com> and contributors.
- *
 ******************************************************************************************/
-
 #include "i2c_core.h"
 #include <user_periph_setup.h>
 

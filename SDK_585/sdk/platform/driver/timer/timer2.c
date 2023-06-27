@@ -3,13 +3,7 @@
  * @file timer2.c
  *
  * @brief Timer2 driver source file.
- *
- * Copyright (C) 2016 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com> and contributors.
- *
+  *
 ******************************************************************************************/
 
 #include <stdint.h>

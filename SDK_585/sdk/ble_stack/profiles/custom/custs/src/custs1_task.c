@@ -3,13 +3,7 @@
  * @file custs1_task.c
  *
  * @brief Custom Service profile task source file.
- *
- * Copyright (C) 2014 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com> and contributors.
- *
+  *
 ******************************************************************************************/
 
 #include "rwble_config.h"              // SW configuration

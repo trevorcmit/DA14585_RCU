@@ -4,12 +4,6 @@
  *
  * @brief app - Service access permission rights api.
  *
- * Copyright (C) 2012 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com> and contributors.
- *
 ******************************************************************************************/
 
 #ifndef _APP_PRF_PERM_TYPES_H_

@@ -3,13 +3,7 @@
  * @file spi_flash_mx25.h
  *
  * @brief flash memory driver extension for Macronix devices file.
- *
- * Copyright (C) 2016 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com> and contributors.
- *
+  *
 ******************************************************************************************/
 
 #ifndef _SPI_FLASH_MX_H_

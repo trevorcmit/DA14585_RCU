@@ -10,7 +10,7 @@
  * \{
  * \addtogroup PORT_PLATFORM
  * \{
-****************************************************************************************	 */
+*****************************************************************************************/
 
 #include <port_platform.h>
 #include "l2cm.h"
@@ -18,13 +18,13 @@
 
 uint32_t port_get_time(void)
 {
-#if (RWBLE_SW_VERSION_MAJOR >= 8)  
-    uint32_t ea_time_get_halfslot_rounded(void);   
-    return ((ea_time_get_halfslot_rounded() >> 4) & BLE_GROSSTARGET_MASK);
-#else    
-    extern uint32_t ke_time(void);
-    return ke_time();
-#endif    
+    #if (RWBLE_SW_VERSION_MAJOR >= 8)  
+        uint32_t ea_time_get_halfslot_rounded(void);   
+        return ((ea_time_get_halfslot_rounded() >> 4) & BLE_GROSSTARGET_MASK);
+    #else
+        extern uint32_t ke_time(void);
+        return ke_time();
+    #endif
 }
 
 __asm void port_delay_usec(uint32_t delay)
@@ -165,6 +165,7 @@ uint8_t port_atts_find_value_by_uuid(uint8_t conidx, uint16_t *start_hdl, uint16
     }
 #endif // DEBUG_EMULATE_PACKET_LOSS
 
+
 struct l2cc_pdu_send_req *port_create_l2cc_pdu(uint16_t length, uint16_t handle)
 {
     struct l2cc_pdu_send_req *pkt = KE_MSG_ALLOC_DYN(L2CC_PDU_SEND_REQ,
@@ -187,16 +188,18 @@ bool port_send_notification(uint16_t handle, uint8_t *data, uint16_t length, boo
 {    
     uint16_t available, already_in;
     uint16_t buffer_size;
-#if (RWBLE_SW_VERSION_MAJOR >= 8) 
+
+    #if (RWBLE_SW_VERSION_MAJOR >= 8) 
         buffer_size = l2cm_get_buffer_size(0); // 27 if packet length extension is not used
-#else
+    #else
         buffer_size = 27;    
-#endif   
+    #endif   
     
     uint8_t number_of_packets = 1;
     int16_t remaining_len = length - (buffer_size-7);
     
-    if(remaining_len > 0) {                   
+    if (remaining_len > 0)
+    {                   
         number_of_packets += (uint8_t)(remaining_len/buffer_size+((remaining_len%buffer_size)>0 ? 1 : 0));  
     }   
     
@@ -204,27 +207,32 @@ bool port_send_notification(uint16_t handle, uint8_t *data, uint16_t length, boo
     
     available = l2cm_get_nb_buffer_available();
     
-    if(low_priority == true) {
+    if (low_priority == true)
+    {
         already_in = MAX_TX_BUFS-available;
-        if (already_in >= MAX_TX_BUFS/2) {
+        if (already_in >= MAX_TX_BUFS/2)
+        {
             return false;
         }
     }
     
-    if(available < number_of_packets) {
+    if (available < number_of_packets)
+    {
         return false;
     }
 
-    
     struct l2cc_pdu_send_req *pkt = port_create_l2cc_pdu(length, handle);
 
-    if (!pkt) {
+    if (!pkt)
+    {
         return false;
     }
+
     // copy the content to value 
-    memcpy(pkt->pdu.data.hdl_val_ntf.value, data, length);
+    memcpy(pkt -> pdu.data.hdl_val_ntf.value, data, length);
     
-    if(GetBits16(CLK_RADIO_REG, BLE_ENABLE) == 0) {
+    if (GetBits16(CLK_RADIO_REG, BLE_ENABLE)==0)
+    {
         arch_ble_force_wakeup();
     }
     
@@ -232,8 +240,9 @@ bool port_send_notification(uint16_t handle, uint8_t *data, uint16_t length, boo
     return true;
 }
 
-/**
+
+/******
  * \}
  * \}
  * \}
- */
+******/

@@ -3,22 +3,14 @@
  * \file app_audio_codec.h
  *
  * \brief Functions for compressing Audio samples
- *
- * Copyright (C) 2017 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information  
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com>
- *
+* 
  ****************************************************************************************
- *
  *  IMA ADPCM
  *  This IMA ADPCM has been implemented based on the paper spec of 
  *  IMA Digital Audio Focus and Technical Working Groups,
  *  Recommended Practices for Enhancing Digital Audio Compatibility 
  *  Revision 3.00, 21 October 1992. 
  *  http://www.cs.columbia.edu/~hgs/audio/dvi/IMA_ADPCM.pdf
- * 
  *  There are some enhancement/modifications.
  *  1) Encoder: The divisor is calculated with full precision by upshifting
  *     both the stepSize and Difference by 3.
@@ -28,7 +20,6 @@
  *     some implementations of IMA-ADPCM do not do this.
  *  4) There is an alternative (but bit-true) calculation of the prediction
  *     difference using a multiplier instead of shift add. May be faster.
- *
 ******************************************************************************************/
 
 /**
@@ -39,7 +30,6 @@
  * \addtogroup AUDIO_CODEC
  *
  * \brief Audio codec
- *
  * \{
  */
  

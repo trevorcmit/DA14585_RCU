@@ -5,13 +5,7 @@
  * \brief The port_touchpad module provides a hardware abstraction layer for interacting
  * with a touchpad module. The functions provide a simple API for initializing touch module
  * related peripherals as well as setting an application touchpad event handler
- *
- * Copyright (C) 2017 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information  
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com>
- *
+ * 
 ******************************************************************************************/
 
 /*****************************************************************************************

@@ -3,13 +3,7 @@
  * \file app_kbd_config.h
  *
  * \brief Keyboard module configuration header file.
- *
- * Copyright (C) 2017 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information  
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com>
- *
+ * 
 ******************************************************************************************/
 
 #ifndef _APP_KBD_CONFIG_H_

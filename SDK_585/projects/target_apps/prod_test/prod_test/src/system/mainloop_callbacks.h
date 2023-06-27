@@ -3,13 +3,7 @@
  * @file mainloop_callbacks.h
  *
  * @brief Declaration of mainloop callbacks used by the production test application. 
- *
- * Copyright (C) 2014 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com> and contributors.
- *
+  *
 ******************************************************************************************/
 
 

@@ -1,17 +1,7 @@
 /*****************************************************************************************
- *
  * @file dma.h
- *
  * @brief Implementation of the DMA Low Level Driver - Header file
- *
- * Copyright (C) 2017 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com> and contributors.
- *
 ******************************************************************************************/
-
 #ifndef DMA_H_
 #define DMA_H_
 
@@ -21,15 +11,10 @@
 #include "ll.h"
 #include "datasheet.h"
 
-/*
-* ENUMERATION DEFINITIONS
-*****************************************************************************************
-*/
 
-/**
+/*******************************
  * \brief DMA channel number
- *
- */
+*******************************/
 typedef enum 
 {
     DMA_CHANNEL_0 = 0,   /**< Channel number 0 */
@@ -39,20 +24,20 @@ typedef enum
     DMA_CHANNEL_INVALID = 8 /**< Invalid Channel number */
 } dma_channel_t;
 
-/**
+
+/***************************************
  * \brief DMA channel enable/disable
- *
- */
+***************************************/
 typedef enum
 {
     DMA_STATE_DISABLED = 0x0,    /**< DMA disabled */
     DMA_STATE_ENABLED = 0x1      /**< DMA enabled */
 } dma_state_t;
 
-/**
+
+/******************************************
  * \brief DMA channel bus width transfer
- *
- */
+******************************************/
 typedef enum
 {
     DMA_BW_BYTE = 0x0,           /**< Byte */
@@ -60,25 +45,26 @@ typedef enum
     DMA_BW_WORD = 0x4            /**< Word */
 } dma_bw_t;
 
-/**
+
+/*************************************************
  * \brief DMA channel interrupt enable/disable
- *
- */
+*************************************************/
 typedef enum
 {
     DMA_IRQ_STATE_DISABLED = 0x0,        /**< Disable interrupt on this channel */
     DMA_IRQ_STATE_ENABLED = 0x8          /**< Enable interrupt on this channel */
 } dma_irq_state_t;
 
-/**
+
+/****************************************************
  * \brief DMA request input multiplexer controlled
- *
- */
+****************************************************/
 typedef enum
 {
     DMA_DREQ_START = 0x0,        /**< DMA channel starts immediately */
     DMA_DREQ_TRIGGERED = 0x10    /**< DMA channel must be triggered by peripheral DMA request */
 } dma_dreq_t;
+
 
 /**
  * \brief Increment destination address mode
@@ -90,6 +76,7 @@ typedef enum
     DMA_BINC_TRUE  = 0x20        /**< Increment according value of BW */
 } dma_binc_t;
 
+
 /**
  * \brief Increment of source address mode
  *
@@ -100,23 +87,22 @@ typedef enum
     DMA_AINC_TRUE  = 0x40        /**< Increment according value of BW */
 } dma_ainc_t;
 
-/**
+
+/**********************************************************************
  * \brief Channel mode
- *
  * In normal mode the DMA transfer stops the transfer after
  * length DMAx_LEN_REG.
  * In circular mode the DMA channel repeats the transfer
  * after length DMAx_LEN_REG with the initial register values
  * DMAx_A_START_REG, DMAx_B_START_REG, DMAx_LEN_REG, DMAx_INT_REG.
- *
  * \note only works if DREQ_MODE = 1
- *
- */
+**********************************************************************/
 typedef enum
 {
     DMA_MODE_NORMAL = 0x0,       /**< Normal mode */
     DMA_MODE_CIRCULAR = 0x80     /**< Circular mode */
 } dma_mode_t;
+
 
 /**
  * \brief Channel priority
@@ -138,18 +124,16 @@ typedef enum
     DMA_PRIO_7 = 0x700   /**< Highest priority */
 } dma_prio_t;
 
-/**
+
+/***********************************************************************
  * \brief DMA idle mode
- *
  * In blocking mode the DMA performs a fast back-to-back
  * copy, disabling bus access for any bus master with lower priority.
  * In interrupting mode the DMA inserts a wait cycle after each
  * store allowing the CR16 to steal cycles or cache to perform a
  * burst read.
- *
  * \note if DREQ_MODE = 1, DMA_IDLE does not have any effect
- *
- */
+************************************************************************/
 typedef enum
 {
     DMA_IDLE_BLOCKING_MODE = 0x000,      /**< Blocking mode */
@@ -181,33 +165,31 @@ typedef enum
     DMA_TRIG_NONE = 0xF
 } dma_trig_t;
 
-/**
+
+/********************************
  * \brief Channel Request Sense
- *
- */
+********************************/
 typedef enum
 {
     DMA_SENSE_LEVEL_SENSITIVE = 0x0,
     DMA_SENSE_POSITIVE_EDGE_SENSITIVE = (1<<13),
 } dma_sense_t;
-/*****************************************************************************************
+
+
+/*******************************************************************************
  * \brief   DMA channel transfer callback
- *
  * \details This function is called by the DMA driver when the
  *          interrupt is fired.
- *
  * \param   [in]  user_data transfered data
  * \param   [in]  len length of transfered data
- *
  * \return  None 
- *
-******************************************************************************************/
+*******************************************************************************/
 typedef void (*hw_dma_transfer_cb)(void *user_data, uint16_t len);
 
-/**
+
+/**************************************
  * \brief DMA parameters structure
- *
- */
+**************************************/
 typedef struct
 {
     dma_channel_t       channel_number;         /**< DMA Channel Number to be used */
@@ -231,20 +213,18 @@ typedef struct
     void                *user_data;             /**< Data to pass to Callback */
 } DMA_setup;
 
-/*
-* API FUNCTIONS DEFINITIONS
-*****************************************************************************************
-*/
+
+/******************************
+ * API FUNCTIONS DEFINITIONS
+******************************/
 
 /*****************************************************************************************
  * \brief   Initialize DMA Channel
- *
  * \param   [in] channel_setup pointer to struct of type DMA_Setup
- *
  * \return  None
- *
 ******************************************************************************************/
 void dma_channel_initialization(DMA_setup *channel_setup);
+
 
 /*****************************************************************************************
  * \brief   Update DMA source address and length
@@ -261,7 +241,7 @@ void dma_channel_initialization(DMA_setup *channel_setup);
  * \param   [in] cb function to call after transmission finishes
  *
  * \return  None
- * 
+  * 
 ******************************************************************************************/
 void dma_channel_update_source(dma_channel_t channel, void* addr, uint16_t length,
                                                                         hw_dma_transfer_cb cb);

@@ -3,13 +3,7 @@
  * @file user_custs_config.h
  *
  * @brief Custom1/2 Server (CUSTS1/2) profile database initialization.
- *
- * Copyright (C) 2016 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com> and contributors.
- *
+  *
 ******************************************************************************************/
 
 #ifndef _USER_CUSTS_CONFIG_H_

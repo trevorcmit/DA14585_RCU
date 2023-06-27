@@ -3,13 +3,7 @@
  * \file app_flash_config.h
  *
  * \brief  SPI Flash configuration file
- *
- * Copyright (C) 2017 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information  
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com>
- *
+ * 
 ******************************************************************************************/ 
  
 #ifndef _APP_FLASH_CONFIG_H_

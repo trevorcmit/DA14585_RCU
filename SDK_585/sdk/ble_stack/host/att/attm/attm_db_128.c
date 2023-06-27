@@ -3,13 +3,7 @@
  * @file attm_db_128.c
  *
  * @brief ATTM functions that handle the ctration of service database of 128bits long UUID.
- *
- * Copyright (C) 2017 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com> and contributors.
- *
+  *
 ******************************************************************************************/
 
 /*

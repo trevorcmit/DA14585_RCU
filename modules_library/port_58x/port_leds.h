@@ -8,13 +8,7 @@
  * The software LED timer1 and LED timer 2 timers are used in order to time the LED blinking/ramping
  * while the hardware timers and PWM peripheral are used in order to dim/ramp the LEDs.
  * 
- *
- * Copyright (C) 2017 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information  
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com>
- *
+ * 
 ******************************************************************************************/
   
 /*****************************************************************************************

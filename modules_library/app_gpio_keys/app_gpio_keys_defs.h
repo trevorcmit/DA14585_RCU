@@ -3,13 +3,7 @@
  * \file app_gpio_keys_defs.h
  *
  * \brief GPIO key module definitions
- *
- * Copyright (C) 2017 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information  
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com>
- *
+ * 
 ******************************************************************************************/
  
  /*****************************************************************************************

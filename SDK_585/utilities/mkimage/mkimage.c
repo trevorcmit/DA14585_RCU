@@ -3,13 +3,7 @@
  * @file mkimage.c
  *
  * @brief Utility for creating a firmware image for DA14585.
- *
- * Copyright (C) 2014 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com> and contributors.
- *
+  *
 ******************************************************************************************/
 #define _XOPEN_SOURCE 700
 #include <stdint.h>

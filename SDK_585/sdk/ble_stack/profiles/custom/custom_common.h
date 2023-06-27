@@ -3,13 +3,7 @@
  * @file custom_common.h
  *
  * @brief Custom Service profile common header file.
- *
- * Copyright (C) 2017 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com> and contributors.
- *
+  *
 ******************************************************************************************/
 
 #ifndef __CUSTOM_COMMON_H

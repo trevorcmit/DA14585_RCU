@@ -3,13 +3,7 @@
  * \file app_dbg.h
  *
  * \brief The app_dbg provides simple tools for assisting debugging. 
- *
- * Copyright (C) 2017 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information  
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com>
- *
+ * 
 ******************************************************************************************/
  
 /*****************************************************************************************

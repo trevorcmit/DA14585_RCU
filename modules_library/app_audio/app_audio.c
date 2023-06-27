@@ -13,6 +13,7 @@
  * \{
 ******************************************************************************************/
 
+
 #ifdef HAS_AUDIO
         #include "app_audio.h"
         #include "app_audio_codec.h"
@@ -104,24 +105,24 @@
                 {
                         int AUDIO_IMA_SIZE;
 
-                #ifdef CFG_AUDIO_ADAPTIVE_RATE
-                        switch(adpcm_mode)
-                #else
-                        switch(ADPCM_DEFAULT_MODE)
-                #endif
-                        {
-                        case ADPCM_MODE_24KBPS_3_8KHZ:
-                        case ADPCM_MODE_48KBPS_3_16KHZ:
-                                AUDIO_IMA_SIZE = 3;
-                                break;
-                        case ADPCM_MODE_64KBPS_4_16KHZ:
-                        case ADPCM_MODE_32KBPS_4_8KHZ:
-                                AUDIO_IMA_SIZE = 4;
-                                break;
-                        default:
-                                ASSERT_ERROR(0);
-                                break;
-                        }
+                        #ifdef CFG_AUDIO_ADAPTIVE_RATE
+                                switch(adpcm_mode)
+                        #else
+                                switch(ADPCM_DEFAULT_MODE)
+                        #endif
+                                {
+                                case ADPCM_MODE_24KBPS_3_8KHZ:
+                                case ADPCM_MODE_48KBPS_3_16KHZ:
+                                        AUDIO_IMA_SIZE = 3;
+                                        break;
+                                case ADPCM_MODE_64KBPS_4_16KHZ:
+                                case ADPCM_MODE_32KBPS_4_8KHZ:
+                                        AUDIO_IMA_SIZE = 4;
+                                        break;
+                                default:
+                                        ASSERT_ERROR(0);
+                                        break;
+                                }
 
                         app_audio_env.imaState.imaSize  = AUDIO_IMA_SIZE;
                         app_audio_env.imaState.imaAnd   = 0xF - ((1 << (4 - AUDIO_IMA_SIZE)) - 1);
@@ -129,55 +130,60 @@
                 }
                 #endif // CFG_AUDIO_IMA_ADPCM
 
-void app_audio_init(void)
-{
-        app_audio_env.sbuf_len          = 0;
-        app_audio_env.sbuf_avail        = AUDIO_SBUF_SIZE; // Number of bytes available
-     
-#ifdef CFG_AUDIO_DC_BLOCK
-        app_audio_env.dcBlock.init      = 1;
-        app_audio_env.dcBlock.len       = AUDIO_NR_SAMP_PER_SLOT;
-        app_audio_env.dcBlock.beta      = APP_AUDIO_DCB_BETA;
-        app_audio_env.dcBlock.xn1       = 0;
-        app_audio_env.dcBlock.yyn1      = 0;
-    #ifdef CFG_AUDIO_ENABLE_DC_BLOCK_FADING
-        app_audio_env.dcBlock.fade_step = 16;   // about 1000 samples fade-in
-    #endif    
-    #ifdef REMOVE_PACKETS_START
-        app_audio_env.dcBlock.fcnt      = 25;   // block input for first 25 frames of 40 samples
-    #endif       
-#endif
-        app_audio_env.buffer_errors     = 0;
-        app_audio_env.errors_send       = 100;        
-    
-#ifdef CFG_AUDIO_IMA_ADPCM    
-    #ifdef AUDIO_CONTROL_ESCAPE_VALUE
-        app_audio_env.imaState.use_byte_stuffing = true;
-        app_audio_env.imaState.escape_byte_value = AUDIO_CONTROL_ESCAPE_VALUE;
-    #else
-        app_audio_env.imaState.use_byte_stuffing = false;
-    #endif
-        app_audio_env.imaState.index    = 0;
-        app_audio_env.imaState.predictedSample = 0;
-        app_audio_set_adpcm_mode_params();  // set IMA ADPCM encoding parameters
-#endif    
-}
+        void app_audio_init(void)
+        {
+                app_audio_env.sbuf_len          = 0;
+                app_audio_env.sbuf_avail        = AUDIO_SBUF_SIZE; // Number of bytes available
+        
+                #ifdef CFG_AUDIO_DC_BLOCK
+                        app_audio_env.dcBlock.init      = 1;
+                        app_audio_env.dcBlock.len       = AUDIO_NR_SAMP_PER_SLOT;
+                        app_audio_env.dcBlock.beta      = APP_AUDIO_DCB_BETA;
+                        app_audio_env.dcBlock.xn1       = 0;
+                        app_audio_env.dcBlock.yyn1      = 0;
 
-#if defined(CFG_AUDIO_IMA_ADPCM) && defined(CFG_AUDIO_ADAPTIVE_RATE)
-void app_audio_set_adpcm_mode(app_audio_adpcm_mode_t mode)
-{
-        #if defined(CFG_AUDIO_UART_DEBUG) && DEVELOPMENT_DEBUG
-                if(mode > adpcm_mode) {
-                dbg_putc('-');
-                }
-                if(mode < adpcm_mode) {
-                dbg_putc('+');
+                        #ifdef CFG_AUDIO_ENABLE_DC_BLOCK_FADING
+                                app_audio_env.dcBlock.fade_step = 16;   // about 1000 samples fade-in
+                        #endif
+
+                        #ifdef REMOVE_PACKETS_START
+                                app_audio_env.dcBlock.fcnt      = 25;   // block input for first 25 frames of 40 samples
+                        #endif       
+                #endif
+                
+                app_audio_env.buffer_errors     = 0;
+                app_audio_env.errors_send       = 100;        
+        
+                #ifdef CFG_AUDIO_IMA_ADPCM    
+                #ifdef AUDIO_CONTROL_ESCAPE_VALUE
+                        app_audio_env.imaState.use_byte_stuffing = true;
+                        app_audio_env.imaState.escape_byte_value = AUDIO_CONTROL_ESCAPE_VALUE;
+                #else
+                        app_audio_env.imaState.use_byte_stuffing = false;
+                #endif
+                        app_audio_env.imaState.index    = 0;
+                        app_audio_env.imaState.predictedSample = 0;
+                        app_audio_set_adpcm_mode_params();  // set IMA ADPCM encoding parameters
+                #endif    
+        }
+
+        #if defined(CFG_AUDIO_IMA_ADPCM) && defined(CFG_AUDIO_ADAPTIVE_RATE)
+                void app_audio_set_adpcm_mode(app_audio_adpcm_mode_t mode)
+                {
+                        #if defined(CFG_AUDIO_UART_DEBUG) && DEVELOPMENT_DEBUG
+                                if (mode > adpcm_mode)
+                                {
+                                        dbg_putc('-');
+                                }
+                                if (mode < adpcm_mode)
+                                {
+                                        dbg_putc('+');
+                                }
+                        #endif
+                                adpcm_mode = mode;
+                                app_audio_set_adpcm_mode_params();
                 }
         #endif
-                adpcm_mode = mode;
-                app_audio_set_adpcm_mode_params();
-}
-#endif
 
 #ifdef CFG_AUDIO_DEBUG_ENC_AUDIO_TO_UART
 
@@ -263,7 +269,6 @@ static void app_audio_fill_buffer(int16_t *ptr)
  * \brief Remove len samples from the work buffer.
  * The len samples to be removed are always at the start of the buffer. Shift the complete
  * buffer, and update the sbuf_len and sbuf_avail states.
- *
  * \param[in] len: number of samples to remove
 ******************************************************************************************/
 static void app_audio_empty_buffer(int len)

@@ -3,13 +3,7 @@
  * \file ir_driver.h
  *
  * \brief IR low level driver.
- *
- * Copyright (C) 2017 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information  
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com>
- *
+ * 
 ******************************************************************************************/
 
 #ifndef _IR_DRIVER_H_

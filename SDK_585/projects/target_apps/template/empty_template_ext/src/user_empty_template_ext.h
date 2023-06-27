@@ -4,12 +4,6 @@
  *
  * @brief Empty template project for external processor mode header file.
  *
- * Copyright (C) 2015 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com> and contributors.
- *
 ******************************************************************************************/
 
 #ifndef _USER_EMPTY_TEMPLATE_EXT_H_

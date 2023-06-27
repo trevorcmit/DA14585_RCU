@@ -3,13 +3,7 @@
  * @file arch_rom.h
  *
  * @brief ROM initialization functions and declarations.
- *
- * Copyright (C) 2016 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com> and contributors.
- *
+  *
 ******************************************************************************************/
 
 #ifndef _ARCH_ROM_H_

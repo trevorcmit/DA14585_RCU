@@ -3,13 +3,7 @@
  * @file wucpt_quadec.c
  *
  * @brief Wakeup IRQ & Quadrature Decoder driver.
- *
- * Copyright (C) 2013 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com> and contributors.
- *
+  *
 ******************************************************************************************/
 
 /* Important note: If, upon reception of interrupt from the wakeup timer or the quadrature

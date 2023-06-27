@@ -5,13 +5,7 @@
  * \brief The port_gpio_keys module provides an abstraction layer between the platform and
  * the application and is meant to be used in order to initialize GPIO pins for handling
  * key presses/releases/debouncing.
- *
- * Copyright (C) 2017 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information  
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com>
- *
+ * 
 ******************************************************************************************/
  
 /*****************************************************************************************

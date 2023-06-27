@@ -1,28 +1,11 @@
 /*****************************************************************************************
- *
  * @file adc.c
- *
  * @brief ADC module source file.
- *
- * Copyright (C) 2012 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com> and contributors.
- *
 ******************************************************************************************/
-
-/*
- * INCLUDE FILES
-******************************************************************************************/
-
 #include <stdint.h>
 #include "adc.h"
 #include "gpio.h"
 
-/*
- * FUNCTION DEFINITIONS
-******************************************************************************************/
 
 /*****************************************************************************************
  * @brief ADC module initialization.
@@ -80,7 +63,8 @@ int adc_get_sample(void)
 ******************************************************************************************/
 void adc_usDelay(uint32_t nof_us)
 {
-    while( nof_us-- ){
+    while( nof_us-- )
+    {
         __nop();
         __nop();
         __nop();

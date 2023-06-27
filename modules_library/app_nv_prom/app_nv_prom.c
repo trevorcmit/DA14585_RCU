@@ -3,13 +3,7 @@
  * \file app_nv_prom.c
  *
  * \brief Provide simplified access to various types of NV PROM devices.
- *
- * Copyright (C) 2017 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information  
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com>
- *
+ * 
 ******************************************************************************************/
 
 /*****************************************************************************************

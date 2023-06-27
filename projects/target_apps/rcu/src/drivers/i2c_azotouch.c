@@ -3,13 +3,7 @@
  * \file i2c_azotouch.c
  *
  * \brief Azoteq IQS572 Trackpad driver over i2c interface.
- *
- * Copyright (C) 2017 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information  
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com>
- *
+ * 
 ******************************************************************************************/
 
 /*****************************************************************************************

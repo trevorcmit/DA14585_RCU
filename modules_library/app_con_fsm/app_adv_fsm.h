@@ -7,13 +7,7 @@
  * The lib provides an API for initializing the Advertisting Finite State Machine 
  * as well as starting various types of advertising procedures and gives also the ability 
  * to the Connection FSM to get notified about advertising related events.
- *
- * Copyright (C) 2017 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information  
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com>
- *
+ * 
 ******************************************************************************************/
 
 /*****************************************************************************************

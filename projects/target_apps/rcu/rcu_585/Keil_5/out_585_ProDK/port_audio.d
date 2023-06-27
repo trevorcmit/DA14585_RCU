@@ -121,5 +121,3 @@
 .\out_585_prodk\port_audio.o: ..\..\..\..\..\modules_library\app_audio\app_audio.h
 .\out_585_prodk\port_audio.o: ..\..\src\user_rcu_audio.h
 .\out_585_prodk\port_audio.o: ..\..\..\..\..\modules_library\app_audio\app_audio_codec.h
-.\out_585_prodk\port_audio.o: .\..\..\..\..\..\SDK_585\sdk\platform\driver\timer\timer0.h
-.\out_585_prodk\port_audio.o: .\..\..\..\..\..\SDK_585\sdk\platform\driver\timer\timer.h

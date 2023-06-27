@@ -1,33 +1,16 @@
 /*****************************************************************************************
- *
  * @file app_user_config.h
- *
  * @brief Compile configuration file.
- *
- * Copyright (C) 2015 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com> and contributors.
- *
 ******************************************************************************************/
-
 #ifndef _APP_USER_CONFIG_H_
 #define _APP_USER_CONFIG_H_
 
 /*****************************************************************************************
  * @addtogroup APP
  * @ingroup
- *
  * @brief
- *
  * @{
 ******************************************************************************************/
-
-/*
- * INCLUDE FILES
-******************************************************************************************/
-
 #include <stdint.h>
 #include "co_bt.h"
 #include "gap.h"
@@ -35,9 +18,6 @@
 #include "gapm_task.h"
 #include "gapc_task.h"
 
-/*
- * DEFINES
-******************************************************************************************/
 
 #define MS_TO_BLESLOTS(x)       ((int)((x)/0.625))
 #define MS_TO_DOUBLESLOTS(x)    ((int)((x)/1.25))
@@ -47,45 +27,33 @@
 #define US_TO_DOUBLESLOTS(x)    ((int)((x)/1250))
 #define US_TO_TIMERUNITS(x)     ((int)((x)/10000))
 
-/*
- * TYPE DEFINITIONS
-******************************************************************************************/
 
-/*
- ****************************************************************************************
- *
+/****************************************************************************************
  * Advertising related configuration
- *
-******************************************************************************************/
+****************************************************************************************/
 struct advertise_configuration {
-    /**
+    /***************************************************************************************************
      * Own BD address source of the device:
      * - GAPM_STATIC_ADDR: Public or Private Static Address according to device address configuration
      * - GAPM_GEN_RSLV_ADDR: Generated resolvable private random address
      * - GAPM_GEN_NON_RSLV_ADDR: Generated non-resolvable private random address
-     */
+    ***************************************************************************************************/
     uint8_t addr_src;
 
-    /// Minimum interval for advertising
-    uint16_t intv_min;
-
-    /// Maximum interval for advertising
-    uint16_t intv_max;
-
-    /// Advertising channel map (@see adv_channel_map)
-    uint8_t channel_map;
+    uint16_t intv_min;      // Minimum interval for advertising
+    uint16_t intv_max;      // Maximum interval for advertising
+    uint8_t channel_map;    // Advertising channel map (@see adv_channel_map)
 
     /*************************
      * Advertising information
-     *************************
-     */
+    **************************/
 
-    /// Host information advertising data (GAPM_ADV_NON_CONN and GAPM_ADV_UNDIRECT)
-    /// Advertising mode :
-    /// - GAP_NON_DISCOVERABLE: Non discoverable mode
-    /// - GAP_GEN_DISCOVERABLE: General discoverable mode
-    /// - GAP_LIM_DISCOVERABLE: Limited discoverable mode
-    /// - GAP_BROADCASTER_MODE: Broadcaster mode
+    // Host information advertising data (GAPM_ADV_NON_CONN and GAPM_ADV_UNDIRECT)
+    // Advertising mode :
+    // - GAP_NON_DISCOVERABLE: Non discoverable mode
+    // - GAP_GEN_DISCOVERABLE: General discoverable mode
+    // - GAP_LIM_DISCOVERABLE: Limited discoverable mode
+    // - GAP_BROADCASTER_MODE: Broadcaster mode
     uint8_t mode;
 
     /// Host information advertising data (GAPM_ADV_NON_CONN and GAPM_ADV_UNDIRECT)
@@ -109,11 +77,9 @@ struct advertise_configuration {
     uint8_t peer_addr_type;
 };
 
-/*
- ****************************************************************************************
- *
+
+/****************************************************************************************
  * Parameter update configuration
- *
 ******************************************************************************************/
 struct connection_param_configuration {
     /// Connection interval minimum

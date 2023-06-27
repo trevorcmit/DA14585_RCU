@@ -3,13 +3,7 @@
  * @file jump_table.c
  *
  * @brief Jump table that holds function pointers and variables used in ROM code.
- *
- * Copyright (C) 2016 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com> and contributors.
- *
+  *
 ******************************************************************************************/
 #include <string.h>          // for mem* functions
 #include <stdint.h>

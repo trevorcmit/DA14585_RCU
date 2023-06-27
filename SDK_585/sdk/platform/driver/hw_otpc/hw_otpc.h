@@ -3,13 +3,7 @@
  * @file hw_otpc.h
  *
  * @brief Definition of API for the OTP Controller driver.
- *
- * Copyright (C) 2016 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com> and contributors.
- *
+  *
 ******************************************************************************************/
 
 #ifndef HW_OTPC_H_

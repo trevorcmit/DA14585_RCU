@@ -1,33 +1,22 @@
 /*****************************************************************************************
- *
  * \file port_white_list.h
- *
  * \brief White List mgmt header file.
- *
- * Copyright (C) 2013. Dialog Semiconductor Ltd, unpublished work. This computer 
- * program includes Confidential, Proprietary Information and is a Trade Secret of 
- * Dialog Semiconductor Ltd.  All use, disclosure, and/or reproduction is prohibited 
- * unless authorized in writing. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com>
- *
 ******************************************************************************************/
  
-/*****************************************************************************************
+/****************************************************************************************
  * \addtogroup APP_UTILS
  * \{
  * \addtogroup BONDING
  * \{
  * \addtogroup PORT_WHITELIST
  * \{
- ****************************************************************************************	 
- */
- 
+*****************************************************************************************/
 #ifndef PORT_WHITE_LIST_H_
 #define PORT_WHITE_LIST_H_
 
 #include "rwip_config.h"
 #include "gapm_task.h"
+
 
 /*****************************************************************************************
  * \brief       Send a GAPM_WHITE_LIST_MGT_CMD to the stack.
@@ -53,8 +42,9 @@ void port_white_list_clear_list(void);
 
 #endif // PORT_WHITE_LIST_H_
 
-/**
+
+/******
  * \}
  * \}
  * \}
- */
+******/

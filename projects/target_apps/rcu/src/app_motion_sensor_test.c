@@ -3,13 +3,7 @@
  * @file app_motion_sensor_test.c
  *
  * @brief Motion Sensor application test.
- *
- * Copyright (C) 2017 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information  
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com>
- *
+ * 
 ******************************************************************************************/
 
 #ifdef HAS_BMI055

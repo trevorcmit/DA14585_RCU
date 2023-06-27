@@ -3,13 +3,7 @@
  * @file app_hogpd_defs.h
  *
  * @brief HID report map definitions.
- *
- * Copyright (C) 2017 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information  
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com>
- *
+ * 
 ******************************************************************************************/
 
 #ifndef _APP_HOGPD_DEFS_H_

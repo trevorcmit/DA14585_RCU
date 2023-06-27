@@ -3,13 +3,7 @@
  * @file user_custs1_def.h
  *
  * @brief Custom1 Server (CUSTS1) profile database declarations.
- *
- * Copyright (C) 2016 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com> and contributors.
- *
+  *
 ******************************************************************************************/
 
 #ifndef _USER_CUSTS1_DEF_H_

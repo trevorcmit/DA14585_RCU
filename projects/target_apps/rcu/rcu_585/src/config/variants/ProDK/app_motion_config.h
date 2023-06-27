@@ -1,25 +1,24 @@
-/**
+/*********************************************************
  * \file app_motion_config.h
  * \brief  Motion application configuration header file
- */ 
- 
+*********************************************************/ 
 #ifndef _APP_MOTION_CONFIG_H_
 #define _APP_MOTION_CONFIG_H_
 
-/**
+
+/**************************************
  * \addtogroup CONFIGURATION
  * \{
  * \addtogroup MODULE_CONFIG
  * \{
  * \addtogroup MOTION_CFG
- *
  * \brief Motion module configuration
  * \{
- */
-
+**************************************/
 #include <user_periph_setup.h>
 #include "port_platform.h"
 #include "app_motion_defs.h"
+
 
 //#define BMI055
 #define BMI160
@@ -34,8 +33,7 @@
 #endif 
 
 /*****************************************************************************************
- * \brief Set motion sensor rotation. Sensor can be rotated 0, 90, 180, or 270 degrees 
-          clockwise as seen from the top
+ * \brief Set motion sensor rotation. Sensor can be rotated 0, 90, 180, or 270 degrees clockwise as seen from the top
 ******************************************************************************************/
 #define MOTION_ROTATION 90 
 
@@ -46,14 +44,13 @@
 //#define MOTION_PCB_BOTTOM
 
 /*****************************************************************************************
- * \brief Set the time that the sensor will remain active after app_motion_stop() has 
-          been called
+ * \brief Set the time that the sensor will remain active after app_motion_stop() has been called
 ******************************************************************************************/
 #define MOTION_DEACTIVATION_TIMEOUT_IN_MS 500 // in msec
 
 #if MOTION_IF == SPI
     /************************************************************************************
-     * pin configuration                                                                 
+     * Pin configuration                                                                 
     *************************************************************************************/
     enum motion_cs_pin_ids {
         MOTION_SPI_CS_PIN,
@@ -88,10 +85,10 @@ static const motion_util_funcs_t app_motion_funcs = {
     .test_bist  = port_motion_test_bist, 
 };
 
-/**
+/*******
  * \}
  * \}
  * \}
- */
+*******/
 
 #endif //_APP_MOTION_CONFIG_H_

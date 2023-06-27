@@ -3,13 +3,7 @@
  * @file wucpt_quadec.h
  *
  * @brief Wakeup IRQ & Quadrature Decoder driver header file.
- *
- * Copyright (C) 2013 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com> and contributors.
- *
+  *
 ******************************************************************************************/
 
 

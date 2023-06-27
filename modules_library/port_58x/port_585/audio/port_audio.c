@@ -11,7 +11,8 @@
  * \addtogroup PORT_AUDIO
  * \{
 ****************************************************************************************/
- 
+
+
 #ifdef HAS_AUDIO
     #include <stdio.h>
     #include "port_platform.h"
@@ -256,7 +257,7 @@
                 #else
                     uint8_t step = port_audio_env.sampling_rate == SAMPLING_RATE_16KHz ? 4 : 8;
 
-                    for (uint8_t j = 0; j < AUDIO_NR_SAMP_PER_SLOT; j++)
+                    for (uint8_t j=0; j < AUDIO_NR_SAMP_PER_SLOT; j++)
                     {
                         data[j] = sine_a[emul_index] >> (16+4-AUDIO_SAMPLING_OFFSET);
                         emul_index+=step;

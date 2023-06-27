@@ -3,13 +3,7 @@
  * @file user_config_defs.h
  *
  * @brief ROM configuration table index definitions.
- *
- * Copyright (C) 2017 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com> and contributors.
- *
+  *
 ******************************************************************************************/
 #ifndef USER_CONFIG_DEFS_H
 #define USER_CONFIG_DEFS_H

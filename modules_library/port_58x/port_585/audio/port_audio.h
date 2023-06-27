@@ -54,6 +54,7 @@ void *port_audio_get_data(void);
 *****************************************************************************************/
 bool port_audio_has_data(void);
 
+
 /*****************************************************************************************
  * \brief Get the number of used samples positions in the audio buffer
  *
@@ -61,12 +62,14 @@ bool port_audio_has_data(void);
 *****************************************************************************************/
 uint16_t port_audio_buffer_get_used(void);
 
+
 /*****************************************************************************************
  * \brief Get the number of errors caused by FIFO overrun
  *
  * \return The number of errors
 *****************************************************************************************/
 uint8_t port_audio_get_errors(void);
+
 
 /*****************************************************************************************
  * \brief Start audio sampling and buffering
@@ -76,10 +79,12 @@ uint8_t port_audio_get_errors(void);
 *****************************************************************************************/
 void port_audio_start_sampling(audio_sampling_rate_t sampling_rate);
 
+
 /*****************************************************************************************
  * \brief Stop audio sampling and buffering
 *****************************************************************************************/
 void port_audio_stop_sampling(void);
+
 
 #endif /* PORT_AUDIO_H_ */
 

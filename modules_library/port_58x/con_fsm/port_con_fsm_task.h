@@ -3,13 +3,7 @@
  * \file port_con_fsm_task.h
  *
  * \brief Connection FSM handlers header file.
- *
- * Copyright (C) 2017 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information  
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com>
- *
+ * 
 ******************************************************************************************/
 
  /*****************************************************************************************

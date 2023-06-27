@@ -4,12 +4,6 @@
  *
  * @brief Battery driver. Provides Battery level. Uses ADC module to get current voltage.
  *
- * Copyright (C) 2012 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com> and contributors.
- *
 ******************************************************************************************/
 
 /*

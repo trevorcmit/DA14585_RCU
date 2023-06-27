@@ -910,109 +910,109 @@ s8 spi_routine(void)
 }
     #endif //MOTION_IF
 
+
 /*-------------------------------------------------------------------*
-*
 *	This is a sample code for read and write the data by using I2C/SPI
 *	Use either I2C or SPI based on your need
 *	Configure the below code to your SPI or I2C driver
-*
 *-----------------------------------------------------------------------*/
-    #if MOTION_IF == I2C
-s8 bmi160_i2c_bus_read(u8 dev_addr, u8 reg_addr, u8 *reg_data, u8 cnt)
-{
-    return i2c_read_data(reg_data, reg_addr, cnt) < cnt ? -1
-                                                        : 0;
-}
+#if MOTION_IF == I2C
+    s8 bmi160_i2c_bus_read(u8 dev_addr, u8 reg_addr, u8 *reg_data, u8 cnt)
+    {
+        return i2c_read_data(reg_data, reg_addr, cnt) < cnt ? -1
+                                                            : 0;
+    }
 
-s8 bmi160_i2c_bus_write(u8 dev_addr, u8 reg_addr, u8 *reg_data, u8 cnt)
-{
-    return i2c_write_data(reg_data, reg_addr, cnt) < cnt ? -1
-                                                         : 0;
-}
-    #elif MOTION_IF == SPI
-        #define MAX_READY_WAIT_COUNT    2000000
-        #define ERR_OK                  0
-        #define ERR_TIMEOUT             -1
+    s8 bmi160_i2c_bus_write(u8 dev_addr, u8 reg_addr, u8 *reg_data, u8 cnt)
+    {
+        return i2c_write_data(reg_data, reg_addr, cnt) < cnt ? -1 : 0;
+    }
+#elif MOTION_IF == SPI
+    #define MAX_READY_WAIT_COUNT    2000000
+    #define ERR_OK                  0
+    #define ERR_TIMEOUT             -1
 
-/*****************************************************************************************
- * @brief Wait till flash is ready for next action
- * @return  Success : ERR_OK
- *          Failure : ERR_TIMEOUT
-******************************************************************************************/
-static int8_t spi_wait_till_ready(void)
-{
-    for (uint32_t readCount = 0; readCount < MAX_READY_WAIT_COUNT; readCount++) {
-        if (!GetBits16(SPI_CTRL_REG1, SPI_BUSY)){
-            return ERR_OK;
+    /*****************************************************************************************
+     * @brief Wait till flash is ready for next action
+     * @return  Success : ERR_OK
+     *          Failure : ERR_TIMEOUT
+    ******************************************************************************************/
+    static int8_t spi_wait_till_ready(void)
+    {
+        for (uint32_t readCount = 0; readCount < MAX_READY_WAIT_COUNT; readCount++)
+        {
+            if (!GetBits16(SPI_CTRL_REG1, SPI_BUSY))
+            {
+                return ERR_OK;
+            }
         }
+        return ERR_TIMEOUT;
     }
-    return ERR_TIMEOUT;
-}
 
-/*****************************************************************************************
- * @brief Read data from a given starting address
- *
- * @param[in] *rd_data_ptr:  Points to the position the read data will be stored
- * @param[in] address:       Starting address of data to be read
- * @param[in] size:          Size of the data to be read
- *
- * @return  Number of read bytes or error code
-******************************************************************************************/
-static int32_t spi_read_data(uint8_t *rd_data_ptr, uint32_t address, uint32_t size)
-{
-    if (spi_wait_till_ready() != ERR_OK) {
-        return ERR_TIMEOUT;                             // an error has occured
+    /*****************************************************************************************
+     * @brief Read data from a given starting address
+     *
+     * @param[in] *rd_data_ptr:  Points to the position the read data will be stored
+     * @param[in] address:       Starting address of data to be read
+     * @param[in] size:          Size of the data to be read
+     *
+     * @return  Number of read bytes or error code
+    ******************************************************************************************/
+    static int32_t spi_read_data(uint8_t *rd_data_ptr, uint32_t address, uint32_t size)
+    {
+        if (spi_wait_till_ready() != ERR_OK) {
+            return ERR_TIMEOUT;                             // an error has occured
+        }
+        
+        spi_set_bitmode(SPI_MODE_8BIT);
+        spi_cs_low();                                       // pull CS low
+        spi_access(MASK_DATA2 | address);                   // Command for sequencial reading from memory
+        for (uint32_t i=0; i<size; i++) {
+            *rd_data_ptr++ = (uint8_t)spi_access(0x0000);   // bare SPI transaction
+        }
+        spi_cs_high();                                      // push CS high
+        
+        return size;
     }
-    
-    spi_set_bitmode(SPI_MODE_8BIT);
-    spi_cs_low();                                       // pull CS low
-    spi_access(MASK_DATA2 | address);                   // Command for sequencial reading from memory
-    for (uint32_t i=0; i<size; i++) {
-        *rd_data_ptr++ = (uint8_t)spi_access(0x0000);   // bare SPI transaction
+
+    s8 bmi160_spi_bus_read(u8 dev_addr, u8 reg_addr, u8 *reg_data, u8 cnt)
+    {
+        return spi_read_data(reg_data, reg_addr, cnt) < cnt ? -1
+                                                            : 0;
     }
-    spi_cs_high();                                      // push CS high
-    
-    return size;
-}
 
-s8 bmi160_spi_bus_read(u8 dev_addr, u8 reg_addr, u8 *reg_data, u8 cnt)
-{
-    return spi_read_data(reg_data, reg_addr, cnt) < cnt ? -1
-                                                        : 0;
-}
-
-/*****************************************************************************************
- * @brief Write data to any starting address
- *
- * @param[in] *wr_data_ptr:  Pointer to the data to be written
- * @param[in] address:       Starting address of data to be written
- * @param[in] size:          Size of the data to be written
- *
- * @return  Number of bytes actually written
-******************************************************************************************/
-static int32_t spi_write_data(uint8_t *wr_data_ptr, uint32_t address, uint32_t size)
-{
-    spi_set_bitmode(SPI_MODE_8BIT);
-    if (spi_wait_till_ready() != ERR_OK) {
-        return ERR_TIMEOUT;                 // an error has occured
-    }    
-    spi_cs_low();                           // pull CS low
-    spi_access(address);                    // Command for sequencial writing to memory
-    for (uint32_t i=0; i<size; i++) {
-        spi_access(*wr_data_ptr++);         // Write data bytes
+    /*****************************************************************************************
+     * @brief Write data to any starting address
+     *
+     * @param[in] *wr_data_ptr:  Pointer to the data to be written
+     * @param[in] address:       Starting address of data to be written
+     * @param[in] size:          Size of the data to be written
+    *
+    * @return  Number of bytes actually written
+    ******************************************************************************************/
+    static int32_t spi_write_data(uint8_t *wr_data_ptr, uint32_t address, uint32_t size)
+    {
+        spi_set_bitmode(SPI_MODE_8BIT);
+        if (spi_wait_till_ready() != ERR_OK) {
+            return ERR_TIMEOUT;                 // an error has occured
+        }    
+        spi_cs_low();                           // pull CS low
+        spi_access(address);                    // Command for sequencial writing to memory
+        for (uint32_t i=0; i<size; i++) {
+            spi_access(*wr_data_ptr++);         // Write data bytes
+        }
+        spi_cs_high();                          // push CS high
+        if (spi_wait_till_ready() != ERR_OK) {
+            return 0;                           // an error has occured
+        }    
+        return size;
     }
-    spi_cs_high();                          // push CS high
-    if (spi_wait_till_ready() != ERR_OK) {
-        return 0;                           // an error has occured
-    }    
-    return size;
-}
 
-s8 bmi160_spi_bus_write(u8 dev_addr, u8 reg_addr, u8 *reg_data, u8 cnt)
-{
-    return spi_write_data(reg_data, reg_addr, cnt) < cnt ? -1
-                                                         : 0;
-}
+    s8 bmi160_spi_bus_write(u8 dev_addr, u8 reg_addr, u8 *reg_data, u8 cnt)
+    {
+        return spi_write_data(reg_data, reg_addr, cnt) < cnt ? -1
+                                                            : 0;
+    }
     #endif //MOTION_IF
 #endif //INCLUDE_BMI160API
 

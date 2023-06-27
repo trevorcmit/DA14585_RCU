@@ -5,13 +5,7 @@
  * \brief Azoteq I2C communication driver provides simple functions for initializing
  * the MCU's I2C peripheral for communicating with the IQS modules as well as
  * functions used for register/memory reading/writing.
- *
- * Copyright (C) 2017 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information  
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com>
- *
+ * 
 ******************************************************************************************/
 
 #ifndef _I2C_AZOTOUCH_H_

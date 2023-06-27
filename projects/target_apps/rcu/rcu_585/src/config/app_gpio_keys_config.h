@@ -3,13 +3,7 @@
  * \file app_gpio_keys_config.h
  *
  * \brief GPIO keys module configuration header file.
- *
- * Copyright (C) 2017 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information  
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com>
- *
+ * 
 ******************************************************************************************/
 
 #ifndef _APP_GPIO_KEYS_CONFIG_H_

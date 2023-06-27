@@ -4,12 +4,6 @@
  *
  * @brief bootloader application
  *
- * Copyright (C) 2012 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com> and contributors.
- *
 ******************************************************************************************/
 
 #include <stdio.h>
@@ -73,7 +67,7 @@ extern uint32_t crc32(uint32_t crc, const void *buf, size_t size);
 /*****************************************************************************************
  * @brief Load the active (latest and valid) image from a non-volatile memory
  * @return Success (0) or Error Code.
- * 
+  * 
 ******************************************************************************************/
 static int loadActiveImage(void)
 {

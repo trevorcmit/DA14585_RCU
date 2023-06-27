@@ -3,13 +3,7 @@
  * \file user_profiles_config.h
  *
  * \brief Configuration file for the profiles used in the application.
- *
- * Copyright (C) 2017 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information  
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com>
- *
+ * 
 ******************************************************************************************/
 
 #ifndef _USER_PROFILES_CONFIG_H_

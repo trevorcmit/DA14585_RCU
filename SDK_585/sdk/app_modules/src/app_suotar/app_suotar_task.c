@@ -3,13 +3,7 @@
  * @file app_suotar_task.c
  *
  * @brief SUOTA receiver application Message Handlers.
- *
- * Copyright (C) 2013 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com> and contributors.
- *
+  *
 ******************************************************************************************/
 
 /*****************************************************************************************

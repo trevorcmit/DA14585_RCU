@@ -4,12 +4,6 @@
  *
  * @brief Commands header file.
  *
- * Copyright (C) 2015 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com> and contributors.
- *
 ******************************************************************************************/
 
 #ifndef _COMMANDS_H_

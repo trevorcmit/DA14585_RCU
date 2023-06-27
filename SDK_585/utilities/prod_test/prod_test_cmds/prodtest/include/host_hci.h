@@ -3,13 +3,7 @@
  * @file host_hci.h
  *
  * @brief Connection Manager HCI library header file.
- *
- * Copyright (C) 2013 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com> and contributors.
- *
+  *
 ******************************************************************************************/
 
 #ifndef _HOST_HCI_H_

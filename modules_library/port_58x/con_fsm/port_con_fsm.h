@@ -4,13 +4,7 @@
  *
  * \brief The port_con_fsm module provides an abstraction layer between the platform specific
  * connection handling functions and the application.
- *
- * Copyright (C) 2017 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information  
- * of Dialog Semiconductor. All Rights Reserved.
- *
- * <bluetooth.support@diasemi.com>
- *
+ * 
 ******************************************************************************************/
  
 /*****************************************************************************************
