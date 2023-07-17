@@ -49,9 +49,9 @@ uint16_t app_audio_ima_enc(IMAData_t *state)
     int32_t   predictedSample = (int32_t)state->predictedSample;
     int32_t   index           = state->index;
     int32_t   stepSize        = stepSizeTable[index];
-    uint8_t   *optr  = state->out;
+    uint8_t   *optr  = state -> out;
     uint16_t  outBuf = 0;
-    int32_t   size   = state->imaSize;
+    int32_t   size   = state -> imaSize;
     int32_t   outMsb = 16-size;
     int32_t   imaAnd = state->imaAnd;
     int32_t   imaOr  = state->imaOr;
@@ -60,14 +60,18 @@ uint16_t app_audio_ima_enc(IMAData_t *state)
     
     for (i=0; i < state->len; i++) {
         int inp = *ptr++;
+
         /* Find the difference with predicted sample */
         int32_t diff = inp - predictedSample;
         int sign = diff;
+
         /* Set the sign of new IMA nibble and find absolute value of difference */
         uint8_t newIma = 0;
-        if (sign < 0) {
+        if (sign < 0)
+        {
             diff = -diff;
         }
+
         /* Quantize the difference to four bits */
         /* Also compute new sample estimate predictedSample */
         int mask = 4;

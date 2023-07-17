@@ -4390,7 +4390,7 @@ Image component sizes
        156         16          0          0          0       7375   nmi_handler.o
        200         14         14          0          0       3036   nvds.o
        852         38          0          0          4      12218   pdm.o
-       296         16          0          0         48       6952   pdm_mic.o
+       296         16          0          0         48       6956   pdm_mic.o
        520        216          0          0          0       2387   port_adv_fsm.o
        340         14         28          0        492       6434   port_audio.o
        296         40          0          0          0       8151   port_con_fsm.o
@@ -4429,7 +4429,7 @@ Image component sizes
        380         28          0          0         12       8370   wkupct_quadec.o
 
     ----------------------------------------------------------------------
-     48262       4030       5240        348      13272    1374814   Object Totals
+     48262       4030       5240        348      13272    1374818   Object Totals
          0          0         64          0         80          0   (incl. Generated)
          6          0         11          0         28          0   (incl. Padding)
 
@@ -4476,8 +4476,8 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-     49568       4166       5512        348      13312    1368602   Grand Totals
-     49568       4166       5512        348      13312    1368602   ELF Image Totals
+     49568       4166       5512        348      13312    1368606   Grand Totals
+     49568       4166       5512        348      13312    1368606   ELF Image Totals
      49568       4166       5512        348          0          0   ROM Totals
 
 ==============================================================================

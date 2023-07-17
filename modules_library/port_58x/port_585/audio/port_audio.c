@@ -95,11 +95,11 @@
 
 
     #if defined(CFG_AUDIO_EMULATE_PDM_MIC) || !defined(USE_CIRCULAR_BUFFER)
-    /****************************************************************************************
-     * \brief 
-     * \param[in]   length
-     * \return
-    *****************************************************************************************/ 
+        /****************************************************************************************
+         * \brief 
+         * \param[in]   length
+         * \return
+        *****************************************************************************************/ 
     static audio_sample_t *get_next_audio_buffer(uint16_t length)
     {
         #ifdef USE_CIRCULAR_BUFFER
@@ -116,6 +116,7 @@
             #endif        
             }        
             return &port_audio_env.buffer[port_audio_env.write_index];
+
         #else // USE_CIRCULAR_BUFFER
             ASSERT_ERROR(length == AUDIO_NR_SAMP_PER_SLOT); // When audio slots are used length can only be equal to slot size
 
@@ -138,9 +139,9 @@
     #endif
 
 
-    /*****************************************************************************************
+    /**************************************************************************************
      * \brief 
-    ******************************************************************************************/ 
+    **************************************************************************************/ 
     static void commit_audio_buffer(void)
     {
         #ifdef USE_CIRCULAR_BUFFER
@@ -216,7 +217,6 @@
                 //     num_of_samples = AUDIO_NR_SAMP_PER_SLOT;
                 // #endif            
                 //     int step = 800 * AUDIO_NR_SAMP_PER_SLOT/num_of_samples;
-                        
                 // for (k=0; k < (4-num_of_packets+2)/2; k++)
                 // {
                 //     for (j = 0; j < num_of_samples / 2; j++)

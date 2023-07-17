@@ -4,9 +4,8 @@
 ; *           ARMCM0 Device Series
 ; * @version  V1.08
 ; * @date     23. November 2012
-; *
 ; * @note
-; *
+
 ; ******************************************************************************/
 ;/* Copyright (c) 2011 - 2012 ARM LIMITED
 ;

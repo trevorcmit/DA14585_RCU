@@ -77,10 +77,9 @@ typedef enum
 } dma_binc_t;
 
 
-/**
+/*********************************************
  * \brief Increment of source address mode
- *
- */
+**********************************************/
 typedef enum
 {
     DMA_AINC_FALSE = 0x0,        /**< Do not increment */

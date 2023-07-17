@@ -1,4 +1,4 @@
-#<SYMDEFS># ARM Linker, 5060960: Last Updated: Tue Jun 27 13:12:09 2023
+#<SYMDEFS># ARM Linker, 5060960: Last Updated: Fri Jun 30 15:01:26 2023
 0x00000000 N __ARM_use_no_argv
 0x000000a0 N __Vectors_Size
 0x07f02001 T uECC_vli_add

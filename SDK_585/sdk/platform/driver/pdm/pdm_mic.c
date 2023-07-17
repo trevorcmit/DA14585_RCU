@@ -115,15 +115,12 @@ static void DMA_reinit(uint32_t *new_buffer)
 
 #endif
 
-/*****************************************************************************************
- * \brief       DMA_init 
- *
- * \param       user_data & length provided from DMA handler
- *
- * \return      None
- *
- ****************************************************************************************
-*/
+
+/*************************************************************
+ * \brief    DMA_init 
+ * \param    user_data & length provided from DMA handler
+ * \return   None
+*************************************************************/
 static void DMA_init(uint32_t *buffer, uint16_t length)
 {
     DMA_Setup_for_PDM_to_buffer.channel_number = DMA_CHANNEL_2;
@@ -142,25 +139,26 @@ static void DMA_init(uint32_t *buffer, uint16_t length)
     DMA_Setup_for_PDM_to_buffer.user_data = NULL;
 		DMA_Setup_for_PDM_to_buffer.dma_sense = DMA_SENSE_LEVEL_SENSITIVE;
 
-#ifdef CFG_AUDIO_DEBUG_PDM_TO_UART 
-    DMA_Setup_for_PDM_to_buffer.circular = DMA_MODE_NORMAL;
-    DMA_Setup_for_PDM_to_buffer.dest_address = (uint32_t)input_buffer;
-    DMA_Setup_for_PDM_to_buffer.length = PDM_INPUT_BUFFER_LENGTH;
-    DMA_Setup_for_PDM_to_buffer.irq_nr_of_trans = 0;
-#else
-    DMA_Setup_for_PDM_to_buffer.circular = (mic_circular == true) ? DMA_MODE_CIRCULAR : DMA_MODE_NORMAL;
-    DMA_Setup_for_PDM_to_buffer.length = length;
-    DMA_Setup_for_PDM_to_buffer.dest_address = (uint32_t)buffer;
-    DMA_Setup_for_PDM_to_buffer.irq_nr_of_trans = mic_int_threshold;
-#endif
-    dma_channel_initialization(&DMA_Setup_for_PDM_to_buffer);
+    #ifdef CFG_AUDIO_DEBUG_PDM_TO_UART 
+        DMA_Setup_for_PDM_to_buffer.circular = DMA_MODE_NORMAL;
+        DMA_Setup_for_PDM_to_buffer.dest_address = (uint32_t)input_buffer;
+        DMA_Setup_for_PDM_to_buffer.length = PDM_INPUT_BUFFER_LENGTH;
+        DMA_Setup_for_PDM_to_buffer.irq_nr_of_trans = 0;
+    #else
+        DMA_Setup_for_PDM_to_buffer.circular = (mic_circular == true) ? DMA_MODE_CIRCULAR : DMA_MODE_NORMAL;
+        DMA_Setup_for_PDM_to_buffer.length = length;
+        DMA_Setup_for_PDM_to_buffer.dest_address = (uint32_t)buffer;
+        DMA_Setup_for_PDM_to_buffer.irq_nr_of_trans = mic_int_threshold;
+    #endif
+        dma_channel_initialization(&DMA_Setup_for_PDM_to_buffer);
 }
+
 
 void pdm_mic_start(pdm_mic_setup_t *config)
 {
-    mic_callback = config->callback;
-    mic_circular = config->buffer_circular;
-    mic_int_threshold = config->int_thresold;
+    mic_callback = config -> callback;
+    mic_circular = config -> buffer_circular;
+    mic_int_threshold = config -> int_thresold;
     
 	pdm_config_t pdm_config;
 	pdm_config.clk_gpio = config->clk_gpio;
@@ -176,17 +174,17 @@ void pdm_mic_start(pdm_mic_setup_t *config)
 	pdm_config.enable_interrupt = false;
 	pdm_config.interrupt_priority = 3;
 	pdm_config.callback = NULL;
+    
 	pdm_enable(&pdm_config);
-	DMA_init(config->buffer, config->buffer_length);
+	DMA_init(config -> buffer, config -> buffer_length);
 	dma_channel_enable(DMA_Setup_for_PDM_to_buffer.channel_number, DMA_STATE_ENABLED);
 }
 
+
 void pdm_mic_stop(void)
 {
-		//assumption is that pdm_mic_stop is called after DMA_init thus
-		//DMA_Setup_for_PDM_to_buffer.channel_number is valid
+	// assumption is that pdm_mic_stop is called after DMA_init thus
+	// DMA_Setup_for_PDM_to_buffer.channel_number is valid
     dma_channel_stop(DMA_Setup_for_PDM_to_buffer.channel_number);
     pdm_disable();
 }
-
-

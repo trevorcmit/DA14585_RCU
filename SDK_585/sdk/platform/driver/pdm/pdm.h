@@ -1,9 +1,6 @@
 /*****************************************************************************************
- *
  * @file pdm.h
- *
  * @brief PDM audio interface driver.
-  *
 ******************************************************************************************/
 
 #ifndef PDM_H_
@@ -76,29 +73,24 @@ typedef struct {
  */
 typedef void (*pdm_src_interrupt_cb)(pdm_src_isr_data_t *src_isr_data);
 
-/**
+
+/****************************************
  * \brief PDM interface configuration.
- */
+****************************************/
 typedef struct {
-        /** PDM clock GPIO pin. */
-        pdm_gpio_t clk_gpio;
+        pdm_gpio_t clk_gpio;               // PDM clock GPIO pin.
+        pdm_gpio_t data_gpio;              // PDM data GPIO pin.
 
-        /** PDM data GPIO pin. */
-        pdm_gpio_t data_gpio;
+        pdm_mode_t mode;                   // The mode of the PDM interface. Master or slave.
 
-        /** The mode of the PDM interface. Master or slave. */
-        pdm_mode_t mode;
+        pdm_direction_t direction;         // The direction of the PDM interface. 
 
-        /** The direction of the PDM interface. */
-        pdm_direction_t direction;
-
-        /**
+        /*************************************************************************************************
          * The direction of the sample rate converter. For example, when direction is
          * \ref IF_PDM_DIRECTION_IN and \ref src_direction is \ref IF_PDM_SRC_DIRECTION_PCM the PDM
          * signal will be passed to the PCM interface. Or when the PDM direction is out and \ref
-         * src_direction is \ref IF_PDM_SRC_DIRECTION_REG the SRC I/O registers are used for PDM
-         * input.
-         */
+         * src_direction is \ref IF_PDM_SRC_DIRECTION_REG the SRC I/O registers are used for PDM input.
+        *************************************************************************************************/
         pdm_src_direction_t src_direction;
 
         /**
@@ -116,10 +108,7 @@ typedef struct {
         /** This is used to enable the dithering feature of the sample rate converter. */
         bool enable_dithering;
 
-        /**
-         * This is used to set the PDM_DIV field of the PDM_DIV_REG. If this equals 0 the PDM_DIV
-         * is set to 8.
-         */
+        // This is used to set the PDM_DIV field of the PDM_DIV_REG. If this equals 0 the PDM_DIV is set to 8.
         uint8_t pdm_div;
 
         /** Enable the SRC interrupt for PDM samples. */
@@ -132,24 +121,20 @@ typedef struct {
         pdm_src_interrupt_cb callback;
 } pdm_config_t;
 
-/*****************************************************************************************
+
+/******************************************************
  * \brief       Enables the PDM
- *
  * \param       config The configuration of the PDM
- *
  * \return      None
- *
-******************************************************************************************/
+******************************************************/
 void pdm_enable(const pdm_config_t *config);
 
-/*****************************************************************************************
- * \brief       Disables the PDM
- *
- * \param       None
- *
- * \return      None
- *
-******************************************************************************************/ 
+
+/********************************
+ * \brief     Disables the PDM
+ * \param     None
+ * \return    None
+********************************/ 
 void pdm_disable(void);
 
 #endif /* PDM_H_ */

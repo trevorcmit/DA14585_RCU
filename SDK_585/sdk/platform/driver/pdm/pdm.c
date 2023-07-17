@@ -1,58 +1,50 @@
-/*
- ****************************************************************************************
- *
+/***************************************
  * @file pdm.c
- *
- * @brief PDM audio interface driver.
-  *
-******************************************************************************************/
-
+ * \brief PDM audio interface driver.
+***************************************/
 #include "pdm.h"
 #include <assert.h>
 
 static pdm_src_interrupt_cb pdm_src_callback;
 
-/*****************************************************************************************
- * \brief   Configures the GPIOs used for PDM
- *          
+
+/**************************************************
+ * \brief   Configures the GPIOs used for PDM        
  * \param[in]  config The GPIOs assigned to PDM
- *
  * \return  None
-******************************************************************************************/
+**************************************************/
 static void pdm_config_port_pins(const pdm_config_t *config)
 {
-        if (config->mode == PDM_MODE_MASTER) {
-                GPIO_ConfigurePin(config->clk_gpio.port, config->clk_gpio.pin,
-                        OUTPUT, PID_PDM_CLK, false);
-        } else {
-                GPIO_ConfigurePin(config->clk_gpio.port, config->clk_gpio.pin,
-                        INPUT, PID_PDM_CLK, false);
+        if (config -> mode == PDM_MODE_MASTER)
+        {
+                GPIO_ConfigurePin(config->clk_gpio.port, config->clk_gpio.pin, OUTPUT, PID_PDM_CLK, false);
+        } 
+        else
+        {
+                GPIO_ConfigurePin(config->clk_gpio.port, config->clk_gpio.pin, INPUT, PID_PDM_CLK, false);
         }
 
-        if (config->direction == PDM_DIRECTION_IN) {
-                GPIO_ConfigurePin(config->data_gpio.port, config->data_gpio.pin,
-                        INPUT, PID_PDM_DATA, false);
-        } else {
-                GPIO_ConfigurePin(config->data_gpio.port, config->data_gpio.pin,
-                        OUTPUT, PID_PDM_DATA, false);
+        if (config -> direction == PDM_DIRECTION_IN)
+        {
+                GPIO_ConfigurePin(config->data_gpio.port, config->data_gpio.pin, INPUT, PID_PDM_DATA, false);
+        } 
+        else
+        {
+                GPIO_ConfigurePin(config->data_gpio.port, config->data_gpio.pin, OUTPUT, PID_PDM_DATA, false);
         }
 }
 
+
 /*****************************************************************************************
- * \brief   Sets the clock of the PDM peripheral and enables the PDM
- *          
+ * \brief   Sets the clock of the PDM peripheral and enables the PDM      
  * \param[in]  pdm_clock_divider The clock divider which determines the PDM clock
- *
  * \return  None
 ******************************************************************************************/
 static void pdm_set_master_clock(unsigned int pdm_clock_divider)
 {
         unsigned int div_field;
-        if (pdm_clock_divider == 0) {
-                div_field = 8;
-        } else {
-                div_field = pdm_clock_divider;
-        }
+        if (pdm_clock_divider == 0) { div_field = 8; }
+        else                        { div_field = pdm_clock_divider; }
 
         GLOBAL_INT_DISABLE();
         uint16_t reg_val = GetWord16(PDM_DIV_REG);
@@ -61,6 +53,7 @@ static void pdm_set_master_clock(unsigned int pdm_clock_divider)
         SetWord16(PDM_DIV_REG, reg_val);
         GLOBAL_INT_RESTORE();
 }
+
 
 /*****************************************************************************************
  * \brief   Sets the clock of the SRC peripheral
@@ -136,14 +129,12 @@ static void pdm_set_src_sample_rate(pdm_direction_t direction, unsigned int samp
         }
 }
 
-/*****************************************************************************************
+
+/**************************************************
  * \brief       Sets the SRC peripheral filters
- *
  * \param       
- *
  * \return      None
- *
-******************************************************************************************/
+**************************************************/
 static void pdm_set_src_filters(pdm_direction_t direction, unsigned int sample_rate)
 {
         int setting = 0;
@@ -160,6 +151,7 @@ static void pdm_set_src_filters(pdm_direction_t direction, unsigned int sample_r
                 SetBits32(SRC1_CTRL_REG, SRC_IN_DS, setting);
         }
 }
+
 
 /*****************************************************************************************
  * \brief       Configures the APU based on the PDM and SRC directions
@@ -191,11 +183,8 @@ static void pdm_set_apu_reg(pdm_direction_t direction, pdm_src_direction_t src_d
 
 /*****************************************************************************************
  * \brief       Enables the PDM
- *
  * \param       config The configuration of the PDM
- *
  * \return      None
- *
 ******************************************************************************************/ 
 void pdm_enable(const pdm_config_t *config)
 {
@@ -205,27 +194,31 @@ void pdm_enable(const pdm_config_t *config)
         GLOBAL_INT_DISABLE();
         SetBits16(PDM_DIV_REG, PDM_MASTER_MODE, config->mode & 0x1);
         GLOBAL_INT_RESTORE();
-        if (config->mode == PDM_MODE_MASTER) {
+
+        if (config->mode == PDM_MODE_MASTER)
+        {
                 pdm_set_master_clock(config->pdm_div);
         }
 
-        pdm_enable_interrupt(config->enable_interrupt, config->interrupt_priority,
-                config->direction, config->callback);
+        pdm_enable_interrupt(config->enable_interrupt, config->interrupt_priority, config->direction, config->callback);
 
         pdm_set_apu_reg(config->direction, config->src_direction);
         pdm_set_src_clock();
 
-        if (config->src_direction == PDM_SRC_DIRECTION_REG) {
+        if (config->src_direction == PDM_SRC_DIRECTION_REG)
+        {
                 pdm_set_src_sample_rate(config->direction, config->src_sample_rate);
         }
 
         pdm_set_src_filters(config->direction, config->src_sample_rate);
+
         SetBits32(SRC1_CTRL_REG, SRC_OUT_AMODE,
                 (config->direction == PDM_DIRECTION_IN &&
                         config->src_direction == PDM_SRC_DIRECTION_PCM) ? 1 : 0);
         SetBits32(SRC1_CTRL_REG, SRC_IN_AMODE,
                 (config->direction == PDM_DIRECTION_IN ||
                         config->src_direction == PDM_SRC_DIRECTION_PCM) ? 1 : 0);
+        
         SetBits32(SRC1_CTRL_REG, SRC_PDM_MODE, config->direction & 0x3);
         SetBits32(SRC1_CTRL_REG, SRC_OUT_CAL_BYPASS, config->bypass_out_filter & 0x1);
         SetBits32(SRC1_CTRL_REG, SRC_IN_CAL_BYPASS, config->bypass_in_filter & 0x1);
@@ -234,14 +227,11 @@ void pdm_enable(const pdm_config_t *config)
         SetBits32(SRC1_CTRL_REG, SRC_EN, 1);
 }
 
-/*****************************************************************************************
+/***********************************
  * \brief       Disables the PDM
- *
  * \param       None
- *
  * \return      None
- *
-******************************************************************************************/ 
+***********************************/ 
 void pdm_disable(void)
 {
         NVIC_DisableIRQ(SRC_IN_IRQn);
@@ -253,14 +243,11 @@ void pdm_disable(void)
 }
 
 
-/*****************************************************************************************
+/**********************************************************************************
  * \brief       The handler for the Sample Rate Converter (SRC) input interrupt
- *
  * \param       None
- *
  * \return      None
- *
-******************************************************************************************/ 
+**********************************************************************************/ 
 void SRCIN_Handler(void)
 {
         if (pdm_src_callback) {
@@ -275,14 +262,12 @@ void SRCIN_Handler(void)
         }
 }
 
-/*****************************************************************************************
+
+/************************************************************************************
  * \brief       The handler for the Sample Rate Converter (SRC) output interrupt
- *
  * \param       None
- *
  * \return      None
- *
-******************************************************************************************/ 
+************************************************************************************/ 
 void SRCOUT_Handler(void)
 {
         if (pdm_src_callback) {
