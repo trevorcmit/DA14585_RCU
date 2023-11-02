@@ -20,8 +20,7 @@
 #ifndef APP_MULTI_BOND_H_
 #define APP_MULTI_BOND_H_
 
-/*
- ****************************************************************************************
+/*****************************************************************************************
  * USAGE
  *
  * To use this module the following must be properly defined in your project and include the header file in app_multi_bond.c:

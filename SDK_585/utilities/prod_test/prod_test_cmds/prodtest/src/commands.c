@@ -331,8 +331,7 @@ uint8_t parse_unmodulated_mode(int *return_status, const char *str)
 	return result;
 }
 
-/*
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Command handler for "Start testmode TX with param length is 3 (default)"
  *
  * command line: prodtest starttest_tx_param_len_3 <FREQUENCY> <DATA_LENGTH> <PAYLOAD_TYPE>
@@ -437,8 +436,7 @@ exit_command_handler:
 	return return_status;
 };
 
-/*
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Command handler for "Start testmode TX with param length is 5"
  *
  *  @param[in] argc		Command line argument count.
@@ -563,8 +561,7 @@ exit_command_handler:
 	return return_status;
 }
 
-/*
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Command handler for "Start testmode RX (default)"
  *
  *  @param[in] argc		Command line argument count.
@@ -649,8 +646,7 @@ exit_command_handler:
 	return return_status;
 };
 
-/*
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Command handler for "Start Prod testmode RX with ReadBack values"
  *
  *  @param[in] argc		Command line argument count.
@@ -729,8 +725,7 @@ exit_command_handler:
 	return return_status;
 };
 
-/*
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Command handler for "End Prod testmode RX with ReadBack values"
  *
  *  @param[in] argc		Command line argument count.
@@ -818,8 +813,7 @@ exit_command_handler:
 	return return_status;
 };
 
-/*
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Command handler for "End Test Mode Command(default)"
  *
  *  @param[in] argc		Command line argument count.
@@ -900,8 +894,7 @@ exit_command_handler:
 	return return_status;
 };
 
-/*
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Command handler for "Unmodulated RX/TX"
  *
  * command line:
@@ -1015,8 +1008,7 @@ exit_command_handler:
 	return return_status;
 };
 
-/*
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Command handler for "Start TX continue test"
  *
  *  Command line:
@@ -1104,8 +1096,7 @@ exit_command_handler:
 	return return_status;
 };
 
-/*
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Command handler for "End TX continue test"
  *
  *  @param[in] argc		Command line argument count.
@@ -1173,8 +1164,7 @@ exit_command_handler:
 	return return_status;
 };
 
-/*
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Command handler for "Reset Command"
  *
  *  @param[in] argc		Command line argument count.

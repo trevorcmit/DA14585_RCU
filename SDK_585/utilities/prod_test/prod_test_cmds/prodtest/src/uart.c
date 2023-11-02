@@ -23,8 +23,7 @@
 HANDLE hComPortHandle = NULL;
 OVERLAPPED ovlRd,ovlWr;
 
-/*
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Write message to UART.
  * @param[in] payload_type 0x01 = HCI_CMD, 0x05 = FE_MSG
  * @param[in] payload_size Message size.
@@ -50,8 +49,7 @@ void UARTSend(unsigned char payload_type, unsigned short payload_size, unsigned 
 	WriteFile(hComPortHandle, bTransmit232ElementArr, bSenderSize, &dwWritten, &ovlWr);
 }
 
-/*
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Send message received from UART to application's main thread.
  * @param[in] length        Message size.
  * @param[in] bInputDataPtr Pointer to message data.
@@ -83,8 +81,7 @@ void SendToMain(unsigned char payload_type, unsigned short length, uint8_t *bInp
 	ReleaseMutex(UARTRxQueueSem);
 }
 
-/*
- ****************************************************************************************
+/*****************************************************************************************
  * @brief UART Reception thread loop.
  * @return void.
  ****************************************************************************************
@@ -279,8 +276,7 @@ void UARTProc(PVOID unused)
 
 
 
-/*
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Init UART iface.
  * @param[in] Port     COM prot number.
  * @param[in] BaudRate Baud rate.

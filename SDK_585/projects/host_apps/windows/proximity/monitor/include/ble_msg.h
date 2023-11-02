@@ -26,8 +26,7 @@ typedef struct {
     unsigned char  bData[1];
 } ble_msg;
 
-/*
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Send message to UART iface.
  *
  * @param[in] msg   pointer to message.
@@ -37,8 +36,7 @@ typedef struct {
 */
 void BleSendMsg(void *msg);
 
-/*
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Allocate memory for ble message.
  *
  * @param[in] msgid     Id of the message received.
@@ -52,8 +50,7 @@ void BleSendMsg(void *msg);
 void *BleMsgAlloc(unsigned short id, unsigned short dest_id,
                   unsigned short src_id, unsigned short param_len);
 
-/*
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Allocate memory for ble message.
  *
  * @param[in] msgid     Id of the message received.
@@ -68,8 +65,7 @@ void *BleMsgAlloc(unsigned short id, unsigned short dest_id,
 void *BleMsgDynAlloc(unsigned short id, unsigned short dest_id,
                      unsigned short src_id, unsigned short param_len, unsigned short length);
 
-/*
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles ble by calling corresponding procedure.
  *
  * @param[in] blemsg    Pointer to received message.
@@ -79,8 +75,7 @@ void *BleMsgDynAlloc(unsigned short id, unsigned short dest_id,
 */
 void HandleBleMsg(ble_msg *blemsg);
 
-/*
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Receives ble message from UART iface.
  *
  * @return void.

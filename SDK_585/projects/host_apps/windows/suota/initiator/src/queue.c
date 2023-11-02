@@ -18,8 +18,7 @@ HANDLE Rx232Id;  // UART RX Thread handle
 
 QueueRecord UARTRxQueue; // UART Rx Queue -> Main thread
 
-/*
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Initialize UART RX thread.
  *
  * @return void
@@ -37,8 +36,7 @@ void InitTasks(void)
     UARTRxQueueSem = CreateMutex( NULL, FALSE, NULL );
 }
 
-/*
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Adds an item to the queue
  *
  * @param[in] rec    Queue.
@@ -66,8 +64,7 @@ void EnQueue(QueueRecord *rec,void *vdata)
     }
 }
 
-/*
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Removes an item from the queue
  *
  * @param[in] rec  Queue.

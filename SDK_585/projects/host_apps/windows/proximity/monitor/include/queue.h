@@ -48,8 +48,7 @@ extern HANDLE Rx232Id, ConsoleTaskId;  // Thread handles
 
 extern QueueRecord ConsoleQueue, UARTRxQueue; //Queues UARTRx -> Main thread /  Console -> Main thread
 
-/*
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Initialize the UART RX thread and the console key handling thread.
  *
  * @return void
@@ -57,8 +56,7 @@ extern QueueRecord ConsoleQueue, UARTRxQueue; //Queues UARTRx -> Main thread /  
 */
 void InitTasks(void);
 
-/*
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Adds an item to the queue
  *
  *  @param[in] rec    Queue.
@@ -69,8 +67,7 @@ void InitTasks(void);
 */
 void EnQueue(QueueRecord *rec,void *vdata);
 
-/*
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Removes an item from the queue
  *
  *  @param[in] rec  Queue.

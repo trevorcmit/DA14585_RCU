@@ -275,8 +275,7 @@ static int gapc_disconnect_ind_handler(ke_msg_id_t const msgid,
     return (KE_MSG_CONSUMED);
 }
 
-/*
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles GAPM_ADV_REPORT_IND event.
  * @param[in] msgid     Id of the message received.
  * @param[in] param     Pointer to the parameters of the message.
@@ -294,8 +293,7 @@ static int gapm_adv_report_ind_handler(ke_msg_id_t msgid,
     return (KE_MSG_CONSUMED);
 }
 
-/*
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles GAPC_SECURITY_IND event.
  * @param[in] msgid     Id of the message received.
  * @param[in] param     Pointer to the parameters of the message.
@@ -315,8 +313,7 @@ static int gapc_security_ind_handler(ke_msg_id_t msgid,
 }
 #endif
 
-/*
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles GAPC_GET_DEV_INFO_REQ_IND event.
  * @param[in] msgid     Id of the message received.
  * @param[in] param     Pointer to the parameters of the message.
@@ -406,8 +403,7 @@ static int gapc_get_dev_info_req_ind_handler(ke_msg_id_t msgid,
     return (KE_MSG_CONSUMED);
 }
 
-/*
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles GAPC_SET_DEV_INFO_REQ_IND event.
  * @param[in] msgid     Id of the message received.
  * @param[in] param     Pointer to the parameters of the message.
@@ -441,8 +437,7 @@ static int gapc_set_dev_info_req_ind_handler(ke_msg_id_t msgid,
     return (KE_MSG_CONSUMED);
 }
 
-/*
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles GAPM_PROFILE_ADDED_IND event.
  * @param[in] msgid     Id of the message received.
  * @param[in] param     Pointer to the parameters of the message.
@@ -475,8 +470,7 @@ static int gapm_profile_added_ind_handler(ke_msg_id_t msgid,
     return (KE_MSG_CONSUMED);
 }
 
-/*
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles GAPC_PARAM_UPDATE_REQ_IND event.
  * @param[in] msgid     Id of the message received.
  * @param[in] param     Pointer to the parameters of the message.
@@ -503,8 +497,7 @@ static int gapc_param_update_req_ind_handler(ke_msg_id_t msgid,
     return (KE_MSG_CONSUMED);
 }
 
-/*
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles GAPC_LE_PKT_SIZE_IND event.
  * @param[in] msgid     Id of the message received.
  * @param[in] param     Pointer to the parameters of the message.

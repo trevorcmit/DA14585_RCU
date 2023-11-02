@@ -16,8 +16,7 @@
 #include "app_task.h"
 #include "uart.h"
 
-/*
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Send message to UART iface.
  *
  * @param[in] msg   pointer to message.
@@ -34,8 +33,7 @@ void BleSendMsg(void *msg)
     free(blemsg);
 }
 
-/*
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Allocate memory for ble message.
  *
  * @param[in] msgid     Id of the message received.
@@ -62,8 +60,7 @@ void *BleMsgAlloc(unsigned short id, unsigned short dest_id,
     return blemsg->bData;
 }
 
-/*
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Allocate memory for ble message.
  *
  * @param[in] msgid     Id of the message received.
@@ -81,8 +78,7 @@ void *BleMsgDynAlloc(unsigned short id, unsigned short dest_id,
     return (BleMsgAlloc(id, dest_id, src_id, (param_len+length)));
 }
 
-/*
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Handles ble message by calling corresponding procedure.
  *
  * @param[in] blemsg    Pointer to received message.
@@ -175,8 +171,7 @@ void HandleBleMsg(ble_msg *blemsg)
 
 }
 
-/*
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Receives ble message from UART iface.
  *
  * @return void.

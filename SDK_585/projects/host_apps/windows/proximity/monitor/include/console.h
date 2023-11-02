@@ -33,16 +33,14 @@ enum
     CONSOLE_EXIT_CMD,
 };
 
-/*
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Sends Discover devices message to application 's main thread.
  *
  * @return void.
 ******************************************************************************************/
 void ConsoleSendScan(void);
 
-/*
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Sends Connect to device message to application 's main thread.
  *
  *  @param[in] indx Device's index in discovered devices list.
@@ -51,8 +49,7 @@ void ConsoleSendScan(void);
 ******************************************************************************************/
 void ConsoleSendConnnect(int indx);
 
-/*
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Sends Disconnect request message to application 's main thread.
  *
  *  @param[in] id Selected device id.
@@ -61,8 +58,7 @@ void ConsoleSendConnnect(int indx);
 ******************************************************************************************/
 void ConsoleSendDisconnnect(int id);
 
-/*
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Sends Read request message to application 's main thread.
  *
  *  @param[in] type  Attribute type to read.
@@ -72,8 +68,7 @@ void ConsoleSendDisconnnect(int id);
 ******************************************************************************************/
 void ConsoleRead(unsigned char type,unsigned char idx);
 
-/*
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Sends write request message to application 's main thread.
  *
  *  @param[in] type  Attribute type to write.

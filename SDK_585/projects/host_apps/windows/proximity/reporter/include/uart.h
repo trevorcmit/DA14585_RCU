@@ -11,8 +11,7 @@
 
 #define MAX_PACKET_LENGTH 350
 #define MIN_PACKET_LENGTH 9
- /*
- ****************************************************************************************
+ /*****************************************************************************************
  * @brief Write message to UART.
  *
  *  @param[in] size  Message's size.
@@ -22,8 +21,7 @@
  ****************************************************************************************
 */
 void UARTSend(unsigned short size, unsigned char *data);
-/*
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Send message received from UART to application's main thread.
  *
  *  @param[in] length           Message's size.
@@ -33,8 +31,7 @@ void UARTSend(unsigned short size, unsigned char *data);
  ****************************************************************************************
 */
 void SendToMain(unsigned short length, uint8_t *bInputDataPtr);
-/*
- ****************************************************************************************
+/*****************************************************************************************
  * @brief UART Reception thread loop.
  *
  * @return void.
@@ -42,8 +39,7 @@ void SendToMain(unsigned short length, uint8_t *bInputDataPtr);
 */
 void UARTProc(PVOID unused);
 
-/*
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Init UART iface.
  *
  *  @param[in] Port         COM prot number.

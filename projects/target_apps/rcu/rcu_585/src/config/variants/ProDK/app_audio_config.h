@@ -88,7 +88,7 @@
  *        the audio samples from the hardware peripheral. e.g. If AUDIO_NR_SAMP_PER_SLOT
  *        is 40 and sampling rate is 16KHz then the CPU will be interrupted every 40*1/16000 = 2.5msec
 *****************************************************************************************/
-#define AUDIO_NR_SAMP_PER_SLOT 40
+#define AUDIO_NR_SAMP_PER_SLOT  40
 
 
 /****************************************************************************************
@@ -97,7 +97,7 @@
  *        The size of the buffer must be fine tuned according to the maximum time needed
  *        by the system to get and process the audio samples of the slot.
 *****************************************************************************************/
-#define AUDIO_BUFFER_NR_SLOTS  3
+#define AUDIO_BUFFER_NR_SLOTS   3
 
 
 /****************************************************************************************

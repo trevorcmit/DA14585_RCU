@@ -44,8 +44,7 @@ const static sleep_state_t app_default_sleep_mode = ARCH_SLEEP_OFF;
 /// Scan response data length- maximum 31 bytes
 #define USER_ADVERTISE_SCAN_RESPONSE_DATA_LEN (sizeof(USER_ADVERTISE_SCAN_RESPONSE_DATA)-1)
 
-/*
- ****************************************************************************************
+/*****************************************************************************************
  *
  * Device name.
  *

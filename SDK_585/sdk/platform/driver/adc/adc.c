@@ -11,8 +11,7 @@
  * @brief ADC module initialization.
  * @param[in] mode  :0 = Differential mode, GP_ADC_SE(0x800) = Single ended mode
  * @param[in] sign  :0 = Default, GP_ADC_SIGN(0x0400) = Conversion with opposite sign at
-                     input and output to cancel out the internal offset of the ADC and
-                     low-frequency
+                     input and output to cancel out the internal offset of the ADC and low-frequency
  * @param[in] attn  :0 = attenuation x1, GP_ADC_ATTN3X(0x0002) = attenuation x3
  * @return void
 ******************************************************************************************/

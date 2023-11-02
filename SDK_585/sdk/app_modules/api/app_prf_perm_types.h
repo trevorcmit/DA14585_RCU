@@ -52,8 +52,7 @@ extern app_prf_srv_perm_t* app_srv_perm;
  * FUNCTION DECLARATIONS
 ******************************************************************************************/
 
-/*
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Returns the Service permission set by user. If user has not set any service
  * permission, the default "ENABLE" is used.
  * @param[in] task_id           Task type definition of the profile.
@@ -62,8 +61,7 @@ extern app_prf_srv_perm_t* app_srv_perm;
 */
 app_prf_srv_perm_t get_user_prf_srv_perm(enum KE_API_ID task_id);
 
-/*
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Sets the service permission access rights for a profile.
  * @param[in] task_id           Task type definition of the profile.
  * @param[in] srv_perm          Service permission access rights of the profile.
@@ -71,8 +69,7 @@ app_prf_srv_perm_t get_user_prf_srv_perm(enum KE_API_ID task_id);
 ******************************************************************************************/
 void app_set_prf_srv_perm(enum KE_API_ID task_id, app_prf_srv_perm_t srv_perm);
 
-/*
- ****************************************************************************************
+/*****************************************************************************************
  * @brief Initialises service permissions to "ENABLE". Should be called once upon app 
  * initialization.
  * @return void

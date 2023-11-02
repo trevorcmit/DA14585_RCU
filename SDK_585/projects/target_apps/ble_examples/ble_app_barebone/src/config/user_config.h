@@ -34,8 +34,7 @@
  */
 const static sleep_state_t app_default_sleep_mode = ARCH_SLEEP_OFF;
 
-/*
- ****************************************************************************************
+/*****************************************************************************************
  *
  * Advertising configuration
  *
@@ -99,8 +98,7 @@ static const struct advertise_configuration user_adv_conf = {
     .peer_addr_type = 0,
 };
 
-/*
- ****************************************************************************************
+/*****************************************************************************************
  *
  * Advertising or scan response data for the following cases:
  *
@@ -137,8 +135,7 @@ static const struct advertise_configuration user_adv_conf = {
 /// Scan response data length- maximum 31 bytes
 #define USER_ADVERTISE_SCAN_RESPONSE_DATA_LEN (sizeof(USER_ADVERTISE_SCAN_RESPONSE_DATA)-1)
 
-/*
- ****************************************************************************************
+/*****************************************************************************************
  *
  * Device name.
  *
@@ -154,8 +151,7 @@ static const struct advertise_configuration user_adv_conf = {
 /// Device name length
 #define USER_DEVICE_NAME_LEN    (sizeof(USER_DEVICE_NAME)-1)
 
-/*
- ****************************************************************************************
+/*****************************************************************************************
  *
  * GAPM configuration
  *
@@ -235,8 +231,7 @@ static const struct gapm_configuration user_gapm_conf = {
     .max_txtime = 2120,
 };
 
-/*
- ****************************************************************************************
+/*****************************************************************************************
  *
  * Parameter update configuration
  *
@@ -266,8 +261,7 @@ static const struct connection_param_configuration user_connection_param_conf = 
     .ce_len_max = MS_TO_DOUBLESLOTS(0),
 };
 
-/*
- ****************************************************************************************
+/*****************************************************************************************
  *
  * Default handlers configuration (applies only for @app_default_handlers.c)
  *
@@ -289,8 +283,7 @@ static const struct default_handlers_configuration  user_default_hnd_conf = {
     .security_request_scenario = DEF_SEC_REQ_NEVER
 };
 
-/*
- ****************************************************************************************
+/*****************************************************************************************
  *
  * Central configuration (not used by current example)
  *
@@ -388,8 +381,7 @@ static const struct central_configuration user_central_conf = {
     .peer_addr_7_type = 0,
 };
 
-/*
- ****************************************************************************************
+/*****************************************************************************************
  *
  * Security related configuration
  *

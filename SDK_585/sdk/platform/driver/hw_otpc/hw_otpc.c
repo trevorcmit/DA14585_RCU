@@ -1,16 +1,10 @@
 /*****************************************************************************************
- *
  * @file hw_otpc.c
- *
  * @brief Implementation of the OTP Controller Low Level Driver.
-  *
 ******************************************************************************************/
-
-
 
 #include <stdint.h>
 #include "hw_otpc.h"
-
 
 #define OTPC_OTPC_TIM1_REG_OTPC_TIM1_CC_T_CADX_Pos (0UL)
 #define OTPC_OTPC_TIM1_REG_OTPC_TIM1_CC_T_CADX_Msk (0xffUL)
@@ -25,10 +19,6 @@
 #define OTPC_OTPC_TIM1_REG_OTPC_TIM1_CC_T_25NS_Pos (31UL)
 #define OTPC_OTPC_TIM1_REG_OTPC_TIM1_CC_T_25NS_Msk (0x80000000UL)
 
-
-/*
- * Local variables
- */
 
 /*
  * 2MHz: 1 cycle = 500ns ==>
@@ -82,12 +72,6 @@ static const uint8_t tim2[4] =
     0, /* 8Mhz */
     1, /* 16Mhz */
 };
-
-
-/*
- * Forward declarations
- */
-
 
 
 /*
