@@ -1,11 +1,7 @@
 /*****************************************************************************************
- *
  * \file app_stream.h
- *
  * \brief This module provides an API for streaming data to a BLE host
- *
  * Define symbol HAS_BLE_STREAM to include this module in the application.
- * 
 ******************************************************************************************/
  
 /*****************************************************************************************
@@ -15,7 +11,6 @@
  * \{
  * \addtogroup APP_STREAM
  * \brief AudioStreamer Application
- *
  * \{
 ******************************************************************************************/
 
@@ -26,45 +21,42 @@
 
 #ifdef HAS_BLE_STREAM
 
-/*
+
+/*****************************************************************************************
  * APP_STREAM Env DataStructure
- ****************************************************************************************
  *
  * NOTE that number and size of payload packets is similar to number and size of 
  * notifications in StreamData profile. 
  * STREAMDATAD_PACKET_SIZE = 20, and STREAMDATAD_MAX=10
- */
+*****************************************************************************************/
  
-#define APP_STREAM_USE_CIRCULAR_BUFFER    (!defined(CFG_APP_STREAM_PACKET_BASED) || !defined(CFG_APP_STREAM_FIFO_PREDEFINED))
-#define APP_STREAM_USE_PREDEFINED_BUFFERS (defined(CFG_APP_STREAM_PACKET_BASED) && defined(CFG_APP_STREAM_FIFO_PREDEFINED))
+#define APP_STREAM_USE_CIRCULAR_BUFFER     (!defined(CFG_APP_STREAM_PACKET_BASED) || !defined(CFG_APP_STREAM_FIFO_PREDEFINED))
+#define APP_STREAM_USE_PREDEFINED_BUFFERS  (defined(CFG_APP_STREAM_PACKET_BASED) && defined(CFG_APP_STREAM_FIFO_PREDEFINED))
 
 #define MEMORY_OPTIMIZATION2
 
 enum stream_status {
-        STREAM_NO_MORE_DATA,
-        STREAM_HID_FAIL,
-        STREAM_MORE_DATA
+    STREAM_NO_MORE_DATA,
+    STREAM_HID_FAIL,
+    STREAM_MORE_DATA
 };
 
 typedef struct app_stream_pkt_s {
     uint8_t *datapt;
-#if APP_STREAM_USE_CIRCULAR_BUFFER
-    void   (*p_callback) (void* , int);
-    uint16_t  len;
-#endif
-#ifndef CFG_APP_STREAM_PACKET_BASED
-    bool wrap_around;
-#endif    
+    #if APP_STREAM_USE_CIRCULAR_BUFFER
+        void   (*p_callback) (void* , int);
+        uint16_t  len;
+    #endif
+
+    #ifndef CFG_APP_STREAM_PACKET_BASED
+        bool wrap_around;
+    #endif
+
     uint16_t  used_hndl;   // if 0, stream packet not used, else it contains the handle
 } app_stream_pkt_t;
 
-/*
- * GLOBAL VARIABLE DECLARATION
-******************************************************************************************/
 
-/*
- * FUNCTION DECLARATIONS
-******************************************************************************************/
+// Functions Defs and Gloabl Vars
 
 /*****************************************************************************************
  * \brief Initialize AudioStreamer Application 

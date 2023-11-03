@@ -128,6 +128,7 @@ static void user_rcu_reset_inactivity(void)
     }
 }
 #endif
+
 /*****************************************************************************************
  * @brief  Send MTU exchange command
 ******************************************************************************************/
@@ -286,130 +287,132 @@ void user_app_adv_undirect_complete(uint8_t status)
 #endif // HAS_CONNECTION_FSM
 
 #if BLE_APP_SEC || defined(HAS_CONNECTION_FSM)
-void user_on_encrypt_ind(const uint8_t auth)
-{   
-    #ifdef HAS_KBD               
-    app_kbd_start_reporting(); // start sending notifications    
-    #endif    
-}
+    void user_on_encrypt_ind(const uint8_t auth)
+    {   
+        #ifdef HAS_KBD               
+        app_kbd_start_reporting(); // start sending notifications    
+        #endif    
+    }
 #endif
 
 void user_on_connection(uint8_t connection_idx, struct gapc_connection_req_ind const *param)
 {
     last_connection_idx = connection_idx;
     
-#ifdef HAS_CONNECTION_FSM
-	peer_addr_t addr;
-	
-	addr.addr_type = param->peer_addr_type;
-	addr.addr = param->peer_addr;
+    #ifdef HAS_CONNECTION_FSM
+        peer_addr_t addr;
+        
+        addr.addr_type = param->peer_addr_type;
+        addr.addr = param->peer_addr;
 
-    app_env[connection_idx].connection_active = true;
-           
-    // Retrieve the connection info from the parameters (MUST always be done!)
-    app_env[connection_idx].conhdl = param->conhdl;
-    app_env[connection_idx].peer_addr_type = param->peer_addr_type;
-    app_env[connection_idx].peer_addr = param->peer_addr;
-    
-    if (app_env[connection_idx].conidx == GAP_INVALID_CONIDX) {    
-        return;
-    }
-    
-    ke_state_set(TASK_APP, APP_CONNECTED); // Update TASK_APP state (MUST always be done!)
-    
-    // connection confirmation is handled by app_con_fsm_connection_validation    
-    if (app_con_fsm_connection_validation(&addr) == false) {
-        return;
-    }  
+        app_env[connection_idx].connection_active = true;
+            
+        // Retrieve the connection info from the parameters (MUST always be done!)
+        app_env[connection_idx].conhdl = param->conhdl;
+        app_env[connection_idx].peer_addr_type = param->peer_addr_type;
+        app_env[connection_idx].peer_addr = param->peer_addr;
+        
+        if (app_env[connection_idx].conidx == GAP_INVALID_CONIDX)
+        {    
+            return;
+        }
+        
+        ke_state_set(TASK_APP, APP_CONNECTED); // Update TASK_APP state (MUST always be done!)
+        
+        // connection confirmation is handled by app_con_fsm_connection_validation    
+        if (app_con_fsm_connection_validation(&addr) == false) {
+            return;
+        }  
 
-    app_prf_enable(connection_idx);
-#else
-    default_app_on_connection(connection_idx, param);
-    app_easy_timer(500, user_update_params_timer_cb);
-    user_conn_update_pending = true;
-#endif
+        app_prf_enable(connection_idx);
+    #else
+        default_app_on_connection(connection_idx, param);
+        app_easy_timer(500, user_update_params_timer_cb);
+        user_conn_update_pending = true;
+    #endif
     
     // Send an MTU exchange command. This is needed for some hosts which do not
     // initialte the MTU exchange procedure
     user_exchange_mtu();
 
-#if ((RWBLE_SW_VERSION_MAJOR >= 8) && BLE_BATT_SERVER) ||  BLE_BAS_SERVER
-    app_batt_poll_start(BATTERY_LEVEL_POLLING_PERIOD/10); // Start polling
-#endif
+    #if ((RWBLE_SW_VERSION_MAJOR >= 8) && BLE_BATT_SERVER) ||  BLE_BAS_SERVER
+        app_batt_poll_start(BATTERY_LEVEL_POLLING_PERIOD/10); // Start polling
+    #endif
         
-#ifdef HAS_AUDIO
-    // Store the connection parameters
-    user_connection_params.con_interval = param->con_interval;
-    user_connection_params.con_latency  = param->con_latency;
-    user_connection_params.sup_to       = param->sup_to;
-    // Calculete the audio packet size for the active connection interval
-    user_audio_set_packet_size();
-#endif
+    #ifdef HAS_AUDIO
+        // Store the connection parameters
+        user_connection_params.con_interval = param->con_interval;
+        user_connection_params.con_latency  = param->con_latency;
+        user_connection_params.sup_to       = param->sup_to;
+        // Calculete the audio packet size for the active connection interval
+        user_audio_set_packet_size();
+    #endif
 }
 
 void user_on_disconnect( struct gapc_disconnect_ind const *param )
 {
     uint8_t state = ke_state_get(TASK_APP);
     
-#if (RWBLE_SW_VERSION_MAJOR >= 8)
-    if (state==APP_CONNECTED)
-#else
-    if ((state==APP_CONNECTED) || (state==APP_PARAM_UPD) || (state==APP_SECURITY))
-#endif        
-    {
-        skip_slave_latency_flag = false;  
-        
-        // Perform actions required by modules on disconnection. Set the corresponding 
-        // mudule functions in user_module_config structure.
-        user_modules_on_disconnect();     
-        
-#ifdef AUDIO_TEST_MODE
-        user_rcu_audio_start_audio_test(false);
-#endif
-        
-#ifndef HAS_CONNECTION_FSM
-        default_app_on_disconnect(param);
-    #ifdef HAS_PWR_MGR
-        user_pwr_mgr_disable_inactivity();
+    #if (RWBLE_SW_VERSION_MAJOR >= 8)
+        if (state==APP_CONNECTED)
+    #else
+        if ((state==APP_CONNECTED) || (state==APP_PARAM_UPD) || (state==APP_SECURITY))
     #endif        
-#endif
+        {
+            skip_slave_latency_flag = false;  
+            
+            // Perform actions required by modules on disconnection. Set the corresponding 
+            // mudule functions in user_module_config structure.
+            user_modules_on_disconnect();     
+        
+            #ifdef AUDIO_TEST_MODE
+                user_rcu_audio_start_audio_test(false);
+            #endif
+        
+            #ifndef HAS_CONNECTION_FSM
+                    default_app_on_disconnect(param);
+                #ifdef HAS_PWR_MGR
+                    user_pwr_mgr_disable_inactivity();
+                #endif        
+            #endif
 
-        ke_state_set(TASK_APP, APP_CONNECTABLE); // APP_CONNECTABLE means "Idle"
+            ke_state_set(TASK_APP, APP_CONNECTABLE); // APP_CONNECTABLE means "Idle"
 
-#if ((RWBLE_SW_VERSION_MAJOR >= 8) && BLE_BATT_SERVER) ||  BLE_BAS_SERVER
-        app_batt_poll_stop(); // stop battery polling
-#endif
+            #if ((RWBLE_SW_VERSION_MAJOR >= 8) && BLE_BATT_SERVER) ||  BLE_BAS_SERVER
+                app_batt_poll_stop(); // stop battery polling
+            #endif
 
-#if (BLE_SUOTA_RECEIVER) || (BLE_SPOTA_RECEIVER)
-        user_suota_in_progress = false;
-        // Issue a platform reset when it is requested by the suotar procedure
-        if (suota_state.reboot_requested) {
-            // Reboot request will be served
-            suota_state.reboot_requested = 0;
+            #if (BLE_SUOTA_RECEIVER) || (BLE_SPOTA_RECEIVER)
+                    user_suota_in_progress = false;
+                    // Issue a platform reset when it is requested by the suotar procedure
+                    if (suota_state.reboot_requested) {
+                        // Reboot request will be served
+                        suota_state.reboot_requested = 0;
 
-            // Platform reset
-            platform_reset(RESET_AFTER_SUOTA_UPDATE);
+                        // Platform reset
+                        platform_reset(RESET_AFTER_SUOTA_UPDATE);
+                    }
+            #endif
         }
-#endif
-    }
-    // There is an extreme case where this message is received twice. This happens when 
-    // both the device and the host decide to terminate the connection at the same time.
-    // In this case, when the device sends the LL_TERMINATE_IND, it also gets the same
-    // message from the Host. This is not an erroneous situation provided that the 
-    // device has already cleared its state.
-    //    else
-    //        ASSERT_ERROR(0);
+        // There is an extreme case where this message is received twice. This happens when 
+        // both the device and the host decide to terminate the connection at the same time.
+        // In this case, when the device sends the LL_TERMINATE_IND, it also gets the same
+        // message from the Host. This is not an erroneous situation provided that the 
+        // device has already cleared its state.
+        //    else
+        //        ASSERT_ERROR(0);
 }
  
+
 void user_on_db_init_complete(void)
 {
-#ifdef HAS_AUDIO
-    // Get the handles of the corresponding HID reports or custom audio data characteristic 
-    // value. These handles will be used for sending notifications directly to L2CAP, 
-    // bypassing ATT and HOGPD or custom audio profile layers
-    user_audio_get_handles();
-    user_audio_set_config_data();
-#endif
+    #ifdef HAS_AUDIO
+        // Get the handles of the corresponding HID reports or custom audio data characteristic 
+        // value. These handles will be used for sending notifications directly to L2CAP, 
+        // bypassing ATT and HOGPD or custom audio profile layers
+        user_audio_get_handles();
+        user_audio_set_config_data();
+    #endif
     
 #if defined(HAS_MOTION) || defined(HAS_MOUSE) || defined(HAS_TOUCHPAD_TRACKPAD)
     // Get the handles of the corresponding HID reports. These handles will be used

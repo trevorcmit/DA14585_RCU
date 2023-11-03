@@ -168,14 +168,14 @@ void user_audio_set_packet_size(void)
     {
         // Host application has set the ATT packet size
         user_audio_packet_size = user_fixed_att_packet_size - 3; // The ATT header is 3 bytes
-    } 
+    }
     else
-    { 
-        // aAtomatic packet size calculation
+    {
+        // automatic packet size calculation
         user_mtu_size = gattc_get_mtu(last_connection_idx);
         uint16_t effective_mtu_size = user_max_att_packet_size ? co_min(user_mtu_size, user_max_att_packet_size) : user_mtu_size;
         
-        #if (RWBLE_SW_VERSION_MAJOR >= 8) 
+        #if (RWBLE_SW_VERSION_MAJOR >= 8)
             buffer_size = l2cm_get_buffer_size(last_connection_idx); // 27 if packet length extension is not used
         #else
             buffer_size = 27;
@@ -183,7 +183,7 @@ void user_audio_set_packet_size(void)
             
         const uint32_t BANDWIDTH_MULT = ((8 * MAX_NUM_OF_PACKETS_PER_CONNECTION * 1000000)) / (user_connection_params.con_interval*1250);
         uint32_t bandwidth;
-        if(effective_mtu_size > (buffer_size - 4))
+        if (effective_mtu_size > (buffer_size - 4))
         {   // The L2CAP header is 4 bytes
             // The MTU will not fit in one packet
             uint8_t packets_per_mtu = (effective_mtu_size + 4 + buffer_size - 1) / buffer_size;
@@ -196,35 +196,40 @@ void user_audio_set_packet_size(void)
         }
 
         #ifdef CFG_AUDIO_ADAPTIVE_RATE    
-        adpcm_env.data_bandwidth = bandwidth;
+            adpcm_env.data_bandwidth = bandwidth;
         
-#ifdef CFG_AUDIO_ADAPTIVE_RATE        
-        // Calculate the minimum ADPCM mode that can be used for the active connection interval
-        if(bandwidth >= ADPM_MODE_TO_RATE(ADPCM_MODE_64KBPS_4_16KHZ)) {
-            adpcm_env.min_mode = ADPCM_MODE_64KBPS_4_16KHZ;
-        }
-        else {
-            adpcm_env.min_mode = (app_audio_adpcm_mode_t) (4 - bandwidth/16000);
-        }
-        dbg_printf(DBG_APP_LVL, "min ADPCM mode: %d\r\n", adpcm_env.min_mode);
-#endif
+            #ifdef CFG_AUDIO_ADAPTIVE_RATE        
+                // Calculate the minimum ADPCM mode that can be used for the active connection interval
+                if (bandwidth >= ADPM_MODE_TO_RATE(ADPCM_MODE_64KBPS_4_16KHZ))
+                {
+                    adpcm_env.min_mode = ADPCM_MODE_64KBPS_4_16KHZ;
+                }
+                else 
+                {
+                    adpcm_env.min_mode = (app_audio_adpcm_mode_t) (4 - bandwidth/16000);
+                }
+                dbg_printf(DBG_APP_LVL, "min ADPCM mode: %d\r\n", adpcm_env.min_mode);
+            #endif
         
-        if(adpcm_env.min_mode == ADPCM_MODE_MIN) {
+        if (adpcm_env.min_mode == ADPCM_MODE_MIN)
+        {
             adpcm_env.min_mode = ADPCM_MODE_24KBPS_3_8KHZ;
         }
         
         uint32_t BANDWIDTH_NEEDED = ADPM_MODE_TO_RATE_120(adpcm_env.min_mode);
+
         #else
             #define BANDWIDTH_NEEDED ADPM_MODE_TO_RATE_120(ADPCM_DEFAULT_MODE)
         #endif
         
-        
-        if(bandwidth > BANDWIDTH_NEEDED) {
-        // BANDWIDTH_NEEDED must fit in data part of the packet that is MTU - 3bytes
-        // bandwidth is used for MTU + 4bytes of L2CAP header
-        // bandwidth = (min_mtu+4) * 1000 / CON_INTERVAL * MAX_NUM_OF_PACKETS_PER_CONNECTION * 8
-        // bandwidth -> min_mtu+4 (4 is the L2CAP header)
-        // BANDWIDTH_NEEDED -> min_mtu - 3 (3 is the GATT header)  
+
+        if (bandwidth > BANDWIDTH_NEEDED)
+        {
+            // BANDWIDTH_NEEDED must fit in data part of the packet that is MTU - 3bytes
+            // bandwidth is used for MTU + 4bytes of L2CAP header
+            // bandwidth = (min_mtu+4) * 1000 / CON_INTERVAL * MAX_NUM_OF_PACKETS_PER_CONNECTION * 8
+            // bandwidth -> min_mtu+4 (4 is the L2CAP header)
+            // BANDWIDTH_NEEDED -> min_mtu - 3 (3 is the GATT header)
             min_mtu = BANDWIDTH_NEEDED/BANDWIDTH_MULT+3;
             min_mtu += (min_mtu > buffer_size-4) ? (buffer_size - 1) : 0; // Add (buffer_size - 1) so that min_mtu is recalculated below
             min_mtu = co_max(min_mtu, 50);
@@ -306,6 +311,7 @@ void user_audio_get_handles(void)
             app_stream_fifo_commit_write_pkt(command_length, user_audio_data_hdl[user_audio_stream_report_nr]);
         }
     #endif
+
 
 /****************************************************************************************
  * \brief Set the ADPCM mode and start audio sampling and encoding. If in-band commands
@@ -626,12 +632,12 @@ static uint16_t user_audio_create_configuration_packet(uint8_t *data)
  * \param[in]  audio_command The command to be sent
 *****************************************************************************************/  
 static void user_audio_send_enable(audio_ctrl_cmd_t audio_command)
-{    
-#ifdef CFG_AUDIO_ADAPTIVE_RATE
-    if(audio_command == AUDIO_BUTTON_PRESSED) {
-        user_audio_force_custom_bitrate = false;
-    }
-#endif        
+{
+    #ifdef CFG_AUDIO_ADAPTIVE_RATE
+        if(audio_command == AUDIO_BUTTON_PRESSED) {
+            user_audio_force_custom_bitrate = false;
+        }
+    #endif        
     
     if (audio_command == AUDIO_STOP || app_stream_is_enabled() == false) {
         // Send notification
@@ -647,6 +653,7 @@ static void user_audio_send_enable(audio_ctrl_cmd_t audio_command)
 
     }
 }
+
 
 #if APP_STREAM_USE_CIRCULAR_BUFFER
 /*****************************************************************************************

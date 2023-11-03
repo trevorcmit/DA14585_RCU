@@ -1,9 +1,8 @@
 /*****************************************************************************************
- *
  * \file app_stream.c
- *
  * \brief BLE stream module source file
- * 
+ * This module provides an API for streaming data to a BLE host
+ * Define symbol HAS_BLE_STREAM to include this module in the application.
 ******************************************************************************************/
  
 /*****************************************************************************************
@@ -13,7 +12,6 @@
  * \{
  * \addtogroup APP_STREAM
  * \brief AudioStreamer Application
- *
  * \{
 ******************************************************************************************/
 
@@ -67,34 +65,36 @@ app_stream_env_t app_stream_env __PORT_RETAINED;
         uint8_t  stream_buffer[APP_STREAM_FIFO_SIZE];
 #endif
 
+
 typedef struct app_stream_fifo_s {
-#ifdef CFG_APP_STREAM_PACKET_BASED
-        app_stream_pkt_t pkt_fifo[APP_STREAM_MAX_PACKET_FIFO_LEN];
-    #ifdef CFG_APP_STREAM_FIFO_PREDEFINED
-        uint8_t  fifo_read;
-        uint8_t  fifo_write;
-    #else
-        uint8_t *buffer;
-        uint16_t fifo_read;
-        uint16_t fifo_write;
-        uint8_t *requested_buffer_start;
-        bool buffer_full;    
-    #endif
-#else    
-        uint8_t *buffer;
-        app_stream_pkt_t pkt;
-        uint16_t fifo_read;
-        uint16_t fifo_write;
-        uint16_t requested_buffer_start;
-        uint16_t fifo_end;
-        bool buffer_full;
-#endif    
+        #ifdef CFG_APP_STREAM_PACKET_BASED
+                app_stream_pkt_t pkt_fifo[APP_STREAM_MAX_PACKET_FIFO_LEN];
+                #ifdef CFG_APP_STREAM_FIFO_PREDEFINED
+                        uint8_t  fifo_read;
+                        uint8_t  fifo_write;
+                #else
+                        uint8_t *buffer;
+                        uint16_t fifo_read;
+                        uint16_t fifo_write;
+                        uint8_t *requested_buffer_start;
+                        bool buffer_full;    
+                #endif
+        #else    
+                uint8_t *buffer;
+                app_stream_pkt_t pkt;
+                uint16_t fifo_read;
+                uint16_t fifo_write;
+                uint16_t requested_buffer_start;
+                uint16_t fifo_end;
+                bool buffer_full;
+        #endif    
 
 } app_stream_fifo_t;
 
-/**
+
+/***************************************************************
  * Global Variable that holds the Steam Application FIFO data
- */
+***************************************************************/
 app_stream_fifo_t app_stream_fifo __PORT_RETAINED;
 
 void app_stream_fifo_init(void)
@@ -103,85 +103,94 @@ void app_stream_fifo_init(void)
         app_stream_fifo.fifo_write = 0;
         app_stream_env.fifo_size   = 0;
     
-#ifdef CFG_APP_STREAM_PACKET_BASED    
-        for (int i=0; i<APP_STREAM_MAX_PACKET_FIFO_LEN; i++) {
-            app_stream_fifo.pkt_fifo[i].used_hndl = 0;
-        }
-    
-    #ifdef CFG_APP_STREAM_FIFO_PREDEFINED
-//        #ifndef APP_STREAM_MULTIPLE_ARRAYS
-//        memset(pkts,0,sizeof(pkts));
-//        #else
-//        memset(pkts0, 0, sizeof(pkts0));
-//        memset(pkts1, 0, sizeof(pkts1));
-//        memset(pkts2, 0, sizeof(pkts2));
-//        #endif
-    #else
-        app_stream_fifo.buffer_full = false;
-    #endif
-#else
-        app_stream_fifo.buffer_full = false;
-        app_stream_fifo.fifo_end = APP_STREAM_FIFO_SIZE;
-#endif
+        #ifdef CFG_APP_STREAM_PACKET_BASED    
+                for (int i=0; i<APP_STREAM_MAX_PACKET_FIFO_LEN; i++)
+                {
+                        app_stream_fifo.pkt_fifo[i].used_hndl = 0;
+                }
+        
+                #ifdef CFG_APP_STREAM_FIFO_PREDEFINED
+                        //        #ifndef APP_STREAM_MULTIPLE_ARRAYS
+                        //        memset(pkts,0,sizeof(pkts));
+                        //        #else
+                        //        memset(pkts0, 0, sizeof(pkts0));
+                        //        memset(pkts1, 0, sizeof(pkts1));
+                        //        memset(pkts2, 0, sizeof(pkts2));
+                        //        #endif
+                #else
+                        app_stream_fifo.buffer_full = false;
+                #endif
+
+        #else
+                app_stream_fifo.buffer_full = false;
+                app_stream_fifo.fifo_end = APP_STREAM_FIFO_SIZE;
+        #endif
 }
+
 
 /*****************************************************************************************
  * \brief
 ******************************************************************************************/
 static void app_stream_fifo_buffer_init(void)
 {
-#ifdef CFG_APP_STREAM_PACKET_BASED    
-        memset(app_stream_fifo.pkt_fifo, 0, sizeof(app_stream_pkt_t) * APP_STREAM_MAX_PACKET_FIFO_LEN);
-    
-    #ifdef CFG_APP_STREAM_FIFO_PREDEFINED
-        #ifndef APP_STREAM_MULTIPLE_ARRAYS
-        for (int i=0; i<APP_STREAM_MAX_PACKET_FIFO_LEN; i++) {
-                app_stream_fifo.pkt_fifo[i].datapt = pkts[i];
-//                app_stream_fifo.pkt_fifo[i].used_hndl = 0;
-        }
-        #else
+        #ifdef CFG_APP_STREAM_PACKET_BASED    
+                memset(app_stream_fifo.pkt_fifo, 0, sizeof(app_stream_pkt_t) * APP_STREAM_MAX_PACKET_FIFO_LEN);
+        
+                #ifdef CFG_APP_STREAM_FIFO_PREDEFINED
+                        #ifndef APP_STREAM_MULTIPLE_ARRAYS
+                        for (int i=0; i<APP_STREAM_MAX_PACKET_FIFO_LEN; i++)
+                        {
+                                app_stream_fifo.pkt_fifo[i].datapt = pkts[i];
+                        }
+                        #else
 
-        for (int i = 0; i < APP_STREAM_MAX_PACKET_FIFO_LEN0; i++) {
-                app_stream_fifo.pkt_fifo[i].datapt = pkts0[i];
-        }
-        for (int i = 0; i < APP_STREAM_MAX_PACKET_FIFO_LEN1; i++) {
-                app_stream_fifo.pkt_fifo[APP_STREAM_MAX_PACKET_FIFO_LEN0 + i].datapt = pkts1[i];
-        }
-        for (int i = 0; i < APP_STREAM_MAX_PACKET_FIFO_LEN2; i++) {
-                app_stream_fifo.pkt_fifo[(APP_STREAM_MAX_PACKET_FIFO_LEN0 + APP_STREAM_MAX_PACKET_FIFO_LEN1) + i].datapt = pkts2[i];
-        }
+                        for (int i = 0; i < APP_STREAM_MAX_PACKET_FIFO_LEN0; i++) {
+                                app_stream_fifo.pkt_fifo[i].datapt = pkts0[i];
+                        }
+                        for (int i = 0; i < APP_STREAM_MAX_PACKET_FIFO_LEN1; i++) {
+                                app_stream_fifo.pkt_fifo[APP_STREAM_MAX_PACKET_FIFO_LEN0 + i].datapt = pkts1[i];
+                        }
+                        for (int i = 0; i < APP_STREAM_MAX_PACKET_FIFO_LEN2; i++) {
+                                app_stream_fifo.pkt_fifo[(APP_STREAM_MAX_PACKET_FIFO_LEN0 + APP_STREAM_MAX_PACKET_FIFO_LEN1) + i].datapt = pkts2[i];
+                        }
+                        #endif
+                #else
+                        app_stream_fifo.buffer = stream_buffer;
+                        app_stream_fifo.pkt_fifo[0].datapt = app_stream_fifo.buffer;
+                #endif    
+        #else
+                app_stream_fifo.buffer = stream_buffer;
         #endif
-    #else
-        app_stream_fifo.buffer = stream_buffer;
-        app_stream_fifo.pkt_fifo[0].datapt = app_stream_fifo.buffer;
-    #endif    
-#else
-        app_stream_fifo.buffer = stream_buffer;
-#endif
 }
+
 
 void app_stream_init(void)
 {
         app_stream_env.stream_enabled = false;
         app_stream_fifo_buffer_init();
         app_stream_fifo_init(); 
-#ifndef CFG_APP_STREAM_PACKET_BASED    
-        if(stream_packet_size == 0) {
-                stream_packet_size = 20;
-        }
-#endif        
+
+        #ifndef CFG_APP_STREAM_PACKET_BASED    
+                if (stream_packet_size == 0)
+                {
+                        stream_packet_size = 20;
+                }
+        #endif        
 }
+
 
 void app_stream_start(void)
 {
-        if (app_stream_env.stream_enabled == false) {
+        if (app_stream_env.stream_enabled == false)
+        {
                 app_stream_env.stream_enabled = true;
                 stream_first_packets = true;
-#ifndef CFG_APP_STREAM_PACKET_BASED           
-                stream_ignore_packet_size = false;
-#endif            
+                #ifndef CFG_APP_STREAM_PACKET_BASED           
+                                stream_ignore_packet_size = false;
+                #endif            
         }
 }
+
 
 void app_stream_stop(void)
 {

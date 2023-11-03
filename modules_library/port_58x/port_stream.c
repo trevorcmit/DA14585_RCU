@@ -73,53 +73,53 @@ static bool port_stream_send_pkt_to_l2cc(app_stream_pkt_t *strpkt)
 
 /*****************************************************************************************
  * \brief
- *
  * \param[in] min_avail
- *
  * \return
 ******************************************************************************************/
 static inline int stream_queue_data_until(uint8_t min_avail)
 {
-        int max_count=0;
-        int available;
-        app_stream_pkt_t *pkt;
-        int retval=0;
-        uint16_t buffer_size;
+    int max_count=0;
+    int available;
+    app_stream_pkt_t *pkt;
+    int retval=0;
+    uint16_t buffer_size;
         
-#ifdef CFG_APP_STREAM_PACKET_BASED  
+    #ifdef CFG_APP_STREAM_PACKET_BASED  
         pkt = app_stream_get_data(0);
-#else    
+    #else    
         pkt = app_stream_get_data(stream_packet_size);
-#endif    
+    #endif    
         
-#ifdef CFG_APP_STREAM_PACKET_BASED
+    #ifdef CFG_APP_STREAM_PACKET_BASED
         if (pkt == NULL) {
-#else            
+    #else            
         // Don't send packets smaller than stream_packet_size
         if (pkt == NULL || (stream_ignore_packet_size == false && pkt->len < stream_packet_size)) {
-#endif          
-                return retval; //nothing to send quick check in order not to spend time
+    #endif          
+            return retval; //nothing to send quick check in order not to spend time
         }
         
-#if (RWBLE_SW_VERSION_MAJOR >= 8) 
+    #if (RWBLE_SW_VERSION_MAJOR >= 8) 
         buffer_size = l2cm_get_buffer_size(0); // 27 if packet length extension is not used
-#else
+    #else
         buffer_size = 27;    
-#endif        
+    #endif        
 
-        int16_t packet_length;
-#if APP_STREAM_USE_PREDEFINED_BUFFERS  
+    int16_t packet_length;
+
+    #if APP_STREAM_USE_PREDEFINED_BUFFERS  
         packet_length = APP_STREAM_PACKET_SIZE;
-#else        
+    #else        
         packet_length = pkt->len;
-#endif
+    #endif
         
-        uint8_t number_of_packets = 1;
-        int16_t remaining_len = packet_length - (buffer_size-7);
+    uint8_t number_of_packets = 1;
+    int16_t remaining_len = packet_length - (buffer_size-7);
         
-        if(remaining_len > 0) {                   
-            number_of_packets += (uint8_t)(remaining_len/buffer_size+((remaining_len%buffer_size)>0 ? 1 : 0));  
-        }   
+    if (remaining_len > 0)
+    {                   
+        number_of_packets += (uint8_t)(remaining_len/buffer_size+((remaining_len%buffer_size)>0 ? 1 : 0));  
+    }   
         
         ASSERT_ERROR(number_of_packets < MAX_TX_BUFS);
         
