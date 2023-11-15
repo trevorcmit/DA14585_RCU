@@ -468,7 +468,8 @@ static const struct security_configuration user_security_conf = {
           4          5         6       
           7          8         9       
           unused     0         unused
-          -------------------------------------*/
+          -------------------------------------
+        */
               
         { 0x0001,    0x0002,   0x0003  },  // 0
         { 0x0004,    0x0005,   0x0006  },  // 1

@@ -1218,31 +1218,31 @@ static void user_hid_report_send_full_release_reports(void)
 
 void user_event_isr(void)
 {
-#ifdef HAS_BLE_STREAM
-    extern uint8_t stream_cpt_event;
-    stream_cpt_event = 1;        
-#endif    
+    #ifdef HAS_BLE_STREAM
+        extern uint8_t stream_cpt_event;
+        stream_cpt_event = 1;        
+    #endif    
 
-#ifdef HAS_MOTION 
-    extern bool motion_cpt_event;
-    motion_cpt_event = true;
-#endif      
+    #ifdef HAS_MOTION 
+        extern bool motion_cpt_event;
+        motion_cpt_event = true;
+    #endif      
 
-#if defined(HAS_MOUSE) || defined(HAS_TOUCHPAD_TRACKPAD)
-    extern bool mouse_cpt_event;
-    mouse_cpt_event = true;
-#endif
-    
-#ifdef DEBUG_EMULATE_PACKET_LOSS
-    port_handle_radio_ctrl();
-#endif       
+    #if defined(HAS_MOUSE) || defined(HAS_TOUCHPAD_TRACKPAD)
+        extern bool mouse_cpt_event;
+        mouse_cpt_event = true;
+    #endif
+        
+    #ifdef DEBUG_EMULATE_PACKET_LOSS
+        port_handle_radio_ctrl();
+    #endif       
 }
 
 void user_cscnt_isr(void) 
 {
-#ifdef DEBUG_EMULATE_PACKET_LOSS
-    port_handle_radio_ctrl();
-#endif    
+    #ifdef DEBUG_EMULATE_PACKET_LOSS
+        port_handle_radio_ctrl();
+    #endif    
 }
 
 void user_rf_diag(void)

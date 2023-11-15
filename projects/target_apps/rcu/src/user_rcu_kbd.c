@@ -1,9 +1,6 @@
 /*****************************************************************************************
- *
  * \file user_rcu_kbd.c
- *
  * \brief RCU keyboard implementation.
- * 
 ******************************************************************************************/
 
 /*****************************************************************************************
@@ -12,13 +9,9 @@
  * \addtogroup USER_APP
  * \{
  * \addtogroup APP_RCU_KBD
- *
  * \{
 ******************************************************************************************/
 
-/*****************************************************************************************
- * INCLUDE FILES
-******************************************************************************************/
 #include "rwip_config.h"
 #include "user_rcu.h"
 #include "user_rcu_kbd.h"
@@ -27,9 +20,7 @@
 #include "ke_env.h"
 #include "app_leds.h"
 #include "port_timer.h"
-/*****************************************************************************************
- * GLOBAL VARIABLE DEFINITIONS
-******************************************************************************************/
+
 
 #ifdef HAS_KBD
     bool user_fn_locked __PORT_RETAINED;
@@ -52,62 +43,58 @@
     bool user_start_mouse_test __PORT_RETAINED;
 #endif
         
-/*****************************************************************************************
- * FUNCTION DEFINITIONS
-******************************************************************************************/
 
 #ifdef DEBUG_EMULATE_PACKET_LOSS
-    
-void user_rcu_kbd_radio_mute_timer_handler(void)
-{
-    if(mute_radio_level > 0) {
-        if((mute_radio_index & 0x01) == 0) {
-            port_enable_radio();
-            port_timer_set(USER_RADIO_MUTE_TIMER, TASK_APP, radio_mute_pattern[mute_radio_index]);
+    void user_rcu_kbd_radio_mute_timer_handler(void)
+    {
+        if(mute_radio_level > 0) {
+            if((mute_radio_index & 0x01) == 0) {
+                port_enable_radio();
+                port_timer_set(USER_RADIO_MUTE_TIMER, TASK_APP, radio_mute_pattern[mute_radio_index]);
+            }
+            else {
+                port_disable_radio();
+                port_timer_set(USER_RADIO_MUTE_TIMER, TASK_APP, radio_mute_pattern[mute_radio_index]*mute_radio_level);
+            }
+            
+            mute_radio_index++;
+            if(mute_radio_index >= sizeof(radio_mute_pattern)) {
+                mute_radio_index = 0;
+            }
         }
         else {
-            port_disable_radio();
-            port_timer_set(USER_RADIO_MUTE_TIMER, TASK_APP, radio_mute_pattern[mute_radio_index]*mute_radio_level);
-        }
-        
-        mute_radio_index++;
-        if(mute_radio_index >= sizeof(radio_mute_pattern)) {
-            mute_radio_index = 0;
+            port_enable_radio();
         }
     }
-    else {
-        port_enable_radio();
-    }
-}
 
-/*****************************************************************************************
- * \brief Increment emulated packet loss. mute_radio_level is incremented by 1.
-          Off times (odd indexes) in radio_mute_pattern are multiplied by 
- *        mute_radio_level.
-******************************************************************************************/
-static void user_packet_loss_inc(void)
-{
-    if(mute_radio_level < 16) {
-        mute_radio_level++;
-        dbg_printf(DBG_APP_LVL, "Radio mute level %d\r\n", mute_radio_level);
+    /*****************************************************************************************
+     * \brief Increment emulated packet loss. mute_radio_level is incremented by 1.
+             Off times (odd indexes) in radio_mute_pattern are multiplied by 
+    *        mute_radio_level.
+    ******************************************************************************************/
+    static void user_packet_loss_inc(void)
+    {
+        if(mute_radio_level < 16) {
+            mute_radio_level++;
+            dbg_printf(DBG_APP_LVL, "Radio mute level %d\r\n", mute_radio_level);
+        }
+        if(mute_radio_level == 1) {
+            user_rcu_kbd_radio_mute_timer_handler();
+        }
     }
-    if(mute_radio_level == 1) {
-        user_rcu_kbd_radio_mute_timer_handler();
-    }
-}
 
-/*****************************************************************************************
- * \brief Decrement emulated packet loss. mute_radio_level is decremented by 1.
-          Off times (odd indexes) in radio_mute_pattern are multiplied by 
- *        mute_radio_level.
-******************************************************************************************/
-static void user_packet_loss_dec(void)
-{
-    if(mute_radio_level > 0) {
-        mute_radio_level--;
-        dbg_printf(DBG_APP_LVL, "Radio mute level %d\r\n", mute_radio_level);
+    /*****************************************************************************************
+     * \brief Decrement emulated packet loss. mute_radio_level is decremented by 1.
+             Off times (odd indexes) in radio_mute_pattern are multiplied by 
+    *        mute_radio_level.
+    ******************************************************************************************/
+    static void user_packet_loss_dec(void)
+    {
+        if(mute_radio_level > 0) {
+            mute_radio_level--;
+            dbg_printf(DBG_APP_LVL, "Radio mute level %d\r\n", mute_radio_level);
+        }
     }
-}
 #endif
 
 #if defined(HAS_KBD) || defined(HAS_TOUCH)
